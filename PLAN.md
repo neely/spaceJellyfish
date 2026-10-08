@@ -10,8 +10,8 @@ Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-08
-- **Next action:** Write config/pads.json and config/profiles.json with a
-  cited Falcon 9 ascent profile, then engine/trajectory.js.
+- **Next action:** Write engine/visibility.js: sunlit test, observer
+  darkness, score, bearing range, and the azimuth set for each orbit class.
 
 ---
 
@@ -47,14 +47,21 @@ Tests run with `node --test`.
       Charleston distance. Compute it; do not take it from the brief.
       Observed: 4 NGS cases agree within 0.4 mm; SLC-40 to the observer is
       466.0 km.
-- [ ] `config/observer.json`, `config/pads.json`, `config/profiles.json`:
-      observer point, pad coordinates, ascent profiles (altitude and
-      downrange against time) for each vehicle. Falcon 9 first. A generic
-      profile for other vehicles. Cite the source of each profile.
-      Done so far: `config/observer.json` only.
-- [ ] `engine/trajectory.js`: rocket position against time from pad, launch
-      azimuth range, and profile. Azimuth comes from the orbit data when
-      present. Otherwise use a wide range with low confidence.
+- [x] `config/observer.json` and `config/profiles.json`: observer point and
+      Falcon 9 ascent profiles (altitude and downrange against time), built
+      by `scripts/build-profiles.js` from pinned public telemetry. There is
+      no `config/pads.json`: each LL2 launch record carries its pad
+      coordinates. Observed: 5 members in 2 profiles; LEO members are at 177
+      to 183 km at 300 s and GTO members at 150 to 158 km.
+- [ ] A profile for vehicles other than Falcon 9. No source found yet. Until
+      then, other vehicles use the Falcon 9 members with low confidence.
+- [x] `engine/trajectory.js`: great-circle position against time from pad,
+      azimuth, and profile member; launch azimuths from an inclination.
+      Observed: `npm test` shows 33 pass, 0 fail. A 51.6 degree orbit gives
+      azimuths of 45.0 and 135.0 degrees from SLC-40.
+- [ ] Azimuth set for each LL2 orbit class, with a source for the range of
+      azimuths the Cape allows. Use a wide range with low confidence when
+      the orbit data is thin.
 - [ ] `engine/visibility.js`: for each time step, is the rocket sunlit, is
       the observer dark enough, is the rocket above the horizon. Output a
       score, a bearing range, a peak elevation, a viewing time window, and a
@@ -143,6 +150,6 @@ Page.
 ## Handoff → next session
 Start prompt:
 > Read AGENTS.md, the PLAN.md status block, and FINDINGS.md "Reference", then
-> continue Phase 1 with `config/pads.json`, `config/profiles.json`, and
-> `engine/trajectory.js`. Run `npm test` first. Watch out for the LL2 rate
-> limit. Cite the source of each ascent profile; do not write one from memory.
+> continue Phase 1 with `engine/visibility.js`. Run `npm test` first. Start
+> at reference/README.md for sources. Watch out for the LL2 rate limit. Do
+> not write a threshold or an azimuth limit from memory; cite a source.

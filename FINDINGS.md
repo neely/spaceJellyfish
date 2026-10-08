@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 26 tests, 26 pass, 0 fail (2026-10-08). The count
+- `npm test` — expected 33 tests, 33 pass, 0 fail (2026-10-08). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
   agree with each within 1/60 degree in GHA, declination, and altitude.
@@ -24,6 +24,11 @@ these before you trust it. Hard-stop on mismatch.
   with each within 2 mm. Largest difference observed: 0.4 mm.
 - SLC-40 to the observer along the surface — expected 466.0 km (289.5
   statute miles), within 0.5 km.
+- `config/profiles.json` — expected 5 members and 2 profiles:
+  `falcon9-leo` (SpaceX CRS-16, SpaceX CRS-14) and `falcon9-gto`
+  (Bangabandhu-1, SES-12, Hispasat 30W-6). Altitude at 300 s: 177 to 183 km
+  for LEO members, 150 to 158 km for GTO members. Altitude at the end of
+  the data: 207 to 208 km for LEO, 164 to 165 km for GTO.
 - The backtest share is not set yet.
 
 ### Intentional, not bugs
@@ -37,6 +42,18 @@ Things that look wrong but are correct. Do not "fix" these.
 - `surfaceDistanceM` uses a sphere of the mean radius. It is good to about
   0.5 percent. Look angles and ranges use the WGS 84 ellipsoid and do not
   have this limit.
+- The ascent profiles come from 2018 launches (Block 4 and Block 5). The
+  source has no Starlink launch and no vehicle other than Falcon 9. ISS
+  missions stand in for all Falcon 9 LEO launches. Treat a Starlink result
+  with lower confidence until a Starlink profile exists.
+- Downrange distance in the profiles is derived by the telemetry author
+  from webcast speed and altitude. It is not a tracked position. Members of
+  one profile differ by up to 120 km in downrange at 400 s.
+- The profiles end at about second-stage cutoff (493 to 538 s). The engine
+  models nothing after that, and no first-stage boostback or entry burn.
+- The trajectory is one great circle at a fixed azimuth. The engine does not
+  model the turn caused by Earth rotation or a dogleg. The bearing range
+  must absorb this error.
 - The USNO celestial navigation API returns no Sun entry when the Sun is far
   below the horizon. The fixture holds only daytime and twilight cases. The
   lowest Sun altitude in the fixture is -11.2 degrees.
@@ -58,6 +75,25 @@ before you rely on it.
   agree with the brief. The computed value is the one to use.
 - A rocket 150 km above SLC-40 is 15.6 degrees above the horizon at the
   observer. A point on the ground at the pad is 2.1 degrees below it.
+
+#### What a launch looks like from the observer (engine output, 2026-10-08)
+- SpaceX CRS-16 profile on azimuth 44.9 degrees from SLC-40: elevation 15.6
+  degrees at 200 s, 30.4 at 300 s, 26.9 at 400 s, 10.7 at 500 s. The bearing
+  moves from 177 to 66 degrees.
+- The same profile on azimuth 135 degrees: elevation peaks near 11.5 degrees
+  at 300 s and is 1.5 degrees at 500 s.
+- SES-12 profile on azimuth 90 degrees: elevation peaks near 11.0 degrees at
+  300 s.
+- A northeast launch is 2 to 3 times higher in the Charleston sky than a
+  southeast or due-east launch.
+
+#### Falcon 9 webcast telemetry
+- https://github.com/shahar603/Telemetry-Data, Unlicense, commit `b245d3b`.
+  `<mission>/JSON/analysed.json` holds time (s), altitude (km), and
+  downrange distance (km) at 1 s steps. The mission README gives orbit,
+  block, and landing type.
+- DM-1, Eshail 2, and TelStar v19 have no README table, so their block and
+  orbit are not stated. They are not used.
 
 #### Reference data sources for tests
 - USNO celestial navigation API: `https://aa.usno.navy.mil/api/celnav` with
@@ -181,3 +217,25 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Why: Ben gave a personal style guide for public text on 2026-10-08. The
   guide is not in this repo; the rules above are the part that applies.
 - Rejected: ASD-STE100 for the README.
+
+### Pad coordinates come from the LL2 record (locked)
+- What: There is no pad config file. The engine takes the pad latitude and
+  longitude from each launch record.
+- Why: LL2 already carries them. A second copy can drift.
+- Rejected: `config/pads.json`.
+
+### A profile is a set of real flights, not an average (locked)
+- What: Each profile lists member missions. The engine evaluates each member
+  and reports the range.
+- Why: The spread between members is the honest measure of profile
+  uncertainty. An average hides it.
+- Rejected: One averaged curve for each orbit class.
+
+### reference/ is a knowledge base with progressive disclosure (locked)
+- What: Each note in reference/ starts with front matter that says what the
+  note answers. reference/INDEX.md lists all notes. Read the index, then
+  the front matter, then the body, then the original source.
+- Why: Ben asked for traceable sources on 2026-10-08, in the same form as
+  `neely/follySurf-data`. FINDINGS holds our conclusions; reference/ holds
+  where the information came from.
+- Rejected: Putting source detail in FINDINGS.

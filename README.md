@@ -12,7 +12,7 @@ visibility from Charleston, SC.
 ## What it is
 A "space jellyfish" is the glowing plume that appears when a rocket climbs
 high enough to be in sunlight while the observer on the ground is still in
-twilight or darkness. We predict when a launch from Cape Canaveral or Kennedy
+twilight or darkness. We aim to predict when a launch from Cape Canaveral or Kennedy
 Space Center will produce that effect as seen from Charleston, SC (James
 Island, ZIP 29412), which our geometry code places 466 km (290 statute miles)
 from Space Launch Complex 40.
@@ -26,10 +26,10 @@ API for launches and api.weather.gov for forecasts. We do not scrape other
 launch-visibility sites.
 
 ## Status
-The project is at an early stage, and it does not yet predict anything. Two
+The project is at an early stage, and it does not yet predict anything. Three
 of the engine's building blocks exist and are tested (described below); the
-trajectory model, the visibility score, the web page, and the email alerts are
-planned but not written. [PLAN.md](PLAN.md) holds the roadmap.
+visibility score, the web page, and the email alerts are planned but not
+written. [PLAN.md](PLAN.md) holds the roadmap.
 
 What works today:
 
@@ -45,16 +45,27 @@ What works today:
   within 0.4 mm. Elevations are geometric, with no correction for atmospheric
   refraction.
 
+- **Trajectory** (`engine/trajectory.js`): the rocket's position against
+  time, taken as one great circle from the pad with altitude and downrange
+  distance from real Falcon 9 flights. The flight data are five 2018
+  missions (two to the ISS, three to geostationary transfer orbit) from the
+  public [Telemetry-Data](https://github.com/shahar603/Telemetry-Data)
+  collection, whose author derived them from SpaceX webcast telemetry. The
+  collection has no Starlink launch and no other vehicle, so results for
+  those rest on the assumption that they climb like the 2018 missions, which
+  is untested.
+
 ## Structure
 - `engine/`: the geometry engine. Pure ES modules with no DOM, no network
   access, and no dependencies, so that the same code can run in the page and
   in a Cloudflare Worker.
 - `config/`: reviewed, versioned inputs. `observer.json` is the observer
-  point.
+  point; `profiles.json` holds the ascent profiles.
 - `test/`: tests for the engine, and `test/fixtures/` with the pinned
   reference values they compare against.
 - `scripts/`: one-off tools. `fetch-reference-fixtures.js` regenerates the
-  fixtures from USNO and NOAA NGS.
+  fixtures from USNO and NOAA NGS; `build-profiles.js` regenerates the ascent
+  profiles.
 - `reference/`: vendored material. `usno-sun-and-sidereal-time.md` holds the
   formulas the engine implements; `handoff-brief.md` is the original project
   brief.
