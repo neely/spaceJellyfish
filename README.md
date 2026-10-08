@@ -27,9 +27,17 @@ predictions, or images from other launch-visibility sites, although we have
 read how they describe their methods (see `reference/`).
 
 ## Status
-The geometry engine runs and has had a first backtest, but nothing is live:
-there is no web page and no alert yet, and weather is not included.
+There is a working web page and a tested geometry engine, but the page is not
+yet hosted anywhere, there are no alerts, and weather is not included.
 [PLAN.md](PLAN.md) holds the roadmap.
+
+**The page.** `index.html` lists upcoming Cape Canaveral and Kennedy Space
+Center launches and, for each one with a set time, shows whether a sunlit
+plume is likely, the clock window in which to look, the compass direction it
+moves through, how high it climbs, a chart of its path across the sky, and how
+the answer changes if liftoff slips (ten-minute steps for two hours either
+side). It refreshes launch times from Launch Library 2 each time it is opened,
+at most once every 20 minutes.
 
 **The backtest so far.** We ran the engine over the 506 Cape Canaveral and
 Kennedy Space Center launches that Launch Library 2 lists from January 2017
@@ -95,6 +103,8 @@ What the engine consists of:
   source or marked provisional.
 
 ## Structure
+- `index.html`, `app.js`, `style.css`: the page. It has no build step; the
+  repo root is the site.
 - `engine/`: the geometry engine. Pure ES modules with no DOM, no network
   access, and no dependencies, so that the same code can run in the page and
   in a Cloudflare Worker.
@@ -110,7 +120,8 @@ What the engine consists of:
 - `scripts/`: one-off tools. `fetch-reference-fixtures.js` regenerates the
   fixtures from USNO and NOAA NGS; `build-profiles.js` regenerates the ascent
   profiles; `snapshot-ll2.js` regenerates the launch snapshot; `backtest.js`
-  runs the engine over the snapshot and the labels.
+  runs the engine over the snapshot and the labels; `serve.js` serves the
+  page locally.
 - `reference/`: our knowledge base of outside sources, so that each value in
   the engine can be traced to where it came from. Each note opens with a
   short statement of what it answers; `INDEX.md` lists them all, and
@@ -130,6 +141,13 @@ npm test
 
 ```bash
 node scripts/backtest.js --list
+```
+
+To see the page locally, start the small server and open
+http://127.0.0.1:8765:
+
+```bash
+npm run dev
 ```
 
 The tests read only the pinned fixtures and never call the network. The

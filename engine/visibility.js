@@ -7,7 +7,7 @@
 
 import { MEAN_RADIUS_M, directionAngles, geodeticToEcef, lookAngles } from './geo.js';
 import { sunDirectionEcef } from './sun.js';
-import { rocketPosition } from './trajectory.js';
+import { launchAzimuthsDeg, rocketPosition } from './trajectory.js';
 
 const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 
@@ -95,7 +95,8 @@ export function evaluateTrack({ liftoff, pad, observer, member, azimuthDeg, para
  * All the possible flights of one launch: every member of the profile on
  * every azimuth of the trajectory class that fits the launch orbit.
  *
- * launch: { net, orbit, vehicle, pad: { latitudeDeg, longitudeDeg } }
+ * launch: { net, orbit, vehicle, programs, pad: { latitudeDeg, longitudeDeg } }
+ * `programs` is optional: the LL2 program names of the launch.
  * config: the contents of config/visibility.json
  * profiles: the contents of config/profiles.json
  *
@@ -106,17 +107,24 @@ export function evaluateTrack({ liftoff, pad, observer, member, azimuthDeg, para
  * `prime` is true when the Sun is at or below config.primeSunElevationDeg
  * at the peak of at least one visible track.
  */
-export function evaluateLaunch({ launch, observer, profiles, config }) {
+export function evaluateLaunch({ launch, observer, profiles, config, withSamples = false }) {
   const { trajectories } = config;
-  const kind = trajectories.east.orbits.includes(launch.orbit) ? 'east' : 'fan';
-  const { profile, azimuthsDeg } = trajectories[kind];
+  const toStation = (launch.programs ?? []).some((p) => trajectories.iss.programs.includes(p));
+  const kind = toStation ? 'iss' : trajectories.east.orbits.includes(launch.orbit) ? 'east' : 'fan';
+  const { profile } = trajectories[kind];
   const pad = { ...launch.pad, heightM: 0 };
+  // A station launch from Florida goes northeast on the azimuth that its
+  // inclination gives. The other classes list their azimuths.
+  const azimuthsDeg =
+    kind === 'iss'
+      ? [launchAzimuthsDeg(trajectories.iss.inclinationDeg, pad.latitudeDeg).northeastDeg]
+      : trajectories[kind].azimuthsDeg;
   const liftoff = new Date(launch.net);
 
   const tracks = [];
   for (const name of profiles.profiles[profile]) {
     for (const azimuthDeg of azimuthsDeg) {
-      const { summary } = evaluateTrack({
+      const { summary, samples } = evaluateTrack({
         liftoff,
         pad,
         observer,
@@ -125,7 +133,7 @@ export function evaluateLaunch({ launch, observer, profiles, config }) {
         params: config.params,
         stepS: profiles.stepS,
       });
-      tracks.push({ member: name, ...summary });
+      tracks.push({ member: name, ...summary, ...(withSamples ? { samples } : {}) });
     }
   }
 
@@ -142,9 +150,9 @@ export function evaluateLaunch({ launch, observer, profiles, config }) {
     result.lastVisibleS = Math.max(...of('lastVisibleS'));
     result.visibleS = { min: Math.min(...of('visibleS')), max: Math.max(...of('visibleS')) };
   }
-  // Direction is known only for the due-east class, and the profiles are
-  // Falcon 9 flights.
+  // Direction is known for the station and due-east classes, and the
+  // profiles are Falcon 9 flights.
   const falcon = /^Falcon/.test(launch.vehicle ?? '');
-  result.confidence = kind === 'east' && falcon ? 'medium' : 'low';
+  result.confidence = kind !== 'fan' && falcon ? 'medium' : 'low';
   return result;
 }

@@ -10,9 +10,10 @@ Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-08
-- **Next action:** Build the twilight candidate list and search local
-  outlets for those dates, to find more `seen-plume` labels (4 now, 5
-  needed) and to test the engine on cases a clock rule cannot decide.
+- **Next action:** Ben points Cloudflare at the repo so the page is live
+  before 2026-10-13. Then build the twilight candidate list and search
+  local outlets for those dates, to find more `seen-plume` labels (4 now, 5
+  needed).
 
 ---
 
@@ -77,8 +78,6 @@ Tests run with `node --test`.
       (likely, possible, no), a prime flag, a bearing range, and a
       confidence level. Observed: `node scripts/backtest.js` runs over all
       506 launches.
-- [ ] Slip table: the same evaluation for liftoff offsets in 10-minute steps
-      across T-0 ± 2 h.
 
 Backtest. Pinned data only.
 - [x] `scripts/snapshot-ll2.js`: fetch past Cape/KSC launches once, inside
@@ -119,12 +118,22 @@ Backtest. Pinned data only.
       this box is ticked.
 
 Page.
-- [ ] `index.html` and flat JS: fetch upcoming Cape/KSC launches from LL2 in
-      the browser. Cache the response locally to stay under 15 requests per
-      hour. Run the engine. Show each launch with score, bearing range,
-      viewing window, and slip table.
-- [ ] Measure engine CPU time for one full evaluation. Compare it with the
-      10 ms free-tier limit and record the result.
+- [x] `index.html`, `app.js`, `style.css`: fetch upcoming Cape/KSC launches
+      from LL2 in the browser. Keep the answer for 20 minutes to stay under
+      15 requests per hour. Run the engine. Show each launch with verdict,
+      viewing window, direction, height, sky chart, and slip table.
+      Observed 2026-10-08 in a local preview at desktop and phone width:
+      SpX-35 shows Likely and Prime, look between 6:36 and 6:42 AM, 30 to 33
+      degrees up, starts S, peaks SE, ends ENE; no console error; no
+      sideways scroll at 375 px.
+- [x] Slip table: liftoff offsets in 10-minute steps across T-0 ± 2 h, on
+      the page. Observed for SpX-35: likely for liftoff from 5:53 to 7:13.
+- [x] Measure engine CPU time for one full evaluation. Observed on the
+      development Mac with Node 26: 0.43 ms for each launch over the
+      snapshot, and 13 ms for a 25-step slip table of a fan launch. This is
+      not a measurement inside a Worker.
+- [ ] The page is not live. Ben sets up Cloudflare. The page needs no build
+      step: the repo root is the site.
 
 ## Phase 2 — Weather modifier
 - [ ] Confirm api.weather.gov requirements (headers, CORS, forecast range)

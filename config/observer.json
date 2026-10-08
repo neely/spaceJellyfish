@@ -3,5 +3,6 @@
   "latitudeDeg": 32.718,
   "longitudeDeg": -79.9537,
   "heightM": 0,
+  "timeZone": "America/New_York",
   "source": "https://api.zippopotam.us/us/29412, read 2026-10-08. Height is set to 0 m: the area is near sea level and the exact value does not matter at this range."
 }

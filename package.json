@@ -6,6 +6,7 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "dev": "node scripts/serve.js"
   }
 }

@@ -91,3 +91,29 @@ test('evaluateTrack: a northeast launch in morning twilight is visible', () => {
   assert.ok(summary.peakElevationDeg > 20 && summary.peakElevationDeg < 40);
   assert.ok(summary.firstVisibleS < summary.lastVisibleS);
 });
+
+test('evaluateLaunch: a station launch flies one northeast azimuth', async () => {
+  const { evaluateLaunch } = await import('../engine/visibility.js');
+  const config = JSON.parse(readFileSync(new URL('../config/visibility.json', import.meta.url)));
+  const launch = {
+    net: '2026-10-13T10:33:44Z',
+    orbit: 'LEO',
+    vehicle: 'Falcon 9',
+    programs: ['Commercial Resupply Services', 'International Space Station'],
+    pad,
+  };
+  const result = evaluateLaunch({ launch, observer, profiles, config, withSamples: true });
+  assert.equal(result.trajectory, 'iss');
+  assert.equal(result.confidence, 'medium');
+  assert.equal(result.tracks.length, profiles.profiles['falcon9-leo'].length);
+  for (const track of result.tracks) {
+    assert.ok(Math.abs(track.azimuthDeg - 45) < 0.5, `${track.azimuthDeg}`);
+    assert.ok(track.samples.length > 50);
+  }
+  assert.equal(result.verdict, 'likely');
+  assert.equal(result.prime, true);
+
+  const noProgram = evaluateLaunch({ launch: { ...launch, programs: [] }, observer, profiles, config });
+  assert.equal(noProgram.trajectory, 'fan');
+  assert.equal(noProgram.confidence, 'low');
+});

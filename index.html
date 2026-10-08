@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Space Jellyfish: Charleston launch visibility</title>
+  <meta name="description" content="Will the next Cape Canaveral launch show a sunlit plume in the Charleston sky?">
+  <link rel="icon" href="assets/jellyfish.png">
+  <link rel="apple-touch-icon" href="assets/jellyfish.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="assets/jellyfish.png" alt="" width="72" height="72">
+    <div>
+      <h1>Space Jellyfish</h1>
+      <p class="sub">Cape Canaveral launches as seen from <span id="observer-name">Charleston</span></p>
+    </div>
+  </header>
+
+  <main>
+    <section id="status" class="status" aria-live="polite">Loading launches…</section>
+    <section id="launches"></section>
+
+    <section class="panel">
+      <h2>How to read this</h2>
+      <p>A <strong>space jellyfish</strong> is a rocket's exhaust plume lit by the Sun while the sky around the observer is dark. This page works out the geometry for each launch: where the rocket is, where the Sun is, and whether the plume is in sunlight while Charleston is not.</p>
+      <ul>
+        <li><strong>Likely</strong>: every flight path we try has at least a minute of sunlit rocket above 5° in a dark sky. <strong>Possible</strong>: only some paths do. <strong>No</strong>: none do.</li>
+        <li><strong>Prime</strong>: the Sun is at least 6° below the horizon, so the sky is properly dark.</li>
+        <li>The sky chart shows where to look. Your fist at arm's length covers roughly 10° of sky.</li>
+      </ul>
+      <p class="caveat">This is a geometry model only. It knows nothing about cloud, and its flight paths come from five Falcon 9 flights in 2018. In a first check against 4 reported plume sightings from the Charleston area it rated all 4 as likely, which is too few to call it proven. A launch that slips changes everything: check the time again before you go outside.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Launch data: <a href="https://thespacedevs.com/llapi">Launch Library 2</a>. Source and method: <a href="https://github.com/neely/spaceJellyfish">github.com/neely/spaceJellyfish</a>.</p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

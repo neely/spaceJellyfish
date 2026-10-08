@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 40 tests, 40 pass, 0 fail (2026-10-08). The count
+- `npm test` — expected 41 tests, 41 pass, 0 fail (2026-10-08). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
   agree with each within 1/60 degree in GHA, declination, and altitude.
@@ -357,3 +357,20 @@ Choices made, and why. Mark settled ones `(locked)`.
   thresholds toward calling night launches jellyfish.
 - Note: this rule was written after the result was known. It rests on what
   the photo shows, not on the verdict.
+
+### Station launches fly one known azimuth (locked)
+- What: A launch that LL2 marks with the program "International Space
+  Station" is flown on the northeast azimuth for 51.6 degrees (45.0 degrees
+  from SLC-40), with medium confidence.
+- Why: The inclination is known, so the fan is not needed. The page can
+  then give one direction and one height.
+- Rejected: The fan for every LEO launch.
+- Limit: The snapshot holds no program names, so the backtest still uses
+  the fan for station launches.
+
+### The page gets its updates from LL2 on each visit (locked)
+- What: The page asks LL2 for upcoming launches when it opens. It keeps the
+  answer in the browser for 20 minutes. A button asks again after 5 minutes.
+- Why: A static page has no server. LL2 allows 15 requests per hour for
+  each address, which is enough for one person.
+- Rejected: A Worker cache now. That is Phase 3, with the alerts.

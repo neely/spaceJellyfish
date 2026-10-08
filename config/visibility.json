@@ -17,15 +17,48 @@
   "primeSunElevationDeg": -6,
   "primeSunElevationSource": "End of civil twilight (USNO, NWS). See reference/topics/twilight-definitions-and-earth-shadow.md. Its use as a quality grade is our interpretation.",
   "trajectories": {
+    "iss": {
+      "profile": "falcon9-leo",
+      "inclinationDeg": 51.6,
+      "programs": [
+        "International Space Station"
+      ],
+      "source": "The ISS orbit is inclined 51.6 degrees, and a Florida launch to it goes northeast. See reference/topics/cape-launch-azimuths-and-inclinations.md. The azimuth comes from the inclination and the pad latitude. LL2 marks these launches with the program \"International Space Station\"."
+    },
     "east": {
       "profile": "falcon9-gto",
-      "azimuthsDeg": [90],
-      "orbits": ["GTO", "Direct-GEO", "GSO", "Super-GTO", "HEO", "Elliptical", "LO", "Lunar flyby", "L1-point", "L2", "Helio-N/A", "Mars", "Asteroid"],
+      "azimuthsDeg": [
+        90
+      ],
+      "orbits": [
+        "GTO",
+        "Direct-GEO",
+        "GSO",
+        "Super-GTO",
+        "HEO",
+        "Elliptical",
+        "LO",
+        "Lunar flyby",
+        "L1-point",
+        "L2",
+        "Helio-N/A",
+        "Mars",
+        "Asteroid"
+      ],
       "source": "An orbit at or below the pad latitude, or an escape orbit, is flown due east: cos(inclination) = cos(latitude) sin(azimuth). See reference/topics/cape-launch-azimuths-and-inclinations.md."
     },
     "fan": {
       "profile": "falcon9-leo",
-      "azimuthsDeg": [37, 50, 63, 76, 89, 101, 114, 124],
+      "azimuthsDeg": [
+        37,
+        50,
+        63,
+        76,
+        89,
+        101,
+        114,
+        124
+      ],
       "orbits": "all other orbits",
       "source": "LL2 gives no inclination or azimuth. The fan covers the 37 to 114 degree range quoted for the Cape. See reference/topics/cape-launch-azimuths-and-inclinations.md. A second source gives 35 to 120 degrees. 124 is added because a 43 degree Starlink flight on 2025-11-22 went southeast, and the azimuth relation gives 123.6 degrees for that orbit."
     }
