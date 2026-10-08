@@ -92,7 +92,7 @@ Backtest. Pinned data only.
       that test the engine are twilight launches it rejects and launches it
       rates likely and prime.
 - [x] `data/labels.json`: 12 launches, each with launch ID, label, and
-      source. 7 are `seen` and 5 are `seen-plume`. Ben confirmed four
+      source. 7 are `seen` and 5 are `seen-plume`. Ben confirmed five
       Reddit post dates. Original task text follows.
       Hand-curated cases, each with launch ID, label, and source URL. Positives: a public report (local news, NWS
       Charleston, a dated social post) that the plume was seen from the
@@ -169,11 +169,13 @@ Page.
   below the horizon. The engine finds no sunlit sample at screening heights
   of 5, 10, and 30 km. On azimuth 37 the profile is 34 to 36 km below
   sunlight at 300 to 400 s; on azimuth 114 it is 100 to 200 km below.
-  Possible causes, none chosen: (1) the date is inferred from a post age of
-  163 days and may be wrong; (2) the photo shows the engine flame, which
-  needs no sunlight, so the label should be `seen`; (3) an Atlas V flies
-  higher than the Falcon 9 profile; (4) the model is wrong. Ben decides the
-  label. Do not change a threshold to remove this miss.
+  Ben confirmed the post date (2026-04-27), so a wrong date is ruled out.
+  Possible causes, none chosen: (1) the photo shows the engine flame, which
+  needs no sunlight, so the label should be `seen`; (2) an Atlas V flies
+  higher than the Falcon 9 profile; (3) the model is wrong. The Space
+  Jellyfish Predictor site lists night launches seen "without sunlight" as
+  a case it does not model (reference/topics/prior-art-jellyfish-predictor.md).
+  Ben decides the label. Do not change a threshold to remove this miss.
 - Which label classes count as a miss against a 'no' verdict? A rocket
   flame can be seen at night with no sunlit plume. Decide this before the
   next label search.

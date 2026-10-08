@@ -100,9 +100,9 @@ Reddit blocks automated reading, and the built-in browser cannot open it. The ow
 |---|---|---|---|---|
 | "Asteriod? This morning: 5:50 AM Stono River Bridge" (comments/ujm18y) | 4 years | Bright head, long glowing tail, dawn sky | Starlink Group 4-17, 2022-05-06 05:42 local | confirmed: the owner read the post date, 2022-05-06 |
 | "Rocket, Jupiter, and Venus. From West Ashley" (comments/ujmtc2) | 4 years | Glowing plume in a twilight sky | Starlink Group 4-17, 2022-05-06 05:42 local | confirmed: the owner read the post date, 2022-05-06 |
-| "Not 100% sure but seems like a rocket launch visible from Sullivan's" (comments/10cznla) | 3 years | Long white trail with a wide head over the ocean, sky lit near the horizon | Falcon Heavy USSF-67, 2023-01-15 17:56 local | confirmed: the owner read the post date, 2023-01-15 |
+| "Not 100% sure but seems like a rocket launch visible from Sullivan's" (comments/10cznla) | 3 years | Long white trail with a wide head over the ocean, sky lit near the horizon | Falcon Heavy USSF-67, 2023-01-15 17:56 local | confirmed: the owner read the post date, 2023-01-16, the day after the evening launch |
 | "Saw this over Folly Beach towards Sullivan's on my drive to work this morning. 5:30AM" (comments/yp1w4l) | 3 years | Wide glowing plume low in a dark sky | Antares 230+ Cygnus NG-18 from Wallops, 2022-11-07 05:32 local | confirmed: the owner read the post date, 2022-11-07. Not a Cape launch |
-| "Atlas V rocket launch seen from my house" (u/stowboy1995, no link) | 163 days | Bright point with a short lit plume, dusk sky | Atlas V 551 Amazon Leo (LA-06), 2026-04-27 20:53 local | inferred |
+| "Atlas V rocket launch seen from my house" (u/stowboy1995, no link) | 163 days | Bright point with a short lit plume, dusk sky | Atlas V 551 Amazon Leo (LA-06), 2026-04-27 20:53 local | confirmed: the owner read the post date, 2026-04-27 |
 | "Meteor over Charleston?" (u/bosox33420, no link) | 91 days | Lit plume behind port cranes | Starlink Group 10-42, 2026-07-09 05:25 local | inferred |
 | "MASSIVE comet around 5:35am on 8-25-26" (u/Spirited_Year323, no link) | 44 days | Comet-shaped plume in a dark sky | Starlink Group 10-49, 2026-08-25 05:33 local | stated in the title |
 

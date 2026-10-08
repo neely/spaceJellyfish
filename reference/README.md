@@ -12,13 +12,14 @@ key_points:
   - "python3 reference/build_index.py --show <key> prints one note's answers and key_points."
   - "python3 reference/build_index.py --topic <tag> lists the notes that carry a tag."
   - "PDFs in papers/pdf/ are local only and not in git."
-  - "Our own measurements are in FINDINGS.md, not here."
+  - "Notes named topics/model-*.md explain the mathematics of our own engine."
+  - "Our own measurements and decisions are in FINDINGS.md, not here."
 related_papers: []
 ---
 
 # reference/
 
-External and vendored material. It is not our own data. Our own measurements and conclusions are in FINDINGS.md, not here.
+The knowledge base. It holds two kinds of note. The first kind distils outside material: papers, web pages, data sources, other tools. The second kind explains how our own model works: the mathematics, the symbols, the simplifications, and ideas to test. Those notes are named `topics/model-*.md`. Our own measurements, tripwires, and decisions are in FINDINGS.md, not here.
 
 ## How to look something up (progressive disclosure)
 1. Read INDEX.md. It lists every note with one line on what it answers. It is generated. Do not edit it by hand.

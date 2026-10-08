@@ -290,7 +290,9 @@ Choices made, and why. Mark settled ones `(locked)`.
   the front matter, then the body, then the original source.
 - Why: Ben asked for traceable sources on 2026-10-08, in the same form as
   `neely/follySurf-data`. FINDINGS holds our conclusions; reference/ holds
-  where the information came from.
+  where the information came from. Ben also asked for the mathematics of
+  the model there: the notes named `topics/model-*.md` explain how the
+  engine works and list ideas to test.
 - Rejected: Putting source detail in FINDINGS.
 
 ### Thresholds live in config/visibility.json, each with a source (locked)
