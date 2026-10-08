@@ -36,7 +36,7 @@ It applies to every project, data-driven or not.
   "Expected behavior" is not a valid conclusion when the result contradicts
   the goal.
 
-## Reproducibility is locked (data-driven projects; skip if not applicable)
+## Reproducibility is locked (data-driven projects)
 - **External data dependencies are pinned to a specific snapshot or version.**
   State this in any Methods text. A reader re-running against current upstream
   gets drift — that's expected.
@@ -51,7 +51,7 @@ It applies to every project, data-driven or not.
   edits.** "Re-derive from raw" faithfully reproduces AUTOMATED steps only;
   anything manual lives in data+code or it silently reverts.
 
-## Tripwire every derived set (data-driven projects; skip if not applicable)
+## Tripwire every derived set (data-driven projects)
 - Recompute against a known count before trusting or interpreting any derived
   set. **Hard-stop on mismatch.** Numbers are certified against the pipeline's
   own scripts, not eyeballed.
@@ -75,55 +75,6 @@ It applies to every project, data-driven or not.
 README.md is for humans arriving cold — not part of your read path, but keep
 it in sync (see below).
 
-## First-run setup (delete this section once completed)
-The presence of this section IS the signal that first-run setup hasn't been
-done for this repo — that's how a future session knows whether to run this
-step. Do it before making any commits. Ask all five questions below in one turn.
-
-**Q1 — Commit style** (two choices):
-- **A — Frequent small commits.** Commit each meaningful change as its own
-  commit, as it happens. Simple, real-time visibility into progress as work
-  happens.
-- **B — Batched atomic commits.** Group logically-related file changes (a
-  code change + the doc update explaining it) into a single commit. Cleaner
-  history, cleaner reverts — one commit reads as one coherent decision —
-  but requires holding related edits together before committing rather than
-  committing each as it's finished.
-
-**Q2 — Is this a data-driven project?** Does it derive facts, measurements,
-identifiers, counts, or figures from files/scripts — such that reproducibility
-pinning and derived-set tripwires apply? (Yes/No.)
-
-**Q3 — Purpose and non-goals.** What is this project for, in one concrete
-sentence? Anything it deliberately won't do?
-
-**Q4 — NIST / U.S. government license?** Is this a U.S. government work that
-should carry the NIST license in LICENSE.md? (Yes/No.)
-
-**Q5 — Journal location.** Can you write issues to a GitHub remote for this
-repo? If yes, each debrief is filed as an issue labeled `journal`, titled with
-the date, and closed on creation. If no, debriefs go to JOURNAL.md. (Default:
-JOURNAL.md — it needs no network and stays in the cold-start read path.)
-
-Once answered:
-1. Update the "Commit to main, plainly" line under **How to work** below to
-   state the chosen commit style explicitly.
-2. Fill in PLAN.md's Purpose and Non-goals lines from the Q3 answer.
-3. If Q2 was **No**, delete the two sections tagged
-   "(data-driven projects; skip if not applicable)" — "Reproducibility is
-   locked" and "Tripwire every derived set" — in full. Also delete the
-   "### Tripwires" block from FINDINGS.md. If **Yes**, leave them and drop
-   the "; skip if not applicable" caveat from both headings.
-4. If Q4 was **No**, delete LICENSE.md. If **Yes**, keep it.
-5. If Q5 was issues, delete JOURNAL.md. Then change item 4 in the Files
-   section above to point at the issues. Give the command that lists them:
-   `gh issue list --label journal --state all`. If JOURNAL.md, leave it.
-6. Move _delete-after-setup/README.stub.md to README.md, replacing the kit's
-   own README. Then delete the _delete-after-setup/ folder in full.
-7. Delete this entire "First-run setup" section.
-
-Make all edits in the same commit.
-
 ## How to work
 - **Targeted edits only.** Never rewrite a whole file to change a few lines.
   Edit the precise lines.
@@ -131,7 +82,9 @@ Make all edits in the same commit.
   and the files likely to change. If the work expands beyond that, stop and
   report why before continuing.
 - **Commit to main, plainly.** Standard commit messages, straight to main.
-  No branches, no squashing, no commit-message prefixes. Commit as you go.
+  No branches, no squashing, no commit-message prefixes. Use batched atomic
+  commits: put logically related changes (a code change and the doc update
+  that explains it) in one commit, so one commit reads as one decision.
 - **Write in ASD-STE100.** Simplified technical English — short sentences,
   one idea each. Applies to commit messages and everything you write in
   PLAN, FINDINGS, and JOURNAL.

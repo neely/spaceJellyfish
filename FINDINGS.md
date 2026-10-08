@@ -1,4 +1,4 @@
-# <Project> — Findings
+# Space Jellyfish — Findings
 
 What this project has concluded. Topical, not chronological. Resolved only —
 no open items; those stay in PLAN.md.
@@ -41,7 +41,19 @@ whatever a session might need to look up. Organize by topic/feature.
 
 Choices made, and why. Mark settled ones `(locked)`.
 
-### <Decision name> (locked)
-- What: <the decision>
-- Why: <the reasoning — this is the part that stops re-litigation>
-- Rejected: <what you considered and didn't do, and why>
+### License: PolyForm Noncommercial 1.0.0 (locked)
+- What: The repo uses the PolyForm Noncommercial License 1.0.0.
+- Why: The owner wants permissive reuse, but not commercial use.
+- Rejected: MIT and Apache-2.0, because they permit commercial use. CC BY-NC,
+  because Creative Commons does not recommend its licenses for software.
+
+### Journal location: JOURNAL.md (locked)
+- What: Session debriefs go to JOURNAL.md.
+- Why: It needs no network and stays in the cold-start read path.
+- Rejected: GitHub issues labeled `journal`.
+
+### Data-driven rules apply (locked)
+- What: The reproducibility and tripwire sections in AGENTS.md stay.
+- Why: The backtest against historical launches is a derived set. Its numbers
+  must be pinned and checked.
+- Rejected: Deleting both sections for lighter rules.

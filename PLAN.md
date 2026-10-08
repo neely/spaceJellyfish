@@ -1,16 +1,16 @@
-# <Project> — Roadmap
+# Space Jellyfish — Roadmap
 
-Live at **<url>** · Repo: **<repo>**
+Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.com/neely/spaceJellyfish**
 
-**Purpose:** <one sentence — what this project is for, in concrete terms>
-**Non-goals:** <optional — what it deliberately won't do>
+**Purpose:** Predict when a Cape Canaveral or KSC launch will show the twilight "space jellyfish" plume from Charleston, SC (James Island, 29412), and send an email alert when it will.
+**Non-goals:** No scraping of nextspaceflight.com or jellyfish.johnkrausphotos.com. No pads outside Cape Canaveral and KSC. No observer points other than Charleston. Weather is a secondary modifier, not a primary signal.
 
 ---
 
 ## Status
-- **Active:** Phase N — <name>
-- **Last updated:** YYYY-MM-DD
-- **Next action:** <the single next concrete thing>
+- **Active:** Phase 0 — Repo setup
+- **Last updated:** 2026-10-08
+- **Next action:** Draft the real phases in this file from reference/handoff-brief.md.
 
 ---
 
@@ -27,15 +27,15 @@ Live at **<url>** · Repo: **<repo>**
 ---
 
 ## ✓ Completed
-- Phase 1 — <name>: <one-clause outcome>.
+- None yet.
 
-## Phase 2 — <name>  ← ACTIVE
-- [x] <done item>
-- [ ] <open item>
-- [ ] <open item>
+## Phase 0 — Repo setup  ← ACTIVE
+- [x] Create the public GitHub repo from the template.
+- [x] Complete the first-run setup of the context kit.
+- [ ] Draft the project phases in this file.
 
 ## Future / if needed
-- <thing> — <one line on why it's deferred, not just what it is>
+- None yet.
 
 ---
 
