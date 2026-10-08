@@ -30,6 +30,7 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ---
 
 ## ✓ Completed
+- Listed on `neely/apps` and in `neely/registry` on 2026-10-08.
 - Phase 0 — Repo setup: public repo made from the template, first-run setup
   done, phases drafted.
 
@@ -175,8 +176,6 @@ Page.
       Compare with real launches before turning email on.
 
 ## Future / if needed
-- Entries on `neely/apps` and `neely/registry` — deferred until the page is
-  live.
 - iOS home-screen icon from `assets/jellyfish.png` — deferred until the page
   is live.
 - Tuned profiles for Vulcan, New Glenn, Falcon Heavy — only if the generic
