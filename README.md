@@ -38,10 +38,10 @@ moves through, how high it climbs, a chart of its path across the sky, and how
 the answer changes if liftoff slips (ten-minute steps for two hours either
 side). It refreshes launch times each time it is opened, at most once every 20
 minutes. Launch Library 2 allows only 15 requests an hour from one address, so
-the site asks on behalf of all visitors through a small Cloudflare Pages
-Function (`functions/api/upcoming.js`) and shares the answer; if that fails
-the page asks Launch Library 2 directly, and if that fails too it shows the
-last copy it has, with its date.
+the page first tries a shared feed on this site (a Cloudflare Pages Function,
+`functions/api/upcoming.js`, which is written but not yet active on the live
+site), then asks Launch Library 2 directly, and if that fails too it shows
+the last copy it has, with its date.
 
 **The backtest so far.** We ran the engine over the 506 Cape Canaveral and
 Kennedy Space Center launches that Launch Library 2 lists from January 2017

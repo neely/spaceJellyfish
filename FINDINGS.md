@@ -389,6 +389,8 @@ Choices made, and why. Mark settled ones `(locked)`.
   used for Ben's address after this session's own requests. A page that
   asks LL2 only from the browser shows nothing when the visitor is over the
   limit.
+- State on 2026-10-08: the function does not run on the live site yet, so
+  the page uses LL2 direct. See PLAN.
 - Rejected: LL2 from the browser only (the first design, replaced the same
   day). A GitHub Action that commits the list every hour, because it fills
   the commit history.

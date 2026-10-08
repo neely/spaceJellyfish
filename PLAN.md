@@ -135,11 +135,17 @@ Page.
 - [x] The page is live at https://jellyfish.benneely.com (Cloudflare Pages,
       set up by Ben on 2026-10-08). There is no build step: the repo root is
       the site.
-- [x] `functions/api/upcoming.js`: a Pages Function that asks LL2 from
+- [ ] `functions/api/upcoming.js`: a Pages Function that asks LL2 from
       Cloudflare and keeps the answer for 20 minutes. Added after the live
-      page showed "Launch Library 2 answered 429" to Ben. The page tries
-      this feed, then LL2 direct, then its saved answer, then
-      `data/upcoming-fallback.json`.
+      page showed "Launch Library 2 answered 429" to Ben. The file is in the
+      repo but the function is NOT active: on 2026-10-08
+      https://jellyfish.benneely.com/api/upcoming returned the HTML of the
+      home page. Find out how the site is deployed (Pages or a Worker with
+      static assets) and make the function run.
+- [x] Fallback chain in the page: the site feed, then LL2 direct, then the
+      saved answer in the browser, then `data/upcoming-fallback.json`.
+      Observed 2026-10-08 on the live site: the feed step fails, LL2 direct
+      answers, and the page shows SpX-35 with no console error.
 
 ## Phase 2 — Weather modifier
 - [ ] Confirm api.weather.gov requirements (headers, CORS, forecast range)
