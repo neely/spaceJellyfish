@@ -1,6 +1,6 @@
 # Space Jellyfish — Roadmap
 
-Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.com/neely/spaceJellyfish**
+Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJellyfish**
 
 **Purpose:** Predict when a Cape Canaveral or KSC launch will show the twilight "space jellyfish" plume from Charleston, SC (James Island, 29412), and send an email alert when it will.
 **Non-goals:** No code, predictions, or images taken from nextspaceflight.com or jellyfish.johnkrausphotos.com; reading them for ideas is allowed (Ben, 2026-10-08). No pads outside Cape Canaveral and KSC. No observer points other than Charleston. Weather is a secondary modifier, not a primary signal.
@@ -10,8 +10,8 @@ Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-08
-- **Next action:** Ben points Cloudflare at the repo so the page is live
-  before 2026-10-13. Then build the twilight candidate list and search
+- **Next action:** Ben watches SpX-35 on 2026-10-13 at 06:33 local and
+  reports what was seen. Then build the twilight candidate list and search
   local outlets for those dates, to find more `seen-plume` labels (4 now, 5
   needed).
 
@@ -132,8 +132,14 @@ Page.
       development Mac with Node 26: 0.43 ms for each launch over the
       snapshot, and 13 ms for a 25-step slip table of a fan launch. This is
       not a measurement inside a Worker.
-- [ ] The page is not live. Ben sets up Cloudflare. The page needs no build
-      step: the repo root is the site.
+- [x] The page is live at https://jellyfish.benneely.com (Cloudflare Pages,
+      set up by Ben on 2026-10-08). There is no build step: the repo root is
+      the site.
+- [x] `functions/api/upcoming.js`: a Pages Function that asks LL2 from
+      Cloudflare and keeps the answer for 20 minutes. Added after the live
+      page showed "Launch Library 2 answered 429" to Ben. The page tries
+      this feed, then LL2 direct, then its saved answer, then
+      `data/upcoming-fallback.json`.
 
 ## Phase 2 — Weather modifier
 - [ ] Confirm api.weather.gov requirements (headers, CORS, forecast range)
@@ -162,8 +168,6 @@ Page.
       Compare with real launches before turning email on.
 
 ## Future / if needed
-- Cloudflare subdomain of benneely.com — Ben does this. Then update the
-  README "Live" line and the line at the top of this file.
 - Entries on `neely/apps` and `neely/registry` — deferred until the page is
   live.
 - iOS home-screen icon from `assets/jellyfish.png` — deferred until the page

@@ -117,3 +117,22 @@ test('evaluateLaunch: a station launch flies one northeast azimuth', async () =>
   assert.equal(noProgram.trajectory, 'fan');
   assert.equal(noProgram.confidence, 'low');
 });
+
+test('reduceLaunch keeps the fields the engine needs', async () => {
+  const { reduceLaunch } = await import('../lib/ll2.js');
+  const reduced = reduceLaunch({
+    id: 'x',
+    name: 'Falcon 9 Block 5 | Test',
+    net: '2026-10-13T10:33:44Z',
+    net_precision: { name: 'Second' },
+    status: { abbrev: 'Go', name: 'Go for Launch' },
+    rocket: { configuration: { name: 'Falcon 9' } },
+    mission: { orbit: { abbrev: 'LEO' } },
+    program: [{ name: 'International Space Station' }],
+    pad: { name: 'Space Launch Complex 40', latitude: '28.56194122', longitude: -80.57735736 },
+  });
+  assert.equal(reduced.precision, 'Second');
+  assert.deepEqual(reduced.programs, ['International Space Station']);
+  assert.deepEqual(reduced.pad, { latitudeDeg: 28.56194122, longitudeDeg: -80.57735736 });
+  assert.equal(reduceLaunch({ id: 'y', name: 'n', net: 't' }).orbit, null);
+});

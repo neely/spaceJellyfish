@@ -7,7 +7,7 @@
 Hyperlocal predictor and email alerts for twilight "space jellyfish" launch
 visibility from Charleston, SC.
 
-**Live:** TBD (will be a subdomain of benneely.com, served by Cloudflare)
+**Live:** https://jellyfish.benneely.com
 
 ## What it is
 A "space jellyfish" is the glowing plume that appears when a rocket climbs
@@ -27,8 +27,8 @@ predictions, or images from other launch-visibility sites, although we have
 read how they describe their methods (see `reference/`).
 
 ## Status
-There is a working web page and a tested geometry engine, but the page is not
-yet hosted anywhere, there are no alerts, and weather is not included.
+There is a live web page and a tested geometry engine, but there are no alerts
+yet and weather is not included.
 [PLAN.md](PLAN.md) holds the roadmap.
 
 **The page.** `index.html` lists upcoming Cape Canaveral and Kennedy Space
@@ -36,8 +36,12 @@ Center launches and, for each one with a set time, shows whether a sunlit
 plume is likely, the clock window in which to look, the compass direction it
 moves through, how high it climbs, a chart of its path across the sky, and how
 the answer changes if liftoff slips (ten-minute steps for two hours either
-side). It refreshes launch times from Launch Library 2 each time it is opened,
-at most once every 20 minutes.
+side). It refreshes launch times each time it is opened, at most once every 20
+minutes. Launch Library 2 allows only 15 requests an hour from one address, so
+the site asks on behalf of all visitors through a small Cloudflare Pages
+Function (`functions/api/upcoming.js`) and shares the answer; if that fails
+the page asks Launch Library 2 directly, and if that fails too it shows the
+last copy it has, with its date.
 
 **The backtest so far.** We ran the engine over the 506 Cape Canaveral and
 Kennedy Space Center launches that Launch Library 2 lists from January 2017
@@ -105,6 +109,9 @@ What the engine consists of:
 ## Structure
 - `index.html`, `app.js`, `style.css`: the page. It has no build step; the
   repo root is the site.
+- `functions/`: Cloudflare Pages Functions. `api/upcoming.js` is the shared
+  launch feed.
+- `lib/`: code shared by the page, the function, and the scripts.
 - `engine/`: the geometry engine. Pure ES modules with no DOM, no network
   access, and no dependencies, so that the same code can run in the page and
   in a Cloudflare Worker.
@@ -116,7 +123,9 @@ What the engine consists of:
 - `data/`: pinned data. `ll2-snapshot.json` holds the 506 Cape Canaveral and
   Kennedy Space Center launches that Launch Library 2 listed from January
   2017 to 2 October 2026; `labels.json` holds the reported sightings. The
-  backtest reads these files and nothing else.
+  backtest reads these files and nothing else. `upcoming-fallback.json` is a
+  saved copy of upcoming launches that the page shows only when every live
+  source fails.
 - `scripts/`: one-off tools. `fetch-reference-fixtures.js` regenerates the
   fixtures from USNO and NOAA NGS; `build-profiles.js` regenerates the ascent
   profiles; `snapshot-ll2.js` regenerates the launch snapshot; `backtest.js`
@@ -144,7 +153,8 @@ node scripts/backtest.js --list
 ```
 
 To see the page locally, start the small server and open
-http://127.0.0.1:8765:
+http://127.0.0.1:8765. The local server has no `/api/upcoming`, so the page
+asks Launch Library 2 directly:
 
 ```bash
 npm run dev

@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 41 tests, 41 pass, 0 fail (2026-10-08). The count
+- `npm test` — expected 42 tests, 42 pass, 0 fail (2026-10-08). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
   agree with each within 1/60 degree in GHA, declination, and altitude.
@@ -191,6 +191,9 @@ before you rely on it.
   `access-control-allow-origin: *`. A browser page can call LL2 directly.
 - `location__ids=12` is "Cape Canaveral SFS, FL, USA". `location__ids=27` is
   "Kennedy Space Center, FL, USA".
+- `https://ll.thespacedevs.com/2.3.0/api-throttle/` reports the limit, the
+  current use, the seconds to the next free request, and the address that
+  LL2 counts. The limit is counted for each address.
 - `limit=100` is accepted. `/launches/previous/` with `net__gte` and
   `ordering=net` pages through history; `next` gives the next page.
 - A launch record in `mode=detailed` carries `id`, `net`, `net_precision`,
@@ -376,9 +379,16 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Limit: The snapshot holds no program names, so the backtest still uses
   the fan for station launches.
 
-### The page gets its updates from LL2 on each visit (locked)
-- What: The page asks LL2 for upcoming launches when it opens. It keeps the
-  answer in the browser for 20 minutes. A button asks again after 5 minutes.
-- Why: A static page has no server. LL2 allows 15 requests per hour for
-  each address, which is enough for one person.
-- Rejected: A Worker cache now. That is Phase 3, with the alerts.
+### The page gets launch times through the site's own feed (locked)
+- What: The page asks `/api/upcoming`, a Cloudflare Pages Function that
+  asks LL2 and keeps the answer at the edge for 20 minutes. If that fails
+  it asks LL2 direct, then uses the answer saved in the browser, then
+  `data/upcoming-fallback.json`. The browser keeps an answer for 20 minutes.
+- Why: The first live visit failed with "Launch Library 2 answered 429". The
+  LL2 limit is counted for each address: `/api-throttle/` showed 15 of 15
+  used for Ben's address after this session's own requests. A page that
+  asks LL2 only from the browser shows nothing when the visitor is over the
+  limit.
+- Rejected: LL2 from the browser only (the first design, replaced the same
+  day). A GitHub Action that commits the list every hour, because it fills
+  the commit history.

@@ -1,14 +1,13 @@
 // The page: fetch upcoming Cape and KSC launches from Launch Library 2, run
 // the geometry engine on each, and show the result. No framework.
 import { evaluateLaunch } from './engine/visibility.js';
+import { LL2_UPCOMING_URL, reduceLaunch } from './lib/ll2.js';
 
 // LL2 allows 15 unauthenticated requests per hour for each address. The
 // page keeps the last answer and asks again only when it is this old.
 const CACHE_KEY = 'spacejellyfish.ll2.upcoming.v1';
 const CACHE_MS = 20 * 60 * 1000;
 const HORIZON_KEY = 'spacejellyfish.horizonDeg';
-const LL2_URL =
-  'https://ll.thespacedevs.com/2.3.0/launches/upcoming/?location__ids=12,27&limit=30&mode=normal&ordering=net';
 // A launch gets a full forecast only when LL2 gives its time to the hour or better.
 const PRECISE = ['Second', 'Minute', 'Hour'];
 const SLIP_STEP_MIN = 10;
@@ -53,42 +52,47 @@ function readCache() {
   }
 }
 
+// Sources, in order: this site's own /api/upcoming (a Cloudflare Pages
+// Function that shares one LL2 request between all visitors), then LL2
+// direct from the browser, then the last answer this browser saved, then a
+// copy saved in the repo.
+async function fromSite() {
+  const res = await fetch('api/upcoming');
+  if (!res.ok) throw new Error(`this site's launch feed answered ${res.status}`);
+  const body = await res.json();
+  if (!Array.isArray(body.results)) throw new Error("this site's launch feed gave no launches");
+  return body;
+}
+
+async function fromLl2() {
+  const res = await fetch(LL2_UPCOMING_URL);
+  if (!res.ok) throw new Error(`Launch Library 2 answered ${res.status}`);
+  const body = await res.json();
+  return { fetched: Date.now(), results: body.results.map(reduceLaunch) };
+}
+
 async function loadLaunches(force) {
   const cached = readCache();
   if (cached && !force && Date.now() - cached.fetched < CACHE_MS) return { ...cached, source: 'cache' };
-  try {
-    const res = await fetch(LL2_URL);
-    if (!res.ok) throw new Error(`Launch Library 2 answered ${res.status}`);
-    const body = await res.json();
-    const fresh = { fetched: Date.now(), results: body.results.map(reduce) };
+  const errors = [];
+  for (const source of [fromSite, fromLl2]) {
     try {
-      localStorage.setItem(CACHE_KEY, JSON.stringify(fresh));
-    } catch {
-      // Storage can be off in a private window. The page still works.
+      const fresh = await source();
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(fresh));
+      } catch {
+        // Storage can be off in a private window. The page still works.
+      }
+      return { ...fresh, source: 'network' };
+    } catch (error) {
+      errors.push(error.message);
     }
-    return { ...fresh, source: 'network' };
-  } catch (error) {
-    if (cached) return { ...cached, source: 'stale', error: error.message };
-    throw error;
   }
-}
-
-// Keep only the fields the page uses.
-function reduce(l) {
-  return {
-    id: l.id,
-    name: l.name,
-    net: l.net,
-    precision: l.net_precision?.name ?? null,
-    status: l.status?.abbrev ?? null,
-    statusName: l.status?.name ?? null,
-    lastUpdated: l.last_updated ?? null,
-    vehicle: l.rocket?.configuration?.name ?? null,
-    orbit: l.mission?.orbit?.abbrev ?? null,
-    programs: (l.program ?? []).map((p) => p.name),
-    padName: l.pad?.name ?? null,
-    pad: { latitudeDeg: Number(l.pad?.latitude), longitudeDeg: Number(l.pad?.longitude) },
-  };
+  const error = errors.at(-1);
+  if (cached) return { ...cached, source: 'stale', error };
+  const saved = await fetch('data/upcoming-fallback.json');
+  if (!saved.ok) throw new Error(error);
+  return { ...(await saved.json()), source: 'stale', error };
 }
 
 function skyChart(result, liftoffMs, horizonDeg) {
@@ -212,11 +216,12 @@ function launchCard(launch) {
 function render(data) {
   const status = $('#status');
   const age = Math.round((Date.now() - data.fetched) / 60000);
+  const old = age < 120 ? `${age} minutes ago` : `${dayFmt.format(data.fetched)} at ${timeFmt.format(data.fetched)}`;
   const text = data.source === 'stale'
-    ? `Could not reach Launch Library 2 (${data.error}). Showing data from ${age} minutes ago.`
+    ? `Could not get live launch times (${data.error}). Showing a saved copy from ${old}. Times may have changed.`
     : `Launch data from ${timeFmt.format(data.fetched)} (${age === 0 ? 'just now' : `${age} min ago`}).`;
   const button = el('button', { type: 'button' }, 'Check for changes');
-  button.disabled = Date.now() - data.fetched < 5 * 60 * 1000;
+  button.disabled = data.source !== 'stale' && Date.now() - data.fetched < 5 * 60 * 1000;
   button.title = button.disabled ? 'Launch Library 2 limits requests; try again in a few minutes.' : '';
   button.addEventListener('click', () => start(true));
   status.replaceChildren(text, button);
