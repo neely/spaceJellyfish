@@ -9,11 +9,10 @@ relevance: high
 answers: "Where does each external input come from (Launch Library 2, Cloudflare Workers limits, USNO, NOAA NGS) and how is it reached? Gives URLs, rate limits, CORS behavior and known gaps."
 key_points:
   - "Launch Library 2 allows up to 15 non-authenticated requests per hour; /launches/upcoming/ returned access-control-allow-origin: *."
-  - "location__ids=12 is Cape Canaveral SFS; the Kennedy Space Center id is not confirmed."
+  - "location__ids=12 is Cape Canaveral SFS and 27 is Kennedy Space Center. LL2 answers 429 to Cloudflare addresses."
   - "Orbit data on upcoming launches can be only the abbreviation LEO (3 of 3 checked)."
   - "Workers Free: 10 ms CPU per request or Cron Trigger run, 5 Cron Triggers per account, 50 subrequests per run, 100,000 requests per day."
   - "USNO celnav API returns no Sun entry when the Sun is far below the horizon; the fixture's lowest Sun altitude is -11.2 degrees."
-  - "Workers KV free-tier limits are not checked yet."
 related_papers: []
 ---
 
@@ -33,7 +32,12 @@ Source of this note: the Reference section of FINDINGS.md and the header comment
 - CORS: a request to `/launches/upcoming/` with an `Origin` header returned `access-control-allow-origin: *`. A browser page can call LL2 directly.
 
 ### Filters and fields (checked 2026-10-08)
-- `location__ids=12` is "Cape Canaveral SFS, FL, USA". The id for Kennedy Space Center is not confirmed.
+- `location__ids=12` is "Cape Canaveral SFS, FL, USA". `location__ids=27` is "Kennedy Space Center, FL, USA".
+- `limit=100` is accepted. `/launches/previous/` with `net__gte` and `ordering=net` pages through history; `next` gives the next page.
+- `https://ll.thespacedevs.com/2.3.0/api-throttle/` reports the limit, the current use, the seconds to the next free request, and the address that LL2 counts. The limit is counted for each address.
+- LL2 answered 429 to 4 of 4 requests from a Cloudflare Pages Function on 2026-10-08. Cloudflare sends requests from addresses that many customers share. Do not ask LL2 from Cloudflare without a token.
+- `https://lldev.thespacedevs.com/2.3.0/` answers 200. Its record for SpX-35 had `last_updated` 2026-10-03 when read on 2026-10-08. It may be a stale copy.
+- A record carries `program` (a list with names such as "International Space Station") and `net_precision` (a name such as "Second" or "Month").
 - A launch record in `mode=detailed` carries `id`, `net`, `net_precision`, `window_start`, `window_end`, `status`, `mission.orbit`, `flightclub_url`, and `pad` with `latitude` and `longitude`.
 - Orbit data on an upcoming launch can be as thin as the abbreviation "LEO". Three upcoming launches were checked and all three showed only "LEO".
 
@@ -44,7 +48,7 @@ Source: https://developers.cloudflare.com/workers/platform/limits/
 ### Workers Free and Workers Paid (checked 2026-10-08)
 - Workers Free: 10 ms CPU for each HTTP request and each Cron Trigger run. 5 Cron Triggers for each account. 50 subrequests for each run. 100,000 requests each day.
 - Workers Paid: 30 s CPU for a Cron Trigger with an interval below 1 hour.
-- Workers KV free-tier limits are not checked yet.
+- Workers KV free-tier limits are not in this note. PLAN.md has the task to check them.
 
 ## USNO celestial navigation API
 

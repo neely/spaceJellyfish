@@ -213,7 +213,8 @@ Page.
 ## Handoff → next session
 Start prompt:
 > Read AGENTS.md, the PLAN.md status block, and FINDINGS.md "Reference", then
-> run `npm test` and `node scripts/backtest.js`. Then build the twilight
-> candidate list and search local outlets for those dates with a Sonnet
+> run `npm test` and `node scripts/backtest.js`. Ask Ben what he saw of
+> SpX-35 on 2026-10-13 and record it in data/labels.json. Then build the
+> twilight candidate list and search local outlets for those dates with a Sonnet
 > subagent. The goal is a fifth `seen-plume` label and evening cases. Start at
 > reference/README.md for sources. Do not tune a threshold to fix a miss.

@@ -103,18 +103,16 @@ before you rely on it.
 - A northeast launch is 2 to 3 times higher in the Charleston sky than a
   southeast or due-east launch.
 
-#### Reported sightings against the snapshot (scratch run, 2026-10-08)
-- reference/topics/charleston-sighting-reports.md lists 10 dated reports
-  that a launch was seen from the Charleston area. Each date matches one
-  launch in data/ll2-snapshot.json.
-- The Sun was below the observer horizon at T+300 s in all 10: between 4.3
-  and 16.0 degrees below. No report is from a daytime or deep-night launch.
-- With trial thresholds (screening height 20 km, rocket at least 3 degrees
-  up), the engine finds a sunlit, above-horizon part of the ascent for all
-  10 on a northeast azimuth. The trial thresholds are not sourced. This
-  was a first look. The backtest numbers are under Tripwires.
-- Only one report uses the word "jellyfish": 2026-07-09, Starlink Group
-  10-42, liftoff 09:25:43 UTC, Sun 9.6 degrees below the horizon.
+#### Reported sightings against the snapshot (2026-10-08)
+- data/labels.json holds 12 launches with a report that the launch was seen
+  from the Charleston area: 10 from local news pages and 2 from Reddit
+  posts alone. Each matches exactly one launch in data/ll2-snapshot.json.
+  Sources and quotes: reference/topics/charleston-sighting-reports.md.
+- 9 of the 12 lifted off between 05:00 and 06:00 local time. The other 3
+  lifted off in the evening (17:32, 17:56, and 19:32) or later (20:53).
+- The news pages mostly say only that the rocket was seen. One uses the word
+  "jellyfish": 2026-07-09, Starlink Group 10-42. The 4 `seen-plume` labels
+  rest on that page and on photos in Reddit posts.
 - One source conflict: the ABC News 4 page for 2020-11-13 says the Atlas V
   launched at "5:13 p.m."; the snapshot gives 22:32 UTC, which is 5:32 p.m.
   local time.
@@ -216,7 +214,6 @@ Source: https://developers.cloudflare.com/workers/platform/limits/
   5 Cron Triggers for each account. 50 subrequests for each run. 100,000
   requests each day.
 - Workers Paid: 30 s CPU for a Cron Trigger with an interval below 1 hour.
-- Workers KV free-tier limits are not checked yet.
 
 ---
 
@@ -285,6 +282,9 @@ Choices made, and why. Mark settled ones `(locked)`.
   other runs.
 - Why: A poll every 5 minutes is 12 requests per hour against a limit of 15.
 - Rejected: An LL2 call on every cron run.
+- Limit found 2026-10-08: LL2 answers 429 to requests from Cloudflare with
+  no token (see Dead-ends). This decision holds only when the Worker has a
+  source of launch times that accepts it. PLAN Phase 3 has the open item.
 
 ### No alerts before the Phase 1 exit gate (locked)
 - What: Phase 3 does not start until the backtest exit gate in PLAN is met.
