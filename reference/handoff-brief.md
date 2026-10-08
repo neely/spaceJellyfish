@@ -1,3 +1,22 @@
+---
+key: handoff-brief
+title: "Space Jellyfish Tracker: original project brief"
+type: brief
+sources_summary: "Project brief written by the owner before the repo was built. Kept unchanged. Read in full."
+distilled: 2026-10-08
+topics: [launch-data, twilight, illumination, plume, visibility, weather, cloudflare, email, trajectory]
+relevance: medium
+answers: "What did the owner first plan to build (data source, engine, weather, scheduler, state, alerts), which risks did the brief name, and in what order should it be built?"
+key_points:
+  - "The effect is twilight illumination geometry: a rocket high enough to be sunlit while the observer on the ground is in relative darkness."
+  - "FINDINGS.md corrects the brief's distance: the brief says about 330-380 miles from the Cape to Charleston; the engine computes 466 km (289.5 statute miles)."
+  - "Planned stack: Launch Library 2 for launches, one pure JS engine for page and Worker, api.weather.gov as a secondary modifier."
+  - "Planned runtime: one Cloudflare Worker Cron Trigger about every 5 minutes, Workers KV state keyed on (launch ID, NET timestamp), email by Resend."
+  - "Named risks: sparse orbit data, alerts before validation, 10 ms free-tier CPU, duplicate alerts after scrubs or NET slips."
+  - "Build order: static page and engine with backtest first, then weather, then Worker, KV and alerts."
+related_papers: []
+---
+
 # Space Jellyfish Tracker — Project Brief
 
 Hyperlocal Charleston, SC SpaceX launch-visibility predictor + email alerts.

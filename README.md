@@ -63,12 +63,16 @@ What works today:
   point; `profiles.json` holds the ascent profiles.
 - `test/`: tests for the engine, and `test/fixtures/` with the pinned
   reference values they compare against.
+- `data/`: pinned data. `ll2-snapshot.json` holds the 506 Cape Canaveral and
+  Kennedy Space Center launches that Launch Library 2 listed from January
+  2017 to 2 October 2026; the backtest will read this file and nothing else.
 - `scripts/`: one-off tools. `fetch-reference-fixtures.js` regenerates the
   fixtures from USNO and NOAA NGS; `build-profiles.js` regenerates the ascent
-  profiles.
-- `reference/`: vendored material. `usno-sun-and-sidereal-time.md` holds the
-  formulas the engine implements; `handoff-brief.md` is the original project
-  brief.
+  profiles; `snapshot-ll2.js` regenerates the launch snapshot.
+- `reference/`: our knowledge base of outside sources, so that each value in
+  the engine can be traced to where it came from. Each note opens with a
+  short statement of what it answers; `INDEX.md` lists them all, and
+  `README.md` explains how to read and extend it.
 - `assets/`: images. `jellyfish.png` is the project art (1024 x 1024), also
   the source for a future app icon.
 - `AGENTS.md`, `PLAN.md`, `FINDINGS.md`, `JOURNAL.md`, `CLAUDE.md`: the

@@ -70,9 +70,11 @@ Tests run with `node --test`.
       across T-0 ± 2 h.
 
 Backtest. Pinned data only.
-- [ ] `scripts/snapshot-ll2.js`: fetch past Cape/KSC launches once, inside
+- [x] `scripts/snapshot-ll2.js`: fetch past Cape/KSC launches once, inside
       the rate limit. Commit `data/ll2-snapshot.json` with the fetch date.
-      The backtest reads only this file.
+      The backtest reads only this file. Observed: 506 launches from
+      2017-01-21 to 2026-10-02, read with 6 requests; the count matches the
+      count LL2 reported.
 - [ ] Candidate list: use the engine to list snapshot launches with liftoff
       in morning or evening twilight at Charleston. These are the dates to
       search for sighting reports.

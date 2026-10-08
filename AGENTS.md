@@ -71,6 +71,9 @@ It applies to every project, data-driven or not.
    looking for something specific.
 5. reference/ — vendored external material (docs, specs, ported source).
    Consult targeted, only when the task needs it — do not read it wholesale.
+   Start at reference/README.md, then reference/INDEX.md. Read the front
+   matter of a note before its body. When you use an outside source, add or
+   update a note there and run `python3 reference/build_index.py`.
 
 README.md is for humans arriving cold — not part of your read path, but keep
 it in sync (see below).

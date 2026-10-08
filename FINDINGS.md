@@ -29,6 +29,9 @@ these before you trust it. Hard-stop on mismatch.
   (Bangabandhu-1, SES-12, Hispasat 30W-6). Altitude at 300 s: 177 to 183 km
   for LEO members, 150 to 158 km for GTO members. Altitude at the end of
   the data: 207 to 208 km for LEO, 164 to 165 km for GTO.
+- `data/ll2-snapshot.json` — expected 506 launches, 2017-01-21 to
+  2026-10-02. 434 are Falcon 9. 358 have orbit LEO and 73 have GTO. 502
+  have status Success and 4 have Failure. 8 pads.
 - The backtest share is not set yet.
 
 ### Intentional, not bugs
@@ -109,8 +112,10 @@ before you rely on it.
   requests per hour".
 - CORS: a request to `/launches/upcoming/` with an `Origin` header returned
   `access-control-allow-origin: *`. A browser page can call LL2 directly.
-- `location__ids=12` is "Cape Canaveral SFS, FL, USA". The id for Kennedy
-  Space Center is not confirmed.
+- `location__ids=12` is "Cape Canaveral SFS, FL, USA". `location__ids=27` is
+  "Kennedy Space Center, FL, USA".
+- `limit=100` is accepted. `/launches/previous/` with `net__gte` and
+  `ordering=net` pages through history; `next` gives the next page.
 - A launch record in `mode=detailed` carries `id`, `net`, `net_precision`,
   `window_start`, `window_end`, `status`, `mission.orbit`, `flightclub_url`,
   and `pad` with `latitude` and `longitude`.
