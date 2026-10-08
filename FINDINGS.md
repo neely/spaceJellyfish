@@ -133,6 +133,26 @@ before you rely on it.
   data with altitude against time was found. See
   reference/topics/falcon9-ascent-timeline.md.
 
+#### Who launches from Florida (snapshot and LL2, 2026-10-08)
+- 2026 to 2026-10-02: 58 Florida launches. 51 are SpaceX (48 Falcon 9, 3
+  Falcon Heavy), 5 are ULA (4 Atlas V, 1 Vulcan), 1 is SLS, 1 is New Glenn.
+- Florida Starlink launches by month in 2026: 6, 5, 7, 2, 4, 3, 3, 3, then 0
+  in September and 0 in October to 2026-10-02. The last one in the snapshot
+  is Starlink Group 10-49 on 2026-08-25.
+- LL2 lists "Starship | Starlink Group 31-1 (Starship Flight 14)" on
+  2026-09-28T12:48 UTC from Orbital Launch Pad 2, SpaceX Starbase, Texas.
+  The snapshot has no Starship launch from Florida.
+- These facts agree with the research note that Starlink launches from
+  Florida "may have ended". They do not prove it. Six weeks with no launch
+  is the only evidence.
+- LL2 upcoming list for Florida (one request, 2026-10-08): 203 entries. One
+  has status Go: Falcon 9 Dragon CRS-2 SpX-35, 2026-10-13T10:33:44Z, SLC-40.
+  The others shown have status TBD and placeholder dates.
+- Engine verdict for SpX-35 at that time: likely, prime, low confidence. Sun
+  10.1 degrees below the horizon. On azimuth 50 with the two ISS profiles:
+  visible from about T+190 s to T+530 s, peak 27 to 29 degrees up near
+  bearing 127 to 133, moving from bearing 173 to 178 round to 67 to 69.
+
 #### A Wallops launch seen from Charleston
 - A Reddit post from Folly Beach on 2022-11-07 shows a glowing plume at
   about 5:30 local. LL2 lists Antares 230+ Cygnus NG-18 from Wallops,

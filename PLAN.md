@@ -175,9 +175,13 @@ Page.
   of a profile are not sampled. 177 of 713 visible tracks are still visible
   at the last sample: the profile ends before the pass does. Decide if the
   engine should say so in its output.
-- A research note says Starlink launches from Florida "may have ended" on
-  2026-08-25. This is not verified. It changes how often an alert would
-  fire.
+- Has Starlink left Florida? The snapshot has no Florida Starlink launch
+  after 2026-08-25, and Starship Flight 14 carried a Starlink group from
+  Texas on 2026-09-28. Starlink launches are most of the past twilight
+  chances. Find a statement from SpaceX. If they have ended, the chances
+  each year are far fewer than the backtest shows.
+- Live test: Falcon 9 SpX-35, 2026-10-13 at 06:33 local. The engine says
+  likely and prime. Ben can watch. Record what was seen as a label.
 - Is 5 positive cases the right minimum for the exit gate? It depends on how
   many Charleston reports the search finds.
 - Does the free-tier limit of 5 Cron Triggers per account leave room? A code
