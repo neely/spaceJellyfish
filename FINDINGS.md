@@ -153,6 +153,14 @@ before you rely on it.
   visible from about T+190 s to T+530 s, peak 27 to 29 degrees up near
   bearing 127 to 133, moving from bearing 173 to 178 round to 67 to 69.
 
+#### One comparison with the Space Jellyfish Predictor (2026-10-08)
+- For SpX-35 on 2026-10-13 the site shows "Rocket in sunlight: T+03:15" and
+  a northeast arrow (screenshot from Ben). The engine gives T+3:07 and
+  T+3:14 for the two ISS profiles at a screening height of 10 km, and
+  T+3:26 and T+3:31 at 30 km.
+- This is one number from another model. It is weak support for a screening
+  height near 10 km. Detail: reference/topics/prior-art-jellyfish-predictor.md.
+
 #### A Wallops launch seen from Charleston
 - A Reddit post from Folly Beach on 2022-11-07 shows a glowing plume at
   about 5:30 local. LL2 lists Antares 230+ Cygnus NG-18 from Wallops,

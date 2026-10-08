@@ -115,3 +115,14 @@ Interpretation, not sourced fact. Most valuable first.
 3. Use mission-specific profiles and tag azimuth confidence. They tag trajectory source (validated, presumed, estimated). Our confidence flag could do the same, and a vehicle profile for Atlas V could be tested.
 4. Score the strongest moment, not time visible. Their label is the best moment after liftoff. Compare with our 60 s rule on the backtest.
 5. Show the factors in words (contrast, illumination, elevation) and add a T-0 slip view. Both help users and are cheap to test.
+
+## One comparison with our engine: CRS-35, 2026-10-13 (added 2026-10-08)
+Source: a screenshot of the site that the owner supplied on 2026-10-08, with the view set to "Near launch site". We did not fetch this prediction.
+
+- The site shows: liftoff 6:33 AM EDT, "Trajectory: Presumed", an arrow to the northeast from the pad, the label "Very likely dramatic", and "Rocket in sunlight: T+03:15".
+- It lists the factors "high sky-plume contrast" and "plume illumination" as strong help, and "plume elevation above your horizon" as help.
+- Its map shades the US Southeast. Charleston is inside the strongest band.
+- Our engine, same launch, azimuth 45 degrees, 1 s steps: the rocket first enters sunlight at T+3:07 (SpaceX CRS-16 profile) and T+3:14 (SpaceX CRS-14 profile) with a screening height of 10 km. With 5 km the times are T+3:03 and T+3:10. With 30 km they are T+3:26 and T+3:31.
+- Our verdict for Charleston is likely and prime, with the visible part from about T+190 s.
+
+Interpretation, not sourced fact. The two models agree on the direction and on the time the rocket enters sunlight to within 8 s at a screening height of 10 km. A screening height of 30 km is 11 to 16 s late against the site. This is one launch and one number from another model, not a measurement. It gives weak support to a value near 10 km. The site also lists a second upcoming launch (USSF-481 from California, 2026-10-15); it is outside our scope.
