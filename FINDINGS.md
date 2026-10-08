@@ -32,7 +32,14 @@ these before you trust it. Hard-stop on mismatch.
 - `data/ll2-snapshot.json` — expected 506 launches, 2017-01-21 to
   2026-10-02. 434 are Falcon 9. 358 have orbit LEO and 73 have GTO. 502
   have status Success and 4 have Failure. 8 pads.
-- The backtest share is not set yet.
+- `node scripts/backtest.js` (2026-10-08, screening height 10 km) — expected
+  41 likely, 18 possible, 447 no, out of 506. 32 of the 59 are prime.
+  Labels: 11 of 12 are not 'no'; the miss is the Atlas V of 2026-04-27.
+  Negatives chosen by clock time: 0 wrong of 82 (10:00 to 15:00 local) and
+  0 wrong of 83 (23:00 to 02:00 local).
+- Screening height sensitivity: 5 km gives 59 not 'no'; 30 km gives 52. The
+  same label is missed at all three heights.
+- `data/labels.json` — expected 12 labels: 7 `seen`, 5 `seen-plume`.
 
 ### Intentional, not bugs
 Things that look wrong but are correct. Do not "fix" these.
@@ -98,13 +105,38 @@ before you rely on it.
   and 16.0 degrees below. No report is from a daytime or deep-night launch.
 - With trial thresholds (screening height 20 km, rocket at least 3 degrees
   up), the engine finds a sunlit, above-horizon part of the ascent for all
-  10 on a northeast azimuth. The trial thresholds are not sourced. This is
-  a first look, not the backtest.
+  10 on a northeast azimuth. The trial thresholds are not sourced. This
+  was a first look. The backtest numbers are under Tripwires.
 - Only one report uses the word "jellyfish": 2026-07-09, Starlink Group
   10-42, liftoff 09:25:43 UTC, Sun 9.6 degrees below the horizon.
 - One source conflict: the ABC News 4 page for 2020-11-13 says the Atlas V
   launched at "5:13 p.m."; the snapshot gives 22:32 UTC, which is 5:32 p.m.
   local time.
+
+#### How often the engine says a launch can be seen (backtest, 2026-10-08)
+- 59 of 506 launches since 2017 are likely or possible (11.7 percent). By
+  year: 1, 1, 2, 2, 4, 8, 8, 15, 9, and 9 for 2017 to 2026 (2026 runs to
+  2026-10-02).
+- 32 of the 59 are prime: the Sun is 6 degrees or more below the horizon.
+- These counts have no weather in them, and they rest on provisional
+  thresholds and on Falcon 9 profiles from 2018.
+
+#### Sources for the visibility thresholds (research, 2026-10-08)
+- No source gives a Sun depression limit for plume visibility, a lowest
+  elevation, or a screening height for rocket plumes. See
+  reference/topics/twilight-phenomenon-space-jellyfish.md and
+  reference/topics/twilight-definitions-and-earth-shadow.md.
+- LL2 detailed records hold no inclination and no azimuth. See
+  reference/topics/cape-launch-azimuths-and-inclinations.md.
+- The Launch Dashboard API was offline on 2026-10-08. No Starlink ascent
+  data with altitude against time was found. See
+  reference/topics/falcon9-ascent-timeline.md.
+
+#### A Wallops launch seen from Charleston
+- A Reddit post from Folly Beach on 2022-11-07 shows a glowing plume at
+  about 5:30 local. LL2 lists Antares 230+ Cygnus NG-18 from Wallops,
+  Virginia, at 10:32:42 UTC that day. Wallops is 698 km from the observer
+  on a bearing of 34 degrees. It is out of scope.
 
 #### Falcon 9 webcast telemetry
 - https://github.com/shahar603/Telemetry-Data, Unlicense, commit `b245d3b`.
@@ -260,3 +292,32 @@ Choices made, and why. Mark settled ones `(locked)`.
   `neely/follySurf-data`. FINDINGS holds our conclusions; reference/ holds
   where the information came from.
 - Rejected: Putting source detail in FINDINGS.
+
+### Thresholds live in config/visibility.json, each with a source (locked)
+- What: engine/visibility.js holds no threshold. Each value in the config
+  names its note in reference/, or says it is provisional.
+- Why: A value with no source must be visible as such.
+- Rejected: Constants in the code.
+
+### No threshold changes to remove a missed label (locked)
+- What: A missed label is reported and stays in PLAN until its cause is
+  known.
+- Why: Tuning to 12 labels would fit noise, and AGENTS says a contradicting
+  result outranks the hypothesis.
+- Rejected: Raising or lowering the screening height until the miss goes.
+
+### The verdict has three levels and a prime flag (locked)
+- What: A launch is likely when every track has at least 60 s of visible
+  sunlit flight, possible when some tracks do, and no when none does. Prime
+  means the Sun is at or below -6 degrees.
+- Why: The spread over tracks is the trajectory uncertainty. A single number
+  would hide it.
+- Rejected: One score from 0 to 100, because no source supports the weights.
+
+### The azimuth fan runs from 37 to 124 degrees (locked)
+- What: Launches with no known direction are flown on 8 azimuths from 37 to
+  124 degrees.
+- Why: One source gives 37 to 114 degrees for the Cape. A 43 degree Starlink
+  flight on 2025-11-22 went southeast, which the azimuth relation puts at
+  123.6 degrees. An observed flight outranks a quoted range.
+- Rejected: The quoted range alone.

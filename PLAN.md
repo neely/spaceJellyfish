@@ -10,9 +10,9 @@ Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-08
-- **Next action:** Set the thresholds in config/visibility.json from the
-  sources in reference/topics/, then add the score and the azimuth set for
-  each orbit class, then write data/labels.json and scripts/backtest.js.
+- **Next action:** Resolve the one missed label (Atlas V, 2026-04-27; see
+  Open questions). Then search local outlets for the twilight launches that
+  have no label, to test the engine on cases a clock rule cannot decide.
 
 ---
 
@@ -60,16 +60,23 @@ Tests run with `node --test`.
       azimuth, and profile member; launch azimuths from an inclination.
       Observed: `npm test` shows 33 pass, 0 fail. A 51.6 degree orbit gives
       azimuths of 45.0 and 135.0 degrees from SLC-40.
-- [ ] Azimuth set for each LL2 orbit class, with a source for the range of
-      azimuths the Cape allows. Use a wide range with low confidence when
-      the orbit data is thin.
+- [x] Azimuth set for each LL2 orbit class. Due east for GTO and escape
+      orbits. A fan from 37 to 124 degrees for all other orbits, because LL2
+      gives no inclination or azimuth.
+- [ ] Polar and sun-synchronous launches (13 in the snapshot) fly south.
+      They now use the fan. Give them their own class when a source gives
+      the corridor azimuths.
 - [x] `engine/visibility.js`, mechanics: for each time step, is the rocket
       sunlit, is the observer dark enough, is the rocket above the horizon.
       One track gives visible seconds, viewing window, peak elevation, and
       bearings. Observed: `npm test` shows 40 pass, 0 fail.
-- [ ] `config/visibility.json`: the thresholds, each with its source.
-- [ ] Combine the tracks of one launch into a score, a bearing range, and a
-      confidence level.
+- [x] `config/visibility.json`: the thresholds, each with its source. Three
+      values are provisional because no source gives them: screening height
+      10 km, lowest elevation 5 degrees, shortest visible time 60 s.
+- [x] `evaluateLaunch`: combine the tracks of one launch into a verdict
+      (likely, possible, no), a prime flag, a bearing range, and a
+      confidence level. Observed: `node scripts/backtest.js` runs over all
+      506 launches.
 - [ ] Slip table: the same evaluation for liftoff offsets in 10-minute steps
       across T-0 ± 2 h.
 
@@ -79,11 +86,15 @@ Backtest. Pinned data only.
       The backtest reads only this file. Observed: 506 launches from
       2017-01-21 to 2026-10-02, read with 6 requests; the count matches the
       count LL2 reported.
-- [ ] Candidate list: use the engine to list snapshot launches with liftoff
-      in morning or evening twilight at Charleston. These are the dates to
-      search for sighting reports.
-- [ ] `data/labels.json`: hand-curated cases, each with launch ID, label,
-      and source URL. Positives: a public report (local news, NWS
+- [ ] Candidate list: list snapshot launches since 2021 with the Sun
+      between 0 and 18 degrees below the observer horizon at T+300 s. Split
+      them by engine verdict. Search local outlets for each date. The cases
+      that test the engine are twilight launches it rejects and launches it
+      rates likely and prime.
+- [x] `data/labels.json`: 12 launches, each with launch ID, label, and
+      source. 7 are `seen` and 5 are `seen-plume`. Ben confirmed four
+      Reddit post dates. Original task text follows.
+      Hand-curated cases, each with launch ID, label, and source URL. Positives: a public report (local news, NWS
       Charleston, a dated social post) that the plume was seen from the
       Charleston area. Negatives: only launches that physics rules out
       (midday, deep night). A twilight launch with no report stays
@@ -95,8 +106,11 @@ Backtest. Pinned data only.
       Leads so far: reference/topics/charleston-sighting-reports.md has 10
       dated reports checked against the raw pages. Each matches a launch in
       the snapshot. Not yet written to data/labels.json.
-- [ ] `scripts/backtest.js`: run the engine over the snapshot. Print the
-      score distribution and the result for each labelled case.
+- [x] `scripts/backtest.js`: run the engine over the snapshot. Print the
+      verdict distribution and the result for each labelled case. Observed
+      2026-10-08: 41 likely, 18 possible, 447 no; 11 of 12 labels are not
+      'no'; 0 of 165 clock-chosen negatives are wrong. The script exits 1
+      while a label is missed. It is not part of `npm test`.
 - [ ] **Exit gate:** at least 5 positive cases are labelled, every labelled
       case is classified correctly, and the share of launches scored
       "visible" is recorded as a tripwire. Phase 3 must not start before
@@ -146,8 +160,26 @@ Page.
 - Tuned profiles for Vulcan, New Glenn, Falcon Heavy — only if the generic
   profile proves too coarse.
 - Workers Paid — only if the engine does not fit in 10 ms.
+- Wallops launches — one Charleston sighting is on record (Antares,
+  2022-11-07). Out of scope now; Ben decides if the scope grows.
 
 ## Open questions
+- The missed label. Atlas V 551 Amazon Leo (LA-06), 2026-04-27 20:53 local,
+  label `seen-plume`, engine verdict 'no'. The Sun was 11.6 to 13.2 degrees
+  below the horizon. The engine finds no sunlit sample at screening heights
+  of 5, 10, and 30 km. On azimuth 37 the profile is 34 to 36 km below
+  sunlight at 300 to 400 s; on azimuth 114 it is 100 to 200 km below.
+  Possible causes, none chosen: (1) the date is inferred from a post age of
+  163 days and may be wrong; (2) the photo shows the engine flame, which
+  needs no sunlight, so the label should be `seen`; (3) an Atlas V flies
+  higher than the Falcon 9 profile; (4) the model is wrong. Ben decides the
+  label. Do not change a threshold to remove this miss.
+- Which label classes count as a miss against a 'no' verdict? A rocket
+  flame can be seen at night with no sunlit plume. Decide this before the
+  next label search.
+- A research note says Starlink launches from Florida "may have ended" on
+  2026-08-25. This is not verified. It changes how often an alert would
+  fire.
 - Is 5 positive cases the right minimum for the exit gate? It depends on how
   many Charleston reports the search finds.
 - Does the free-tier limit of 5 Cron Triggers per account leave room? A code
@@ -160,6 +192,8 @@ Page.
 ## Handoff → next session
 Start prompt:
 > Read AGENTS.md, the PLAN.md status block, and FINDINGS.md "Reference", then
-> continue Phase 1 with `engine/visibility.js`. Run `npm test` first. Start
-> at reference/README.md for sources. Watch out for the LL2 rate limit. Do
-> not write a threshold or an azimuth limit from memory; cite a source.
+> run `npm test` and `node scripts/backtest.js`. The backtest misses one
+> label (Atlas V, 2026-04-27): read PLAN "Open questions" and ask Ben for the
+> post date and what the photo shows. Then build the twilight candidate list
+> and search local outlets for those dates with a Sonnet subagent. Start at
+> reference/README.md for sources. Do not tune a threshold to fix a miss.

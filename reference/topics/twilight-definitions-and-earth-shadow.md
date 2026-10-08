@@ -9,10 +9,10 @@ relevance: high
 answers: "How are civil, nautical and astronomical twilight defined, how high above a point on Earth is an object still in sunlight when the Sun is D degrees below the horizon, what screening height does the literature use, and does 34 arcminutes of refraction matter?"
 key_points:
   - "USNO and NWS: civil 6, nautical 12, astronomical 18 degrees of geometric Sun-centre depression."
-  - "Overhead shadow height h = R (1 - cos D) / cos D (Patat 2006, App. A). Table: 6 deg 35.1 km, 9 deg 79.5 km, 12 deg 142.5 km, 18 deg 328.3 km."
-  - "Screening height: 7 +/- 1 km on one night (Taylor 1984); about 30 km in older work (Taylor 1984); 5 km used as an input (Bertolin 2020)."
-  - "USNO uses 34 arcminutes of refraction at the horizon; sunrise is at 50 arcminutes depression (16' radius + 34')."
-  - "The Patat formula is for a point directly above the observer. A far rocket needs the Sun depression at the rocket sub-point."
+  - "Overhead shadow height h = R(1-cosD)/cosD (Patat 2006): 35.1 km at 6 deg, 142.5 km at 12 deg."
+  - "Screening height: 7 +/- 1 km measured once (Taylor 1984); about 30 km in older work; 5 km assumed (Bertolin 2020)."
+  - "USNO uses 34 arcminutes of horizon refraction; sunrise is at 50 arcminutes depression."
+  - "The formula is for a point directly above the observer. A far rocket needs the rocket sub-point."
 related_papers: []
 ---
 

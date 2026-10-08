@@ -10,7 +10,7 @@ answers: "At what time after liftoff do Falcon 9 MECO, stage separation, SES-1, 
 key_points:
   - "Starlink from SLC-40 (SpaceX pages): MECO T+2:25 to 2:26, separation T+2:29, SES-1 T+2:36, fairing T+2:58 to 2:59, SECO-1 T+8:39 to 8:40."
   - "Fairing separation varies by mission: T+2:58 (Starlink), T+3:24 (GTO Nusantara Lima), T+3:30 (Kuiper KF-02)."
-  - "Altitude at stage separation: about 65 km (40 miles) for a 2025-11-22 Starlink flight (Spaceflight Now); about 80 km at MECO in 2015 (older Spaceflight Now timeline)."
+  - "Separation altitude about 65 km on a 2025-11-22 Starlink flight (Spaceflight Now); MECO about 80 km in 2015."
   - "Launch Dashboard API (MIT) is offline as of 2026-10-08. Its Telemetry-Data repository (Unlicense) has no Starlink flights."
   - "Not found: any open Starlink-era altitude versus time data. SpaceXtract (MIT) can extract it from webcast video."
 related_papers: []
@@ -50,8 +50,8 @@ Snippet only: Vulcan Cert-1 timing (booster jettison about 1:50, core cutoff T+4
 | Landing | 8:19 | 8:20 | 8:13 | 8:32 |
 | SECO-1 | 8:40 | 8:39 | 8:31 | 8:07 |
 | SES-2 | 54:10 | 52:10 | 52:43 | 23:13 |
-| SECO-2 | 54:11 | 52:11 | 56:18 listed as deployment start; SECO-2 52:46 | 23:57 |
-| Payload deploy | 1:03:31 | 1:01:31 | 56:18 to 1:03:58 | 27:25 |
+| SECO-2 | 54:11 | 52:11 | 52:46 | 23:57 |
+| Payload deploy | 1:03:31 | 1:01:31 | begins 56:18, ends 1:03:58 | 27:25 |
 
 - In the Nusantara Lima column the page lists SECO-1 at 8:07, before landing burn start (8:09). It differs from the Starlink flights, where SECO-1 comes after landing.
 - LL2 timeline for Starlink Group 15-25 (Vandenberg, Source 5): Max Q 1:08, MECO 2:26, stage 2 separation 2:29, SES-1 2:36, fairing separation 2:58, entry burn 6:01 to 6:24, landing burn 8:00, landing 8:23, SECO-1 8:39, SES-2 53:05, SECO-2 53:06, deployment 1:01:57.
@@ -73,7 +73,7 @@ Snippet only: Vulcan Cert-1 timing (booster jettison about 1:50, core cutoff T+4
 - Not found: ascent timelines for Falcon Heavy and New Glenn from a fetched source.
 
 ## Open telemetry data
-- Telemetry-Data (https://github.com/shahar603/Telemetry-Data): Unlicense. Last push 2020-01-24. The README says the data moved to the Launch Dashboard API. The folders (listed with the gh CLI) cover about 50 missions through 2019, such as Iridium NEXT, CRS-8 to CRS-16, SES and Falcon Heavy Demo. No folder is named for Starlink. The telemetry is time, velocity and altitude read from webcast video at 30 frames per second.
+- Telemetry-Data (https://github.com/shahar603/Telemetry-Data): Unlicense. Last push 2020-01-24. The README says the data moved to the Launch Dashboard API. The folders (listed with the gh CLI) cover about 50 missions, such as Iridium NEXT, CRS-8 to CRS-16, SES and Falcon Heavy Demo. The newest folder name I saw is DM-1. No folder is named for Starlink. The telemetry is time, velocity and altitude read from webcast video at 30 frames per second.
 - Launch Dashboard API (https://github.com/shahar603/Launch-Dashboard-API): MIT licence. Repository not archived. Last commit 2022-05-21 and last push 2024-06-19 (a dependency bump). README example shows a REST route `/v2/launches/latest/spacex` that returns raw and analysed telemetry (time, velocity, altitude, downrange distance, acceleration, dynamic pressure) and events (Max Q, MECO and others), with a field for the Launch Library 2 id.
 - Is it online? On 2026-10-08 the host api.launchdashboard.space resolved in DNS but the connection on port 80 was refused. HTTPS also failed. Treat it as offline.
 - Does it cover Starlink? The README mentions a Starlink-18 first-stage analysis by the author. I cannot list the data because the API is offline.

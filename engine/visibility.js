@@ -90,3 +90,61 @@ export function evaluateTrack({ liftoff, pad, observer, member, azimuthDeg, para
   }
   return { summary, samples };
 }
+
+/**
+ * All the possible flights of one launch: every member of the profile on
+ * every azimuth of the trajectory class that fits the launch orbit.
+ *
+ * launch: { net, orbit, vehicle, pad: { latitudeDeg, longitudeDeg } }
+ * config: the contents of config/visibility.json
+ * profiles: the contents of config/profiles.json
+ *
+ * Returns the track summaries and one verdict:
+ *   'no'        no track has a visible part of at least config.minVisibleS
+ *   'possible'  some tracks do, but not all
+ *   'likely'    every track does
+ * `prime` is true when the Sun is at or below config.primeSunElevationDeg
+ * at the peak of at least one visible track.
+ */
+export function evaluateLaunch({ launch, observer, profiles, config }) {
+  const { trajectories } = config;
+  const kind = trajectories.east.orbits.includes(launch.orbit) ? 'east' : 'fan';
+  const { profile, azimuthsDeg } = trajectories[kind];
+  const pad = { ...launch.pad, heightM: 0 };
+  const liftoff = new Date(launch.net);
+
+  const tracks = [];
+  for (const name of profiles.profiles[profile]) {
+    for (const azimuthDeg of azimuthsDeg) {
+      const { summary } = evaluateTrack({
+        liftoff,
+        pad,
+        observer,
+        member: profiles.members[name],
+        azimuthDeg,
+        params: config.params,
+        stepS: profiles.stepS,
+      });
+      tracks.push({ member: name, ...summary });
+    }
+  }
+
+  const seen = tracks.filter((t) => t.visibleS >= config.minVisibleS);
+  const verdict = seen.length === 0 ? 'no' : seen.length === tracks.length ? 'likely' : 'possible';
+  const result = { verdict, trajectory: kind, tracks, visibleTracks: seen.length };
+  if (seen.length > 0) {
+    const of = (key) => seen.map((t) => t[key]);
+    result.prime = Math.min(...of('sunElevationDeg')) <= config.primeSunElevationDeg;
+    result.sunElevationDeg = Math.min(...of('sunElevationDeg'));
+    result.peakElevationDeg = { min: Math.min(...of('peakElevationDeg')), max: Math.max(...of('peakElevationDeg')) };
+    result.peakBearingDeg = { min: Math.min(...of('peakBearingDeg')), max: Math.max(...of('peakBearingDeg')) };
+    result.firstVisibleS = Math.min(...of('firstVisibleS'));
+    result.lastVisibleS = Math.max(...of('lastVisibleS'));
+    result.visibleS = { min: Math.min(...of('visibleS')), max: Math.max(...of('visibleS')) };
+  }
+  // Direction is known only for the due-east class, and the profiles are
+  // Falcon 9 flights.
+  const falcon = /^Falcon/.test(launch.vehicle ?? '');
+  result.confidence = kind === 'east' && falcon ? 'medium' : 'low';
+  return result;
+}

@@ -26,12 +26,36 @@ API for launches and api.weather.gov for forecasts. We do not scrape other
 launch-visibility sites.
 
 ## Status
-The project is at an early stage, and it does not yet predict anything. Three
-of the engine's building blocks exist and are tested (described below); the
-visibility score, the web page, and the email alerts are planned but not
-written. [PLAN.md](PLAN.md) holds the roadmap.
+The geometry engine runs and has had a first backtest, but nothing is live:
+there is no web page and no alert yet, and weather is not included.
+[PLAN.md](PLAN.md) holds the roadmap.
 
-What works today:
+**The backtest so far.** We ran the engine over the 506 Cape Canaveral and
+Kennedy Space Center launches that Launch Library 2 lists from January 2017
+to 2 October 2026. It rates 59 of them (11.7%) as likely or possible to show
+a sunlit rocket in a dark Charleston sky, and 32 of those fall after the end
+of civil twilight, when the sky is darkest. That count carries no weather and
+rests on three provisional thresholds, so it is an upper bound on the chances
+rather than a forecast of sightings.
+
+We compared the engine with 12 launches that people in the Charleston area
+reported seeing (local news stories and r/Charleston posts, listed in
+[data/labels.json](data/labels.json)). The engine rates 11 of the 12 as likely
+or possible. It also rates none of 165 midday or late-night launches as
+visible, although any rule based on the clock alone would pass that check, so
+it says little about the geometry itself.
+
+**One sighting the engine misses.** An Atlas V launch on 27 April 2026 at
+8:53 pm was reported with a photo, and the engine finds no sunlit part of that
+ascent at any screening height we tried (5, 10, and 30 km). Several
+explanations are possible: the date of the post was inferred and may be
+wrong; the photo may show the engine flame, which needs no sunlight; or an
+Atlas V may fly higher than the Falcon 9 flights our profiles come from. We
+have not tuned the model to remove the miss, and the result should be treated
+with caution for evening launches and for vehicles other than Falcon 9 until
+it is explained.
+
+What the engine consists of:
 
 - **Sun position** (`engine/sun.js`): the U.S. Naval Observatory approximate
   solar coordinates algorithm. Across 12 reference cases from the USNO
@@ -55,20 +79,32 @@ What works today:
   those rest on the assumption that they climb like the 2018 missions, which
   is untested.
 
+- **Visibility** (`engine/visibility.js`): whether the rocket is in sunlight
+  (outside a cylindrical Earth shadow), whether the Sun is below the
+  observer's horizon, and whether the rocket is at least 5 degrees up.
+  Launch Library 2 does not give a launch direction, so for most launches we
+  fly every profile on eight azimuths from 37 to 124 degrees and report a
+  launch as "likely" when all of them are visible and "possible" when only
+  some are. The thresholds are in `config/visibility.json`, each with its
+  source or marked provisional.
+
 ## Structure
 - `engine/`: the geometry engine. Pure ES modules with no DOM, no network
   access, and no dependencies, so that the same code can run in the page and
   in a Cloudflare Worker.
 - `config/`: reviewed, versioned inputs. `observer.json` is the observer
-  point; `profiles.json` holds the ascent profiles.
+  point; `profiles.json` holds the ascent profiles; `visibility.json` holds
+  the thresholds and azimuths.
 - `test/`: tests for the engine, and `test/fixtures/` with the pinned
   reference values they compare against.
 - `data/`: pinned data. `ll2-snapshot.json` holds the 506 Cape Canaveral and
   Kennedy Space Center launches that Launch Library 2 listed from January
-  2017 to 2 October 2026; the backtest will read this file and nothing else.
+  2017 to 2 October 2026; `labels.json` holds the reported sightings. The
+  backtest reads these files and nothing else.
 - `scripts/`: one-off tools. `fetch-reference-fixtures.js` regenerates the
   fixtures from USNO and NOAA NGS; `build-profiles.js` regenerates the ascent
-  profiles; `snapshot-ll2.js` regenerates the launch snapshot.
+  profiles; `snapshot-ll2.js` regenerates the launch snapshot; `backtest.js`
+  runs the engine over the snapshot and the labels.
 - `reference/`: our knowledge base of outside sources, so that each value in
   the engine can be traced to where it came from. Each note opens with a
   short statement of what it answers; `INDEX.md` lists them all, and
@@ -84,6 +120,10 @@ The engine needs Node.js 22 or later and has no dependencies to install.
 
 ```bash
 npm test
+```
+
+```bash
+node scripts/backtest.js --list
 ```
 
 The tests read only the pinned fixtures and never call the network. The

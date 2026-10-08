@@ -1,0 +1,33 @@
+{
+  "note": "Thresholds and trajectory choices for engine/visibility.js. Each value names its source in reference/. Values marked provisional have no outside source; the backtest is their only check.",
+  "params": {
+    "screeningHeightM": 10000,
+    "maxSunElevationDeg": 0,
+    "minElevationDeg": 5,
+    "minAltitudeM": 65000
+  },
+  "sources": {
+    "screeningHeightM": "Provisional, inside the range the literature gives: 7 +/- 1 km (Taylor 1984), 5 km (Bertolin 2020), about 30 km in older work. See reference/topics/twilight-definitions-and-earth-shadow.md. No value for rocket plumes was found.",
+    "maxSunElevationDeg": "The twilight phenomenon needs the observer in darkness and the plume in sunlight. See reference/topics/twilight-phenomenon-space-jellyfish.md. No source gives a Sun depression limit, so the limit is the horizon.",
+    "minElevationDeg": "Provisional. No source found. It stands for trees, buildings, and haze near the horizon.",
+    "minAltitudeM": "Stage separation at about 65 km on a 2025-11-22 Starlink flight. See reference/topics/falcon9-ascent-timeline.md. The wide plume belongs to the second-stage burn, which starts after separation."
+  },
+  "minVisibleS": 60,
+  "minVisibleSource": "Provisional. No source found. A shorter pass is easy to miss.",
+  "primeSunElevationDeg": -6,
+  "primeSunElevationSource": "End of civil twilight (USNO, NWS). See reference/topics/twilight-definitions-and-earth-shadow.md. Its use as a quality grade is our interpretation.",
+  "trajectories": {
+    "east": {
+      "profile": "falcon9-gto",
+      "azimuthsDeg": [90],
+      "orbits": ["GTO", "Direct-GEO", "GSO", "Super-GTO", "HEO", "Elliptical", "LO", "Lunar flyby", "L1-point", "L2", "Helio-N/A", "Mars", "Asteroid"],
+      "source": "An orbit at or below the pad latitude, or an escape orbit, is flown due east: cos(inclination) = cos(latitude) sin(azimuth). See reference/topics/cape-launch-azimuths-and-inclinations.md."
+    },
+    "fan": {
+      "profile": "falcon9-leo",
+      "azimuthsDeg": [37, 50, 63, 76, 89, 101, 114, 124],
+      "orbits": "all other orbits",
+      "source": "LL2 gives no inclination or azimuth. The fan covers the 37 to 114 degree range quoted for the Cape. See reference/topics/cape-launch-azimuths-and-inclinations.md. A second source gives 35 to 120 degrees. 124 is added because a 43 degree Starlink flight on 2025-11-22 went southeast, and the azimuth relation gives 123.6 degrees for that orbit."
+    }
+  }
+}

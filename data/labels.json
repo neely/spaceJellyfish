@@ -7,7 +7,7 @@
   "rules": [
     "A launch with no report has no label. Silence is not a negative.",
     "Each launch id was matched by local date to data/ll2-snapshot.json. Exactly one snapshot launch falls on each date.",
-    "Review status: not yet reviewed by Ben.",
+    "Review status: Ben supplied the Reddit posts and confirmed three post dates on 2026-10-08. Ben has not reviewed the news reports.",
     "A Reddit source could not be opened by the agent (Reddit blocks automated reading). Its content comes from a screenshot that Ben supplied on 2026-10-08. When the entry says the date is inferred, the date comes from the post age on the screenshot and the nearest snapshot launch."
   ],
   "curated": "2026-10-08",
@@ -56,11 +56,11 @@
       "moreSources": [
         {
           "url": "https://www.reddit.com/r/Charleston/comments/ujm18y/",
-          "note": "Reddit r/Charleston, \"Asteriod? This morning: 5:50 AM Stono River Bridge\". Screenshot from Ben: a bright head with a long glowing tail in a dawn sky. Date inferred."
+          "note": "Reddit r/Charleston, \"Asteriod? This morning: 5:50 AM Stono River Bridge\". Screenshot from Ben: a bright head with a long glowing tail in a dawn sky. Ben read the post date on 2026-10-08: 2022-05-06."
         },
         {
           "url": "https://www.reddit.com/r/Charleston/comments/ujmtc2/",
-          "note": "Reddit r/Charleston, \"Rocket, Jupiter, and Venus. From West Ashley\". Screenshot from Ben: a glowing plume in a twilight sky. Date inferred."
+          "note": "Reddit r/Charleston, \"Rocket, Jupiter, and Venus. From West Ashley\". Screenshot from Ben: a glowing plume in a twilight sky. Ben read the post date on 2026-10-08: 2022-05-06."
         }
       ]
     },
@@ -82,8 +82,8 @@
       "label": "seen-plume",
       "place": "Sullivan's Island",
       "source": "https://www.reddit.com/r/Charleston/comments/10cznla/",
-      "confidence": "medium",
-      "note": "Reddit r/Charleston, \"Not 100% sure but seems like a rocket launch visible from Sullivan's\". Screenshot from Ben: a long white trail with a wide head over the ocean after sunset. A comment says \"Falcon heavy launch of a military\". Date inferred: post age 3 years, and USSF-67 is the only Falcon Heavy twilight launch near that time."
+      "confidence": "high",
+      "note": "Reddit r/Charleston, \"Not 100% sure but seems like a rocket launch visible from Sullivan's\". Screenshot from Ben: a long white trail with a wide head over the ocean after sunset. A comment says \"Falcon heavy launch of a military\". Ben read the post date on 2026-10-08: 2023-01-15."
     },
     {
       "launchId": "d4eba3cb-9474-41f9-9618-a90d1c0b7025",
@@ -162,11 +162,11 @@
       ]
     }
   ],
-  "unmatched": [
+  "outOfScope": [
     {
       "source": "https://www.reddit.com/r/Charleston/comments/yp1w4l/",
-      "what": "Reddit r/Charleston, \"Saw this over Folly Beach towards Sullivan's on my drive to work this morning. 5:30AM\". Screenshot from Ben: a wide glowing plume low in a dark sky. Post age 3 years; the post id falls between May 2022 and January 2023.",
-      "finding": "The snapshot has no Cape or KSC launch near 5:30 local time from 2022-10-20 to 2022-11-25. This sighting does not match a Cape launch. It may be a launch from another site, or the date range is wrong. Do not use it until the post date is known."
+      "what": "Reddit r/Charleston, \"Saw this over Folly Beach towards Sullivan's on my drive to work this morning. 5:30AM\". Screenshot from Ben: a wide glowing plume low in a dark sky.",
+      "finding": "Ben read the post date on 2026-10-08: 2022-11-07. LL2 lists Antares 230+ Cygnus NG-18 from Wallops Flight Facility, Virginia, at 2022-11-07T10:32:42Z (5:32 local). The engine puts Wallops 698 km from the observer on a bearing of 34 degrees, which fits \"over Folly Beach towards Sullivan's\". This launch is not from the Cape, so it is out of scope and is not a label."
     }
   ]
 }
