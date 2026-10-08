@@ -34,12 +34,13 @@ these before you trust it. Hard-stop on mismatch.
   have status Success and 4 have Failure. 8 pads.
 - `node scripts/backtest.js` (2026-10-08, screening height 10 km) — expected
   41 likely, 18 possible, 447 no, out of 506. 32 of the 59 are prime.
-  Labels: 11 of 12 are not 'no'; the miss is the Atlas V of 2026-04-27.
+  Labels: 0 of 4 `seen-plume` labels are missed. 1 of 8 `seen` labels has
+  verdict 'no' (the Atlas V of 2026-04-27).
   Negatives chosen by clock time: 0 wrong of 82 (10:00 to 15:00 local) and
   0 wrong of 83 (23:00 to 02:00 local).
 - Screening height sensitivity: 5 km gives 59 not 'no'; 30 km gives 52. The
-  same label is missed at all three heights.
-- `data/labels.json` — expected 12 labels: 7 `seen`, 5 `seen-plume`.
+  Atlas V of 2026-04-27 is 'no' at all three heights.
+- `data/labels.json` — expected 12 labels: 8 `seen`, 4 `seen-plume`.
 
 ### Intentional, not bugs
 Things that look wrong but are correct. Do not "fix" these.
@@ -323,3 +324,16 @@ Choices made, and why. Mark settled ones `(locked)`.
   flight on 2025-11-22 went southeast, which the azimuth relation puts at
   123.6 degrees. An observed flight outranks a quoted range.
 - Rejected: The quoted range alone.
+
+### Only a `seen-plume` label can be a miss (locked)
+- What: A 'no' verdict is a miss only for a label of `seen-plume`. A `seen`
+  label with a 'no' verdict is listed, not counted.
+- Why: The engine predicts a sunlit plume. A rocket flame can be seen at
+  night from Charleston with no sunlight on it. Ben read the Atlas V post of
+  2026-04-27 and said it shows "a bright moving point with a short tail if
+  at all". The Space Jellyfish Predictor site names the same case as one it
+  does not model.
+- Rejected: Counting every sighting as a required hit. That would push the
+  thresholds toward calling night launches jellyfish.
+- Note: this rule was written after the result was known. It rests on what
+  the photo shows, not on the verdict.

@@ -40,20 +40,25 @@ rather than a forecast of sightings.
 
 We compared the engine with 12 launches that people in the Charleston area
 reported seeing (local news stories and r/Charleston posts, listed in
-[data/labels.json](data/labels.json)). The engine rates 11 of the 12 as likely
-or possible. It also rates none of 165 midday or late-night launches as
+[data/labels.json](data/labels.json)). Four of the reports show a wide
+glowing plume, and the engine rates all four as likely. Of the other eight,
+which say only that the rocket was seen, it rates seven as likely or
+possible. It also rates none of 165 midday or late-night launches as
 visible, although any rule based on the clock alone would pass that check, so
 it says little about the geometry itself.
 
-**One sighting the engine misses.** An Atlas V launch on 27 April 2026 at
-8:53 pm was reported with a photo, and the engine finds no sunlit part of that
-ascent at any screening height we tried (5, 10, and 30 km). Several
-explanations are possible: the date of the post was inferred and may be
-wrong; the photo may show the engine flame, which needs no sunlight; or an
-Atlas V may fly higher than the Falcon 9 flights our profiles come from. We
-have not tuned the model to remove the miss, and the result should be treated
-with caution for evening launches and for vehicles other than Falcon 9 until
-it is explained.
+**One sighting without a sunlit plume.** An Atlas V launch on 27 April 2026
+at 8:53 pm was seen and photographed from the Charleston area, and the engine
+finds no sunlit part of that ascent at any screening height we tried (5, 10,
+and 30 km). The photo shows a bright moving point rather than a glowing cloud,
+which is what a rocket flame looks like at night, so we count it as a sighting
+of the rocket and not of a jellyfish. This is consistent with the engine but
+does not confirm it: only one of our four plume reports is an evening launch,
+and all of our ascent profiles are Falcon 9 flights, so results for evening
+launches and for other vehicles should be treated with caution.
+
+Four plume reports are too few to call the engine validated, and we have set
+five as the minimum before any alert is built.
 
 What the engine consists of:
 

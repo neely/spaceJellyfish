@@ -52,18 +52,24 @@ for (const [name, set] of [['10:00 to 15:00 local', midday], ['23:00 to 02:00 lo
   for (const r of wrong) console.log(`    WRONG ${localStamp(r.launch.net)} ${r.launch.name}`);
 }
 
+// A `seen-plume` label needs a sunlit plume, so a 'no' verdict is a miss.
+// A `seen` label does not: the flame can be seen at night. A 'no' verdict
+// for a `seen` label is listed but is not a miss.
 console.log('\nLabelled sightings:');
 let missed = 0;
+let flameOnly = 0;
 for (const label of labels) {
   const hit = results.find((r) => r.launch.id === label.launchId);
   if (!hit) throw new Error(`Label ${label.localDate} has no launch in the snapshot`);
   const { result: x, launch } = hit;
-  if (x.verdict === 'no') missed++;
+  if (x.verdict === 'no') label.label === 'seen-plume' ? missed++ : flameOnly++;
   const detail = x.verdict === 'no' ? '' :
     ` Sun ${x.sunElevationDeg.toFixed(1)}, peak ${x.peakElevationDeg.min.toFixed(0)}-${x.peakElevationDeg.max.toFixed(0)} deg, T+${x.firstVisibleS}-${x.lastVisibleS} s, ${x.visibleTracks}/${x.tracks.length} tracks${x.prime ? ', prime' : ''}`;
   console.log(`  ${x.verdict.padEnd(8)} ${localStamp(launch.net)} ${label.label.padEnd(10)} ${launch.name.slice(0, 40).padEnd(40)}${detail}`);
 }
-console.log(`  Missed: ${missed} of ${labels.length}`);
+const plume = labels.filter((l) => l.label === 'seen-plume').length;
+console.log(`  Missed: ${missed} of ${plume} seen-plume labels`);
+console.log(`  'no' for a seen label (seen with no sunlit plume): ${flameOnly} of ${labels.length - plume}`);
 
 if (process.argv.includes('--list')) {
   console.log('\nEvery launch that is not "no":');

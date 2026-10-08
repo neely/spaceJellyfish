@@ -1,7 +1,7 @@
 {
   "about": "Hand-curated reports that a Cape or KSC launch was seen from the Charleston, SC area. Details and exact quotes: reference/topics/charleston-sighting-reports.md.",
   "labels_meaning": {
-    "seen": "A dated public report says the rocket or its trail was seen from the Charleston area.",
+    "seen": "A dated public report says the rocket or its trail was seen from the Charleston area. The rocket flame can be seen at night with no sunlight on the plume, so this label does not require a sunlit plume.",
     "seen-plume": "As seen, and a photo or the text shows a wide glowing plume (the jellyfish effect), whether or not the word is used."
   },
   "rules": [
@@ -122,10 +122,10 @@
       "launchName": "Atlas V 551 | Amazon Leo (LA-06)",
       "net": "2026-04-28T00:53:30Z",
       "localDate": "2026-04-27",
-      "label": "seen-plume",
+      "label": "seen",
       "place": "Charleston area (not stated)",
       "confidence": "high",
-      "note": "Reddit r/Charleston, \"Atlas V rocket launch seen from my house\" (u/stowboy1995). Screenshot from Ben: a bright point with a short lit plume in a dusk sky. No link. Ben read the post date on 2026-10-08: 2026-04-27. The snapshot has an Atlas V launch at 20:53 local that day. Open point: the photo may show the engine flame and not a sunlit plume; see PLAN, Open questions."
+      "note": "Reddit r/Charleston, \"Atlas V rocket launch seen from my house\" (u/stowboy1995). No link. Ben read the post on 2026-10-08: the date is 2026-04-27, and the photo shows \"a bright moving point with a short tail if at all\", with what looks like a cone around it. It is not a wide glowing plume, so the label is seen. The snapshot has an Atlas V launch at 20:53 local that day."
     },
     {
       "launchId": "62d4cd48-ed28-418b-b58c-526781a50a39",

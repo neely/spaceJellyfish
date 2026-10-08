@@ -10,9 +10,9 @@ Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-08
-- **Next action:** Resolve the one missed label (Atlas V, 2026-04-27; see
-  Open questions). Then search local outlets for the twilight launches that
-  have no label, to test the engine on cases a clock rule cannot decide.
+- **Next action:** Build the twilight candidate list and search local
+  outlets for those dates, to find more `seen-plume` labels (4 now, 5
+  needed) and to test the engine on cases a clock rule cannot decide.
 
 ---
 
@@ -92,7 +92,7 @@ Backtest. Pinned data only.
       that test the engine are twilight launches it rejects and launches it
       rates likely and prime.
 - [x] `data/labels.json`: 12 launches, each with launch ID, label, and
-      source. 7 are `seen` and 5 are `seen-plume`. Ben confirmed five
+      source. 8 are `seen` and 4 are `seen-plume`. Ben confirmed five
       Reddit post dates. Original task text follows.
       Hand-curated cases, each with launch ID, label, and source URL. Positives: a public report (local news, NWS
       Charleston, a dated social post) that the plume was seen from the
@@ -108,11 +108,13 @@ Backtest. Pinned data only.
       the snapshot. Not yet written to data/labels.json.
 - [x] `scripts/backtest.js`: run the engine over the snapshot. Print the
       verdict distribution and the result for each labelled case. Observed
-      2026-10-08: 41 likely, 18 possible, 447 no; 11 of 12 labels are not
-      'no'; 0 of 165 clock-chosen negatives are wrong. The script exits 1
-      while a label is missed. It is not part of `npm test`.
-- [ ] **Exit gate:** at least 5 positive cases are labelled, every labelled
-      case is classified correctly, and the share of launches scored
+      2026-10-08: 41 likely, 18 possible, 447 no; 0 of 165 clock-chosen
+      negatives are wrong. After Ben relabelled the Atlas V case: 0 of 4
+      `seen-plume` labels are missed, and 1 of 8 `seen` labels has verdict
+      'no'. The script exits 1 when a `seen-plume` label is missed. It is
+      not part of `npm test`.
+- [ ] **Exit gate:** at least 5 `seen-plume` cases are labelled, every
+      `seen-plume` case is classified correctly, and the share of launches scored
       "visible" is recorded as a tripwire. Phase 3 must not start before
       this box is ticked.
 
@@ -164,21 +166,15 @@ Page.
   2022-11-07). Out of scope now; Ben decides if the scope grows.
 
 ## Open questions
-- The missed label. Atlas V 551 Amazon Leo (LA-06), 2026-04-27 20:53 local,
-  label `seen-plume`, engine verdict 'no'. The Sun was 11.6 to 13.2 degrees
-  below the horizon. The engine finds no sunlit sample at screening heights
-  of 5, 10, and 30 km. On azimuth 37 the profile is 34 to 36 km below
-  sunlight at 300 to 400 s; on azimuth 114 it is 100 to 200 km below.
-  Ben confirmed the post date (2026-04-27), so a wrong date is ruled out.
-  Possible causes, none chosen: (1) the photo shows the engine flame, which
-  needs no sunlight, so the label should be `seen`; (2) an Atlas V flies
-  higher than the Falcon 9 profile; (3) the model is wrong. The Space
-  Jellyfish Predictor site lists night launches seen "without sunlight" as
-  a case it does not model (reference/topics/prior-art-jellyfish-predictor.md).
-  Ben decides the label. Do not change a threshold to remove this miss.
-- Which label classes count as a miss against a 'no' verdict? A rocket
-  flame can be seen at night with no sunlit plume. Decide this before the
-  next label search.
+- Evening launches. The Atlas V of 2026-04-27 (20:53 local, Sun 11.6 to
+  13.2 degrees down) was seen as a bright point; the engine says no sunlit
+  plume. Ben read the post and set the label to `seen`, so it is not a miss.
+  It is also not proof that the engine is right for evening launches. Only
+  one `seen-plume` label is an evening launch (USSF-67). Find more.
+- The sample loop stops at the last multiple of 10 s, so the last 3 to 9 s
+  of a profile are not sampled. 177 of 713 visible tracks are still visible
+  at the last sample: the profile ends before the pass does. Decide if the
+  engine should say so in its output.
 - A research note says Starlink launches from Florida "may have ended" on
   2026-08-25. This is not verified. It changes how often an alert would
   fire.
@@ -194,8 +190,7 @@ Page.
 ## Handoff → next session
 Start prompt:
 > Read AGENTS.md, the PLAN.md status block, and FINDINGS.md "Reference", then
-> run `npm test` and `node scripts/backtest.js`. The backtest misses one
-> label (Atlas V, 2026-04-27): read PLAN "Open questions" and ask Ben for the
-> post date and what the photo shows. Then build the twilight candidate list
-> and search local outlets for those dates with a Sonnet subagent. Start at
+> run `npm test` and `node scripts/backtest.js`. Then build the twilight
+> candidate list and search local outlets for those dates with a Sonnet
+> subagent. The goal is a fifth `seen-plume` label and evening cases. Start at
 > reference/README.md for sources. Do not tune a threshold to fix a miss.
