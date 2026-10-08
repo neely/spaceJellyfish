@@ -10,8 +10,8 @@ Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-08
-- **Next action:** Vendor the sun-position formula source into reference/,
-  then write engine/sun.js and engine/geo.js with their tests.
+- **Next action:** Write config/pads.json and config/profiles.json with a
+  cited Falcon 9 ascent profile, then engine/trajectory.js.
 
 ---
 
@@ -35,17 +35,23 @@ Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.
 
 Engine. Pure ES modules in `engine/`: no DOM, no network, no dependencies.
 Tests run with `node --test`.
-- [ ] Vendor the sun-position formula source into `reference/` and cite it.
-      Do not write the formula from memory.
-- [ ] `engine/sun.js`: sun direction for a UTC time. Test against published
-      reference values. Record them as tripwires in FINDINGS.
-- [ ] `engine/geo.js`: geodetic to ECEF, elevation, bearing, slant range from
+- [x] Vendor the sun-position formula source into `reference/` and cite it.
+      Do not write the formula from memory. Observed: the constants in
+      reference/usno-sun-and-sidereal-time.md match the raw text of the two
+      USNO pages.
+- [x] `engine/sun.js`: sun direction for a UTC time. Test against published
+      reference values. Record them as tripwires in FINDINGS. Observed: 12
+      USNO cases agree within 0.007 degrees; `npm test` shows 26 pass, 0 fail.
+- [x] `engine/geo.js`: geodetic to ECEF, elevation, bearing, slant range from
       the observer. Test against hand-checked cases. Include the Cape to
       Charleston distance. Compute it; do not take it from the brief.
+      Observed: 4 NGS cases agree within 0.4 mm; SLC-40 to the observer is
+      466.0 km.
 - [ ] `config/observer.json`, `config/pads.json`, `config/profiles.json`:
       observer point, pad coordinates, ascent profiles (altitude and
       downrange against time) for each vehicle. Falcon 9 first. A generic
       profile for other vehicles. Cite the source of each profile.
+      Done so far: `config/observer.json` only.
 - [ ] `engine/trajectory.js`: rocket position against time from pad, launch
       azimuth range, and profile. Azimuth comes from the orbit data when
       present. Otherwise use a wide range with low confidence.
@@ -70,6 +76,8 @@ Backtest. Pinned data only.
       (midday, deep night). A twilight launch with no report stays
       unlabelled, because cloud or no observer can also explain silence.
       Find reports by hand search, not by scraping. Ben reviews the list.
+      Lead from Ben: Bill Walsh, the Live 5 (WCSC) meteorologist, posts
+      about launches that are visible from Charleston.
 - [ ] `scripts/backtest.js`: run the engine over the snapshot. Print the
       score distribution and the result for each labelled case.
 - [ ] **Exit gate:** at least 5 positive cases are labelled, every labelled
@@ -135,6 +143,6 @@ Page.
 ## Handoff → next session
 Start prompt:
 > Read AGENTS.md, the PLAN.md status block, and FINDINGS.md "Reference", then
-> start Phase 1 with `engine/sun.js` and `engine/geo.js` and their tests. Key
-> input: reference/handoff-brief.md. Watch out for the LL2 rate limit. Do not
-> write the sun formula from memory.
+> continue Phase 1 with `config/pads.json`, `config/profiles.json`, and
+> `engine/trajectory.js`. Run `npm test` first. Watch out for the LL2 rate
+> limit. Cite the source of each ascent profile; do not write one from memory.

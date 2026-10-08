@@ -15,15 +15,31 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- None yet. Phase 1 adds the sun-position reference values and the backtest
-  share.
+- `npm test` — expected 26 tests, 26 pass, 0 fail (2026-10-08). The count
+  grows when tests are added; update this line in the same commit.
+- `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
+  agree with each within 1/60 degree in GHA, declination, and altitude.
+  Largest difference observed: 0.0070 degrees (altitude, 2026-10-13 case).
+- `test/fixtures/ngs-ecef.json` — expected 4 cases. The engine must agree
+  with each within 2 mm. Largest difference observed: 0.4 mm.
+- SLC-40 to the observer along the surface — expected 466.0 km (289.5
+  statute miles), within 0.5 km.
+- The backtest share is not set yet.
 
 ### Intentional, not bugs
 Things that look wrong but are correct. Do not "fix" these.
 - None yet.
 
 ### Known permanent limitations
-- None yet.
+- Sun position is good to about 1 arcminute. The USNO algorithm states this
+  limit. It is enough for this project; do not chase more accuracy.
+- Angles are geometric. The engine applies no atmospheric refraction.
+- `surfaceDistanceM` uses a sphere of the mean radius. It is good to about
+  0.5 percent. Look angles and ranges use the WGS 84 ellipsoid and do not
+  have this limit.
+- The USNO celestial navigation API returns no Sun entry when the Sun is far
+  below the horizon. The fixture holds only daytime and twilight cases. The
+  lowest Sun altitude in the fixture is -11.2 degrees.
 
 ### Dead-ends (do not re-explore)
 - None yet.
@@ -33,6 +49,23 @@ API quirks, schemas, formulas, constants. Organized by topic.
 
 Every entry below is an external claim, checked on 2026-10-08. Check it again
 before you rely on it.
+
+#### Distance from the Cape to Charleston
+- The engine computes 466.0 km (289.5 statute miles) from SLC-40 to the
+  observer in config/observer.json. The bearing from the observer to the pad
+  is 187.6 degrees.
+- reference/handoff-brief.md says "~330–380 mi". The computed value does not
+  agree with the brief. The computed value is the one to use.
+- A rocket 150 km above SLC-40 is 15.6 degrees above the horizon at the
+  observer. A point on the ground at the pad is 2.1 degrees below it.
+
+#### Reference data sources for tests
+- USNO celestial navigation API: `https://aa.usno.navy.mil/api/celnav` with
+  `date`, `time`, and `coords`. It returns the Sun GHA, declination, computed
+  altitude `hc`, and azimuth `zn`.
+- NOAA NGS NCAT API: `https://geodesy.noaa.gov/api/ncat/llh`. It returns
+  ECEF `x`, `y`, `z` for a latitude, longitude, and ellipsoid height.
+- `scripts/fetch-reference-fixtures.js` reads both and writes the fixtures.
 
 #### Launch Library 2 (LL2)
 - Base URL: `https://ll.thespacedevs.com/2.3.0/`.
@@ -128,3 +161,23 @@ Choices made, and why. Mark settled ones `(locked)`.
 - What: Phase 3 does not start until the backtest exit gate in PLAN is met.
 - Why: A wrong "go outside" email costs trust.
 - Rejected: Building the alert path in parallel with the model.
+
+### Tests read pinned fixtures, never the network (locked)
+- What: Reference values from USNO and NOAA NGS are fetched by
+  scripts/fetch-reference-fixtures.js and committed under test/fixtures/.
+- Why: The tests must give the same result on every run, and offline.
+- Rejected: Calling the reference APIs from the tests.
+
+### The equation of the equinoxes is skipped (locked)
+- What: engine/sun.js uses mean sidereal time, not apparent sidereal time.
+- Why: USNO gives the largest difference as about 1.1 seconds of time, which
+  is about 0.005 degrees. The solar formula itself is good to 1 arcminute.
+- Rejected: Adding the nutation correction.
+
+### README follows the owner's style guide (locked)
+- What: README and other public text for humans use first-person plural,
+  no em-dashes, calibrated hedging, numbers with context and a caveat, and
+  named limitations. PLAN, FINDINGS, and JOURNAL stay in ASD-STE100.
+- Why: Ben gave a personal style guide for public text on 2026-10-08. The
+  guide is not in this repo; the rules above are the part that applies.
+- Rejected: ASD-STE100 for the README.

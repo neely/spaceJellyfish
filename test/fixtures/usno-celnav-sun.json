@@ -1,0 +1,97 @@
+{
+  "source": "https://aa.usno.navy.mil/api/celnav",
+  "fetched": "2026-10-08",
+  "observer": {
+    "name": "James Island, Charleston, SC (ZIP 29412)",
+    "latitudeDeg": 32.718,
+    "longitudeDeg": -79.9537,
+    "heightM": 0,
+    "source": "https://api.zippopotam.us/us/29412, read 2026-10-08. Height is set to 0 m: the area is near sea level and the exact value does not matter at this range."
+  },
+  "cases": [
+    {
+      "utc": "2020-03-20T11:00:00Z",
+      "ghaDeg": 343.162832,
+      "decDeg": 0.118139,
+      "altitudeDeg": -5.645332,
+      "azimuthDeg": 86.217626
+    },
+    {
+      "utc": "2021-12-21T22:30:00Z",
+      "ghaDeg": 157.907091,
+      "decDeg": -23.437187,
+      "altitudeDeg": -3.08832,
+      "azimuthDeg": 243.974224
+    },
+    {
+      "utc": "2022-06-21T00:45:00Z",
+      "ghaDeg": 190.82069,
+      "decDeg": 23.43736,
+      "altitudeDeg": -3.438454,
+      "azimuthDeg": 300.810849
+    },
+    {
+      "utc": "2023-09-23T10:40:00Z",
+      "ghaDeg": 341.880548,
+      "decDeg": -0.062238,
+      "altitudeDeg": -6.819548,
+      "azimuthDeg": 85.668474
+    },
+    {
+      "utc": "2024-01-15T12:00:00Z",
+      "ghaDeg": 357.692783,
+      "decDeg": -21.1633,
+      "altitudeDeg": -5.133776,
+      "azimuthDeg": 111.908188
+    },
+    {
+      "utc": "2024-06-21T16:00:00Z",
+      "ghaDeg": 59.510486,
+      "decDeg": 23.436021,
+      "altitudeDeg": 69.766199,
+      "azimuthDeg": 112.089673
+    },
+    {
+      "utc": "2025-04-10T23:55:00Z",
+      "ghaDeg": 178.477836,
+      "decDeg": 8.327757,
+      "altitudeDeg": -2.585454,
+      "azimuthDeg": 281.614928
+    },
+    {
+      "utc": "2025-11-02T11:15:00Z",
+      "ghaDeg": 352.857502,
+      "decDeg": -14.905221,
+      "altitudeDeg": -5.614888,
+      "azimuthDeg": 104.125201
+    },
+    {
+      "utc": "2026-02-28T11:20:00Z",
+      "ghaDeg": 346.87751,
+      "decDeg": -7.865478,
+      "altitudeDeg": -6.816601,
+      "azimuthDeg": 94.992079
+    },
+    {
+      "utc": "2026-10-13T10:33:00Z",
+      "ghaDeg": 341.685508,
+      "decDeg": -7.860894,
+      "altitudeDeg": -11.173326,
+      "azimuthDeg": 92.224014
+    },
+    {
+      "utc": "2027-07-04T01:10:00Z",
+      "ghaDeg": 196.416038,
+      "decDeg": 22.906143,
+      "altitudeDeg": -7.756818,
+      "azimuthDeg": 303.669607
+    },
+    {
+      "utc": "2027-12-21T17:00:00Z",
+      "ghaDeg": 75.491614,
+      "decDeg": -23.436436,
+      "altitudeDeg": 33.684309,
+      "azimuthDeg": 175.07891
+    }
+  ]
+}

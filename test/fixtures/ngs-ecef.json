@@ -1,0 +1,38 @@
+{
+  "source": "https://geodesy.noaa.gov/api/ncat/llh (NAD83(2011), GRS 80 ellipsoid)",
+  "fetched": "2026-10-08",
+  "cases": [
+    {
+      "latitudeDeg": 32.718,
+      "longitudeDeg": -79.9537,
+      "heightM": 0,
+      "xM": 937015.706,
+      "yM": -5289083.645,
+      "zM": 3427687.953
+    },
+    {
+      "latitudeDeg": 28.56194122,
+      "longitudeDeg": -80.57735736,
+      "heightM": 150000,
+      "xM": 939394.688,
+      "yM": -5660539.572,
+      "zM": 3103064.255
+    },
+    {
+      "latitudeDeg": 0,
+      "longitudeDeg": -75,
+      "heightM": 0,
+      "xM": 1650783.328,
+      "yM": -6160807.252,
+      "zM": 0
+    },
+    {
+      "latitudeDeg": 64.5,
+      "longitudeDeg": -147.5,
+      "heightM": 2500,
+      "xM": -2323082.324,
+      "yM": -1479966.662,
+      "zM": 5736187.558
+    }
+  ]
+}
