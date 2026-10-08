@@ -10,8 +10,9 @@ Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-08
-- **Next action:** Write engine/visibility.js: sunlit test, observer
-  darkness, score, bearing range, and the azimuth set for each orbit class.
+- **Next action:** Set the thresholds in config/visibility.json from the
+  sources in reference/topics/, then add the score and the azimuth set for
+  each orbit class, then write data/labels.json and scripts/backtest.js.
 
 ---
 
@@ -62,9 +63,12 @@ Tests run with `node --test`.
 - [ ] Azimuth set for each LL2 orbit class, with a source for the range of
       azimuths the Cape allows. Use a wide range with low confidence when
       the orbit data is thin.
-- [ ] `engine/visibility.js`: for each time step, is the rocket sunlit, is
-      the observer dark enough, is the rocket above the horizon. Output a
-      score, a bearing range, a peak elevation, a viewing time window, and a
+- [x] `engine/visibility.js`, mechanics: for each time step, is the rocket
+      sunlit, is the observer dark enough, is the rocket above the horizon.
+      One track gives visible seconds, viewing window, peak elevation, and
+      bearings. Observed: `npm test` shows 40 pass, 0 fail.
+- [ ] `config/visibility.json`: the thresholds, each with its source.
+- [ ] Combine the tracks of one launch into a score, a bearing range, and a
       confidence level.
 - [ ] Slip table: the same evaluation for liftoff offsets in 10-minute steps
       across T-0 ± 2 h.
@@ -86,7 +90,11 @@ Backtest. Pinned data only.
       unlabelled, because cloud or no observer can also explain silence.
       Find reports by hand search, not by scraping. Ben reviews the list.
       Lead from Ben: Bill Walsh, the Live 5 (WCSC) meteorologist, posts
-      about launches that are visible from Charleston.
+      about launches that are visible from Charleston. No post or quote
+      from him was found by web search; Facebook and X could not be read.
+      Leads so far: reference/topics/charleston-sighting-reports.md has 10
+      dated reports checked against the raw pages. Each matches a launch in
+      the snapshot. Not yet written to data/labels.json.
 - [ ] `scripts/backtest.js`: run the engine over the snapshot. Print the
       score distribution and the result for each labelled case.
 - [ ] **Exit gate:** at least 5 positive cases are labelled, every labelled

@@ -8,17 +8,18 @@ Read this index. Pick the few notes whose answers match your question. Read only
 
 ## Tags (count of notes)
 
-sun-position 2, sidereal-time 1, geodesy 1, trajectory 2, ascent-profile 1, telemetry 1, launch-data 2, twilight 1, illumination 2, plume 1, visibility 1, sightings 0, weather 1, cloudflare 2, email 1, data-access 3
+sun-position 2, sidereal-time 1, geodesy 1, trajectory 2, ascent-profile 1, telemetry 1, launch-data 2, twilight 2, illumination 2, plume 2, visibility 2, sightings 1, weather 1, cloudflare 2, email 1, data-access 3
 
 ## Papers (0), high relevance first, then newest
 
 | key | year | relevance | topics | answers |
 |---|---|---|---|---|
 
-## Topic notes (1)
+## Topic notes (2)
 
 | key | distilled | relevance | topics | answers |
 |---|---|---|---|---|
+| [topics/charleston-sighting-reports](topics/charleston-sighting-reports.md) | 2026-10-08 | high | sightings, visibility, plume, twilight | Which past Florida launches did Charleston-area outlets report as seen, and which of those reports are solid enough to use as positive labels for a backtest? |
 | [topics/falcon9-webcast-telemetry](topics/falcon9-webcast-telemetry.md) | 2026-10-08 | high | telemetry, ascent-profile, trajectory, data-access | Where do the altitude and downrange curves in config/profiles.json come from, which missions are used and why, and what are the limits of that data? |
 
 ## Top-level notes (3)

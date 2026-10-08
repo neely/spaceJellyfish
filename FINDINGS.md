@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 33 tests, 33 pass, 0 fail (2026-10-08). The count
+- `npm test` — expected 40 tests, 40 pass, 0 fail (2026-10-08). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
   agree with each within 1/60 degree in GHA, declination, and altitude.
@@ -89,6 +89,22 @@ before you rely on it.
   300 s.
 - A northeast launch is 2 to 3 times higher in the Charleston sky than a
   southeast or due-east launch.
+
+#### Reported sightings against the snapshot (scratch run, 2026-10-08)
+- reference/topics/charleston-sighting-reports.md lists 10 dated reports
+  that a launch was seen from the Charleston area. Each date matches one
+  launch in data/ll2-snapshot.json.
+- The Sun was below the observer horizon at T+300 s in all 10: between 4.3
+  and 16.0 degrees below. No report is from a daytime or deep-night launch.
+- With trial thresholds (screening height 20 km, rocket at least 3 degrees
+  up), the engine finds a sunlit, above-horizon part of the ascent for all
+  10 on a northeast azimuth. The trial thresholds are not sourced. This is
+  a first look, not the backtest.
+- Only one report uses the word "jellyfish": 2026-07-09, Starlink Group
+  10-42, liftoff 09:25:43 UTC, Sun 9.6 degrees below the horizon.
+- One source conflict: the ABC News 4 page for 2020-11-13 says the Atlas V
+  launched at "5:13 p.m."; the snapshot gives 22:32 UTC, which is 5:32 p.m.
+  local time.
 
 #### Falcon 9 webcast telemetry
 - https://github.com/shahar603/Telemetry-Data, Unlicense, commit `b245d3b`.
