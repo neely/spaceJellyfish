@@ -1,0 +1,172 @@
+{
+  "about": "Hand-curated reports that a Cape or KSC launch was seen from the Charleston, SC area. Details and exact quotes: reference/topics/charleston-sighting-reports.md.",
+  "labels_meaning": {
+    "seen": "A dated public report says the rocket or its trail was seen from the Charleston area.",
+    "seen-plume": "As seen, and a photo or the text shows a wide glowing plume (the jellyfish effect), whether or not the word is used."
+  },
+  "rules": [
+    "A launch with no report has no label. Silence is not a negative.",
+    "Each launch id was matched by local date to data/ll2-snapshot.json. Exactly one snapshot launch falls on each date.",
+    "Review status: not yet reviewed by Ben.",
+    "A Reddit source could not be opened by the agent (Reddit blocks automated reading). Its content comes from a screenshot that Ben supplied on 2026-10-08. When the entry says the date is inferred, the date comes from the post age on the screenshot and the nearest snapshot launch."
+  ],
+  "curated": "2026-10-08",
+  "labels": [
+    {
+      "launchId": "9961a642-0d04-44bd-850a-3f8299ef4d82",
+      "launchName": "Falcon 9 Block 4 | SpX CRS-15",
+      "net": "2018-06-29T09:42:41Z",
+      "localDate": "2018-06-29",
+      "label": "seen",
+      "place": "Goose Creek",
+      "source": "https://abcnews4.com/news/local/a-bird-a-plane-a-falcon-goose-creek-viewer-spots-liftoff",
+      "confidence": "medium",
+      "note": "The page says the object was \"likely\" a Falcon 9. It does not name the launch."
+    },
+    {
+      "launchId": "c5a9ba01-d03f-4fd7-940a-8a10d535809a",
+      "launchName": "Atlas V 531 | NROL-101",
+      "net": "2020-11-13T22:32:00Z",
+      "localDate": "2020-11-13",
+      "label": "seen",
+      "place": "Charleston",
+      "source": "https://abcnews4.com/news/local/atlas-v-launches-into-space-from-florida-but-seen-in-lowcountry",
+      "confidence": "medium",
+      "note": "The page gives the launch time as 5:13 p.m.; the snapshot gives 5:32 p.m. local."
+    },
+    {
+      "launchId": "32dcb5ad-7609-4fc0-8094-768ee5c2ebe0",
+      "launchName": "Falcon 9 Block 5 | Crew-2",
+      "net": "2021-04-23T09:49:02Z",
+      "localDate": "2021-04-23",
+      "label": "seen",
+      "place": "Lowcountry; Moncks Corner",
+      "source": "https://www.live5news.com/2021/04/23/lowcountry-viewers-send-photos-video-spacex-launch",
+      "confidence": "high"
+    },
+    {
+      "launchId": "4f25c927-6a49-4472-814f-4f1a20d93604",
+      "launchName": "Falcon 9 Block 5 | Starlink Group 4-17",
+      "net": "2022-05-06T09:42:00Z",
+      "localDate": "2022-05-06",
+      "label": "seen-plume",
+      "place": "Dorchester County; The Citadel; Holly Hill; Ladson",
+      "source": "https://abcnews4.com/news/local/lowcountry-residents-capture-early-morning-spacex-launch",
+      "confidence": "high",
+      "moreSources": [
+        {
+          "url": "https://www.reddit.com/r/Charleston/comments/ujm18y/",
+          "note": "Reddit r/Charleston, \"Asteriod? This morning: 5:50 AM Stono River Bridge\". Screenshot from Ben: a bright head with a long glowing tail in a dawn sky. Date inferred."
+        },
+        {
+          "url": "https://www.reddit.com/r/Charleston/comments/ujmtc2/",
+          "note": "Reddit r/Charleston, \"Rocket, Jupiter, and Venus. From West Ashley\". Screenshot from Ben: a glowing plume in a twilight sky. Date inferred."
+        }
+      ]
+    },
+    {
+      "launchId": "1c903b65-6667-4fd5-944d-296c5f13e01f",
+      "launchName": "Falcon 9 Block 5 | Starlink Group 4-35",
+      "net": "2022-09-24T23:32:10Z",
+      "localDate": "2022-09-24",
+      "label": "seen",
+      "place": "Charleston area",
+      "source": "https://abcnews4.com/news/local/viewer-captures-space-x-launch-traveling-over-charleston-saturday-night",
+      "confidence": "high"
+    },
+    {
+      "launchId": "571bf2c1-59eb-4079-b785-0472324d3a2d",
+      "launchName": "Falcon Heavy | USSF-67",
+      "net": "2023-01-15T22:56:00Z",
+      "localDate": "2023-01-15",
+      "label": "seen-plume",
+      "place": "Sullivan's Island",
+      "source": "https://www.reddit.com/r/Charleston/comments/10cznla/",
+      "confidence": "medium",
+      "note": "Reddit r/Charleston, \"Not 100% sure but seems like a rocket launch visible from Sullivan's\". Screenshot from Ben: a long white trail with a wide head over the ocean after sunset. A comment says \"Falcon heavy launch of a military\". Date inferred: post age 3 years, and USSF-67 is the only Falcon Heavy twilight launch near that time."
+    },
+    {
+      "launchId": "d4eba3cb-9474-41f9-9618-a90d1c0b7025",
+      "launchName": "Falcon 9 Block 5 | Starlink Group 10-26",
+      "net": "2025-07-26T09:01:40Z",
+      "localDate": "2025-07-26",
+      "label": "seen",
+      "place": "Lowcountry; Isle of Palms",
+      "source": "https://www.yahoo.com/news/articles/gallery-falcon-9-launch-seen-151945880.html",
+      "confidence": "high",
+      "note": "WCBD story, read on Yahoo."
+    },
+    {
+      "launchId": "5d5e17f4-292b-45f6-ab53-05437cf63ce0",
+      "launchName": "Falcon 9 Block 5 | Starlink Group 10-40",
+      "net": "2026-03-04T10:52:20Z",
+      "localDate": "2026-03-04",
+      "label": "seen",
+      "place": "Folly Beach; Mount Pleasant; Sullivan's Island",
+      "source": "https://www.counton2.com/news/local-news/video-falcon-9-launch-seen-from-folly-beach/",
+      "confidence": "high",
+      "note": "Fog limited the view."
+    },
+    {
+      "launchId": "5352577c-d94a-4e68-a0c8-b0b684621a4f",
+      "launchName": "Falcon 9 Block 5 | Starlink Group 10-24",
+      "net": "2026-04-14T09:33:10Z",
+      "localDate": "2026-04-14",
+      "label": "seen",
+      "place": "Daniel Island; St. Stephen; Moncks Corner; James Island; Folly Beach",
+      "source": "https://www.counton2.com/news/local-news/photos-falcon-9-launch-seen-from-charleston-area-early-tuesday-morning/",
+      "confidence": "high"
+    },
+    {
+      "launchId": "7e89e423-6f47-40a0-b075-c6fc1d9cf228",
+      "launchName": "Atlas V 551 | Amazon Leo (LA-06)",
+      "net": "2026-04-28T00:53:30Z",
+      "localDate": "2026-04-27",
+      "label": "seen-plume",
+      "place": "Charleston area (not stated)",
+      "confidence": "medium",
+      "note": "Reddit r/Charleston, \"Atlas V rocket launch seen from my house\" (u/stowboy1995). Screenshot from Ben: a bright point with a short lit plume in a dusk sky. No link. Date inferred: post age 163 days on 2026-10-08 gives 2026-04-28; the snapshot has an Atlas V launch at 20:53 local on 2026-04-27."
+    },
+    {
+      "launchId": "62d4cd48-ed28-418b-b58c-526781a50a39",
+      "launchName": "Falcon 9 Block 5 | Starlink Group 10-42",
+      "net": "2026-07-09T09:25:43Z",
+      "localDate": "2026-07-09",
+      "label": "seen-plume",
+      "place": "Folly Beach Pier; Sullivan's Island; Beaufort",
+      "source": "https://www.postandcourier.com/news/spacex-rocket-sc-lowcountry-charleston-beaufort/article_eca134fc-f7fc-4c3d-8a09-4f96056b7cef.html",
+      "confidence": "high",
+      "note": "The only report that uses the word jellyfish.",
+      "moreSources": [
+        {
+          "note": "Reddit r/Charleston, \"Meteor over Charleston?\" (u/bosox33420). Screenshot from Ben, post age 91 days on 2026-10-08. No link. Date inferred."
+        }
+      ]
+    },
+    {
+      "launchId": "ad501ebd-a357-4305-90c1-c46c6feb2ecf",
+      "launchName": "Falcon 9 Block 5 | Starlink Group 10-49",
+      "net": "2026-08-25T09:33:38Z",
+      "localDate": "2026-08-25",
+      "label": "seen-plume",
+      "place": "Hanahan; Cane Bay; Summerville; Charleston; Folly Beach",
+      "source": "https://www.counton2.com/news/local-news/photos-spacex-rocket-launch-visible-from-charleston-area-early-tuesday-morning/",
+      "confidence": "high",
+      "moreSources": [
+        {
+          "note": "Reddit r/Charleston, \"MASSIVE comet around 5:35am on 8-25-26\" (u/Spirited_Year323). Screenshot from Ben: a comet-shaped plume in a dark sky. The title gives the date. No link."
+        },
+        {
+          "note": "A search summary on X, screenshot from Ben: Falcon 9 \"passed over Charleston, South Carolina on August 25, 2026 at 5:37am\". Not a primary source."
+        }
+      ]
+    }
+  ],
+  "unmatched": [
+    {
+      "source": "https://www.reddit.com/r/Charleston/comments/yp1w4l/",
+      "what": "Reddit r/Charleston, \"Saw this over Folly Beach towards Sullivan's on my drive to work this morning. 5:30AM\". Screenshot from Ben: a wide glowing plume low in a dark sky. Post age 3 years; the post id falls between May 2022 and January 2023.",
+      "finding": "The snapshot has no Cape or KSC launch near 5:30 local time from 2022-10-20 to 2022-11-25. This sighting does not match a Cape launch. It may be a launch from another site, or the date range is wrong. Do not use it until the post date is known."
+    }
+  ]
+}

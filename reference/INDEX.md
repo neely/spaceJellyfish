@@ -8,19 +8,23 @@ Read this index. Pick the few notes whose answers match your question. Read only
 
 ## Tags (count of notes)
 
-sun-position 2, sidereal-time 1, geodesy 1, trajectory 2, ascent-profile 1, telemetry 1, launch-data 2, twilight 2, illumination 2, plume 2, visibility 2, sightings 1, weather 1, cloudflare 2, email 1, data-access 3
+sun-position 3, sidereal-time 1, geodesy 2, trajectory 4, ascent-profile 3, telemetry 2, launch-data 4, twilight 4, illumination 4, plume 3, visibility 5, sightings 2, weather 1, cloudflare 2, email 1, data-access 3
 
 ## Papers (0), high relevance first, then newest
 
 | key | year | relevance | topics | answers |
 |---|---|---|---|---|
 
-## Topic notes (2)
+## Topic notes (6)
 
 | key | distilled | relevance | topics | answers |
 |---|---|---|---|---|
+| [topics/cape-launch-azimuths-and-inclinations](topics/cape-launch-azimuths-and-inclinations.md) | 2026-10-08 | high | trajectory, launch-data, ascent-profile, visibility | Which launch azimuths are allowed from the Cape, how do azimuth and inclination relate, what inclination goes with each mission class, and how can we know the... |
 | [topics/charleston-sighting-reports](topics/charleston-sighting-reports.md) | 2026-10-08 | high | sightings, visibility, plume, twilight | Which past Florida launches did Charleston-area outlets report as seen, and which of those reports are solid enough to use as positive labels for a backtest? |
+| [topics/falcon9-ascent-timeline](topics/falcon9-ascent-timeline.md) | 2026-10-08 | high | ascent-profile, telemetry, trajectory, launch-data | At what time after liftoff do Falcon 9 MECO, stage separation, SES-1, fairing separation, entry burn, landing and SECO-1 happen for current Cape missions, what... |
 | [topics/falcon9-webcast-telemetry](topics/falcon9-webcast-telemetry.md) | 2026-10-08 | high | telemetry, ascent-profile, trajectory, data-access | Where do the altitude and downrange curves in config/profiles.json come from, which missions are used and why, and what are the limits of that data? |
+| [topics/twilight-definitions-and-earth-shadow](topics/twilight-definitions-and-earth-shadow.md) | 2026-10-08 | high | twilight, illumination, sun-position, visibility, geodesy | How are civil, nautical and astronomical twilight defined, how high above a point on Earth is an object still in sunlight when the Sun is D degrees below the... |
+| [topics/twilight-phenomenon-space-jellyfish](topics/twilight-phenomenon-space-jellyfish.md) | 2026-10-08 | high | twilight, plume, visibility, illumination, sightings | What do reputable sources say about when and how far a rocket plume glows in twilight (time window, plume altitude, duration, distance), and where do they... |
 
 ## Top-level notes (3)
 

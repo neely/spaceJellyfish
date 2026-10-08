@@ -91,3 +91,25 @@ This section is interpretation, not sourced fact.
 - Item 11 needs the owner to open the page in a browser.
 - Negative labels are not available. News outlets do not report launches nobody saw. Any backtest needs a different source for "not seen".
 - The sample is small and biased to news-worthy sightings and recent years.
+
+## Reddit posts supplied by the owner (added 2026-10-08)
+
+Reddit blocks automated reading, and the built-in browser cannot open it. The owner supplied screenshots of r/Charleston posts and five share links on 2026-10-08. The links resolve to four posts. We read only what the screenshots show: the title, the user name, the post age, and the photo. We did not read the post dates. A date marked "inferred" comes from the post age and the nearest launch in data/ll2-snapshot.json.
+
+| Post | Age on screenshot | What the photo shows | Matched launch (snapshot) | Date status |
+|---|---|---|---|---|
+| "Asteriod? This morning: 5:50 AM Stono River Bridge" (comments/ujm18y) | 4 years | Bright head, long glowing tail, dawn sky | Starlink Group 4-17, 2022-05-06 05:42 local | inferred |
+| "Rocket, Jupiter, and Venus. From West Ashley" (comments/ujmtc2) | 4 years | Glowing plume in a twilight sky | Starlink Group 4-17, 2022-05-06 05:42 local | inferred; the post id is next to ujm18y |
+| "Not 100% sure but seems like a rocket launch visible from Sullivan's" (comments/10cznla) | 3 years | Long white trail with a wide head over the ocean, sky lit near the horizon | Falcon Heavy USSF-67, 2023-01-15 17:56 local | inferred; a comment says "Falcon heavy launch of a military" |
+| "Saw this over Folly Beach towards Sullivan's on my drive to work this morning. 5:30AM" (comments/yp1w4l) | 3 years | Wide glowing plume low in a dark sky | none | unmatched, see below |
+| "Atlas V rocket launch seen from my house" (u/stowboy1995, no link) | 163 days | Bright point with a short lit plume, dusk sky | Atlas V 551 Amazon Leo (LA-06), 2026-04-27 20:53 local | inferred |
+| "Meteor over Charleston?" (u/bosox33420, no link) | 91 days | Lit plume behind port cranes | Starlink Group 10-42, 2026-07-09 05:25 local | inferred |
+| "MASSIVE comet around 5:35am on 8-25-26" (u/Spirited_Year323, no link) | 44 days | Comet-shaped plume in a dark sky | Starlink Group 10-49, 2026-08-25 05:33 local | stated in the title |
+
+A search summary on X (screenshot) says a Falcon 9 "passed over Charleston, South Carolina on August 25, 2026 at 5:37am". It is not a primary source.
+
+### Anomaly: the Folly Beach post at 5:30 AM
+The post id yp1w4l falls between ujm18y (May 2022) and 10cznla (January 2023). The snapshot has no Cape or KSC launch near 5:30 local time from 2022-10-20 to 2022-11-25. Three explanations are possible. The launch came from a site other than the Cape. The post is from a different date than the id order suggests. The snapshot lacks a launch. We cannot choose between them without the post date. Do not use this post as a label until the date is known.
+
+### What the photos add
+The news reports mostly say only that the rocket was seen. The Reddit photos show a wide glowing plume for the launches of 2022-05-06, 2023-01-15, 2026-07-09, and 2026-08-25. The owner states that they have lived in Charleston for 22 years and have never seen a launch.
