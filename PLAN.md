@@ -3,7 +3,7 @@
 Live at **TBD (subdomain of benneely.com, not yet assigned)** · Repo: **github.com/neely/spaceJellyfish**
 
 **Purpose:** Predict when a Cape Canaveral or KSC launch will show the twilight "space jellyfish" plume from Charleston, SC (James Island, 29412), and send an email alert when it will.
-**Non-goals:** No scraping of nextspaceflight.com or jellyfish.johnkrausphotos.com. No pads outside Cape Canaveral and KSC. No observer points other than Charleston. Weather is a secondary modifier, not a primary signal.
+**Non-goals:** No code, predictions, or images taken from nextspaceflight.com or jellyfish.johnkrausphotos.com; reading them for ideas is allowed (Ben, 2026-10-08). No pads outside Cape Canaveral and KSC. No observer points other than Charleston. Weather is a secondary modifier, not a primary signal.
 
 ---
 

@@ -22,8 +22,9 @@ It is a question of illumination geometry: where the rocket is, where the Sun
 is, and whether the plume is lit while Charleston is dark.
 
 This is an independent build from public data sources: the Launch Library 2
-API for launches and api.weather.gov for forecasts. We do not scrape other
-launch-visibility sites.
+API for launches and api.weather.gov for forecasts. We take no code,
+predictions, or images from other launch-visibility sites, although we have
+read how they describe their methods (see `reference/`).
 
 ## Status
 The geometry engine runs and has had a first backtest, but nothing is live:
