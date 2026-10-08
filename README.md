@@ -1,5 +1,9 @@
 # Space Jellyfish
 
+<p align="center">
+  <img src="assets/jellyfish.png" alt="A glowing jellyfish in space with a rocket at the top of its bell" width="320">
+</p>
+
 Hyperlocal predictor and email alerts for twilight "space jellyfish" launch
 visibility from Charleston, SC.
 
@@ -27,6 +31,8 @@ launch-visibility sites.
 - `AGENTS.md`, `PLAN.md`, `FINDINGS.md`, `JOURNAL.md`, `CLAUDE.md`: the
   project context files, from the
   [Solo Agent Context Kit](https://github.com/neely/agent-context-project-template).
+- `assets/`: images. `jellyfish.png` is the project art (1024 x 1024), also
+  the source for a future app icon.
 - `reference/`: vendored material. `handoff-brief.md` is the original project
   brief.
 
