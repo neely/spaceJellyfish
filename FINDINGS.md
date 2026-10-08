@@ -70,7 +70,12 @@ Things that look wrong but are correct. Do not "fix" these.
   lowest Sun altitude in the fixture is -11.2 degrees.
 
 ### Dead-ends (do not re-explore)
-- None yet.
+- Tried a Cloudflare Pages Function (`functions/api/upcoming.js`) that asked
+  LL2 with no token → LL2 answered 429 on 4 of 4 requests on 2026-10-08 →
+  removed. Cloudflare sends requests from addresses that many customers
+  share, and LL2 counts 15 requests per hour for each address. Do not ask
+  LL2 from Cloudflare without a token.
+- Did NOT tune a threshold to remove a missed label. See Decisions.
 
 ### Reference
 API quirks, schemas, formulas, constants. Organized by topic.
@@ -194,6 +199,9 @@ before you rely on it.
 - `https://ll.thespacedevs.com/2.3.0/api-throttle/` reports the limit, the
   current use, the seconds to the next free request, and the address that
   LL2 counts. The limit is counted for each address.
+- `https://lldev.thespacedevs.com/2.3.0/` answers 200. Its record for SpX-35
+  had `last_updated` 2026-10-03 when read on 2026-10-08. It may be a stale
+  copy. Do not use it for live times until its update rule is known.
 - `limit=100` is accepted. `/launches/previous/` with `net__gte` and
   `ordering=net` pages through history; `next` gives the next page.
 - A launch record in `mode=detailed` carries `id`, `net`, `net_precision`,
@@ -379,18 +387,12 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Limit: The snapshot holds no program names, so the backtest still uses
   the fan for station launches.
 
-### The page gets launch times through the site's own feed (locked)
-- What: The page asks `/api/upcoming`, a Cloudflare Pages Function that
-  asks LL2 and keeps the answer at the edge for 20 minutes. If that fails
-  it asks LL2 direct, then uses the answer saved in the browser, then
-  `data/upcoming-fallback.json`. The browser keeps an answer for 20 minutes.
-- Why: The first live visit failed with "Launch Library 2 answered 429". The
-  LL2 limit is counted for each address: `/api-throttle/` showed 15 of 15
-  used for Ben's address after this session's own requests. A page that
-  asks LL2 only from the browser shows nothing when the visitor is over the
-  limit.
-- State on 2026-10-08: the function does not run on the live site yet, so
-  the page uses LL2 direct. See PLAN.
-- Rejected: LL2 from the browser only (the first design, replaced the same
-  day). A GitHub Action that commits the list every hour, because it fills
-  the commit history.
+### The page asks LL2 from the browser (locked)
+- What: The page asks LL2 for upcoming launches from the visitor's browser.
+  It keeps the answer for 20 minutes. If LL2 fails it uses the answer saved
+  in the browser, then `data/upcoming-fallback.json`, and says the copy is
+  old.
+- Why: Each visitor has their own LL2 allowance of 15 requests per hour. A
+  feed on Cloudflare was tried and failed (see Dead-ends).
+- Rejected: A Cloudflare Pages Function as a shared feed. A GitHub Action
+  that commits the list every hour, because it fills the commit history.

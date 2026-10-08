@@ -61,3 +61,11 @@ svg.sky { width: 100%; height: auto; display: block; background: #0a0f1e; border
 .later { color: var(--dim); font-size: .9rem; }
 .later li { margin: 2px 0; }
 footer { color: var(--dim); font-size: .85rem; padding-bottom: 30px; }
+table.minutes { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 1rem; }
+table.minutes th { text-align: left; color: var(--dim); font-size: .78rem; font-weight: 500; padding: 4px 8px; }
+table.minutes td { padding: 7px 8px; border-top: 1px solid var(--line); font-weight: 600; }
+@media (max-width: 520px) {
+  .launch, .panel { padding: 12px; }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .slider { flex-wrap: wrap; }
+}

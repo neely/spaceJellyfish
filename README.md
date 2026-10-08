@@ -38,10 +38,10 @@ moves through, how high it climbs, a chart of its path across the sky, and how
 the answer changes if liftoff slips (ten-minute steps for two hours either
 side). It refreshes launch times each time it is opened, at most once every 20
 minutes. Launch Library 2 allows only 15 requests an hour from one address, so
-the page first tries a shared feed on this site (a Cloudflare Pages Function,
-`functions/api/upcoming.js`, which is written but not yet active on the live
-site), then asks Launch Library 2 directly, and if that fails too it shows
-the last copy it has, with its date.
+the page asks from each visitor's own browser, and if that fails it shows
+the last copy it has, with its date. (We tried a shared feed on Cloudflare;
+Launch Library 2 rejected every request from Cloudflare's shared addresses,
+so we removed it.)
 
 **The backtest so far.** We ran the engine over the 506 Cape Canaveral and
 Kennedy Space Center launches that Launch Library 2 lists from January 2017
@@ -109,9 +109,7 @@ What the engine consists of:
 ## Structure
 - `index.html`, `app.js`, `style.css`: the page. It has no build step; the
   repo root is the site.
-- `functions/`: Cloudflare Pages Functions. `api/upcoming.js` is the shared
-  launch feed.
-- `lib/`: code shared by the page, the function, and the scripts.
+- `lib/`: code shared by the page and the scripts.
 - `engine/`: the geometry engine. Pure ES modules with no DOM, no network
   access, and no dependencies, so that the same code can run in the page and
   in a Cloudflare Worker.
@@ -153,8 +151,7 @@ node scripts/backtest.js --list
 ```
 
 To see the page locally, start the small server and open
-http://127.0.0.1:8765. The local server has no `/api/upcoming`, so the page
-asks Launch Library 2 directly:
+http://127.0.0.1:8765:
 
 ```bash
 npm run dev

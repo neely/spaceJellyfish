@@ -40,6 +40,8 @@ const [observer, profiles, config] = await Promise.all([
 const fmt = (opts) => new Intl.DateTimeFormat('en-US', { timeZone: observer.timeZone, ...opts });
 const dayFmt = fmt({ weekday: 'long', month: 'long', day: 'numeric' });
 const timeFmt = fmt({ hour: 'numeric', minute: '2-digit' });
+// Clock time with no AM or PM, for the tight labels on the chart.
+const shortTime = (ms) => timeFmt.format(ms).replace(/\s?[AP]M$/, '');
 const secFmt = fmt({ hour: 'numeric', minute: '2-digit', second: '2-digit' });
 const COMPASS = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
 const compass = (deg) => COMPASS[Math.round((((deg % 360) + 360) % 360) / 22.5) % 16];
@@ -52,18 +54,9 @@ function readCache() {
   }
 }
 
-// Sources, in order: this site's own /api/upcoming (a Cloudflare Pages
-// Function that shares one LL2 request between all visitors), then LL2
-// direct from the browser, then the last answer this browser saved, then a
-// copy saved in the repo.
-async function fromSite() {
-  const res = await fetch('api/upcoming');
-  if (!res.ok) throw new Error(`this site's launch feed answered ${res.status}`);
-  const body = await res.json();
-  if (!Array.isArray(body.results)) throw new Error("this site's launch feed gave no launches");
-  return body;
-}
-
+// Sources, in order: LL2 direct from the browser, then the last answer this
+// browser saved, then a copy saved in the repo. A feed on Cloudflare was
+// tried and removed: LL2 answers 429 to Cloudflare's shared addresses.
 async function fromLl2() {
   const res = await fetch(LL2_UPCOMING_URL);
   if (!res.ok) throw new Error(`Launch Library 2 answered ${res.status}`);
@@ -75,7 +68,7 @@ async function loadLaunches(force) {
   const cached = readCache();
   if (cached && !force && Date.now() - cached.fetched < CACHE_MS) return { ...cached, source: 'cache' };
   const errors = [];
-  for (const source of [fromSite, fromLl2]) {
+  for (const source of [fromLl2]) {
     try {
       const fresh = await source();
       try {
@@ -96,9 +89,12 @@ async function loadLaunches(force) {
 }
 
 function skyChart(result, liftoffMs, horizonDeg) {
-  const W = 700;
-  const H = 300;
-  const M = { l: 34, r: 10, t: 12, b: 26 };
+  // Draw at the real width so that text stays readable on a phone.
+  const W = Math.max(300, Math.min(700, document.documentElement.clientWidth - 66));
+  const small = W < 520;
+  const H = small ? 320 : 300;
+  const F = small ? 13 : 12;
+  const M = { l: 36, r: 10, t: 22, b: 28 };
   const tracks = result.tracks.filter((t) => t.samples);
   const up = tracks.flatMap((t) => t.samples.filter((s) => s.elevationDeg > 0));
   // Bearings near north can wrap; this page only expects south and east skies.
@@ -112,15 +108,16 @@ function skyChart(result, liftoffMs, horizonDeg) {
   svg.append(svgEl('title', {}, 'Path of the rocket across the sky: compass bearing against height above the horizon'));
   for (let e = 0; e <= maxE; e += 10) {
     svg.append(svgEl('line', { x1: M.l, x2: W - M.r, y1: y(e), y2: y(e), stroke: '#1c2540' }));
-    svg.append(svgEl('text', { x: M.l - 6, y: y(e) + 4, fill: '#98a2bd', 'font-size': 11, 'text-anchor': 'end' }, `${e}°`));
+    svg.append(svgEl('text', { x: M.l - 6, y: y(e) + 4, fill: '#98a2bd', 'font-size': F, 'text-anchor': 'end' }, `${e}°`));
   }
-  for (let b = Math.ceil(minB / 22.5) * 22.5; b <= maxB; b += 22.5) {
+  const compassStep = small ? 45 : 22.5;
+  for (let b = Math.ceil(minB / compassStep) * compassStep; b <= maxB; b += compassStep) {
     svg.append(svgEl('line', { x1: x(b), x2: x(b), y1: y(0), y2: y(maxE), stroke: '#141b30' }));
-    svg.append(svgEl('text', { x: x(b), y: H - 8, fill: '#98a2bd', 'font-size': 11, 'text-anchor': 'middle' }, compass(b)));
+    svg.append(svgEl('text', { x: x(b), y: H - 8, fill: '#98a2bd', 'font-size': F, 'text-anchor': 'middle' }, compass(b)));
   }
   if (horizonDeg > 0) {
     svg.append(svgEl('rect', { x: M.l, y: y(horizonDeg), width: W - M.l - M.r, height: y(0) - y(horizonDeg), fill: '#1d3a2a', opacity: 0.75 }));
-    svg.append(svgEl('text', { x: W - M.r - 6, y: y(horizonDeg) - 4, fill: '#7fbf95', 'font-size': 11, 'text-anchor': 'end' }, `your trees: ${horizonDeg}°`));
+    svg.append(svgEl('text', { x: W - M.r - 6, y: y(horizonDeg) - 4, fill: '#7fbf95', 'font-size': F, 'text-anchor': 'end' }, `your trees: ${horizonDeg}°`));
   }
   for (const track of tracks) {
     const shown = track.samples.filter((s) => s.elevationDeg > 0);
@@ -137,10 +134,27 @@ function skyChart(result, liftoffMs, horizonDeg) {
   const first = tracks.find((t) => t.visibleS > 0) ?? tracks[0];
   for (const s of first.samples) {
     if (s.tS % 60 !== 0 || s.elevationDeg <= 0 || !s.visible) continue;
-    svg.append(svgEl('circle', { cx: x(s.bearingDeg), cy: y(s.elevationDeg), r: 3.5, fill: '#fff' }));
-    svg.append(svgEl('text', { x: x(s.bearingDeg), y: y(s.elevationDeg) - 8, fill: '#e8ecf6', 'font-size': 11, 'text-anchor': 'middle' }, timeFmt.format(liftoffMs + s.tS * 1000)));
+    svg.append(svgEl('circle', { cx: x(s.bearingDeg), cy: y(s.elevationDeg), r: 4, fill: '#fff' }));
+    svg.append(svgEl('text', { x: x(s.bearingDeg), y: y(s.elevationDeg) - 9, fill: '#fff', 'font-size': F + 1, 'font-weight': 700, 'text-anchor': 'middle' }, shortTime(liftoffMs + s.tS * 1000)));
   }
   return svg;
+}
+
+// One row for each minute: the clock time, the direction, and the height.
+function minuteTable(result, liftoffMs) {
+  const tracks = result.tracks.filter((t) => t.samples && t.visibleS > 0);
+  const table = el('table', { class: 'minutes' });
+  table.append(el('tr', {}, el('th', {}, 'Time'), el('th', {}, 'Look toward'), el('th', {}, 'Height')));
+  const endS = Math.max(...tracks.map((t) => t.lastVisibleS));
+  for (let tS = 60; tS <= endS; tS += 60) {
+    const at = tracks.map((t) => t.samples.find((s) => s.tS === tS)).filter((s) => s && s.visible);
+    if (at.length === 0) continue;
+    const lo = Math.round(Math.min(...at.map((s) => s.elevationDeg)));
+    const hi = Math.round(Math.max(...at.map((s) => s.elevationDeg)));
+    const dirs = [...new Set(at.map((s) => compass(s.bearingDeg)))].join(' to ');
+    table.append(el('tr', {}, el('td', {}, timeFmt.format(liftoffMs + tS * 1000)), el('td', {}, dirs), el('td', {}, lo === hi ? `${hi}°` : `${lo}° to ${hi}°`)));
+  }
+  return table;
 }
 
 function slipTable(launch) {
@@ -202,6 +216,7 @@ function launchCard(launch) {
       draw(Number(input.value));
     });
     card.append(el('div', { class: 'slider' }, 'My trees block the sky up to', input, read));
+    if (result.trajectory !== 'fan') card.append(minuteTable(result, liftoff));
     card.append(el('p', { class: 'note' }, result.trajectory === 'fan'
       ? 'Launch Library 2 does not give the direction of this launch, so each line is one possible path. Orange is the sunlit part in a dark sky.'
       : `The chart is the view when you face southeast: south is on the right and east is on the left. Each line is one past Falcon 9 flight flown on this launch's path. Orange is the sunlit part in a dark sky; the dotted part is before the plume is counted or after it leaves sunlight. The data ends about ${Math.round(lead.samples.at(-1).tS / 60)} minutes after liftoff; the rocket may stay visible longer.`));

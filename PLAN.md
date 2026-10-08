@@ -135,17 +135,14 @@ Page.
 - [x] The page is live at https://jellyfish.benneely.com (Cloudflare Pages,
       set up by Ben on 2026-10-08). There is no build step: the repo root is
       the site.
-- [ ] `functions/api/upcoming.js`: a Pages Function that asks LL2 from
-      Cloudflare and keeps the answer for 20 minutes. Added after the live
-      page showed "Launch Library 2 answered 429" to Ben. The file is in the
-      repo but the function is NOT active: on 2026-10-08
-      https://jellyfish.benneely.com/api/upcoming returned the HTML of the
-      home page. Find out how the site is deployed (Pages or a Worker with
-      static assets) and make the function run.
-- [x] Fallback chain in the page: the site feed, then LL2 direct, then the
-      saved answer in the browser, then `data/upcoming-fallback.json`.
-      Observed 2026-10-08 on the live site: the feed step fails, LL2 direct
-      answers, and the page shows SpX-35 with no console error.
+- [x] Fallback chain in the page: LL2 direct, then the saved answer in the
+      browser, then `data/upcoming-fallback.json`. Observed 2026-10-08 on
+      the live site: LL2 direct answers and the page shows SpX-35 with no
+      console error.
+- [x] Phone layout: the sky chart is drawn at the real width, and a table
+      gives the time, direction, and height for each minute. Observed at
+      375 px in a local preview: labels are readable, no sideways scroll.
+      Ben has not yet confirmed on his phone.
 
 ## Phase 2 — Weather modifier
 - [ ] Confirm api.weather.gov requirements (headers, CORS, forecast range)
@@ -157,6 +154,10 @@ Page.
 
 ## Phase 3 — Worker cron, KV state, email alerts
 - [ ] Confirm KV free-tier read and write limits against the planned cadence.
+- [ ] Choose how the Worker gets launch times. LL2 answered 429 to every
+      request from a Cloudflare Pages Function on 2026-10-08 (see FINDINGS,
+      Dead-ends). Options: an LL2 API token, another launch data source, or
+      a fetch from outside Cloudflare. This blocks the rest of Phase 3.
 - [ ] Worker with one Cron Trigger. KV holds the cached LL2 launch list.
       Refresh slowly by default. Refresh faster only when a tracked launch
       is close. Stay under 15 LL2 requests per hour in every case.
