@@ -69,3 +69,6 @@ table.minutes td { padding: 7px 8px; border-top: 1px solid var(--line); font-wei
   .facts { grid-template-columns: 1fr 1fr; }
   .slider { flex-wrap: wrap; }
 }
+.note.first { margin: 0 0 10px; color: var(--text); }
+.slip span.now { outline: 2px solid #fff; outline-offset: 1px; }
+.slip span small { display: block; font-size: .62rem; font-weight: 700; text-transform: uppercase; }

@@ -157,16 +157,33 @@ function minuteTable(result, liftoffMs) {
   return table;
 }
 
+// What the verdict would be if liftoff moved. Each box is a liftoff time,
+// not a time to look. A summary sentence says the same thing in words.
 function slipTable(launch) {
-  const box = el('div', { class: 'slip' });
   const base = Date.parse(launch.net);
+  const steps = [];
   for (let m = -SLIP_RANGE_MIN; m <= SLIP_RANGE_MIN; m += SLIP_STEP_MIN) {
     const net = new Date(base + m * 60000).toISOString();
     const r = evaluateLaunch({ launch: { ...launch, net }, observer, profiles, config });
-    const cell = el('span', { class: `${r.verdict}${m === 0 ? ' now' : ''}`, title: `${r.verdict}${r.prime ? ', prime' : ''}` }, timeFmt.format(base + m * 60000));
+    steps.push({ m, ms: base + m * 60000, verdict: r.verdict });
+  }
+  const good = steps.filter((s) => s.verdict !== 'no');
+  const planned = timeFmt.format(base);
+  let summary;
+  if (good.length === 0) {
+    summary = `Planned liftoff is ${planned}. No liftoff time within two hours either side would give a jellyfish.`;
+  } else {
+    const first = timeFmt.format(good[0].ms);
+    const last = timeFmt.format(good.at(-1).ms);
+    summary = `Planned liftoff is ${planned}. A jellyfish is likely or possible for any liftoff from ${first} to ${last}. Outside that window the sky is too dark for the rocket to be in sunlight, or too bright to see it.`;
+  }
+  const box = el('div', { class: 'slip' });
+  for (const s of steps) {
+    const cell = el('span', { class: `${s.verdict}${s.m === 0 ? ' now' : ''}` }, timeFmt.format(s.ms).replace(/\s?[AP]M$/, ''));
+    if (s.m === 0) cell.append(el('small', {}, 'planned'));
     box.append(cell);
   }
-  return box;
+  return el('div', {}, el('p', { class: 'note first' }, summary), box);
 }
 
 function fact(label, value) {
@@ -222,9 +239,9 @@ function launchCard(launch) {
       : `The chart is the view when you face southeast: south is on the right and east is on the left. Each line is one past Falcon 9 flight flown on this launch's path. Orange is the sunlit part in a dark sky; the dotted part is before the plume is counted or after it leaves sunlight. The data ends about ${Math.round(lead.samples.at(-1).tS / 60)} minutes after liftoff; the rocket may stay visible longer.`));
   }
 
-  card.append(el('h3', {}, 'If the launch time slips'));
+  card.append(el('h3', {}, 'What if liftoff is delayed or moved?'));
   card.append(slipTable(launch));
-  card.append(el('p', { class: 'note' }, 'Each box is a liftoff time. Orange is likely, blue is possible, dark is no. The outlined box is the current time.'));
+  card.append(el('p', { class: 'note' }, 'Each box is a possible liftoff time, not a time to look. Orange: likely. Blue: possible. Dark: no jellyfish. If the launch moves, reopen this page for the new viewing times.'));
   return card;
 }
 
