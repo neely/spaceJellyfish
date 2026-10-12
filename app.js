@@ -220,6 +220,7 @@ function launchCard(launch) {
     card.append(facts);
 
     card.append(el('h3', {}, 'Where to look'));
+    card.append(el('p', {}, el('a', { class: 'sky-link', href: `sky.html?id=${encodeURIComponent(launch.id)}` }, 'Point your phone at the sky: see this path over your trees →')));
     const chartBox = el('div');
     const stored = Number(localStorage.getItem(HORIZON_KEY) ?? 0);
     const draw = (deg) => chartBox.replaceChildren(skyChart(result, liftoff, deg));

@@ -73,6 +73,15 @@ launches and for other vehicles should be treated with caution.
 Four plume reports are too few to call the engine validated, and we have set
 five as the minimum before any alert is built.
 
+**Sky view (camera).** Each launch card links to `sky.html`. It opens the
+phone's back camera and draws the predicted path, the horizon, height lines
+every 10 degrees, and compass marks over the live picture, so you can see
+which part of the path your trees hide. Orange is the sunlit plume. Calibrate
+it in daylight: put the Sun in the centre circle and tap the button; the page
+keeps the correction. Freeze and Save picture keep an augmented photo. It
+runs on the phone only; nothing is uploaded. It is not yet tested on a real
+phone.
+
 What the engine consists of:
 
 - **Sun position** (`engine/sun.js`): the U.S. Naval Observatory approximate

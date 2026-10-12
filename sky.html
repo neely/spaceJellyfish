@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sky View: Space Jellyfish</title>
+  <meta name="description" content="Point your phone at the sky to see where the rocket path crosses your trees.">
+  <link rel="icon" href="assets/jellyfish.png">
+  <link rel="apple-touch-icon" href="assets/jellyfish.png">
+  <link rel="stylesheet" href="sky.css">
+</head>
+<body>
+  <video id="video" playsinline muted autoplay></video>
+  <canvas id="overlay"></canvas>
+
+  <div id="hud" class="hud top">
+    <div id="title">Loading launch…</div>
+    <div id="reading" class="dim"></div>
+  </div>
+
+  <div id="hint" class="hint" hidden></div>
+
+  <div id="controls" class="hud bottom" hidden>
+    <div class="row">
+      <button type="button" id="nudge-left" aria-label="Turn the overlay 1 degree left">◀ 1°</button>
+      <button type="button" id="align-sun">Sun is in the circle</button>
+      <button type="button" id="nudge-right" aria-label="Turn the overlay 1 degree right">1° ▶</button>
+    </div>
+    <div class="row">
+      <button type="button" id="freeze">Freeze</button>
+      <button type="button" id="save">Save picture</button>
+      <button type="button" id="settings-toggle">Settings</button>
+      <a class="button" href="./">Back</a>
+    </div>
+    <div id="settings" class="settings" hidden>
+      <label>Camera field of view, long side <input type="range" id="fov" min="40" max="100" step="1"> <span id="fov-read"></span></label>
+      <label>Compass correction <span id="corr-read"></span> <button type="button" id="corr-reset">Reset</button></label>
+      <p class="dim">Calibrate in daylight: put the Sun in the circle and tap the button. The page then knows how far off your compass is and keeps that for next time. Check the field of view with the horizon lines: 10° is about one fist at arm's length.</p>
+    </div>
+  </div>
+
+  <div id="start" class="start">
+    <img src="assets/jellyfish.png" alt="" width="96" height="96">
+    <h1>Sky view</h1>
+    <p id="start-text">See the rocket path over your own trees. Hold the phone up and look through it.</p>
+    <button type="button" id="start-button">Start camera</button>
+    <p class="dim">Needs the camera and motion sensors. Nothing is uploaded; it all runs on your phone.</p>
+    <p><a href="./">Back to launches</a></p>
+  </div>
+
+  <script type="module" src="sky.js"></script>
+</body>
+</html>

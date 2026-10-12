@@ -144,6 +144,18 @@ Page.
       gives the time, direction, and height for each minute. Observed at
       375 px in a local preview: labels are readable, no sideways scroll.
       Ben has not yet confirmed on his phone.
+- [ ] Camera sky view (add-on, `sky.html`, `sky.js`, `sky.css`,
+      `lib/skyproject.js`, `config/skyview.json`): live back camera, phone
+      orientation sensors, and the predicted path drawn over the picture.
+      Sun calibration stores the compass error; Freeze and Save picture
+      make an augmented photo. Each launch card links to it. The main page
+      keeps every feature. Observed 2026-10-12 in headless Chromium at
+      390 px with a fake camera and simulated iOS orientation events: the
+      readout follows the events (compass 150 plus declination -8 gives
+      facing 142), the SpX-35 path and minute labels draw, and drag mode
+      works with no sensors; `npm test` shows 50 pass, 0 fail. Not yet seen
+      on a real phone. Tick after Ben checks the Sun calibration and the
+      path on his phone.
 
 ## Phase 2 — Weather modifier
 - [ ] Confirm api.weather.gov requirements (headers, CORS, forecast range)

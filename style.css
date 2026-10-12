@@ -72,3 +72,7 @@ table.minutes td { padding: 7px 8px; border-top: 1px solid var(--line); font-wei
 .note.first { margin: 0 0 10px; color: var(--text); }
 .slip span.now { outline: 2px solid #fff; outline-offset: 1px; }
 .slip span small { display: block; font-size: .62rem; font-weight: 700; text-transform: uppercase; }
+.sky-link {
+  display: inline-block; margin: 2px 0 6px; padding: 8px 12px; border: 1px solid var(--likely);
+  border-radius: 10px; color: var(--likely); text-decoration: none; font-weight: 600;
+}

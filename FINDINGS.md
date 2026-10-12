@@ -396,3 +396,21 @@ Choices made, and why. Mark settled ones `(locked)`.
   feed on Cloudflare was tried and failed (see Dead-ends).
 - Rejected: A Cloudflare Pages Function as a shared feed. A GitHub Action
   that commits the list every hour, because it fills the commit history.
+
+### Sky view uses the live camera and the phone sensors
+- What: An add-on page shows the back camera and draws the path with the
+  phone's orientation sensors. A frozen frame can be saved as a picture.
+- Why: A photo file gives a compass heading and a lens, but no tilt. With
+  trees in the way, the horizon is not in the picture, so tilt cannot be
+  found from the image. The observer's height does not matter: the
+  horizon dip from 2 m is about 0.05 degrees.
+- Rejected: Upload a photo and align it by hand.
+- Limit: Phone compasses are often wrong by 5 to 10 degrees near a house.
+  The page takes the Sun as the reference: the user puts the Sun in the
+  centre circle and the page stores the compass error. The magnetic
+  declination (-8 degrees) and the default field of view (65 degrees) in
+  `config/skyview.json` are provisional and not verified.
+- Limit: iOS gives one compass heading. The page takes it as the heading
+  of the camera axis when the phone is held up. This is not verified on a
+  device; Sun calibration will show it.
+

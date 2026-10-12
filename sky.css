@@ -1,0 +1,39 @@
+:root {
+  --bg: #070a14;
+  --panel: rgba(17, 23, 40, .82);
+  --line: #26304a;
+  --text: #e8ecf6;
+  --dim: #98a2bd;
+  --likely: #ffb347;
+  --possible: #7fc8ff;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #000; color: var(--text);
+  font: 15px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+video, canvas { position: fixed; inset: 0; width: 100%; height: 100%; }
+video { object-fit: cover; }
+canvas { touch-action: none; }
+.dim { color: var(--dim); font-size: .85rem; }
+.hud { position: fixed; left: 0; right: 0; padding: 8px 12px; background: var(--panel); }
+.hud.top { top: 0; padding-top: max(8px, env(safe-area-inset-top)); }
+.hud.bottom { bottom: 0; background: rgba(17,23,40,.6); padding-bottom: max(10px, env(safe-area-inset-bottom)); }
+#title { font-weight: 600; }
+.row { display: flex; gap: 8px; justify-content: center; margin: 4px 0; flex-wrap: wrap; }
+button, a.button {
+  background: #111728; color: var(--text); border: 1px solid var(--line);
+  border-radius: 10px; padding: 7px 10px; font: inherit; font-size: .9rem; cursor: pointer; text-decoration: none;
+}
+button.on { border-color: var(--likely); color: var(--likely); }
+.settings { max-width: 520px; margin: 6px auto 0; }
+.settings label { display: flex; gap: 8px; align-items: center; margin: 6px 0; flex-wrap: wrap; }
+.settings input[type=range] { flex: 1; min-width: 120px; }
+.hint { position: fixed; left: 50%; top: 24%; transform: translate(-50%, 0); max-width: 86%;
+  background: var(--panel); padding: 10px 14px; border-radius: 12px; text-align: center; pointer-events: none; }
+.start { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; padding: 24px; gap: 4px; }
+.start img { border-radius: 20px; }
+.start h1 { margin: 8px 0 0; }
+.start p { max-width: 380px; }
+.start button { font-size: 1.1rem; padding: 12px 22px; border-color: var(--likely); }
+a { color: var(--possible); }
