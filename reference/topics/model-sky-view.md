@@ -91,8 +91,10 @@ distance; f = pixels / tan(angle).
 
 - 12:46 EDT: engine Sun azimuth 172.3, elevation 49.4. Page with the Sun
   in the centre: "Facing 172° S, 49° up", drawn Sun on the real Sun.
-- Tilt agreed without calibration. Whether Sun calibration was tapped
-  before that screenshot is not recorded.
+- Tilt agreed without calibration. Sun calibration was tapped; the stored
+  compass error was -3.4 degrees (raw compass plus -8 declination read 3.4
+  degrees too far clockwise). Uncalibrated, the drawn path would be about
+  3 degrees off, which matters little for checking trees.
 - SpX-35 path seen over the trees: sunlit part starts at 6:36 about 12 to
   13 degrees up, above the trees; the dashed part before it is behind them.
 

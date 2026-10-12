@@ -411,9 +411,11 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Observed 2026-10-12 12:46 EDT, Ben's iPhone, Safari, James Island: the
   engine put the Sun at azimuth 172.3, elevation 49.4. With the Sun in the
   centre circle the page read "Facing 172° S, 49° up", and the predicted
-  ring was on the Sun. Tilt agreed with no calibration. It is not recorded
-  whether Ben tapped Sun calibration before that screenshot, so the raw
-  compass plus the -8 degree declination is not yet proven alone.
+  ring was on the Sun after Sun calibration. Tilt agreed with no
+  calibration. The stored compass error was -3.4 degrees: the raw iOS
+  compass plus the -8 degree declination read 3.4 degrees too far
+  clockwise. That is inside the usual 5 to 10 degree compass error, so the
+  heading model works; calibration takes out the rest.
 - Observed: with field of view 65 the ring near the screen edge was about
   20 percent too far from the centre. Ben set 70 and the ring stayed on the
   Sun. 70 is now the default. The centre of the screen does not depend on
