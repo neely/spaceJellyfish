@@ -9,7 +9,7 @@ relevance: medium
 answers: "How does sky.html turn the phone's orientation into camera axes, project a sky direction (azimuth, elevation) onto the screen, correct the compass, and set the field of view, and what is verified on a real phone?"
 key_points:
   - "Device to earth: R = Rz(alpha) Rx(beta) Ry(gamma); earth x east, y north, z up; back camera looks along device -z."
-  - "Screen point = centre + f * (d.right, -d.up) / (d.forward); f comes from the field of view of the long side of the cover-fitted video."
+  - "Screen point = centre + f * (d.right, -d.up) / (d.forward); f comes from the long-side field of view of the video."
   - "iOS alpha has no fixed reference; webkitCompassHeading plus declination sets a heading correction, smoothed with gain 0.08 per event."
   - "Sun calibration stores the total compass error in localStorage; field of view is a user setting, default 70 degrees from one iPhone test."
   - "Verified 2026-10-12 on one iPhone: drawn Sun on the real Sun at azimuth 172, elevation 49."
