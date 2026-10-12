@@ -79,8 +79,10 @@ every 10 degrees, and compass marks over the live picture, so you can see
 which part of the path your trees hide. Orange is the sunlit plume. Calibrate
 it in daylight: put the Sun in the centre circle and tap the button; the page
 keeps the correction. Freeze and Save picture keep an augmented photo. It
-runs on the phone only; nothing is uploaded. It is not yet tested on a real
-phone.
+runs on the phone only; nothing is uploaded. Tested on one iPhone on
+2026-10-12: the drawn Sun sat on the real Sun. If the drawn Sun drifts off
+the real one near the screen edge, change the field of view in Settings
+(70 degrees worked on that iPhone).
 
 What the engine consists of:
 

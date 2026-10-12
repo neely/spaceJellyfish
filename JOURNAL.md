@@ -8,6 +8,30 @@ journal/YYYY-MM.md (the month they were written, newest first).
 
 ---
 
+## 2026-10-12 — Camera sky view, tested with the Sun
+
+**Did:** Built an add-on page, `sky.html`. It shows the phone's back camera
+and draws the predicted path, horizon, height lines and compass marks over
+it. Sun calibration stores the compass error; Freeze and Save picture make
+an augmented photo. Each launch card links to it; the main page is
+unchanged. Ben tested it on his iPhone: the drawn Sun sat on the real Sun
+(172 degrees, 49 up). Field of view 65 was too narrow; 70 worked and is now
+the default. The SpX-35 sunlit path clears his trees from 6:36. Added
+reference/topics/model-sky-view.
+
+**Least confident about (Q1):**
+- The raw iOS compass. It is not recorded whether Ben tapped Sun
+  calibration before the matching screenshot. Opening Settings and reading
+  "Compass correction" would show it (0.0 means no tap).
+- The declination of −8 degrees. A NOAA calculator value would prove it.
+- Field of view 70 for other phones. One phone, one test by eye.
+- Android. Not tested on any device.
+
+**Suggestions (Q5):** Build the two-point Sun calibration for the field of
+view. Add the Moon as a night calibration target. Show a per-minute marker
+for the current time during a launch, so the user can match the real plume
+to the drawn path.
+
 ## 2026-10-08 — Page live, labels corrected, Cloudflare feed removed
 
 **Did:** Ben confirmed five Reddit post dates and described the Atlas V

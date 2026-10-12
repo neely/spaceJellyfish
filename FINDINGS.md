@@ -398,19 +398,25 @@ Choices made, and why. Mark settled ones `(locked)`.
   that commits the list every hour, because it fills the commit history.
 
 ### Sky view uses the live camera and the phone sensors
-- What: An add-on page shows the back camera and draws the path with the
-  phone's orientation sensors. A frozen frame can be saved as a picture.
+- What: An add-on page (`sky.html`) shows the back camera and draws the
+  path with the phone's orientation sensors. A frozen frame can be saved
+  as a picture. Math and sensor details: reference/topics/model-sky-view.
 - Why: A photo file gives a compass heading and a lens, but no tilt. With
   trees in the way, the horizon is not in the picture, so tilt cannot be
   found from the image. The observer's height does not matter: the
   horizon dip from 2 m is about 0.05 degrees.
-- Rejected: Upload a photo and align it by hand.
-- Limit: Phone compasses are often wrong by 5 to 10 degrees near a house.
-  The page takes the Sun as the reference: the user puts the Sun in the
-  centre circle and the page stores the compass error. The magnetic
-  declination (-8 degrees) and the default field of view (65 degrees) in
-  `config/skyview.json` are provisional and not verified.
-- Limit: iOS gives one compass heading. The page takes it as the heading
-  of the camera axis when the phone is held up. This is not verified on a
-  device; Sun calibration will show it.
-
+- Rejected: Upload a photo and align it by hand. Read the focal length
+  from the camera: the browser camera API does not give it, and the photo
+  value does not fit the cropped video.
+- Observed 2026-10-12 12:46 EDT, Ben's iPhone, Safari, James Island: the
+  engine put the Sun at azimuth 172.3, elevation 49.4. With the Sun in the
+  centre circle the page read "Facing 172° S, 49° up", and the predicted
+  ring was on the Sun. Tilt agreed with no calibration. It is not recorded
+  whether Ben tapped Sun calibration before that screenshot, so the raw
+  compass plus the -8 degree declination is not yet proven alone.
+- Observed: with field of view 65 the ring near the screen edge was about
+  20 percent too far from the centre. Ben set 70 and the ring stayed on the
+  Sun. 70 is now the default. The centre of the screen does not depend on
+  this value.
+- Limit: The declination (-8 degrees) is not verified. Sun calibration
+  stores the total compass error, so it does not matter after calibration.

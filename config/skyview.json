@@ -1,8 +1,8 @@
 {
-  "defaultFovLongDeg": 65,
+  "defaultFovLongDeg": 70,
   "magneticDeclinationDeg": -8,
   "notes": {
-    "defaultFovLongDeg": "Provisional. Field of view across the long side of the camera video. Not measured for any phone; the user can change it in Settings and check it against the 10-degree lines.",
+    "defaultFovLongDeg": "Field of view across the long side of the camera video. 70 is what Ben set on his iPhone on 2026-10-12, by eye: the Sun ring stayed on the Sun near the screen edge (65 put the ring about 20 percent too far from the centre). One phone, one test. Other phones can differ; the user can change it in Settings.",
     "magneticDeclinationDeg": "Provisional, not verified. Added to the phone's magnetic compass heading to get a true heading (negative is west). Check against the NOAA calculator for 32.718 N, 79.954 W. Sun calibration on the page measures and stores the total compass error, so an error here is corrected there."
   }
 }

@@ -30,6 +30,7 @@ VOCAB = [
     "sun-position", "sidereal-time", "geodesy", "trajectory", "ascent-profile",
     "telemetry", "launch-data", "twilight", "illumination", "plume",
     "visibility", "sightings", "weather", "cloudflare", "email", "data-access",
+    "sky-view",
 ]
 SKIP_FILES = ("TEMPLATE.md", "INDEX.md")
 ANSWER_WIDTH = 160

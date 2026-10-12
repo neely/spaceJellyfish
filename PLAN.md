@@ -9,9 +9,10 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
-- **Last updated:** 2026-10-08
-- **Next action:** Ben watches SpX-35 on 2026-10-13 at 06:33 local and
-  reports what was seen. Then build the twilight candidate list and search
+- **Last updated:** 2026-10-12
+- **Next action:** Ben watches SpX-35 on 2026-10-13 at 06:33 local, with the
+  sky view open, and reports what was seen and where it was against the
+  drawn path. Then build the twilight candidate list and search
   local outlets for those dates, to find more `seen-plume` labels (4 now, 5
   needed).
 
@@ -144,7 +145,7 @@ Page.
       gives the time, direction, and height for each minute. Observed at
       375 px in a local preview: labels are readable, no sideways scroll.
       Ben has not yet confirmed on his phone.
-- [ ] Camera sky view (add-on, `sky.html`, `sky.js`, `sky.css`,
+- [x] Camera sky view (add-on, `sky.html`, `sky.js`, `sky.css`,
       `lib/skyproject.js`, `config/skyview.json`): live back camera, phone
       orientation sensors, and the predicted path drawn over the picture.
       Sun calibration stores the compass error; Freeze and Save picture
@@ -153,9 +154,10 @@ Page.
       390 px with a fake camera and simulated iOS orientation events: the
       readout follows the events (compass 150 plus declination -8 gives
       facing 142), the SpX-35 path and minute labels draw, and drag mode
-      works with no sensors; `npm test` shows 50 pass, 0 fail. Not yet seen
-      on a real phone. Tick after Ben checks the Sun calibration and the
-      path on his phone.
+      works with no sensors; `npm test` shows 50 pass, 0 fail. Observed
+      2026-10-12 on Ben's iPhone: the Sun ring sat on the Sun (172 degrees,
+      49 up); with field of view 70 it stayed on the Sun near the edge; the
+      SpX-35 sunlit path clears his trees from 6:36.
 
 ## Phase 2 — Weather modifier
 - [ ] Confirm api.weather.gov requirements (headers, CORS, forecast range)
