@@ -397,6 +397,25 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Rejected: A Cloudflare Pages Function as a shared feed. A GitHub Action
   that commits the list every hour, because it fills the commit history.
 
+### SpX-35 seen by Ben, 2026-10-13 (first own observation)
+- Ben saw and photographed a wide sunlit plume (jellyfish) from James Island.
+  The engine said likely and prime. The plume was in the predicted window.
+- Sky view screenshots, times from the image EXIF (liftoff 06:33:44 EDT):
+  T+254 s rocket at about azimuth 136, elevation 25.5; T+277 s at about
+  131, 28. Read by eye from the drawn grid, so about ±2 degrees.
+- Engine at the same times: T+254 s azimuth 155 to 165, elevation 24.1 to
+  24.9; T+277 s azimuth 144 to 158, elevation 27.4 to 28.1.
+- Elevation and timing agree within about 1 degree. Azimuth does not: the
+  rocket was 19 to 29 degrees further east than the engine said.
+- Two explanations, not yet separated: (a) the phone compass was off by
+  about 20 to 25 degrees this morning (calibration was the day before, by
+  the Sun); (b) the real path was further east than the 2018 profiles give.
+  Test: from the same spot in daylight, check the drawn Sun against the real
+  Sun before tapping calibration. If it is off by about 20 degrees, it is (a).
+- Label: this is a fifth `seen-plume` report. It is not in data/labels.json
+  yet, because SpX-35 is not in the pinned data/ll2-snapshot.json. Add it
+  when the snapshot is regenerated (only on Ben's request; see AGENTS.md).
+
 ### Sky view uses the live camera and the phone sensors
 - What: An add-on page (`sky.html`) shows the back camera and draws the
   path with the phone's orientation sensors. A frozen frame can be saved

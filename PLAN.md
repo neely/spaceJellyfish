@@ -9,12 +9,11 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
-- **Last updated:** 2026-10-12
-- **Next action:** Ben watches SpX-35 on 2026-10-13 at 06:33 local, with the
-  sky view open, and reports what was seen and where it was against the
-  drawn path. Then build the twilight candidate list and search
-  local outlets for those dates, to find more `seen-plume` labels (4 now, 5
-  needed).
+- **Last updated:** 2026-10-13
+- **Next action:** SpX-35 was seen as a jellyfish (see FINDINGS). Ben checks
+  the sky view against the Sun in daylight from the same spot, to find out
+  if the 20 to 25 degree azimuth difference was the compass. Then decide if
+  the snapshot is regenerated to add SpX-35 as the fifth `seen-plume` label.
 
 ---
 
