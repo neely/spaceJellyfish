@@ -84,6 +84,15 @@ and the engine's values for the same moments.
 |---|---|---|---|---|---|---|
 | 2026-10-13 | SpX-35 | James Island | likely, prime | plume | within about 1 deg | 19 to 29 deg farther east than predicted at the same moment; on or just under the drawn arc; compass check pending |
 
+<p align="center">
+  <img src="assets/demo-plume-spx35.jpg" alt="A wide fan-shaped glowing rocket plume above dark trees in a twilight sky" width="520">
+  <img src="assets/demo-skyview-spx35.jpg" alt="Sky view screenshot: the plume below the drawn orange path, with height lines and compass marks" width="260">
+</p>
+<p align="center"><em>SpX-35 from James Island, 13 October 2026. Left: the plume about
+four minutes after liftoff. Right: the sky view 254 s after liftoff, facing
+southeast; the rocket (the bright tip of the plume) sits just under the
+predicted path, and the plume fills far more sky than the line.</em></p>
+
 To add one: before the launch, calibrate the sky view as described below.
 During it, take sky view screenshots (their time stamps give the seconds
 after liftoff), and note whether you saw nothing, a moving point of light,
@@ -220,7 +229,8 @@ What the engine consists of:
   the engine can be traced to where it came from. Each note opens with a
   short statement of what it answers; `INDEX.md` lists them all, and
   `README.md` explains how to read and extend it.
-- `assets/`: images. `jellyfish.png` is the project art (1024 x 1024), also
+- `assets/`: images. `demo-*.jpg` are the SpX-35 photo and sky view
+  screenshot shown above. `jellyfish.png` is the project art (1024 x 1024), also
   the source for a future app icon.
 - `AGENTS.md`, `PLAN.md`, `FINDINGS.md`, `JOURNAL.md`, `CLAUDE.md`: the
   project context files, from the
