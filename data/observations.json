@@ -1,0 +1,31 @@
+{
+  "about": "Our own sightings, made with the sky view from a known spot. Unlike data/labels.json (public reports matched to the pinned snapshot), each entry here records what was measured, so it can test direction, height, and timing, not only whether a plume was seen. Add one entry per launch watched, including launches where nothing was seen.",
+  "fields": {
+    "seen": "none, rocket (a moving point of light), or plume (a wide sunlit cloud).",
+    "points": "Rocket positions read from sky view screenshots: seconds after liftoff (from the screenshot time), azimuth and elevation in degrees read from the drawn grid, about +/-2 degrees.",
+    "model": "What the engine gave for the same seconds after liftoff, as a range over the profile members.",
+    "compassCheck": "The drawn Sun against the real Sun from the same spot, before recalibrating. Tells whether a direction error was the phone compass."
+  },
+  "observations": [
+    {
+      "date": "2026-10-13",
+      "launch": "Falcon 9 Block 5 | Dragon CRS-2 SpX-35",
+      "llId": "bf2c3027-a314-403e-a416-2bfd5d165ad1",
+      "liftoffUtc": "2026-10-13T10:33:44Z",
+      "observer": "Ben, James Island (29412)",
+      "verdict": "likely, prime",
+      "seen": "plume",
+      "points": [
+        { "tS": 254, "azimuthDeg": 136, "elevationDeg": 25.5 },
+        { "tS": 277, "azimuthDeg": 131, "elevationDeg": 28 }
+      ],
+      "model": [
+        { "tS": 254, "azimuthDeg": [155.2, 165.2], "elevationDeg": [24.1, 24.9] },
+        { "tS": 277, "azimuthDeg": [144.2, 157.6], "elevationDeg": [27.4, 28.1] }
+      ],
+      "compassCorrectionDeg": -3.4,
+      "compassCheck": null,
+      "note": "Height and timing agree within about 1 degree. Rocket 19 to 29 degrees farther east than the engine at the same moments; it sat on or just under the drawn arc. Compass check pending."
+    }
+  ]
+}

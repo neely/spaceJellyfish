@@ -73,19 +73,25 @@ launches and for other vehicles should be treated with caution.
 Four plume reports are too few to call the engine validated, and we have set
 five as the minimum before any alert is built.
 
-**First sighting from our own observer point.** On 13 October 2026 Ben
-watched SpX-35 from James Island and photographed a wide sunlit plume. The
-engine had rated the launch likely and prime. In two screenshots from the sky
-view (below), taken 254 s and 277 s after liftoff, the rocket stood 25.5 and
-28 degrees above the horizon against a predicted 24 to 25 and 27 to 28
-degrees, so height and timing agreed within about 1 degree. Its compass
-direction did not: the rocket appeared 19 to 29 degrees farther east than the
-engine placed it at those moments. We cannot yet tell whether the phone
-compass drifted overnight or the real ascent ran farther east than our 2018
-profiles, and a daylight check against the Sun from the same spot should
-separate the two (FINDINGS.md has the numbers). One sighting is one data
-point; it does not change the validation count above until it is added to
-the labels.
+**Our own observations.** Public reports tell us only whether a launch was
+seen. Watching with the sky view from a known spot also tells us where the
+rocket was and when, so each of these tests the direction, height, and
+timing of the model. They are kept in
+[data/observations.json](data/observations.json), with the measured points
+and the engine's values for the same moments.
+
+| Date | Launch | Where | Verdict | Seen | Height and timing | Direction |
+|---|---|---|---|---|---|---|
+| 2026-10-13 | SpX-35 | James Island | likely, prime | plume | within about 1 deg | 19 to 29 deg farther east than predicted at the same moment; on or just under the drawn arc; compass check pending |
+
+To add one: before the launch, calibrate the sky view as described below.
+During it, take sky view screenshots (their time stamps give the seconds
+after liftoff), and note whether you saw nothing, a moving point of light,
+or a wide glowing plume. Afterwards, from the same spot in daylight, check
+whether the drawn Sun sits on the real Sun before recalibrating, because that
+separates a compass error from a model error. One launch is one data point,
+so we read this table for patterns across several launches rather than for
+any single row.
 
 **Who this works for.** The engine computes everything for one point on
 James Island, but while it is visible the rocket is 290 to 1,180 km away
@@ -200,7 +206,8 @@ What the engine consists of:
 - `data/`: pinned data. `ll2-snapshot.json` holds the 506 Cape Canaveral and
   Kennedy Space Center launches that Launch Library 2 listed from January
   2017 to 2 October 2026; `labels.json` holds the reported sightings. The
-  backtest reads these files and nothing else. `upcoming-fallback.json` is a
+  backtest reads these files and nothing else. `observations.json` holds our
+  own measured sightings. `upcoming-fallback.json` is a
   saved copy of upcoming launches that the page shows only when every live
   source fails.
 - `scripts/`: one-off tools. `fetch-reference-fixtures.js` regenerates the

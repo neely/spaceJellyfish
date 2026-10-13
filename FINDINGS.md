@@ -429,6 +429,7 @@ Choices made, and why. Mark settled ones `(locked)`.
   the Sun); (b) the real path was further east than the 2018 profiles give.
   Test: from the same spot in daylight, check the drawn Sun against the real
   Sun before tapping calibration. If it is off by about 20 degrees, it is (a).
+- Recorded in data/observations.json with the measured points.
 - Label: this is a fifth `seen-plume` report. It is not in data/labels.json
   yet, because SpX-35 is not in the pinned data/ll2-snapshot.json. Add it
   when the snapshot is regenerated (only on Ben's request; see AGENTS.md).
