@@ -28,10 +28,23 @@ button.on { border-color: var(--likely); color: var(--likely); }
 .settings { max-width: 520px; margin: 6px auto 0; }
 .settings label { display: flex; gap: 8px; align-items: center; margin: 6px 0; flex-wrap: wrap; }
 .settings input[type=range] { flex: 1; min-width: 120px; }
-.hint { position: fixed; left: 50%; top: 24%; transform: translate(-50%, 0); max-width: 86%;
+.hint { position: fixed; left: 50%; top: calc(max(8px, env(safe-area-inset-top)) + 72px); transform: translate(-50%, 0); max-width: 86%;
   background: var(--panel); padding: 10px 14px; border-radius: 12px; text-align: center; pointer-events: none; }
 .start { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column;
-  align-items: center; justify-content: center; text-align: center; padding: 24px; gap: 4px; }
+  align-items: center; justify-content: safe center; text-align: center; padding: 24px 16px; gap: 4px; overflow-y: auto; }
+.how { max-width: 460px; text-align: left; margin: 10px 0; }
+.how summary { cursor: pointer; color: var(--possible); text-align: center; }
+.help { position: fixed; inset: 0; z-index: 5; background: rgba(7,10,20,.95); overflow-y: auto;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom)); }
+.help > div { max-width: 520px; margin: 0 auto; }
+.help-head { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center;
+  max-width: 520px; margin: 0 auto; padding: 6px 0; background: rgba(7,10,20,.98); }
+.help h2, .how h2 { font-size: 1rem; margin: 14px 0 4px; color: var(--likely); }
+.help ol, .how ol, .help ul, .how ul { padding-left: 1.3em; margin: 4px 0; }
+.help p, .how p { margin: 6px 0; }
+.help li, .how li { margin: 6px 0; }
+.lit { color: var(--likely); font-weight: 600; }
+.dark { color: var(--possible); font-weight: 600; }
 .start img { border-radius: 20px; }
 .start h1 { margin: 8px 0 0; }
 .start p { max-width: 380px; }

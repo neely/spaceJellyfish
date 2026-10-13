@@ -397,6 +397,23 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Rejected: A Cloudflare Pages Function as a shared feed. A GitHub Action
   that commits the list every hour, because it fills the commit history.
 
+### The answer holds across the Charleston area
+- `node scripts/observer-sensitivity.js` re-runs all 506 snapshot launches
+  for other places (ZIP centroids from zippopotam.us, read 2026-10-13).
+- Folly Beach, downtown, Sullivan's Island, Mount Pleasant, Isle of Palms
+  (7 to 19 km away): same verdict for 504 to 506 of 506 launches, and for
+  58 or 59 of the 59 that James Island rates likely or possible. Median
+  change in peak height 0.3 to 1.3 degrees; median change in peak bearing
+  0.1 to 1.1 degrees (max 14, from fan launches where the peak moves
+  between tracks).
+- Summerville (40 km): 57 of 59, peak height about 4 degrees lower.
+  Columbia (174 km): 53 of 59, about 14 degrees lower.
+- While visible, the rocket is 290 to 1,180 km from the observer, which is
+  why a few km of observer movement barely matters.
+- This compares the model with itself. It does not test the model.
+- 29455 (Johns Island) was left out: the API gave Mount Pleasant
+  coordinates for it.
+
 ### SpX-35 seen by Ben, 2026-10-13 (first own observation)
 - Ben saw and photographed a wide sunlit plume (jellyfish) from James Island.
   The engine said likely and prime. The plume was in the predicted window.

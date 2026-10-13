@@ -28,15 +28,21 @@
     </div>
     <div class="row">
       <button type="button" id="freeze">Freeze</button>
-      <button type="button" id="save">Save picture</button>
+      <button type="button" id="save">Save</button>
       <button type="button" id="settings-toggle">Settings</button>
+      <button type="button" id="help-toggle">Help</button>
       <a class="button" href="./">Back</a>
     </div>
     <div id="settings" class="settings" hidden>
-      <label>Camera field of view, long side <input type="range" id="fov" min="40" max="100" step="1"> <span id="fov-read"></span></label>
+      <label>Field of view <input type="range" id="fov" min="40" max="100" step="1"> <span id="fov-read"></span></label>
       <label>Compass correction <span id="corr-read"></span> <button type="button" id="corr-reset">Reset</button></label>
-      <p class="dim">Calibrate in daylight: put the Sun in the circle and tap the button. The page then knows how far off your compass is and keeps that for next time. Check the field of view with the horizon lines: 10° is about one fist at arm's length.</p>
+      <p class="dim">Field of view: with the Sun near the screen edge, if the yellow ring is farther from the centre than the Sun, make this larger; if closer, make it smaller. Compass correction is set by the Sun button; ◀ 1° and 1° ▶ fine-tune it. Both are kept on this phone.</p>
     </div>
+  </div>
+
+  <div id="help" class="help" hidden>
+    <div class="help-head"><strong>How to set it up</strong><button type="button" id="help-close">Close</button></div>
+    <div id="help-body"></div>
   </div>
 
   <div id="start" class="start">
@@ -45,8 +51,53 @@
     <p id="start-text">See the rocket path over your own trees. Hold the phone up and look through it.</p>
     <button type="button" id="start-button">Start camera</button>
     <p class="dim">Needs the camera and motion sensors. Nothing is uploaded; it all runs on your phone.</p>
+    <details class="how">
+      <summary>How to set it up (do this the day before, in sunshine)</summary>
+      <div id="start-help"></div>
+    </details>
     <p><a href="./">Back to launches</a></p>
   </div>
+
+  <template id="help-steps">
+    <p>The drawing is only as good as two settings: the <strong>compass correction</strong> (which way the phone is facing) and the <strong>field of view</strong> (how wide your camera sees). Set both once with the Sun, the day before. Both are kept on this phone in this browser.</p>
+
+    <h2>Calibrate the compass (the day before, in sunshine)</h2>
+    <ol>
+      <li><strong>Stand exactly where you will watch.</strong> The compass error changes from place to place, even a few steps away, so a correction made in the driveway may not hold in the back yard.</li>
+      <li><strong>Pick a time when the Sun is low,</strong> just above the trees. A low Sun means you hold the phone upright, the same way you will hold it at launch time. For a morning launch, the hour after sunrise is ideal, because the Sun is then low in the east and southeast, close to where the rocket will be. A high midday Sun still works, but less well.</li>
+      <li>Tap <strong>Start camera</strong> and allow camera and motion access.</li>
+      <li>Point the phone at the Sun. Look at the screen, not at the Sun. The <span class="lit">yellow ring</span> is where the page thinks the Sun is.</li>
+      <li>Put the real Sun inside the white centre circle and tap <strong>Sun is in the circle</strong>. The yellow ring should jump onto the Sun. Use <strong>◀ 1°</strong> and <strong>1° ▶</strong> to fine-tune.</li>
+    </ol>
+
+    <h2>Set the field of view (same visit)</h2>
+    <p>Phones have different lenses, so the page cannot know how wide your camera sees. You set it by watching the yellow ring near the edge of the screen.</p>
+    <ol>
+      <li>Do not zoom. Keep the camera at its normal 1× view.</li>
+      <li>Turn slowly so the Sun moves from the centre toward the left or right edge.</li>
+      <li>Watch the yellow ring. If it stays on the Sun, you are done.</li>
+      <li>If the ring is <strong>farther from the centre</strong> than the Sun, open <strong>Settings</strong> and make <strong>Field of view</strong> larger. If it is <strong>closer to the centre</strong>, make it smaller. Repeat until the ring stays on the Sun at the edge. (70° worked on one iPhone.)</li>
+      <li>The centre of the screen is always right, whatever this setting is. To check one tree exactly, put it in the centre circle.</li>
+    </ol>
+
+    <h2>What throws the compass off</h2>
+    <p>The page uses the phone's compass and tilt sensors. It does not use GPS, and it does not need your location. Compass errors of 5 to 10 degrees are common. The usual causes:</p>
+    <ul>
+      <li>Metal and magnets nearby: cars, metal railings, a grill, a steel or rebar-filled deck, and especially magnetic phone cases, MagSafe wallets, and car mounts.</li>
+      <li>A compass that needs recalibrating. On Android, open a compass or maps app and move the phone in a figure 8. On iPhone, make sure Settings, Privacy &amp; Security, Location Services, System Services, Compass Calibration is on.</li>
+      <li>Moving to a new spot after calibrating. Calibrate again where you stand.</li>
+    </ul>
+    <p class="dim">Tested on one iPhone in Safari. Android phones should work in Chrome but have not been tested; if the drawing spins or drifts, calibrate on the Sun again.</p>
+
+    <h2>On launch morning</h2>
+    <ol>
+      <li>Open the launch list first, so the launch time is fresh, then tap that launch's camera button.</li>
+      <li>Stand in the spot where you calibrated, and point where the hint says.</li>
+      <li>The <span class="lit">solid orange line</span> is where the rocket will be while it is in sunlight. The glowing plume spreads out wide behind that point, so expect it to fill much more sky than the line. The <span class="dark">dashed blue line</span> is the rocket before it reaches sunlight; it is often too low or faint to see. Dots mark each minute after liftoff.</li>
+      <li>Use <strong>Freeze</strong> and <strong>Save</strong> to keep a photo with the path drawn on it.</li>
+    </ol>
+    <p class="dim">The path is worked out for James Island. Anywhere from Folly Beach to Isle of Palms it moves by about 1 to 2 degrees, which is less than a typical compass error. Nothing leaves your phone.</p>
+  </template>
 
   <script type="module" src="sky.js"></script>
 </body>

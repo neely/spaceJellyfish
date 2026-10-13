@@ -98,6 +98,20 @@ distance; f = pixels / tan(angle).
 - SpX-35 path seen over the trees: sunlit part starts at 6:36 about 12 to
   13 degrees up, above the trees; the dashed part before it is behind them.
 
+## Instructions and launch data (2026-10-13)
+
+- The setup steps live in one `<template id="help-steps">` in sky.html. The
+  page shows it on the start screen and behind the Help button.
+- Advice given there: calibrate the day before, at the watching spot, with
+  a low Sun (phone held upright, as at launch); set the field of view by
+  watching the Sun ring near the screen edge (ring farther out than the Sun
+  means make the field of view larger).
+- Calibration only corrects azimuth. A vertical gap between the ring and
+  the Sun is a tilt error, which the page cannot correct.
+- sky.js loads launches like the main page: the saved list if under 20
+  minutes old, then LL2, then the saved list of any age, then
+  data/upcoming-fallback.json.
+
 ## Not modelled
 
 Lens distortion; refraction near the horizon; magnetic disturbance that

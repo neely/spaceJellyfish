@@ -73,16 +73,82 @@ launches and for other vehicles should be treated with caution.
 Four plume reports are too few to call the engine validated, and we have set
 five as the minimum before any alert is built.
 
+**First sighting from our own observer point.** On 13 October 2026 Ben
+watched SpX-35 from James Island and photographed a wide sunlit plume. The
+engine had rated the launch likely and prime. In two screenshots from the sky
+view (below), taken 254 s and 277 s after liftoff, the rocket stood 25.5 and
+28 degrees above the horizon against a predicted 24 to 25 and 27 to 28
+degrees, so height and timing agreed within about 1 degree. Its compass
+direction did not: the rocket appeared 19 to 29 degrees farther east than the
+engine placed it at those moments. We cannot yet tell whether the phone
+compass drifted overnight or the real ascent ran farther east than our 2018
+profiles, and a daylight check against the Sun from the same spot should
+separate the two (FINDINGS.md has the numbers). One sighting is one data
+point; it does not change the validation count above until it is added to
+the labels.
+
+**Who this works for.** The engine computes everything for one point on
+James Island, but while it is visible the rocket is 290 to 1,180 km away
+(over all 506 snapshot launches), so moving the observer a
+few kilometres barely changes the answer. We re-ran all 506 snapshot launches
+for other places (`node scripts/observer-sensitivity.js`, ZIP centroids):
+
+| Place | km from James Island | Same verdict (of 506) | Same verdict when James Island says likely or possible (of 59) | Typical change in peak height |
+|---|---|---|---|---|
+| Folly Beach | 7 | 506 | 59 | 0.7 deg |
+| Downtown Charleston | 7 | 505 | 58 | 0.3 deg |
+| Sullivan's Island | 12 | 505 | 59 | 0.9 deg |
+| Mount Pleasant | 19 | 504 | 58 | 0.4 deg |
+| Isle of Palms | 19 | 505 | 59 | 1.3 deg |
+| Summerville | 40 | 503 | 57 | 4.1 deg |
+| Columbia | 174 | 499 | 53 | 14.1 deg |
+
+Anywhere from Folly Beach to Isle of Palms, the page is as good for you as it
+is for James Island: the verdict differs for at most 2 of 506 launches, and
+heights and directions shift by about 1 degree, less than a phone compass
+error. By Summerville (40 km) the verdict still holds but heights run about 4
+degrees off, and beyond roughly 50 km the page should be treated as a rough
+guide only. These figures compare the model with itself; they say nothing
+about how right the model is, only that the answer does not depend on which
+Charleston-area neighbourhood you stand in.
+
 **Sky view (camera).** Each launch card links to `sky.html`. It opens the
-phone's back camera and draws the predicted path, the horizon, height lines
-every 10 degrees, and compass marks over the live picture, so you can see
-which part of the path your trees hide. Orange is the sunlit plume. Calibrate
-it in daylight: put the Sun in the centre circle and tap the button; the page
-keeps the correction. Freeze and Save picture keep an augmented photo. It
-runs on the phone only; nothing is uploaded. Tested on one iPhone on
-2026-10-12: the drawn Sun sat on the real Sun. If the drawn Sun drifts off
-the real one near the screen edge, change the field of view in Settings
-(70 degrees worked on that iPhone).
+phone's back camera and draws the predicted rocket path over the live
+picture, with the horizon, a line every 10 degrees of height, compass marks,
+and a dot for each minute after liftoff. The solid orange line is the rocket
+while it is sunlit; the glowing plume spreads far wider than that line. The
+dashed blue line is the rocket before it reaches sunlight. Everything runs on
+the phone and nothing is uploaded. The page uses the compass and tilt
+sensors, not GPS.
+
+The drawing depends on two settings, which each phone keeps for itself, and
+both are set with the Sun:
+
+1. **Compass correction.** The day before, stand exactly where you will
+   watch, ideally when the Sun is low over the trees (for a morning launch,
+   the hour after sunrise puts the Sun low in the east and southeast, close
+   to the rocket's path). Point the phone at the Sun, put it in the white
+   centre circle, and tap *Sun is in the circle*. The yellow ring, which
+   marks where the page expects the Sun, should land on it. A low Sun is
+   better than a high one because you then hold the phone upright, as you
+   will at launch time.
+2. **Field of view.** Lenses differ, and browsers do not report them, so the
+   page cannot know how wide your camera sees. With the camera at 1x, turn
+   until the Sun is near the edge of the screen. If the yellow ring sits
+   farther from the centre than the Sun, raise *Field of view* in Settings;
+   if it sits closer, lower it. 70 degrees worked on one iPhone. The centre
+   of the screen is right whatever this value is.
+
+Compass errors of 5 to 10 degrees are normal, and they come mostly from
+metal and magnets close to the phone: cars, railings, grills, decks with
+steel in them, and magnetic cases, MagSafe wallets, and car mounts.
+Recalibrating the phone's own compass helps (on Android, a figure-8 motion
+in a compass or maps app; on iPhone, keep Compass Calibration on under
+Location Services, System Services). The correction holds only for the spot
+where it was made. On one iPhone the correction was -3.4 degrees on
+12 October 2026; the sky view has not been tested on Android, where it
+should work in Chrome. The full instructions are also on the page itself,
+on the start screen and behind the Help button.
 
 What the engine consists of:
 
@@ -120,6 +186,8 @@ What the engine consists of:
 ## Structure
 - `index.html`, `app.js`, `style.css`: the page. It has no build step; the
   repo root is the site.
+- `sky.html`, `sky.js`, `sky.css`: the camera sky view. `lib/skyproject.js`
+  holds its projection math and `config/skyview.json` its defaults.
 - `lib/`: code shared by the page and the scripts.
 - `engine/`: the geometry engine. Pure ES modules with no DOM, no network
   access, and no dependencies, so that the same code can run in the page and
@@ -138,8 +206,9 @@ What the engine consists of:
 - `scripts/`: one-off tools. `fetch-reference-fixtures.js` regenerates the
   fixtures from USNO and NOAA NGS; `build-profiles.js` regenerates the ascent
   profiles; `snapshot-ll2.js` regenerates the launch snapshot; `backtest.js`
-  runs the engine over the snapshot and the labels; `serve.js` serves the
-  page locally.
+  runs the engine over the snapshot and the labels;
+  `observer-sensitivity.js` re-runs it for other Charleston-area places;
+  `serve.js` serves the page locally.
 - `reference/`: our knowledge base of outside sources, so that each value in
   the engine can be traced to where it came from. Each note opens with a
   short statement of what it answers; `INDEX.md` lists them all, and

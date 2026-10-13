@@ -2,6 +2,7 @@
 // and draw the predicted rocket path for one launch over the picture.
 // Add-on page; the main page (index.html, app.js) is not changed by it.
 import { evaluateLaunch } from './engine/visibility.js';
+import { LL2_UPCOMING_URL, reduceLaunch } from './lib/ll2.js';
 import { sunDirectionEcef } from './engine/sun.js';
 import { directionAngles } from './engine/geo.js';
 import { cameraAxes, project, vectorAngles, compassReferenceAzimuth, angleDiff, focalLengthPx } from './lib/skyproject.js';
@@ -40,10 +41,21 @@ const timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: observer.timeZone, 
 const dayFmt = new Intl.DateTimeFormat('en-US', { timeZone: observer.timeZone, weekday: 'short', month: 'short', day: 'numeric' });
 
 // ---------- Launch ----------
+// Same sources as the main page: the list the main page saved in this
+// browser, then Launch Library 2 itself, then the copy in the repo.
 async function loadLaunches() {
   const cached = store.get(CACHE_KEY, null);
-  if (cached?.results?.length) return cached.results;
-  return (await getJson('data/upcoming-fallback.json')).results;
+  if (cached?.results?.length && Date.now() - cached.fetched < 20 * 60 * 1000) return cached.results;
+  try {
+    const res = await fetch(LL2_UPCOMING_URL);
+    if (!res.ok) throw new Error(String(res.status));
+    const fresh = { fetched: Date.now(), results: (await res.json()).results.map(reduceLaunch) };
+    store.set(CACHE_KEY, fresh);
+    return fresh.results;
+  } catch {
+    if (cached?.results?.length) return cached.results;
+    return (await getJson('data/upcoming-fallback.json')).results;
+  }
 }
 
 function pickLaunch(launches) {
@@ -267,7 +279,10 @@ function draw() {
   const hint = $('hint');
   const peak = lead?.samples.reduce((a, b) => (b.elevationDeg > a.elevationDeg ? b : a));
   const anyShown = lead?.samples.some((s) => s.elevationDeg > 0 && onScreen(P(s.bearingDeg, s.elevationDeg)));
-  if (peak && !anyShown) {
+  if (state.flash) {
+    hint.textContent = state.flash;
+    hint.hidden = false;
+  } else if (peak && !anyShown) {
     const turn = angleDiff(peak.bearingDeg, view.azimuthDeg);
     const lift = peak.elevationDeg - view.elevationDeg;
     hint.textContent = Math.abs(turn) > 15
@@ -304,13 +319,14 @@ $('nudge-right').addEventListener('click', () => {
 $('align-sun').addEventListener('click', () => {
   const sun = sunNow();
   if (sun.elevationDeg < -1) {
-    alert('The Sun is below the horizon now. Calibrate in daylight; the correction is kept for later.');
+    flash('The Sun is below the horizon now. Calibrate in daylight; the correction is kept for later.');
     return;
   }
   const axes = currentAxes();
   if (!axes || state.drag) return;
   const view = vectorAngles(axes.forward);
   setError(state.errorDeg + angleDiff(sun.azimuthDeg, view.azimuthDeg));
+  flash(`Saved. Compass correction is now ${state.errorDeg >= 0 ? '+' : ''}${state.errorDeg.toFixed(1)}°. Check that the yellow ring sits on the Sun.`);
 });
 
 const fov = $('fov');
@@ -323,6 +339,21 @@ fov.addEventListener('input', () => {
 });
 $('corr-reset').addEventListener('click', () => setError(0));
 $('settings-toggle').addEventListener('click', () => { $('settings').hidden = !$('settings').hidden; });
+
+// One set of instructions, shown on the start screen and behind Help.
+const steps = () => document.getElementById('help-steps').content.cloneNode(true);
+$('start-help').append(steps());
+$('help-body').append(steps());
+$('help-toggle').addEventListener('click', () => { $('help').hidden = false; });
+$('help-close').addEventListener('click', () => { $('help').hidden = true; });
+
+// A short message over the picture, for a few seconds.
+let flashTimer = 0;
+function flash(text, ms = 4000) {
+  state.flash = text;
+  clearTimeout(flashTimer);
+  flashTimer = setTimeout(() => { state.flash = null; }, ms);
+}
 
 $('freeze').addEventListener('click', () => {
   state.frozen = !state.frozen;
@@ -387,8 +418,7 @@ $('start-button').addEventListener('click', async () => {
     video.srcObject = stream;
     video.play().catch(() => {});
   } else {
-    $('hint').textContent = `No camera (${stream?.message ?? 'not allowed'}). Showing the sky grid only.`;
-    $('hint').hidden = false;
+    flash(`No camera (${stream?.message ?? 'not allowed'}). Showing the sky grid only. To fix it, allow camera access for this site in your browser settings and reload.`, 8000);
   }
   if (motionAnswer === 'granted') {
     addEventListener('deviceorientationabsolute', onOrientation);
@@ -400,8 +430,7 @@ $('start-button').addEventListener('click', async () => {
       const peak = lead?.samples.reduce((a, b) => (b.elevationDeg > a.elevationDeg ? b : a));
       state.drag = { az: peak?.bearingDeg ?? 150, el: Math.min(20, peak?.elevationDeg ?? 15) };
     } else if (!state.haveLive) {
-      $('hint').textContent = 'This phone gives no compass heading. Point at the Sun and tap "Sun is in the circle" to set the direction.';
-      $('hint').hidden = false;
+      flash('This phone gives no compass heading. In daylight, put the Sun in the centre circle and tap "Sun is in the circle" to set the direction.', 8000);
     }
   }, 1500);
   loop();
