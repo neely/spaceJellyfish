@@ -88,8 +88,8 @@ and the engine's values for the same moments.
   <img src="assets/demo-plume-spx35.jpg" alt="A wide fan-shaped glowing rocket plume above dark trees in a twilight sky" width="520">
   <img src="assets/demo-skyview-spx35.jpg" alt="Sky view screenshot: the plume below the drawn orange path, with height lines and compass marks" width="260">
 </p>
-<p align="center"><em>SpX-35 from James Island, 13 October 2026. Left: the plume about
-four minutes after liftoff. Right: the sky view 254 s after liftoff, facing
+<p align="center"><em>SpX-35 from James Island, 13 October 2026. Left: the plume, photographed
+with the phone camera. Right: the sky view 254 s after liftoff, facing
 southeast; the rocket (the bright tip of the plume) sits just under the
 predicted path, and the plume fills far more sky than the line.</em></p>
 
