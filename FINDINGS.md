@@ -450,8 +450,8 @@ Choices made, and why. Mark settled ones `(locked)`.
   degrees. So (a) is unlikely and (b) is the leading explanation: at 254 and
   277 s the real rocket was farther along its track (lower and farther east
   as seen from Charleston) than the 2018 Falcon 9 profiles put it. Not
-  proven: the check spot may differ from the viewing spot, and it is one
-  launch. More sightings, or a recent Falcon 9 profile, would test it.
+  proven: the check was at the same spot (Ben) but facing west, and compass
+  error near metal can change with heading; it is also one launch. More sightings, or a recent Falcon 9 profile, would test it.
 - Recorded in data/observations.json with the measured points.
 - Label: this is a fifth `seen-plume` report. It is not in data/labels.json
   yet, because SpX-35 is not in the pinned data/ll2-snapshot.json. Add it

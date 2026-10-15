@@ -56,7 +56,7 @@
         "date": "2026-10-15T21:36:00Z",
         "sunAzimuthDeg": 250.1,
         "sunElevationDeg": 13.5,
-        "result": "Drawn Sun ring on the real Sun within about 1 degree, before recalibrating, with the stored correction. Ben held the phone level (after the roll fix). Same spot as the SpX-35 viewing not yet confirmed."
+        "result": "Drawn Sun ring on the real Sun within about 1 degree, before recalibrating, with the stored correction. Same spot as the SpX-35 viewing (Ben). Phone held level, after the roll fix. Facing west (Sun at 250), while SpX-35 was viewed facing southeast; compass error near metal can change with heading, so a check facing southeast would close this fully."
       },
       "note": "Height and timing agree within about 1 degree. Rocket 19 to 29 degrees farther east than the engine at the same moments; it sat on or just under the drawn arc. The 2026-10-15 compass check found the compass right within about 1 degree, so a compass error of 20 degrees is unlikely; the old code's roll error was about 1 degree per degree of roll, and the SpX-35 screenshots show only 2 to 3 degrees of roll. Leading explanation: the real ascent ran farther downrange at those times than the 2018 profiles."
     }
