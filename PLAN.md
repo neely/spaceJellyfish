@@ -176,6 +176,36 @@ Page.
       "two possible paths", and the source note. Backtest unchanged (41,
       18, 447).
 
+### Source audit (next session, before the easy wins below)
+- [ ] Audit every outside input. For each one, write one row in a new
+      `reference/source-audit.md`: what it is, where it is used (file and
+      key), source and version or date, how old it is, how it was checked,
+      known problems, and what would replace it. Check each claim against
+      the source again where the source can be reached; mark what cannot.
+      Inputs known so far:
+      - Ascent profiles: config/profiles.json from shahar603/Telemetry-Data
+        (2018 flights, last push 2020). Known problem: SpX-35 position
+        miss. Look for newer data (Launch Dashboard API).
+      - LL2 snapshot, data/ll2-snapshot.json (to 2026-10-02) and
+        data/upcoming-fallback.json (2026-10-08).
+      - Sighting labels, data/labels.json, and the sources in
+        reference/topics/charleston-sighting-reports.md.
+      - Thresholds in config/visibility.json: three are provisional.
+      - Azimuth fan 37 to 124 degrees: sources disagree (37 to 114 from a
+        2002 FAA-sponsored report via Wikipedia; 35 to 120 secondary).
+      - Station inclination 51.6; due-east rule for high orbits.
+      - Sun and Earth formulas (USNO, NGS fixtures): likely fine; confirm.
+      - Observer point (ZIP centroid) and the ZIP centroids in
+        scripts/observer-sensitivity.js (one bad API value dropped).
+      - Sky view: magnetic declination -8 (not verified; check NOAA),
+        default field of view 70 (one phone).
+      - config/launch-directions.json entries (Bandwagon 5 at 45 degrees
+        from one secondary source).
+      - The runbook URLs: which ones still answer.
+      Output: the audit table, FINDINGS entries for any problem found, and
+      PLAN items for each fix. Do not change a pinned value during the
+      audit; list the change and its downstream impact instead.
+
 ### Easy wins (next, in this order)
 - [ ] Set Bandwagon 5 to northeast or southeast from the drone ship
       position the day before (runbook). One line in
@@ -267,7 +297,8 @@ Page.
 ## Handoff → next session
 Start prompt:
 > Read AGENTS.md, the PLAN.md status block and "Easy wins", and FINDINGS.md
-> "Reference", then run `npm test` and `node scripts/backtest.js`. If
+> "Reference", then run `npm test` and `node scripts/backtest.js`. Do the
+> source audit in PLAN (Phase 1, "Source audit") first. Then, if
 > Bandwagon 5 has not flown, help Ben set its direction with the runbook in
 > reference/topics/cape-launch-azimuths-and-inclinations.md. If it has, ask
 > for his sky view screenshots and add them to data/observations.json. Then
