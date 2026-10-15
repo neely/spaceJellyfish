@@ -409,8 +409,10 @@ Choices made, and why. Mark settled ones `(locked)`.
   with gain 0.02. Otherwise the gyro carries the direction and the readout
   says "compass held". A simulated roll with a swinging heading kept the
   readout at 132 degrees. Not yet confirmed on Ben's phone.
-- Limit: in landscape the compass is never read after the first value, so
-  Sun calibration matters more there.
+- Decision (Ben, 2026-10-15): the sky view is portrait only. In landscape
+  it hides the drawing and asks the user to turn the phone. It also asks the
+  browser to lock portrait, which iOS always refuses. Rejected: supporting
+  landscape with the compass never read after the first value.
 
 ### The answer holds across the Charleston area
 - `node scripts/observer-sensitivity.js` re-runs all 506 snapshot launches

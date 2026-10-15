@@ -211,10 +211,21 @@ function polyline(points, style, width, dash = []) {
   ctx.setLineDash([]);
 }
 
+// Directions are right only in portrait: the compass is read only then
+// (see onOrientation). In landscape the page hides the drawing and asks the
+// user to turn the phone upright.
+function isLandscape() {
+  const a = Math.abs(screenAngle()) % 180;
+  return a === 90 || innerWidth > innerHeight * 1.1;
+}
+
 function draw() {
   const W = innerWidth;
   const H = innerHeight;
   ctx.clearRect(0, 0, W, H);
+  const sideways = isLandscape() && !state.drag;
+  $('rotate').hidden = !sideways;
+  if (sideways) return;
   const axes = currentAxes();
   if (!axes) return;
   const f = focal();
@@ -439,6 +450,10 @@ $('start-button').addEventListener('click', async () => {
   } else {
     flash(`No camera (${stream?.message ?? 'not allowed'}). Showing the sky grid only. To fix it, allow camera access for this site in your browser settings and reload.`, 8000);
   }
+  // Ask the browser to keep the page upright. Most phones refuse this
+  // outside full-screen apps (iOS always does), so the message above is the
+  // real guard; the phone's own rotation lock is the reliable way.
+  try { screen.orientation?.lock?.('portrait').catch(() => {}); } catch { /* not supported */ }
   if (motionAnswer === 'granted') {
     addEventListener('deviceorientationabsolute', onOrientation);
     addEventListener('deviceorientation', onOrientation);

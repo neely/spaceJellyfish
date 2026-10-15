@@ -116,6 +116,15 @@ distance; f = pixels / tan(angle).
   minutes old, then LL2, then the saved list of any age, then
   data/upcoming-fallback.json.
 
+## Portrait only (2026-10-15)
+
+The page hides the drawing in landscape (screen angle 90, or the window
+wider than 1.1 times its height) and asks the user to turn the phone. It
+calls `screen.orientation.lock('portrait')`, which iOS always refuses and
+Android allows only in some full-screen cases; the phone's own rotation
+lock is the reliable way. The cameraAxes screen-angle code stays, so
+landscape support could come back.
+
 ## Not modelled
 
 Lens distortion; refraction near the horizon; magnetic disturbance that

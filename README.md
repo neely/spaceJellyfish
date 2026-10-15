@@ -70,8 +70,12 @@ does not confirm it: only one of our four plume reports is an evening launch,
 and all of our ascent profiles are Falcon 9 flights, so results for evening
 launches and for other vehicles should be treated with caution.
 
-Four plume reports are too few to call the engine validated, and we have set
-five as the minimum before any alert is built.
+We set five plume reports as the minimum before any alert is built. The
+four public reports above and Ben's own SpX-35 sighting of 13 October 2026
+(see Our own observations, below) now make five, so that bar is met. Five is
+still a small number, and the fifth is not yet in `data/labels.json` (it
+waits for the next snapshot), so the backtest figures above still count
+four.
 
 **Our own observations.** Public reports tell us only whether a launch was
 seen. Watching with the sky view from a known spot also tells us where the
@@ -134,7 +138,10 @@ and a dot for each minute after liftoff. The solid orange line is the rocket
 while it is sunlit; the glowing plume spreads far wider than that line. The
 dashed blue line is the rocket before it reaches sunlight. Everything runs on
 the phone and nothing is uploaded. The page uses the compass and tilt
-sensors, not GPS.
+sensors, not GPS. It works only with the phone upright, in portrait: in
+landscape it hides the drawing and asks you to turn the phone. A phone's
+rotation lock keeps it in portrait; the page asks the browser to lock it
+too, but most phones (all iPhones) refuse that request.
 
 The drawing depends on two settings, which each phone keeps for itself, and
 both are set with the Sun:
@@ -157,7 +164,10 @@ both are set with the Sun:
 Compass errors of 5 to 10 degrees are normal, and they come mostly from
 metal and magnets close to the phone: cars, railings, grills, decks with
 steel in them, and magnetic cases, MagSafe wallets, and car mounts.
-Recalibrating the phone's own compass helps (on Android, a figure-8 motion
+The iPhone compass also shifts when the phone is tilted sideways, so the
+page reads the compass only while the phone is held level and otherwise
+carries the direction on the gyro, showing "compass held" until you level it
+again. Recalibrating the phone's own compass helps (on Android, a figure-8 motion
 in a compass or maps app; on iPhone, keep Compass Calibration on under
 Location Services, System Services). The correction holds only for the spot
 where it was made. On one iPhone the correction was -3.4 degrees on

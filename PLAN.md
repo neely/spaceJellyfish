@@ -9,11 +9,13 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
-- **Last updated:** 2026-10-13
-- **Next action:** SpX-35 was seen as a jellyfish (see FINDINGS). Ben checks
-  the sky view against the Sun in daylight from the same spot, to find out
-  if the 20 to 25 degree azimuth difference was the compass. Then decide if
-  the snapshot is regenerated to add SpX-35 as the fifth `seen-plume` label.
+- **Last updated:** 2026-10-15
+- **Next action:** Ben tests the sky view on his iPhone after the roll fix:
+  tilt sideways and check the direction holds ("compass held"); turn to
+  landscape and check the portrait message; then the Sun check from the
+  SpX-35 spot before recalibrating, to settle the 20 to 25 degree azimuth
+  question. Then decide if the snapshot is regenerated to add SpX-35 as the
+  fifth `seen-plume` label.
 
 ---
 
