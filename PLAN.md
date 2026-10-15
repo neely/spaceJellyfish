@@ -10,12 +10,12 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-15
-- **Next action:** Tilt and landscape tests passed on Ben's iPhone
-  (2026-10-15), and the Sun check put the compass within 1 degree, so the
-  SpX-35 direction miss points at the 2018 ascent profiles. Next: find a
-  recent Falcon 9 ascent profile (start with the Launch Dashboard API named
-  in reference/topics/falcon9-webcast-telemetry), and watch Bandwagon 5 on
-  2026-10-19 with the sky view to get a second measured sighting.
+- **Next action:** Before Bandwagon 5 (2026-10-19, 06:30 to 07:30 local):
+  find where the drone ship waits and set its heading in
+  config/launch-directions.json (runbook in
+  reference/topics/cape-launch-azimuths-and-inclinations.md). Ben watches
+  with the sky view and takes screenshots for data/observations.json. Then
+  the easy wins below.
 
 ---
 
@@ -163,6 +163,41 @@ Page.
       49 up); with field of view 70 it stayed on the Sun near the edge; the
       SpX-35 sunlit path clears his trees from 6:36.
 
+- [x] Sky view follow-ups, 2026-10-13 to 15: setup steps on the start
+      screen and behind Help; calibration message; compass read only when
+      the phone is level; portrait only. Observed on Ben's iPhone
+      2026-10-15: tilting no longer moves the direction ("compass held"
+      shows), landscape shows the turn-upright message, and the drawn Sun
+      sat on the real Sun before recalibrating. `npm test`: 52 pass.
+- [x] Hand-set launch directions (`config/launch-directions.json`,
+      `lib/directions.js`). Observed 2026-10-15 in headless Chromium with
+      Bandwagon 5 set to 45 degrees, heading both: the card shows two
+      paths (peak 25 to 28 degrees for northeast, 10 to 12 for southeast),
+      "two possible paths", and the source note. Backtest unchanged (41,
+      18, 447).
+
+### Easy wins (next, in this order)
+- [ ] Set Bandwagon 5 to northeast or southeast from the drone ship
+      position the day before (runbook). One line in
+      config/launch-directions.json.
+- [ ] Morning Sun check facing southeast at the SpX-35 spot (Ben, about
+      08:30 to 09:30, Sun at azimuth 109 to 119), to close the compass
+      question for that direction.
+- [ ] `scripts/compare-observations.js`: read data/observations.json, run
+      the engine for each point, and print the differences. Replaces the
+      hand computation done for SpX-35.
+- [ ] A newer Falcon 9 ascent profile. Start with the Launch Dashboard API
+      named in reference/topics/falcon9-webcast-telemetry.md. Test it
+      against the SpX-35 points before adopting it.
+- [ ] Sky view: draw a soft glow band behind the sunlit rocket line, so
+      the wide plume is not a surprise.
+- [ ] Sky view: two-tap field-of-view calibration from the Sun (centre,
+      then edge).
+- [ ] Ask Ben to regenerate the LL2 snapshot, after a downstream-impact
+      trace, so SpX-35 can become the fifth `seen-plume` label. This is what
+      the exit gate below waits for.
+- [ ] One Android test of the sky view (Chrome).
+
 ## Phase 2 — Weather modifier
 - [ ] Confirm api.weather.gov requirements (headers, CORS, forecast range)
       from its own docs. Record them in FINDINGS.
@@ -217,8 +252,9 @@ Page.
   Texas on 2026-09-28. Starlink launches are most of the past twilight
   chances. Find a statement from SpaceX. If they have ended, the chances
   each year are far fewer than the backtest shows.
-- Live test: Falcon 9 SpX-35, 2026-10-13 at 06:33 local. The engine says
-  likely and prime. Ben can watch. Record what was seen as a label.
+- SpX-35 (2026-10-13): seen as a plume, as predicted, but 19 to 29
+  degrees east of the predicted position (FINDINGS). Is that the 2018
+  profiles? A second measured launch and a newer profile will tell.
 - Is 5 positive cases the right minimum for the exit gate? It depends on how
   many Charleston reports the search finds.
 - Does the free-tier limit of 5 Cron Triggers per account leave room? A code
@@ -230,9 +266,9 @@ Page.
 
 ## Handoff → next session
 Start prompt:
-> Read AGENTS.md, the PLAN.md status block, and FINDINGS.md "Reference", then
-> run `npm test` and `node scripts/backtest.js`. Ask Ben what he saw of
-> SpX-35 on 2026-10-13 and record it in data/labels.json. Then build the
-> twilight candidate list and search local outlets for those dates with a Sonnet
-> subagent. The goal is a fifth `seen-plume` label and evening cases. Start at
-> reference/README.md for sources. Do not tune a threshold to fix a miss.
+> Read AGENTS.md, the PLAN.md status block and "Easy wins", and FINDINGS.md
+> "Reference", then run `npm test` and `node scripts/backtest.js`. If
+> Bandwagon 5 has not flown, help Ben set its direction with the runbook in
+> reference/topics/cape-launch-azimuths-and-inclinations.md. If it has, ask
+> for his sky view screenshots and add them to data/observations.json. Then
+> work the easy wins in order. Do not tune a threshold to fix a miss.

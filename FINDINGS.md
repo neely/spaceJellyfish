@@ -217,6 +217,35 @@ Source: https://developers.cloudflare.com/workers/platform/limits/
 
 ---
 
+#### Sky view field tests (Ben's iPhone, Safari, 2026-10-12 to 15)
+- Drawn Sun on the real Sun within about 1 degree: at azimuth 172,
+  elevation 49 (10-12, after calibration) and at 250, 13.5 (10-15, before
+  recalibrating, at the SpX-35 spot, facing west). Stored compass error
+  -3.4 degrees.
+- Field of view 65 put the ring about 20 percent too far out; 70 worked.
+- The iOS compass heading moved about 1 degree per degree of roll (screen
+  recording, 10-15). Our camera model does not move with roll (test).
+- Details: reference/topics/model-sky-view.md.
+
+#### SpX-35 seen from James Island (2026-10-13)
+- Wide plume seen. Engine: likely, prime. At 254 and 277 s after liftoff,
+  height agreed within about 1 degree; the rocket was 19 to 29 degrees
+  farther east than the engine placed it. Numbers: data/observations.json.
+- The compass check (above) rules out a 20 degree compass error, but it
+  faced west, not southeast. Leading cause: the 2018 ascent profiles put
+  the rocket too far back along its track. One launch; not proven.
+- Fifth `seen-plume` report. Not in data/labels.json until the snapshot is
+  regenerated (Ben's call).
+
+#### The observer can be anywhere near Charleston
+- `node scripts/observer-sensitivity.js` (506 snapshot launches, ZIP
+  centroids). Folly Beach to Isle of Palms (7 to 19 km): same verdict for
+  58 or 59 of the 59 that James Island rates likely or possible; peak
+  height within 0.3 to 1.3 degrees (median). Summerville (40 km): 57 of 59,
+  about 4 degrees lower. Columbia (174 km): 53 of 59, about 14 lower.
+- The rocket is 290 to 1,180 km away while visible. This compares the
+  model with itself; it does not test it.
+
 ## Decisions
 
 Choices made, and why. Mark settled ones `(locked)`.
@@ -397,88 +426,23 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Rejected: A Cloudflare Pages Function as a shared feed. A GitHub Action
   that commits the list every hour, because it fills the commit history.
 
-### On iOS the compass heading follows roll; the page holds it while rolled
-- Ben's screen recording, 2026-10-15: pointing at the same house, rolling
-  the phone about 30 degrees left or right moved the readout from 254 to
-  213 and to 286 degrees. The horizon line tilted correctly.
-- Our camera model keeps the same azimuth under roll (test in
-  test/skyproject.test.js). So the slide came from webkitCompassHeading,
-  which the page followed with gain 0.08 per event.
-- Fix: the page reads the compass only while the phone is held level in
-  portrait (roll under 5 degrees, view within 60 degrees of the horizon),
-  with gain 0.02. Otherwise the gyro carries the direction and the readout
-  says "compass held". A simulated roll with a swinging heading kept the
-  readout at 132 degrees. Not yet confirmed on Ben's phone.
-- Decision (Ben, 2026-10-15): the sky view is portrait only. In landscape
-  it hides the drawing and asks the user to turn the phone. It also asks the
-  browser to lock portrait, which iOS always refuses. Rejected: supporting
-  landscape with the compass never read after the first value.
+### Sky view: live camera, portrait only, calibrated on the Sun
+- What: `sky.html` draws the path over the live back camera from the phone
+  orientation sensors. Portrait only: in landscape it hides the drawing.
+  The compass is read only while the phone is level (roll under 5
+  degrees); the gyro carries the direction otherwise. Sun calibration
+  stores the compass error; field of view is a setting (default 70).
+- Why: A photo has no tilt, and trees hide the horizon. The iOS compass
+  heading moves with roll. The browser does not give the lens.
+- Rejected: Upload a photo and align it by hand. Landscape support. Focal
+  length from photo metadata (the video is cropped differently).
 
-### The answer holds across the Charleston area
-- `node scripts/observer-sensitivity.js` re-runs all 506 snapshot launches
-  for other places (ZIP centroids from zippopotam.us, read 2026-10-13).
-- Folly Beach, downtown, Sullivan's Island, Mount Pleasant, Isle of Palms
-  (7 to 19 km away): same verdict for 504 to 506 of 506 launches, and for
-  58 or 59 of the 59 that James Island rates likely or possible. Median
-  change in peak height 0.3 to 1.3 degrees; median change in peak bearing
-  0.1 to 1.1 degrees (max 14, from fan launches where the peak moves
-  between tracks).
-- Summerville (40 km): 57 of 59, peak height about 4 degrees lower.
-  Columbia (174 km): 53 of 59, about 14 degrees lower.
-- While visible, the rocket is 290 to 1,180 km from the observer, which is
-  why a few km of observer movement barely matters.
-- This compares the model with itself. It does not test the model.
-- 29455 (Johns Island) was left out: the API gave Mount Pleasant
-  coordinates for it.
-
-### SpX-35 seen by Ben, 2026-10-13 (first own observation)
-- Ben saw and photographed a wide sunlit plume (jellyfish) from James Island.
-  The engine said likely and prime. The plume was in the predicted window.
-- Sky view screenshots, times from the image EXIF (liftoff 06:33:44 EDT):
-  T+254 s rocket at about azimuth 136, elevation 25.5; T+277 s at about
-  131, 28. Read by eye from the drawn grid, so about ±2 degrees.
-- Engine at the same times: T+254 s azimuth 155 to 165, elevation 24.1 to
-  24.9; T+277 s azimuth 144 to 158, elevation 27.4 to 28.1.
-- Elevation and timing agree within about 1 degree. Azimuth does not: the
-  rocket was 19 to 29 degrees further east than the engine said.
-- Two explanations were open: (a) the phone compass was off by about 20 to
-  25 degrees; (b) the real path ran farther east than the 2018 profiles.
-- Compass check, 2026-10-15 17:36 EDT, before recalibrating: engine Sun at
-  azimuth 250.1, elevation 13.5; the drawn ring sat on the real Sun within
-  about 1 degree. The old code's roll error was about 1 degree per degree of
-  roll, and the SpX-35 screenshots show a horizon tilt of only 2 to 3
-  degrees. So (a) is unlikely and (b) is the leading explanation: at 254 and
-  277 s the real rocket was farther along its track (lower and farther east
-  as seen from Charleston) than the 2018 Falcon 9 profiles put it. Not
-  proven: the check was at the same spot (Ben) but facing west, and compass
-  error near metal can change with heading; it is also one launch. More sightings, or a recent Falcon 9 profile, would test it.
-- Recorded in data/observations.json with the measured points.
-- Label: this is a fifth `seen-plume` report. It is not in data/labels.json
-  yet, because SpX-35 is not in the pinned data/ll2-snapshot.json. Add it
-  when the snapshot is regenerated (only on Ben's request; see AGENTS.md).
-
-### Sky view uses the live camera and the phone sensors
-- What: An add-on page (`sky.html`) shows the back camera and draws the
-  path with the phone's orientation sensors. A frozen frame can be saved
-  as a picture. Math and sensor details: reference/topics/model-sky-view.
-- Why: A photo file gives a compass heading and a lens, but no tilt. With
-  trees in the way, the horizon is not in the picture, so tilt cannot be
-  found from the image. The observer's height does not matter: the
-  horizon dip from 2 m is about 0.05 degrees.
-- Rejected: Upload a photo and align it by hand. Read the focal length
-  from the camera: the browser camera API does not give it, and the photo
-  value does not fit the cropped video.
-- Observed 2026-10-12 12:46 EDT, Ben's iPhone, Safari, James Island: the
-  engine put the Sun at azimuth 172.3, elevation 49.4. With the Sun in the
-  centre circle the page read "Facing 172° S, 49° up", and the predicted
-  ring was on the Sun after Sun calibration. Tilt agreed with no
-  calibration. The stored compass error was -3.4 degrees: the raw iOS
-  compass plus the -8 degree declination read 3.4 degrees too far
-  clockwise. That is inside the usual 5 to 10 degree compass error, so the
-  heading model works; calibration takes out the rest.
-- Observed: with field of view 65 the ring near the screen edge was about
-  20 percent too far from the centre. Ben set 70 and the ring stayed on the
-  Sun. 70 is now the default. The centre of the screen does not depend on
-  this value.
-- Limit: The declination (-8 degrees) is not verified. Sun calibration
-  stores the total compass error, so it does not matter after calibration.
+### Hand-set directions for launches LL2 gives no direction for
+- What: `config/launch-directions.json`, keyed by LL2 id, sets an azimuth,
+  or an inclination with heading northeast, southeast, or both. Each entry
+  has a source. The page then draws those paths instead of the fan.
+- Why: The fan (37 to 124 degrees) is too wide to plan by. The inclination
+  and the drone ship position are often public before launch.
+- Rejected: Guess the direction from the orbit class alone.
+- How to find a direction, with URLs: the Runbook section in
+  reference/topics/cape-launch-azimuths-and-inclinations.md.

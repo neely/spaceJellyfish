@@ -136,3 +136,26 @@ test('reduceLaunch keeps the fields the engine needs', async () => {
   assert.deepEqual(reduced.pad, { latitudeDeg: 28.56194122, longitudeDeg: -80.57735736 });
   assert.equal(reduceLaunch({ id: 'y', name: 'n', net: 't' }).orbit, null);
 });
+
+test('a hand-set direction replaces the class azimuths', async () => {
+  const { evaluateLaunch } = await import('../engine/visibility.js');
+  const { readFileSync } = await import('node:fs');
+  const read = (p) => JSON.parse(readFileSync(new URL(p, import.meta.url)));
+  const observer = read('../config/observer.json');
+  const profiles = read('../config/profiles.json');
+  const config = read('../config/visibility.json');
+  const base = { id: 'x', name: 'test', net: '2026-10-19T10:30:00Z', vehicle: 'Falcon 9', orbit: 'LEO', programs: [],
+    pad: { latitudeDeg: 28.5618571, longitudeDeg: -80.577366 } };
+  const fan = evaluateLaunch({ launch: base, observer, profiles, config });
+  assert.equal(fan.direction, 'unknown');
+  const two = evaluateLaunch({ launch: { ...base, direction: { inclinationDeg: 45, heading: 'both' } }, observer, profiles, config });
+  assert.equal(two.direction, 'two');
+  assert.equal(new Set(two.tracks.map((t) => t.azimuthDeg.toFixed(1))).size, 2);
+  const ne = evaluateLaunch({ launch: { ...base, direction: { inclinationDeg: 45, heading: 'northeast', source: 's' } }, observer, profiles, config });
+  assert.equal(ne.direction, 'known');
+  assert.equal(ne.confidence, 'medium');
+  assert.equal(ne.directionSource, 's');
+  assert.ok(Math.abs(ne.tracks[0].azimuthDeg - 53.6) < 0.1);
+  const az = evaluateLaunch({ launch: { ...base, direction: { azimuthDeg: 100 } }, observer, profiles, config });
+  assert.ok(az.tracks.every((t) => t.azimuthDeg === 100));
+});

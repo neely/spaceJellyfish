@@ -109,16 +109,28 @@ export function evaluateTrack({ liftoff, pad, observer, member, azimuthDeg, para
  */
 export function evaluateLaunch({ launch, observer, profiles, config, withSamples = false }) {
   const { trajectories } = config;
-  const toStation = (launch.programs ?? []).some((p) => trajectories.iss.programs.includes(p));
-  const kind = toStation ? 'iss' : trajectories.east.orbits.includes(launch.orbit) ? 'east' : 'fan';
-  const { profile } = trajectories[kind];
   const pad = { ...launch.pad, heightM: 0 };
+  // A hand-set direction (config/launch-directions.json, attached to the
+  // launch as launch.direction by the caller) wins over the classes.
+  const set = launch.direction;
+  const toStation = (launch.programs ?? []).some((p) => trajectories.iss.programs.includes(p));
+  const kind = set ? 'set' : toStation ? 'iss' : trajectories.east.orbits.includes(launch.orbit) ? 'east' : 'fan';
+  const profile = set ? set.profile ?? trajectories.iss.profile : trajectories[kind].profile;
   // A station launch from Florida goes northeast on the azimuth that its
   // inclination gives. The other classes list their azimuths.
-  const azimuthsDeg =
-    kind === 'iss'
+  let azimuthsDeg;
+  if (set) {
+    const both = set.inclinationDeg != null ? launchAzimuthsDeg(set.inclinationDeg, pad.latitudeDeg) : null;
+    azimuthsDeg = set.azimuthDeg != null
+      ? [set.azimuthDeg]
+      : set.heading === 'northeast' ? [both.northeastDeg]
+      : set.heading === 'southeast' ? [both.southeastDeg]
+      : [both.northeastDeg, both.southeastDeg];
+  } else {
+    azimuthsDeg = kind === 'iss'
       ? [launchAzimuthsDeg(trajectories.iss.inclinationDeg, pad.latitudeDeg).northeastDeg]
       : trajectories[kind].azimuthsDeg;
+  }
   const liftoff = new Date(launch.net);
 
   const tracks = [];
@@ -150,9 +162,14 @@ export function evaluateLaunch({ launch, observer, profiles, config, withSamples
     result.lastVisibleS = Math.max(...of('lastVisibleS'));
     result.visibleS = { min: Math.min(...of('visibleS')), max: Math.max(...of('visibleS')) };
   }
-  // Direction is known for the station and due-east classes, and the
+  // Direction is known for the station and due-east classes and for a
+  // hand-set single direction, and the
   // profiles are Falcon 9 flights.
   const falcon = /^Falcon/.test(launch.vehicle ?? '');
-  result.confidence = kind !== 'fan' && falcon ? 'medium' : 'low';
+  const oneWay = kind !== 'fan' && azimuthsDeg.length === 1;
+  result.confidence = oneWay && falcon ? 'medium' : 'low';
+  // 'known' when one direction is set; 'two' when only the inclination is.
+  result.direction = kind === 'set' ? (oneWay ? 'known' : 'two') : kind === 'fan' ? 'unknown' : 'known';
+  if (set) result.directionSource = set.source;
   return result;
 }

@@ -12,6 +12,7 @@ key_points:
   - "Southeast and south launches need a dog-leg around land; the polar corridor was first used on 2020-08-30 (Space Florida, snippet only)."
   - "Starlink 43 degree flight (2025-11-22) went southeast; 10-33 (2026-03-19) went northeast; a 53.2 degree flight (2022-01) was planned southeast."
   - "LL2 detailed launch records have no inclination or azimuth field. They have mission.orbit (coarse), landing location, downrange distance, timeline and flightclub_url."
+  - "Runbook with URLs for finding an upcoming launch direction (drone ship position, inclination of earlier flights, hazard warnings): section Runbook, 2026-10-15."
   - "Starlink from Florida may have ended on 2026-08-25 (Universe Today, 2026-09-08); the LL2 Cape query on 2026-10-08 returned no Starlink in its first four rows."
 related_papers: []
 ---
@@ -72,6 +73,56 @@ Request count to the Launch Library 2 API: exactly 3 (one launch search, one req
 - The docs page lists endpoints /launches/, /landings/, /config/orbits/ and others. No trajectory endpoint is listed (Source 8).
 - Landing site as a proxy: Spaceflight Now says that for northeast launches the landing ship sits east of Charleston, South Carolina (Source 4, 2022). A landing zone at the Cape (LZ-40, downrange 0.3 in the 2026-10-13 CRS-35 record) means a return to the launch site. These are hints, not proofs.
 - Navigational and airspace notices: Space Force Eastern Range airspace worksheets list launch hazard polygons by date and time in Zulu (snippet only, Source 10). The Coast Guard has a Regulated Navigation Area for rocket flight trajectories out to 12 nautical miles (snippet only, Source 10). Activation starts about 1 hour before launch (snippet only). I could not open the worksheets.
+
+## Runbook: finding the direction of an upcoming launch (2026-10-15)
+
+Use this when the page shows the fan ("path not known"). Record the answer
+in config/launch-directions.json, keyed by the LL2 launch id, with the
+source. Each step says what it gave when checked on 2026-10-15.
+
+1. LL2 record of the launch (id from the page, or search by name):
+   - https://ll.thespacedevs.com/2.3.0/launches/upcoming/?search=Bandwagon&mode=list
+     (gives the id, name, net).
+   - https://ll.thespacedevs.com/2.3.0/launches/upcoming/?search=Bandwagon&mode=detailed
+     (gives mission.orbit, mission.description, window, landing location
+     and downrange distance). For Bandwagon 5 it gave "mid-inclination
+     orbit", window 10:30Z to 11:30Z, drone ship A Shortfall of Gravitas,
+     downrange 600.0. No inclination or azimuth field.
+   - Each request counts toward the 15 per hour LL2 limit.
+2. Earlier flights of the same series, for the inclination. Example:
+   https://orbitcodex.com/operations/bandwagon-3-dedicated-mid-inclination-rideshare-falcon-9
+   gave 45 degrees for Bandwagon 3 (secondary source).
+3. Inclination to azimuth: `launchAzimuthsDeg(inclinationDeg, padLatitudeDeg)`
+   in engine/trajectory.js. From SLC-40, 45 degrees gives 53.6 (northeast)
+   or 126.4 (southeast). Until the side is known, set heading "both".
+4. Northeast or southeast: where the drone ship waits. A point 600 km
+   downrange on 53.6 degrees is about 31.7 N 75.5 W (off the Carolinas); on
+   126.4 degrees about 25.3 N 75.8 W (near the Bahamas). Computed with
+   `destinationPoint` in engine/trajectory.js. Ship position, the day
+   before launch:
+   - https://orbitalradar.com/recovery-fleet/a-shortfall-of-gravitas and
+     https://api.orbitalradar.com/recovery-fleet say they show AIS
+     positions every 5 minutes. WebFetch saw no position (the map needs a
+     browser). Open in a browser.
+   - AIS sites by ship name (MarineTraffic, VesselFinder). Not checked; no
+     ship page was confirmed.
+5. Spaceflight Now launch-day reports state "north-easterly" or
+   "south-easterly" (Sources 5 and 6). Usually only on launch day.
+6. Maritime hazard warnings give the booster and debris boxes.
+   - https://msi.nga.mil/NavWarnings (NGA web page; open in a browser).
+   - https://msi.nga.mil/api/publications/broadcast-warn?output=html&status=A
+     answered, but its newest entry was from May 2024, so it is not useful
+     through WebFetch.
+   - https://www.navcen.uscg.gov/local-notices-to-mariners (Coast Guard
+     District 7 notices). WebFetch failed.
+7. Trajectory simulations: the LL2 flightclub_url, or https://flightclub.io/.
+   Not opened. https://www.spacelaunchschedule.com/launch/falcon-9-block-5-bandwagon-5-dedicated-mid-inclination-rideshare/
+   links to it and repeats the LL2 data.
+8. SpaceX: https://www.spacex.com/launches/ needs a browser; WebFetch saw
+   only metadata. Mission pages name the landing ship.
+
+After the launch, check the result with the sky view and add it to
+data/observations.json.
 
 ## Not found
 - Official current azimuth limits for Cape launches (two conflicting values only).

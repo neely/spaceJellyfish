@@ -43,6 +43,18 @@ the last copy it has, with its date. (We tried a shared feed on Cloudflare;
 Launch Library 2 rejected every request from Cloudflare's shared addresses,
 so we removed it.)
 
+**Launch directions.** Launch Library 2 gives no flight direction. The page
+knows it for space station flights (northeast) and for flights to high
+orbits (due east); for anything else it draws a fan of possible paths from
+37 to 124 degrees. When we can find the direction or the orbit's
+inclination before a launch (from the drone ship's position, earlier flights
+of the same series, or hazard warnings), we set it by hand in
+[config/launch-directions.json](config/launch-directions.json) with its
+source, and the page draws those paths instead. The steps and the web
+addresses to check are in
+[reference/topics/cape-launch-azimuths-and-inclinations.md](reference/topics/cape-launch-azimuths-and-inclinations.md)
+(section "Runbook").
+
 **The backtest so far.** We ran the engine over the 506 Cape Canaveral and
 Kennedy Space Center launches that Launch Library 2 lists from January 2017
 to 2 October 2026. It rates 59 of them (11.7%) as likely or possible to show
@@ -219,7 +231,9 @@ What the engine consists of:
   in a Cloudflare Worker.
 - `config/`: reviewed, versioned inputs. `observer.json` is the observer
   point; `profiles.json` holds the ascent profiles; `visibility.json` holds
-  the thresholds and azimuths.
+  the thresholds and azimuths; `launch-directions.json` holds directions
+  we set by hand for upcoming launches; `skyview.json` holds the sky view
+  defaults.
 - `test/`: tests for the engine, and `test/fixtures/` with the pinned
   reference values they compare against.
 - `data/`: pinned data. `ll2-snapshot.json` holds the 506 Cape Canaveral and

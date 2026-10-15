@@ -2,6 +2,7 @@
 // the geometry engine on each, and show the result. No framework.
 import { evaluateLaunch } from './engine/visibility.js';
 import { LL2_UPCOMING_URL, reduceLaunch } from './lib/ll2.js';
+import { applyDirections } from './lib/directions.js';
 
 // LL2 allows 15 unauthenticated requests per hour for each address. The
 // page keeps the last answer and asks again only when it is this old.
@@ -31,10 +32,11 @@ const svgEl = (tag, attrs = {}, text) => {
 };
 
 const getJson = async (path) => (await fetch(path)).json();
-const [observer, profiles, config] = await Promise.all([
+const [observer, profiles, config, directions] = await Promise.all([
   getJson('config/observer.json'),
   getJson('config/profiles.json'),
   getJson('config/visibility.json'),
+  getJson('config/launch-directions.json').catch(() => ({})),
 ]);
 
 const fmt = (opts) => new Intl.DateTimeFormat('en-US', { timeZone: observer.timeZone, ...opts });
@@ -213,8 +215,8 @@ function launchCard(launch) {
     const lo = Math.round(result.peakElevationDeg.min);
     const hi = Math.round(result.peakElevationDeg.max);
     facts.append(fact('Highest point', lo === hi ? `${hi}° up` : `${lo}° to ${hi}° up`));
-    facts.append(fact('Direction', result.trajectory === 'fan'
-      ? `${compass(result.peakBearingDeg.min)} to ${compass(result.peakBearingDeg.max)} (path not known)`
+    facts.append(fact('Direction', result.direction !== 'known'
+      ? `${compass(result.peakBearingDeg.min)} to ${compass(result.peakBearingDeg.max)} (${result.direction === 'two' ? 'two possible paths' : 'path not known'})`
       : `starts ${compass(lead.firstBearingDeg)}, peaks ${compass(lead.peakBearingDeg)}, ends ${compass(lead.lastBearingDeg)}`));
     facts.append(fact('Sun below horizon', `${Math.abs(result.sunElevationDeg).toFixed(0)}°`));
     card.append(facts);
@@ -234,8 +236,11 @@ function launchCard(launch) {
       draw(Number(input.value));
     });
     card.append(el('div', { class: 'slider' }, 'My trees block the sky up to', input, read));
-    if (result.trajectory !== 'fan') card.append(minuteTable(result, liftoff));
-    card.append(el('p', { class: 'note' }, result.trajectory === 'fan'
+    if (result.direction === 'known') card.append(minuteTable(result, liftoff));
+    if (result.directionSource) card.append(el('p', { class: 'note' }, `Direction set by hand: ${result.directionSource}`));
+    card.append(el('p', { class: 'note' }, result.direction === 'two'
+      ? `Only the orbit is known, so the chart shows both ways to reach it: northeast (the higher arcs, over the southeast sky) and southeast (the low arcs in the south). Orange is the sunlit part in a dark sky.`
+      : result.direction === 'unknown'
       ? 'Launch Library 2 does not give the direction of this launch, so each line is one possible path. Orange is the sunlit part in a dark sky.'
       : `The chart is the view when you face southeast: south is on the right and east is on the left. Each line is one past Falcon 9 flight flown on this launch's path. Orange is the sunlit part in a dark sky; the dotted part is before the plume is counted or after it leaves sunlight. The data ends about ${Math.round(lead.samples.at(-1).tS / 60)} minutes after liftoff; the rocket may stay visible longer.`));
   }
@@ -260,7 +265,7 @@ function render(data) {
   status.replaceChildren(text, button);
 
   const now = Date.now();
-  const coming = data.results.filter((l) => Date.parse(l.net) > now - 30 * 60 * 1000);
+  const coming = applyDirections(data.results, directions).filter((l) => Date.parse(l.net) > now - 30 * 60 * 1000);
   const precise = coming.filter((l) => PRECISE.includes(l.precision));
   const vague = coming.filter((l) => !PRECISE.includes(l.precision));
   const box = $('#launches');

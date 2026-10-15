@@ -3,6 +3,7 @@
 // Add-on page; the main page (index.html, app.js) is not changed by it.
 import { evaluateLaunch } from './engine/visibility.js';
 import { LL2_UPCOMING_URL, reduceLaunch } from './lib/ll2.js';
+import { applyDirections } from './lib/directions.js';
 import { sunDirectionEcef } from './engine/sun.js';
 import { directionAngles } from './engine/geo.js';
 import { cameraAxes, project, vectorAngles, compassReferenceAzimuth, angleDiff, focalLengthPx, portraitRollDeg } from './lib/skyproject.js';
@@ -32,11 +33,12 @@ const store = {
 };
 
 const getJson = async (path) => (await fetch(path)).json();
-const [observer, profiles, config, sky] = await Promise.all([
+const [observer, profiles, config, sky, directions] = await Promise.all([
   getJson('config/observer.json'),
   getJson('config/profiles.json'),
   getJson('config/visibility.json'),
   getJson('config/skyview.json'),
+  getJson('config/launch-directions.json').catch(() => ({})),
 ]);
 const timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: observer.timeZone, hour: 'numeric', minute: '2-digit' });
 const dayFmt = new Intl.DateTimeFormat('en-US', { timeZone: observer.timeZone, weekday: 'short', month: 'short', day: 'numeric' });
@@ -70,7 +72,7 @@ function pickLaunch(launches) {
   return coming.find((l) => evaluateLaunch({ launch: l, observer, profiles, config }).verdict !== 'no') ?? coming[0] ?? null;
 }
 
-const launch = pickLaunch(await loadLaunches());
+const launch = pickLaunch(applyDirections(await loadLaunches(), directions));
 let result = null;
 let liftoff = 0;
 if (launch) {
