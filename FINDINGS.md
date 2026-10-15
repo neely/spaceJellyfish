@@ -225,7 +225,7 @@ Source: https://developers.cloudflare.com/workers/platform/limits/
 - Field of view 65 put the ring about 20 percent too far out; 70 worked.
 - The iOS compass heading moved about 1 degree per degree of roll (screen
   recording, 10-15). Our camera model does not move with roll (test).
-- Details: reference/topics/model-sky-view.md.
+- How the sky view computes what it draws: reference/topics/model-sky-view.md.
 
 #### SpX-35 seen from James Island (2026-10-13)
 - Wide plume seen. Engine: likely, prime. At 254 and 277 s after liftoff,
@@ -234,8 +234,8 @@ Source: https://developers.cloudflare.com/workers/platform/limits/
 - The compass check (above) rules out a 20 degree compass error, but it
   faced west, not southeast. Leading cause: the 2018 ascent profiles put
   the rocket too far back along its track. One launch; not proven.
-- Fifth `seen-plume` report. Not in data/labels.json until the snapshot is
-  regenerated (Ben's call).
+- Fifth `seen-plume` report. It is not in data/labels.json, because SpX-35
+  is not in the pinned snapshot.
 
 #### The observer can be anywhere near Charleston
 - `node scripts/observer-sensitivity.js` (506 snapshot launches, ZIP
@@ -426,7 +426,7 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Rejected: A Cloudflare Pages Function as a shared feed. A GitHub Action
   that commits the list every hour, because it fills the commit history.
 
-### Sky view: live camera, portrait only, calibrated on the Sun
+### Sky view: live camera, portrait only, calibrated on the Sun (locked)
 - What: `sky.html` draws the path over the live back camera from the phone
   orientation sensors. Portrait only: in landscape it hides the drawing.
   The compass is read only while the phone is level (roll under 5
@@ -437,7 +437,7 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Rejected: Upload a photo and align it by hand. Landscape support. Focal
   length from photo metadata (the video is cropped differently).
 
-### Hand-set directions for launches LL2 gives no direction for
+### Hand-set directions for launches LL2 gives no direction for (locked)
 - What: `config/launch-directions.json`, keyed by LL2 id, sets an azimuth,
   or an inclination with heading northeast, southeast, or both. Each entry
   has a source. The page then draws those paths instead of the fan.

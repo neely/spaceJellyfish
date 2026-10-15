@@ -2,17 +2,17 @@
 key: topics/model-sky-view
 title: "How our model works: the camera sky view"
 type: topic-note
-sources_summary: "Documents our own code as of 2026-10-12: sky.js, lib/skyproject.js, config/skyview.json, test/skyproject.test.js. Browser API behaviour comes from the W3C DeviceOrientation spec frames as used in the code and from tests on Ben's iPhone (Safari) on 2026-10-12; claims not tested on a device are marked unverified."
+sources_summary: "Documents our own code as of 2026-10-15: sky.js, sky.html, lib/skyproject.js, lib/directions.js, config/skyview.json, test/skyproject.test.js. Browser API behaviour follows the W3C DeviceOrientation frames as used in the code. Our field measurements are in FINDINGS.md (Reference), not here."
 distilled: 2026-10-12
 topics: [sky-view, geodesy, visibility]
 relevance: medium
-answers: "How does sky.html turn the phone's orientation into camera axes, project a sky direction (azimuth, elevation) onto the screen, correct the compass, and set the field of view, and what is verified on a real phone?"
+answers: "How does sky.html turn the phone's orientation into camera axes, project a sky direction (azimuth, elevation) onto the screen, correct the compass, set the field of view, and handle roll and landscape?"
 key_points:
   - "Device to earth: R = Rz(alpha) Rx(beta) Ry(gamma); earth x east, y north, z up; back camera looks along device -z."
   - "Screen point = centre + f * (d.right, -d.up) / (d.forward); f comes from the long-side field of view of the video."
-  - "iOS alpha has no fixed reference; webkitCompassHeading plus declination sets a heading correction, smoothed with gain 0.08 per event."
-  - "Sun calibration stores the total compass error in localStorage; field of view is a user setting, default 70 degrees from one iPhone test."
-  - "Verified 2026-10-12 on one iPhone: drawn Sun on the real Sun at azimuth 172, elevation 49."
+  - "iOS alpha has no fixed reference; webkitCompassHeading plus declination sets a heading correction, smoothed with gain 0.02 per event."
+  - "Sun calibration stores the total compass error in localStorage; field of view is a user setting with a default in config/skyview.json."
+  - "The compass is read only while the phone is level in portrait; the gyro carries the direction otherwise."
 related_papers: []
 ---
 
@@ -56,11 +56,12 @@ off-centre points.
 - iOS Safari: `alpha` has an arbitrary reference. `webkitCompassHeading` is
   a magnetic heading. The code takes it as the heading of whichever device
   axis is closer to level: the camera axis when the phone is held up, the
-  top edge when it lies flat (unverified for flat use; held up it agreed
-  with the Sun on 2026-10-12).
+  top edge when it lies flat. Flat use is untested; for held-up use see
+  FINDINGS, Reference.
 - Correction = (compass heading + declination) − raw azimuth of that axis.
   It is updated only while the phone is level in portrait (roll under 5
-  degrees), because the iOS heading slides with roll (FINDINGS, 2026-10-15).
+  degrees), because the iOS heading slides with roll (measured: FINDINGS,
+  Reference, sky view field tests).
   Note: at beta 90 the W3C Euler angles are gimbal-locked; a sideways roll of
   an upright phone shows as beta = 90 - r, gamma = -90, not as gamma = r.
   It is added to every azimuth. Gyro alpha gives fast motion; the
@@ -82,25 +83,11 @@ off-centre points.
 The browser camera API gives resolution but no focal length or field of
 view. A photo's EXIF gives a 35 mm equivalent focal length, but the video
 stream is cropped differently, so it is not used. The field of view is a
-setting (default 70, long side). On 2026-10-12, 65 put the drawn Sun about
-20 percent too far from the centre near the screen edge; 70 kept it on the
-Sun.
-
-Idea, not built: measure the field of view from the Sun. Calibrate with
-the Sun at the centre, then turn until the Sun is at a marker near the
-edge and tap. The sensors give the angle turned; the screen gives the pixel
-distance; f = pixels / tan(angle).
-
-## Field test 2026-10-12 (Ben, iPhone, Safari, James Island)
-
-- 12:46 EDT: engine Sun azimuth 172.3, elevation 49.4. Page with the Sun
-  in the centre: "Facing 172° S, 49° up", drawn Sun on the real Sun.
-- Tilt agreed without calibration. Sun calibration was tapped; the stored
-  compass error was -3.4 degrees (raw compass plus -8 declination read 3.4
-  degrees too far clockwise). Uncalibrated, the drawn path would be about
-  3 degrees off, which matters little for checking trees.
-- SpX-35 path seen over the trees: sunlit part starts at 6:36 about 12 to
-  13 degrees up, above the trees; the dashed part before it is behind them.
+setting (default in config/skyview.json, long side). A larger field of
+view gives a smaller f, so off-centre points move toward the centre.
+A two-point measurement would give f directly: with the Sun at the centre,
+turn by a known angle a (from the sensors) until the Sun is d pixels from
+the centre; then f = d / tan(a).
 
 ## Instructions and launch data (2026-10-13)
 
@@ -116,14 +103,15 @@ distance; f = pixels / tan(angle).
   minutes old, then LL2, then the saved list of any age, then
   data/upcoming-fallback.json.
 
-## Portrait only (2026-10-15)
+## Landscape handling
 
 The page hides the drawing in landscape (screen angle 90, or the window
 wider than 1.1 times its height) and asks the user to turn the phone. It
 calls `screen.orientation.lock('portrait')`, which iOS always refuses and
 Android allows only in some full-screen cases; the phone's own rotation
-lock is the reliable way. The cameraAxes screen-angle code stays, so
-landscape support could come back.
+lock is the reliable way. The cameraAxes screen-angle code still handles
+landscape; only the guard stops it being used. Why portrait only: FINDINGS,
+Decisions.
 
 ## Not modelled
 
