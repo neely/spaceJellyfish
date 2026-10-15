@@ -10,12 +10,13 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-15
-- **Next action:** Before Bandwagon 5 (2026-10-19, 06:30 to 07:30 local):
-  find where the drone ship waits and set its heading in
-  config/launch-directions.json (runbook in
+- **Next action:** Source audit is done (reference/source-audit.md).
+  Bandwagon 5 is Monday 2026-10-19, 06:30 to 07:30 local (LL2, read
+  2026-10-15). On Sunday 10-18, find where the drone ship waits and set
+  its heading in config/launch-directions.json (runbook in
   reference/topics/cape-launch-azimuths-and-inclinations.md). Ben watches
   with the sky view and takes screenshots for data/observations.json. Then
-  the easy wins below.
+  Ben picks from "Audit follow-ups" and the easy wins.
 
 ---
 
@@ -176,8 +177,13 @@ Page.
       "two possible paths", and the source note. Backtest unchanged (41,
       18, 447).
 
-### Source audit (next session, before the easy wins below)
-- [ ] Audit every outside input. For each one, write one row in a new
+### Source audit
+- [x] Done 2026-10-15. Observed: reference/source-audit.md has a row for
+      each input below, each checked again where the source could be
+      reached; `npm test` 52 pass and the backtest gives 41, 18, 447
+      after the audit. Fixes are the items under "Audit follow-ups".
+      Original task text follows.
+      Audit every outside input. For each one, write one row in a new
       `reference/source-audit.md`: what it is, where it is used (file and
       key), source and version or date, how old it is, how it was checked,
       known problems, and what would replace it. Check each claim against
@@ -205,6 +211,26 @@ Page.
       Output: the audit table, FINDINGS entries for any problem found, and
       PLAN items for each fix. Do not change a pinned value during the
       audit; list the change and its downstream impact instead.
+
+### Audit follow-ups (Ben decides each; impact in reference/source-audit.md)
+- [ ] Magnetic declination -8 to -8.3 in config/skyview.json, cited to
+      WMM-2025. Sky view only.
+- [ ] Ascent data: read R4yGM/SpaceXTelemetry-Api (Starlink 5 to 8 and
+      DM-2, 2020, altitude and speed; no licence). Compare altitude with
+      the LEO members and the SpX-35 points. Ask the author before any
+      vendoring. Do not use its downrange files.
+- [ ] In a browser on Ben's computer: open the Launch Dashboard API and
+      the Flight Club page for a launch. Record what data each gives and
+      its terms.
+- [ ] Open the WCBD page for the 2025-07-26 label and swap the source URL
+      if it matches.
+- [ ] Bandwagon 5 source note: cite SpaceNews (about 45 degrees) and the
+      Wikipedia SSO conflict. Check the conflict on 10-18 with the drone
+      ship position.
+- [ ] ZIP points in scripts/observer-sensitivity.js to Census points; add
+      Johns Island back. Then update the FINDINGS entry. Low value.
+- [ ] Observer point: keep zippopotam (0.6 km from Census). No change
+      unless Ben wants it.
 
 ### Easy wins (next, in this order)
 - [ ] Set Bandwagon 5 to northeast or southeast from the drone ship
@@ -277,11 +303,6 @@ Page.
   of a profile are not sampled. 177 of 713 visible tracks are still visible
   at the last sample: the profile ends before the pass does. Decide if the
   engine should say so in its output.
-- Has Starlink left Florida? The snapshot has no Florida Starlink launch
-  after 2026-08-25, and Starship Flight 14 carried a Starlink group from
-  Texas on 2026-09-28. Starlink launches are most of the past twilight
-  chances. Find a statement from SpaceX. If they have ended, the chances
-  each year are far fewer than the backtest shows.
 - SpX-35 (2026-10-13): seen as a plume, as predicted, but 19 to 29
   degrees east of the predicted position (FINDINGS). Is that the 2018
   profiles? A second measured launch and a newer profile will tell.
@@ -297,8 +318,8 @@ Page.
 ## Handoff → next session
 Start prompt:
 > Read AGENTS.md, the PLAN.md status block and "Easy wins", and FINDINGS.md
-> "Reference", then run `npm test` and `node scripts/backtest.js`. Do the
-> source audit in PLAN (Phase 1, "Source audit") first. Then, if
+> "Reference", then run `npm test` and `node scripts/backtest.js`. Read
+> reference/source-audit.md and ask Ben which "Audit follow-ups" to do. Then, if
 > Bandwagon 5 has not flown, help Ben set its direction with the runbook in
 > reference/topics/cape-launch-azimuths-and-inclinations.md. If it has, ask
 > for his sky view screenshots and add them to data/observations.json. Then

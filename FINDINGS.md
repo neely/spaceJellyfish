@@ -145,9 +145,14 @@ before you rely on it.
 - LL2 lists "Starship | Starlink Group 31-1 (Starship Flight 14)" on
   2026-09-28T12:48 UTC from Orbital Launch Pad 2, SpaceX Starbase, Texas.
   The snapshot has no Starship launch from Florida.
-- These facts agree with the research note that Starlink launches from
-  Florida "may have ended". They do not prove it. Six weeks with no launch
-  is the only evidence.
+- SpaceX said Starlink 10-49 (2026-08-25) was the last Falcon 9 Starlink
+  launch from Florida. Future Florida Starlink missions will fly on
+  Starship, with no date given. Source: Spectrum News 13, 2026-08-25,
+  quoting Kiko Dontchev (SpaceX VP of Launch) on X. Read 2026-10-15. The X
+  post itself was not read.
+- 35 of the 59 backtest launches rated likely or possible are Starlink,
+  and 22 of the 32 prime ones (script run 2026-10-15). The past rate of
+  chances is therefore much higher than the future rate.
 - LL2 upcoming list for Florida (one request, 2026-10-08): 203 entries. One
   has status Go: Falcon 9 Dragon CRS-2 SpX-35, 2026-10-13T10:33:44Z, SLC-40.
   The others shown have status TBD and placeholder dates.
@@ -227,6 +232,23 @@ Source: https://developers.cloudflare.com/workers/platform/limits/
   recording, 10-15). Our camera model does not move with roll (test).
 - How the sky view computes what it draws: reference/topics/model-sky-view.md.
 
+#### Source audit (2026-10-15)
+Full table: reference/source-audit.md. No pinned value was changed.
+- Telemetry-Data commit b245d3b is still the repository HEAD.
+- USNO Sun and sidereal time constants still match engine/sun.js.
+- Magnetic declination at the observer is -8.28 degrees by WMM-2025 for
+  2026.79. config/skyview.json has -8.
+- The Census ZCTA point for 29412 is 0.6 km from config/observer.json.
+  Four ZIP points in scripts/observer-sensitivity.js are 4.3 to 10.1 km
+  from the Census points.
+- Azimuth limits: a second source gives 35 to 120 degrees (CSIS, Roberts,
+  2019). Wikipedia still gives 37 to 114. The FAA SLC-40 environmental
+  documents (2020, 2025) give no azimuth numbers.
+- Bandwagon: SpaceNews reports that SpaceX said about 45 degrees.
+  Wikipedia lists Bandwagon-5 as SSO; LL2 says mid-inclination. Conflict.
+- No source gives a screening height, a lowest elevation, or a shortest
+  visible time for rocket plumes. The three values stay provisional.
+
 #### SpX-35 seen from James Island (2026-10-13)
 - Wide plume seen. Engine: likely, prime. At 254 and 277 s after liftoff,
   height agreed within about 1 degree; the rocket was 19 to 29 degrees
@@ -236,6 +258,10 @@ Source: https://developers.cloudflare.com/workers/platform/limits/
   the rocket too far back along its track. One launch; not proven.
 - Fifth `seen-plume` report. It is not in data/labels.json, because SpX-35
   is not in the pinned snapshot.
+- Public reports for the same launch (read 2026-10-15): Live 5 News says
+  Lowcountry residents saw a jellyfish cloud; Post and Courier reports the
+  trail seen from Charleston, Folly Beach, Moncks Corner and other places.
+  URLs in reference/source-audit.md.
 
 #### The observer can be anywhere near Charleston
 - `node scripts/observer-sensitivity.js` (506 snapshot launches, ZIP

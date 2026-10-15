@@ -13,7 +13,7 @@ key_points:
   - "Starlink 43 degree flight (2025-11-22) went southeast; 10-33 (2026-03-19) went northeast; a 53.2 degree flight (2022-01) was planned southeast."
   - "LL2 detailed launch records have no inclination or azimuth field. They have mission.orbit (coarse), landing location, downrange distance, timeline and flightclub_url."
   - "Runbook with URLs for finding an upcoming launch direction (drone ship position, inclination of earlier flights, hazard warnings): section Runbook, 2026-10-15."
-  - "Starlink from Florida may have ended on 2026-08-25 (Universe Today, 2026-09-08); the LL2 Cape query on 2026-10-08 returned no Starlink in its first four rows."
+  - "Falcon 9 Starlink from Florida ended on 2026-08-25. SpaceX said so (Spectrum News, read 2026-10-15; see reference/source-audit.md)."
 related_papers: []
 ---
 

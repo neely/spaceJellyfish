@@ -61,7 +61,10 @@ to 2 October 2026. It rates 59 of them (11.7%) as likely or possible to show
 a sunlit rocket in a dark Charleston sky, and 32 of those fall after the end
 of civil twilight, when the sky is darkest. That count carries no weather and
 rests on three provisional thresholds, so it is an upper bound on the chances
-rather than a forecast of sightings.
+rather than a forecast of sightings. It also overstates the future rate: 35
+of the 59 are Falcon 9 Starlink launches, and SpaceX has said the August 25,
+2026 Starlink flight was the last of those from Florida (reported by
+Spectrum News 13), so we expect fewer chances each year from now on.
 
 We compared the engine with 12 launches that people in the Charleston area
 reported seeing (local news stories and r/Charleston posts, listed in

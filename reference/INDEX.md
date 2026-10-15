@@ -8,7 +8,7 @@ Read this index. Pick the few notes whose answers match your question. Read only
 
 ## Tags (count of notes)
 
-sun-position 5, sidereal-time 2, geodesy 5, trajectory 6, ascent-profile 4, telemetry 3, launch-data 6, twilight 6, illumination 7, plume 5, visibility 8, sightings 3, weather 1, cloudflare 2, email 1, data-access 3, sky-view 1
+sun-position 6, sidereal-time 2, geodesy 6, trajectory 7, ascent-profile 5, telemetry 4, launch-data 7, twilight 6, illumination 7, plume 5, visibility 9, sightings 4, weather 1, cloudflare 2, email 1, data-access 4, sky-view 2
 
 ## Papers (0), high relevance first, then newest
 
@@ -31,10 +31,11 @@ sun-position 5, sidereal-time 2, geodesy 5, trajectory 6, ascent-profile 4, tele
 | [topics/twilight-definitions-and-earth-shadow](topics/twilight-definitions-and-earth-shadow.md) | 2026-10-08 | high | twilight, illumination, sun-position, visibility, geodesy | How are civil, nautical and astronomical twilight defined, how high above a point on Earth is an object still in sunlight when the Sun is D degrees below the... |
 | [topics/twilight-phenomenon-space-jellyfish](topics/twilight-phenomenon-space-jellyfish.md) | 2026-10-08 | high | twilight, plume, visibility, illumination, sightings | What do reputable sources say about when and how far a rocket plume glows in twilight (time window, plume altitude, duration, distance), and where do they... |
 
-## Top-level notes (3)
+## Top-level notes (4)
 
 | key | distilled | relevance | topics | answers |
 |---|---|---|---|---|
 | [data-sources](data-sources.md) | 2026-10-08 | high | data-access, launch-data, cloudflare, sun-position, geodesy | Where does each external input come from (Launch Library 2, Cloudflare Workers limits, USNO, NOAA NGS) and how is it reached? Gives URLs, rate limits, CORS... |
 | [handoff-brief](handoff-brief.md) | 2026-10-08 | medium | launch-data, twilight, illumination, plume, visibility, weather, cloudflare, email, trajectory | What did the owner first plan to build (data source, engine, weather, scheduler, state, alerts), which risks did the brief name, and in what order should it be... |
+| [source-audit](source-audit.md) | 2026-10-15 | high | data-access, launch-data, ascent-profile, telemetry, trajectory, sightings, visibility, sky-view, geodesy, sun-position | Which outside inputs does the engine and the page use, where does each come from, how old is it, was it checked again, what is wrong with it, and what would... |
 | [usno-sun-and-sidereal-time](usno-sun-and-sidereal-time.md) | 2026-10-08 | high | sun-position, sidereal-time, illumination | Which formulas give the Sun's coordinates and Greenwich mean sidereal time, how accurate are they, and what does engine/sun.js add on top? |
