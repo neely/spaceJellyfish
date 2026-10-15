@@ -100,10 +100,13 @@ source. Each step says what it gave when checked on 2026-10-15.
    126.4 degrees about 25.3 N 75.8 W (near the Bahamas). Computed with
    `destinationPoint` in engine/trajectory.js. Ship position, the day
    before launch:
-   - https://orbitalradar.com/recovery-fleet/a-shortfall-of-gravitas and
-     https://api.orbitalradar.com/recovery-fleet say they show AIS
-     positions every 5 minutes. WebFetch saw no position (the map needs a
-     browser). Open in a browser.
+   - https://orbitalradar.com/recovery-fleet/a-shortfall-of-gravitas is a
+     description page with no map (Ben, 2026-10-15). It says the ship works
+     300 to 650 km downrange and that the support ship Bob or Doug escorts
+     it.
+   - https://api.orbitalradar.com/recovery-fleet (the fleet hub) says it
+     shows AIS positions every 5 minutes. WebFetch saw no position; not yet
+     checked in a browser.
    - AIS sites by ship name (MarineTraffic, VesselFinder). Not checked; no
      ship page was confirmed.
 5. Spaceflight Now launch-day reports state "north-easterly" or
