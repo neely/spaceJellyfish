@@ -108,9 +108,9 @@ Backtest. Pinned data only.
       Lead from Ben: Bill Walsh, the Live 5 (WCSC) meteorologist, posts
       about launches that are visible from Charleston. No post or quote
       from him was found by web search; Facebook and X could not be read.
-      Leads so far: reference/topics/charleston-sighting-reports.md has 10
+      Sources: reference/topics/charleston-sighting-reports.md has the
       dated reports checked against the raw pages. Each matches a launch in
-      the snapshot. Not yet written to data/labels.json.
+      the snapshot.
 - [x] `scripts/backtest.js`: run the engine over the snapshot. Print the
       verdict distribution and the result for each labelled case. Observed
       2026-10-08: 41 likely, 18 possible, 447 no; 0 of 165 clock-chosen
@@ -225,7 +225,7 @@ Page.
       then edge).
 - [ ] Ask Ben to regenerate the LL2 snapshot, after a downstream-impact
       trace, so SpX-35 can become the fifth `seen-plume` label. This is what
-      the exit gate below waits for.
+      the exit gate above waits for.
 - [ ] One Android test of the sky view (Chrome).
 
 ## Phase 2 — Weather modifier
