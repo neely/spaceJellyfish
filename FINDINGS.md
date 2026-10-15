@@ -441,11 +441,17 @@ Choices made, and why. Mark settled ones `(locked)`.
   24.9; T+277 s azimuth 144 to 158, elevation 27.4 to 28.1.
 - Elevation and timing agree within about 1 degree. Azimuth does not: the
   rocket was 19 to 29 degrees further east than the engine said.
-- Two explanations, not yet separated: (a) the phone compass was off by
-  about 20 to 25 degrees this morning (calibration was the day before, by
-  the Sun); (b) the real path was further east than the 2018 profiles give.
-  Test: from the same spot in daylight, check the drawn Sun against the real
-  Sun before tapping calibration. If it is off by about 20 degrees, it is (a).
+- Two explanations were open: (a) the phone compass was off by about 20 to
+  25 degrees; (b) the real path ran farther east than the 2018 profiles.
+- Compass check, 2026-10-15 17:36 EDT, before recalibrating: engine Sun at
+  azimuth 250.1, elevation 13.5; the drawn ring sat on the real Sun within
+  about 1 degree. The old code's roll error was about 1 degree per degree of
+  roll, and the SpX-35 screenshots show a horizon tilt of only 2 to 3
+  degrees. So (a) is unlikely and (b) is the leading explanation: at 254 and
+  277 s the real rocket was farther along its track (lower and farther east
+  as seen from Charleston) than the 2018 Falcon 9 profiles put it. Not
+  proven: the check spot may differ from the viewing spot, and it is one
+  launch. More sightings, or a recent Falcon 9 profile, would test it.
 - Recorded in data/observations.json with the measured points.
 - Label: this is a fifth `seen-plume` report. It is not in data/labels.json
   yet, because SpX-35 is not in the pinned data/ll2-snapshot.json. Add it

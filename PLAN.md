@@ -10,12 +10,12 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-15
-- **Next action:** Ben tests the sky view on his iPhone after the roll fix:
-  tilt sideways and check the direction holds ("compass held"); turn to
-  landscape and check the portrait message; then the Sun check from the
-  SpX-35 spot before recalibrating, to settle the 20 to 25 degree azimuth
-  question. Then decide if the snapshot is regenerated to add SpX-35 as the
-  fifth `seen-plume` label.
+- **Next action:** Tilt and landscape tests passed on Ben's iPhone
+  (2026-10-15), and the Sun check put the compass within 1 degree, so the
+  SpX-35 direction miss points at the 2018 ascent profiles. Next: find a
+  recent Falcon 9 ascent profile (start with the Launch Dashboard API named
+  in reference/topics/falcon9-webcast-telemetry), and watch Bandwagon 5 on
+  2026-10-19 with the sky view to get a second measured sighting.
 
 ---
 
@@ -58,6 +58,9 @@ Tests run with `node --test`.
       no `config/pads.json`: each LL2 launch record carries its pad
       coordinates. Observed: 5 members in 2 profiles; LEO members are at 177
       to 183 km at 300 s and GTO members at 150 to 158 km.
+- [ ] A newer Falcon 9 profile. SpX-35 (2026-10-13) was seen 19 to 29
+      degrees farther east than the 2018 profiles at the same moments,
+      with the compass checked (FINDINGS).
 - [ ] A profile for vehicles other than Falcon 9. No source found yet. Until
       then, other vehicles use the Falcon 9 members with low confidence.
 - [x] `engine/trajectory.js`: great-circle position against time from pad,

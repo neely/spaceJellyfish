@@ -86,7 +86,7 @@ and the engine's values for the same moments.
 
 | Date | Launch | Where | Verdict | Seen | Height and timing | Direction |
 |---|---|---|---|---|---|---|
-| 2026-10-13 | SpX-35 | James Island | likely, prime | plume | within about 1 deg | 19 to 29 deg farther east than predicted at the same moment; on or just under the drawn arc; compass check pending |
+| 2026-10-13 | SpX-35 | James Island | likely, prime | plume | within about 1 deg | 19 to 29 deg farther east than predicted at the same moment; on or just under the drawn arc. The compass checked out within 1 deg two days later, so the ascent model, not the phone, is the likely cause |
 
 <p align="center">
   <img src="assets/demo-plume-spx35.jpg" alt="A wide fan-shaped glowing rocket plume above dark trees in a twilight sky" width="520">

@@ -16,16 +16,49 @@
       "verdict": "likely, prime",
       "seen": "plume",
       "points": [
-        { "tS": 254, "azimuthDeg": 136, "elevationDeg": 25.5 },
-        { "tS": 277, "azimuthDeg": 131, "elevationDeg": 28 }
+        {
+          "tS": 254,
+          "azimuthDeg": 136,
+          "elevationDeg": 25.5
+        },
+        {
+          "tS": 277,
+          "azimuthDeg": 131,
+          "elevationDeg": 28
+        }
       ],
       "model": [
-        { "tS": 254, "azimuthDeg": [155.2, 165.2], "elevationDeg": [24.1, 24.9] },
-        { "tS": 277, "azimuthDeg": [144.2, 157.6], "elevationDeg": [27.4, 28.1] }
+        {
+          "tS": 254,
+          "azimuthDeg": [
+            155.2,
+            165.2
+          ],
+          "elevationDeg": [
+            24.1,
+            24.9
+          ]
+        },
+        {
+          "tS": 277,
+          "azimuthDeg": [
+            144.2,
+            157.6
+          ],
+          "elevationDeg": [
+            27.4,
+            28.1
+          ]
+        }
       ],
       "compassCorrectionDeg": -3.4,
-      "compassCheck": null,
-      "note": "Height and timing agree within about 1 degree. Rocket 19 to 29 degrees farther east than the engine at the same moments; it sat on or just under the drawn arc. Compass check pending."
+      "compassCheck": {
+        "date": "2026-10-15T21:36:00Z",
+        "sunAzimuthDeg": 250.1,
+        "sunElevationDeg": 13.5,
+        "result": "Drawn Sun ring on the real Sun within about 1 degree, before recalibrating, with the stored correction. Ben held the phone level (after the roll fix). Same spot as the SpX-35 viewing not yet confirmed."
+      },
+      "note": "Height and timing agree within about 1 degree. Rocket 19 to 29 degrees farther east than the engine at the same moments; it sat on or just under the drawn arc. The 2026-10-15 compass check found the compass right within about 1 degree, so a compass error of 20 degrees is unlikely; the old code's roll error was about 1 degree per degree of roll, and the SpX-35 screenshots show only 2 to 3 degrees of roll. Leading explanation: the real ascent ran farther downrange at those times than the 2018 profiles."
     }
   ]
 }
