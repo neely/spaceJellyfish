@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cameraAxes, project, vectorAngles, compassReferenceAzimuth, angleDiff, focalLengthPx } from '../lib/skyproject.js';
+import { cameraAxes, project, vectorAngles, compassReferenceAzimuth, angleDiff, focalLengthPx, portraitRollDeg } from '../lib/skyproject.js';
 
 const near = (a, b, tol = 1e-9) => assert.ok(Math.abs(a - b) <= tol, `${a} vs ${b}`);
 
@@ -59,4 +59,21 @@ test('focal length for a cover-fitted video', () => {
   // the scale, so the 1920 side spans 1920 * 844/1080 screen pixels.
   const fPx = focalLengthPx({ videoW: 1920, videoH: 1080, screenW: 390, screenH: 844, fovLongDeg: 60 });
   near(fPx, (1920 * (844 / 1080)) / 2 / Math.tan(Math.PI / 6), 1e-9);
+});
+
+test('portrait roll is 0 when level and measures a true sideways roll', () => {
+  near(portraitRollDeg(30, 90, 0), 0, 1e-9);
+  near(portraitRollDeg(30, 120, 0), 0, 1e-9);
+  // Note: at beta 90, gamma turns the phone like a compass needle (gimbal
+  // lock), so it is not a roll. A phone held up at the horizon and rolled
+  // sideways by r has beta = 90 - r and gamma = -90 in these Euler angles.
+  for (const r of [5, 10, 20]) {
+    near(portraitRollDeg(0, 90 - r, -90), r, 1e-9);
+    const f = vectorAngles(cameraAxes({ alphaDeg: 0, betaDeg: 90 - r, gammaDeg: -90 }).forward);
+    near(f.elevationDeg, 0, 1e-9);
+    // Our camera model keeps the same azimuth while rolling.
+    near(f.azimuthDeg, vectorAngles(cameraAxes({ alphaDeg: 0, betaDeg: 90, gammaDeg: 0 }).forward).azimuthDeg + 90, 1e-6);
+  }
+  // Phone flat on its back and tilted sideways by gamma.
+  near(Math.abs(portraitRollDeg(0, 0, 15)), 15, 1e-9);
 });

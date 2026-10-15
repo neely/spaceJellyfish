@@ -59,8 +59,12 @@ off-centre points.
   top edge when it lies flat (unverified for flat use; held up it agreed
   with the Sun on 2026-10-12).
 - Correction = (compass heading + declination) − raw azimuth of that axis.
+  It is updated only while the phone is level in portrait (roll under 5
+  degrees), because the iOS heading slides with roll (FINDINGS, 2026-10-15).
+  Note: at beta 90 the W3C Euler angles are gimbal-locked; a sideways roll of
+  an upright phone shows as beta = 90 - r, gamma = -90, not as gamma = r.
   It is added to every azimuth. Gyro alpha gives fast motion; the
-  correction follows the compass slowly (gain 0.08 per event).
+  correction follows the compass slowly (gain 0.02 per event).
 - Android: listens for `deviceorientationabsolute` and then ignores plain
   `deviceorientation`. Not tested on a device.
 - Declination −8 degrees in `config/skyview.json` is not verified.

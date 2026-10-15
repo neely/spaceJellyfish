@@ -5,12 +5,13 @@ import { evaluateLaunch } from './engine/visibility.js';
 import { LL2_UPCOMING_URL, reduceLaunch } from './lib/ll2.js';
 import { sunDirectionEcef } from './engine/sun.js';
 import { directionAngles } from './engine/geo.js';
-import { cameraAxes, project, vectorAngles, compassReferenceAzimuth, angleDiff, focalLengthPx } from './lib/skyproject.js';
+import { cameraAxes, project, vectorAngles, compassReferenceAzimuth, angleDiff, focalLengthPx, portraitRollDeg } from './lib/skyproject.js';
 
 const CACHE_KEY = 'spacejellyfish.ll2.upcoming.v1'; // written by app.js
 const ERROR_KEY = 'spacejellyfish.sky.compassErrorDeg';
 const FOV_KEY = 'spacejellyfish.sky.fovLongDeg';
 const PRECISE = ['Second', 'Minute', 'Hour'];
+const ROLL_OK = 5; // degrees of side-to-side roll at which the compass is still read
 const COMPASS = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
 const compass = (deg) => COMPASS[Math.round((((deg % 360) + 360) % 360) / 22.5) % 16];
 const COLORS = { sunlit: '#ffb347', dark: '#7fc8ff', grid: 'rgba(232,236,246,.35)', horizon: 'rgba(232,236,246,.85)', sun: '#ffe066' };
@@ -105,23 +106,39 @@ function onOrientation(e) {
   state.ori = { alpha: e.alpha, beta: e.beta, gamma: e.gamma };
   const raw = cameraAxes({ alphaDeg: e.alpha, betaDeg: e.beta, gammaDeg: e.gamma, screenAngleDeg: screenAngle() });
   let target = null;
+  // The gyro (alpha, beta, gamma) gives smooth, consistent motion. The
+  // compass only fixes which way is north. On iOS the compass heading does
+  // not follow side-to-side roll the way our camera model does, so a rolled
+  // phone gave a wrong heading and the picture slid sideways (Ben,
+  // 2026-10-15). We now read the compass only while the phone is held level
+  // (portrait, roll under ROLL_OK) and otherwise keep the last good value.
+  let good = true;
   if (typeof e.webkitCompassHeading === 'number' && e.webkitCompassHeading >= 0) {
     // iOS: alpha has no fixed reference; the compass heading gives one.
     state.compassDeg = e.webkitCompassHeading;
     state.compassAccDeg = e.webkitCompassAccuracy;
     target = e.webkitCompassHeading + sky.magneticDeclinationDeg - compassReferenceAzimuth(raw);
+    const view = vectorAngles(raw.forward);
+    good = Math.abs(portraitRollDeg(e.alpha, e.beta, e.gamma)) < ROLL_OK && Math.abs(view.elevationDeg) < 60;
   } else if (e.absolute || e.type === 'deviceorientationabsolute') {
-    // Android: alpha is already measured from magnetic north.
+    // Android: alpha is already measured from magnetic north and stays
+    // consistent with beta and gamma, so roll does not upset it.
     state.absolute = true;
     target = sky.magneticDeclinationDeg;
   }
+  state.compassHeld = !good;
   if (target === null) return;
   if (!state.haveLive) {
+    // First reading: take it so something shows, even if not level.
     state.liveCorrDeg = target;
     state.haveLive = true;
-  } else {
+    state.locked = good;
+  } else if (good && !state.locked) {
+    state.liveCorrDeg = target;
+    state.locked = true;
+  } else if (good) {
     // The compass is noisy and the gyro is not: follow the compass slowly.
-    state.liveCorrDeg += 0.08 * angleDiff(target, state.liveCorrDeg);
+    state.liveCorrDeg += 0.02 * angleDiff(target, state.liveCorrDeg);
   }
 }
 
@@ -274,7 +291,9 @@ function draw() {
   ctx.stroke();
 
   // Readout and a hint when the path is off screen.
-  const err = state.compassAccDeg != null && state.compassAccDeg >= 0 ? ` · compass ±${Math.round(state.compassAccDeg)}°` : '';
+  const err = state.compassHeld && state.haveLive
+    ? ' · compass held (hold the phone level to update)'
+    : state.compassAccDeg != null && state.compassAccDeg >= 0 ? ` · compass ±${Math.round(state.compassAccDeg)}°` : '';
   $('reading').textContent = `Facing ${Math.round(view.azimuthDeg)}° ${compass(view.azimuthDeg)} · ${Math.round(view.elevationDeg)}° up${err}${state.drag ? ' · drag to look around (no motion sensors)' : ''}`;
   const hint = $('hint');
   const peak = lead?.samples.reduce((a, b) => (b.elevationDeg > a.elevationDeg ? b : a));

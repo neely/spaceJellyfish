@@ -397,6 +397,21 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Rejected: A Cloudflare Pages Function as a shared feed. A GitHub Action
   that commits the list every hour, because it fills the commit history.
 
+### On iOS the compass heading follows roll; the page holds it while rolled
+- Ben's screen recording, 2026-10-15: pointing at the same house, rolling
+  the phone about 30 degrees left or right moved the readout from 254 to
+  213 and to 286 degrees. The horizon line tilted correctly.
+- Our camera model keeps the same azimuth under roll (test in
+  test/skyproject.test.js). So the slide came from webkitCompassHeading,
+  which the page followed with gain 0.08 per event.
+- Fix: the page reads the compass only while the phone is held level in
+  portrait (roll under 5 degrees, view within 60 degrees of the horizon),
+  with gain 0.02. Otherwise the gyro carries the direction and the readout
+  says "compass held". A simulated roll with a swinging heading kept the
+  readout at 132 degrees. Not yet confirmed on Ben's phone.
+- Limit: in landscape the compass is never read after the first value, so
+  Sun calibration matters more there.
+
 ### The answer holds across the Charleston area
 - `node scripts/observer-sensitivity.js` re-runs all 506 snapshot launches
   for other places (ZIP centroids from zippopotam.us, read 2026-10-13).
