@@ -213,22 +213,31 @@ Page.
       audit; list the change and its downstream impact instead.
 
 ### Audit follow-ups (Ben decides each; impact in reference/source-audit.md)
-- [ ] Magnetic declination -8 to -8.3 in config/skyview.json, cited to
-      WMM-2025. Sky view only.
-- [ ] Ascent data: read R4yGM/SpaceXTelemetry-Api (Starlink 5 to 8 and
-      DM-2, 2020, altitude and speed; no licence). Compare altitude with
-      the LEO members and the SpX-35 points. Ask the author before any
-      vendoring. Do not use its downrange files.
-- [ ] In a browser on Ben's computer: open the Launch Dashboard API and
-      the Flight Club page for a launch. Record what data each gives and
-      its terms.
-- [ ] Open the WCBD page for the 2025-07-26 label and swap the source URL
-      if it matches.
-- [ ] Bandwagon 5 source note: cite SpaceNews (about 45 degrees) and the
-      Wikipedia SSO conflict. Check the conflict on 10-18 with the drone
-      ship position.
-- [ ] ZIP points in scripts/observer-sensitivity.js to Census points; add
-      Johns Island back. Then update the FINDINGS entry. Low value.
+- [x] Magnetic declination -8 to -8.3 in config/skyview.json, cited to
+      WMM-2025. Sky view only. Observed: config reads -8.3; `npm test` 52
+      pass. Ben: recalibrate on the Sun once, as the drawing moves 0.3
+      degrees until then.
+- [x] Ascent data: R4yGM Starlink 5 to 8 and DM-2 (2020) vendored with
+      Ben's approval; `node scripts/compare-ascent-sources.js` compares
+      them on SpX-35. Observed: Starlink cuts the azimuth miss to 13 to 14
+      degrees (254 s) and 6 to 7 (277 s); CRS rows equal FINDINGS.
+- [ ] Decide: add a `falcon9-starlink-2020` profile (or put the four
+      flights in `falcon9-leo`). Model change: needs a downstream trace
+      first (backtest counts, prime counts, label results, README numbers,
+      FINDINGS tripwires). Ben decides.
+- [ ] Launch Dashboard API and Flight Club. 2026-10-15 on Ben's iPhone:
+      the API gave "Safari can't reach the page"; both Flight Club pages
+      loaded, then Safari stopped with "a problem repeatedly occurred". Try
+      once on a desktop browser; if it fails, record both as dead ends.
+- [x] 2025-07-26 label: the WCBD URL is added to moreSources. It could
+      not be opened (counton2.com refuses automated reading), so the Yahoo
+      source stays. Labels count unchanged (12).
+- [x] Bandwagon 5 source note cites SpaceNews (about 45 degrees) and the
+      Wikipedia SSO conflict (config/launch-directions.json). The drone
+      ship position on 10-18 still sets the heading.
+- [x] ZIP points in scripts/observer-sensitivity.js are Census points;
+      Johns Island is back. Observed: FINDINGS and the README table match
+      the new run (Johns Island 13 km, 57 of 59).
 - [ ] Observer point: keep zippopotam (0.6 km from Census). No change
       unless Ben wants it.
 

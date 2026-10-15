@@ -125,23 +125,24 @@ any single row.
 James Island, but while it is visible the rocket is 290 to 1,180 km away
 (over all 506 snapshot launches), so moving the observer a
 few kilometres barely changes the answer. We re-ran all 506 snapshot launches
-for other places (`node scripts/observer-sensitivity.js`, ZIP centroids):
+for other places (`node scripts/observer-sensitivity.js`, Census ZIP code area points):
 
 | Place | km from James Island | Same verdict (of 506) | Same verdict when James Island says likely or possible (of 59) | Typical change in peak height |
 |---|---|---|---|---|
-| Folly Beach | 7 | 506 | 59 | 0.7 deg |
-| Downtown Charleston | 7 | 505 | 58 | 0.3 deg |
-| Sullivan's Island | 12 | 505 | 59 | 0.9 deg |
-| Mount Pleasant | 19 | 504 | 58 | 0.4 deg |
-| Isle of Palms | 19 | 505 | 59 | 1.3 deg |
-| Summerville | 40 | 503 | 57 | 4.1 deg |
-| Columbia | 174 | 499 | 53 | 14.1 deg |
+| Folly Beach | 6 | 506 | 59 | 0.6 deg |
+| Downtown Charleston | 7 | 505 | 58 | 0.2 deg |
+| Johns Island | 13 | 504 | 57 | 1.1 deg |
+| Sullivan's Island | 13 | 505 | 59 | 0.9 deg |
+| Mount Pleasant | 14 | 504 | 58 | 0.3 deg |
+| Isle of Palms | 23 | 505 | 59 | 1.3 deg |
+| Summerville | 43 | 503 | 57 | 4.6 deg |
+| Columbia | 172 | 499 | 53 | 14.0 deg |
 
 Anywhere from Folly Beach to Isle of Palms, the page is as good for you as it
 is for James Island: the verdict differs for at most 2 of 506 launches, and
 heights and directions shift by about 1 degree, less than a phone compass
-error. By Summerville (40 km) the verdict still holds but heights run about 4
-degrees off, and beyond roughly 50 km the page should be treated as a rough
+error. By Summerville (43 km) the verdict still holds but heights run about
+4.6 degrees off, and beyond roughly 50 km the page should be treated as a rough
 guide only. These figures compare the model with itself; they say nothing
 about how right the model is, only that the answer does not depend on which
 Charleston-area neighbourhood you stand in.
@@ -251,11 +252,14 @@ What the engine consists of:
   profiles; `snapshot-ll2.js` regenerates the launch snapshot; `backtest.js`
   runs the engine over the snapshot and the labels;
   `observer-sensitivity.js` re-runs it for other Charleston-area places;
+  `compare-ascent-sources.js` flies other ascent data (2020 Starlink and
+  DM-2) on SpX-35 and prints the miss against our measured points;
   `serve.js` serves the page locally.
 - `reference/`: our knowledge base of outside sources, so that each value in
   the engine can be traced to where it came from. Each note opens with a
   short statement of what it answers; `INDEX.md` lists them all, and
-  `README.md` explains how to read and extend it.
+  `README.md` explains how to read and extend it. `reference/vendor/` holds
+  copies of outside data files we analyse but do not yet use in the engine.
 - `assets/`: images. `demo-*.jpg` are the SpX-35 photo and sky view
   screenshot shown above. `jellyfish.png` is the project art (1024 x 1024), also
   the source for a future app icon.

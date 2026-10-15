@@ -258,17 +258,29 @@ Full table: reference/source-audit.md. No pinned value was changed.
   the rocket too far back along its track. One launch; not proven.
 - Fifth `seen-plume` report. It is not in data/labels.json, because SpX-35
   is not in the pinned snapshot.
+- Ascent data check (2026-10-15, `node scripts/compare-ascent-sources.js`):
+  the sighting needs about 364 km downrange at 254 s and 389 km at 277 s,
+  plus or minus 10 km. CRS-14 and CRS-16 (2018) give 264 and 203 km at
+  254 s. 2020 Starlink flights give 294 to 297 km and cut the azimuth miss
+  to 13 to 14 degrees (254 s) and 6 to 7 degrees (277 s), with height still
+  within 1 degree. DM-2 (2020) does not help. The 2018 profiles are too
+  short downrange; a 2020 Starlink ascent is closer but still short.
+  Detail: reference/topics/falcon9-starlink-2020-telemetry.md.
+- The two measured points imply about 1.1 km/s of ground travel between
+  them. Every flight in the data moves 2.0 to 2.6 km/s then. The points fit
+  only at the edge of their stated 2 degree error.
 - Public reports for the same launch (read 2026-10-15): Live 5 News says
   Lowcountry residents saw a jellyfish cloud; Post and Courier reports the
   trail seen from Charleston, Folly Beach, Moncks Corner and other places.
   URLs in reference/source-audit.md.
 
 #### The observer can be anywhere near Charleston
-- `node scripts/observer-sensitivity.js` (506 snapshot launches, ZIP
-  centroids). Folly Beach to Isle of Palms (7 to 19 km): same verdict for
-  58 or 59 of the 59 that James Island rates likely or possible; peak
-  height within 0.3 to 1.3 degrees (median). Summerville (40 km): 57 of 59,
-  about 4 degrees lower. Columbia (174 km): 53 of 59, about 14 lower.
+- `node scripts/observer-sensitivity.js` (506 snapshot launches, Census
+  ZCTA points, run 2026-10-15). Folly Beach to Isle of Palms (6 to 23 km):
+  same verdict for 58 or 59 of the 59 that James Island rates likely or
+  possible; Johns Island (13 km): 57 of 59. Peak height within 0.2 to 1.3
+  degrees (median). Summerville (43 km): 57 of 59, about 4.6 degrees
+  lower. Columbia (172 km): 53 of 59, about 14 lower.
 - The rocket is 290 to 1,180 km away while visible. This compares the
   model with itself; it does not test it.
 
@@ -462,6 +474,14 @@ Choices made, and why. Mark settled ones `(locked)`.
   heading moves with roll. The browser does not give the lens.
 - Rejected: Upload a photo and align it by hand. Landscape support. Focal
   length from photo metadata (the video is cropped differently).
+
+### Vendor the R4yGM 2020 telemetry without a licence file (locked)
+- What: Five telemetry.csv files from R4yGM/SpaceXTelemetry-Api (commit
+  d1f8621) are copied into reference/vendor/r4ygm-spacextelemetry/.
+- Why: It is the only open altitude data for a Starlink-era Falcon 9
+  ascent found. Ben approved vendoring on 2026-10-15 after he was told the
+  repository has no licence file.
+- Rejected: Ask the author first; read it without copying.
 
 ### Hand-set directions for launches LL2 gives no direction for (locked)
 - What: `config/launch-directions.json`, keyed by LL2 id, sets an azimuth,

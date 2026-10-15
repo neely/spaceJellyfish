@@ -68,7 +68,9 @@ off-centre points.
   correction follows the compass slowly (gain 0.02 per event).
 - Android: listens for `deviceorientationabsolute` and then ignores plain
   `deviceorientation`. Not tested on a device.
-- Declination −8 degrees in `config/skyview.json` is not verified.
+- Declination −8.3 degrees in `config/skyview.json`, from WMM-2025 for
+  the observer (−8.28 for 2026.79; see reference/source-audit.md). Before
+  2026-10-15 it was −8, not verified.
 - Sun calibration: the user puts the Sun in the centre circle and taps. The
   page adds angleDiff(sun azimuth, camera azimuth) to a stored compass
   error. The stored error covers declination error, compass error near

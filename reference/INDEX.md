@@ -8,20 +8,21 @@ Read this index. Pick the few notes whose answers match your question. Read only
 
 ## Tags (count of notes)
 
-sun-position 6, sidereal-time 2, geodesy 6, trajectory 7, ascent-profile 5, telemetry 4, launch-data 7, twilight 6, illumination 7, plume 5, visibility 9, sightings 4, weather 1, cloudflare 2, email 1, data-access 4, sky-view 2
+sun-position 6, sidereal-time 2, geodesy 6, trajectory 8, ascent-profile 6, telemetry 5, launch-data 7, twilight 6, illumination 7, plume 5, visibility 9, sightings 4, weather 1, cloudflare 2, email 1, data-access 5, sky-view 2
 
 ## Papers (0), high relevance first, then newest
 
 | key | year | relevance | topics | answers |
 |---|---|---|---|---|
 
-## Topic notes (11)
+## Topic notes (12)
 
 | key | distilled | relevance | topics | answers |
 |---|---|---|---|---|
 | [topics/cape-launch-azimuths-and-inclinations](topics/cape-launch-azimuths-and-inclinations.md) | 2026-10-08 | high | trajectory, launch-data, ascent-profile, visibility | Which launch azimuths are allowed from the Cape, how do azimuth and inclination relate, what inclination goes with each mission class, and how can we know the... |
 | [topics/charleston-sighting-reports](topics/charleston-sighting-reports.md) | 2026-10-08 | high | sightings, visibility, plume, twilight | Which past Florida launches did Charleston-area outlets report as seen, and which of those reports are solid enough to use as positive labels for a backtest? |
 | [topics/falcon9-ascent-timeline](topics/falcon9-ascent-timeline.md) | 2026-10-08 | high | ascent-profile, telemetry, trajectory, launch-data | At what time after liftoff do Falcon 9 MECO, stage separation, SES-1, fairing separation, entry burn, landing and SECO-1 happen for current Cape missions, what... |
+| [topics/falcon9-starlink-2020-telemetry](topics/falcon9-starlink-2020-telemetry.md) | 2026-10-15 | high | telemetry, ascent-profile, trajectory, data-access | What ascent data exists for Falcon 9 Starlink flights, where is it vendored, how is downrange derived from it, and does a Starlink-shaped ascent explain the... |
 | [topics/falcon9-webcast-telemetry](topics/falcon9-webcast-telemetry.md) | 2026-10-08 | high | telemetry, ascent-profile, trajectory, data-access | Where do the altitude and downrange curves in config/profiles.json come from, which missions are used and why, and what are the limits of that data? |
 | [topics/model-sky-view](topics/model-sky-view.md) | 2026-10-12 | medium | sky-view, geodesy, visibility | How does sky.html turn the phone's orientation into camera axes, project a sky direction (azimuth, elevation) onto the screen, correct the compass, set the... |
 | [topics/model-sun-and-earth-geometry](topics/model-sun-and-earth-geometry.md) | 2026-10-08 | high | sun-position, sidereal-time, geodesy, illumination | Which formulas turn a Unix time and a place into the Sun's direction, the Sun's elevation and azimuth, and the look angles and range to a point, which... |

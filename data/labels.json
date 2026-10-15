@@ -94,7 +94,13 @@
       "place": "Lowcountry; Isle of Palms",
       "source": "https://www.yahoo.com/news/articles/gallery-falcon-9-launch-seen-151945880.html",
       "confidence": "high",
-      "note": "WCBD story, read on Yahoo."
+      "note": "WCBD story, read on Yahoo. On 2026-10-15 the Yahoo copy loaded but showed no date.",
+      "moreSources": [
+        {
+          "url": "https://www.counton2.com/news/local-news/gallery-falcon-9-launch-seen-over-lowcountry-early-saturday-morning/",
+          "note": "The original WCBD page, found by search on 2026-10-15. Not opened: counton2.com refused automated reading."
+        }
+      ]
     },
     {
       "launchId": "5d5e17f4-292b-45f6-ab53-05437cf63ce0",

@@ -15,19 +15,23 @@ const config = read('../config/visibility.json');
 const snapshot = read('../data/ll2-snapshot.json');
 const upcoming = read('../data/upcoming-fallback.json');
 
-// ZIP centroids from https://api.zippopotam.us/us/<zip>, read 2026-10-13.
-// 29455 (Johns Island) was left out: the API gave 32.8357, -79.8217, which
-// is in Mount Pleasant, so the value is not trusted.
+// ZCTA internal points from the Census TIGERweb ZCTA layer
+// (PUMA_TAD_TAZ_UGA_ZCTA/MapServer/1, fields INTPTLAT and INTPTLON), read
+// 2026-10-15. Until 2026-10-15 these came from api.zippopotam.us; four of
+// those points were 4.3 to 10.1 km from the Census points, and the one for
+// 29455 (Johns Island) was 30 km off, so it was left out. See
+// reference/source-audit.md.
 const PLACES = [
-  ['Folly Beach 29439', 32.663, -79.927],
-  ['Downtown Charleston 29401', 32.7795, -79.9371],
-  ['Sullivans Island 29482', 32.7637, -79.8399],
-  ['Mount Pleasant 29464', 32.8473, -79.8206],
-  ['Isle of Palms 29451', 32.7943, -79.7729],
-  ['Summerville 29483', 33.028, -80.1739],
-  ['Beaufort 29902', 32.4047, -80.6531],
-  ['Myrtle Beach 29577', 33.6994, -78.9137],
-  ['Columbia 29201', 34.0004, -81.0334],
+  ['Folly Beach 29439', 32.6626912, -79.9316597],
+  ['Johns Island 29455', 32.6851849, -80.0910082],
+  ['Downtown Charleston 29401', 32.77718, -79.9320004],
+  ['Sullivans Island 29482', 32.7709494, -79.8311365],
+  ['Mount Pleasant 29464', 32.8174212, -79.8550653],
+  ['Isle of Palms 29451', 32.8280093, -79.750481],
+  ['Summerville 29483', 33.0302971, -80.2338068],
+  ['Beaufort 29902', 32.3175972, -80.6822133],
+  ['Myrtle Beach 29577', 33.6976385, -78.906484],
+  ['Columbia 29201', 33.9823292, -81.0286589],
 ];
 
 const run = (observer, launch) => evaluateLaunch({ launch, observer, profiles, config });

@@ -48,10 +48,11 @@ Rule for this audit (PLAN): no pinned value changes. A proposed change is listed
 | Bandwagon 5 direction | config/launch-directions.json | orbitcodex.com for Bandwagon 3 at 45 degrees (secondary) | 6 months | Better source found: SpaceNews reports SpaceX said Bandwagon missions go to about 45 degrees (SmallSat conference talk, Aug. 9; the article shows no year). Spaceflight Now (2025-04-21) says Bandwagon 3 went to a mid-inclination orbit, no number, booster to LZ-2. spacelaunchschedule.com names drone ship A Shortfall of Gravitas for Bandwagon 5. | Conflict: Wikipedia "List of spaceflight launches in October to December 2026" lists Bandwagon-5 as SSO. LL2 and the mission name say mid-inclination. Heading still unknown. | Drone ship position on 10-18 (runbook). |
 
 ### Ascent data leads (new, 2026-10-15)
-- R4yGM/SpaceXTelemetry-Api (https://github.com/R4yGM/SpaceXTelemetry-Api, last commit 2021-06-12). It holds altitude and speed against time for Starlink 5, 6, 7, 8 (2020, Florida), Crew Dragon DM-2 (ISS, 2020), GPS III SV03 and ANASIS-II. There is no licence file, so we can read it but should not vendor it without the author's permission.
+- R4yGM/SpaceXTelemetry-Api (https://github.com/R4yGM/SpaceXTelemetry-Api, last commit 2021-06-12). Vendored and compared on 2026-10-15: reference/topics/falcon9-starlink-2020-telemetry.md. It holds altitude and speed against time for Starlink 5, 6, 7, 8 (2020, Florida), Crew Dragon DM-2 (ISS, 2020), GPS III SV03 and ANASIS-II. There is no licence file, so we can read it but should not vendor it without the author's permission.
   - Altitude at 254 s: Starlink 5 to 8 give 145 to 147 km; DM-2 gives 168 km. Our LEO members give 152 (CRS-14) and 159 (CRS-16) km.
   - Problem: the Starlink 7 downrange file is identical to the DM-2 file, so at least one is a copy. The downrange time column does not behave like seconds (933 km at row 200 for Starlink 8). Do not use the downrange files.
 - Launch Dashboard API (shahar603): the repository holds only server code; the data lived in a database and S3. The host api.launchdashboard.space now answers, but its robots rule blocks WebFetch. The built-in browser on Ben's computer was offline today, so it is not checked.
+- 2026-10-15 evening, on Ben's iPhone (Safari): the Launch Dashboard API gave "Safari can't reach the page". Both Flight Club pages (SpX-35 and Bandwagon 5) started to load, then Safari stopped with "a problem repeatedly occurred". Not yet tried on a desktop browser.
 - Flight Club: LL2 gives a per-launch page (for Bandwagon 5: https://flightclub.io/result/3d?llId=3b430f81-0ff1-4d85-8a1a-cef0de326198). Robots rule blocks WebFetch. It is a simulation, not telemetry, and its terms are not checked.
 - Other telemetry repos found (jonas-braun/spacex_flight_data 2018, wergil81/SpaceX 2017, rikkertkoppes/spacex-telemetry 2017): older than the pinned data. Not useful.
 
@@ -114,7 +115,9 @@ Distances above are haversine distances on a 6371 km sphere, computed in the ses
 | Cloudflare Workers limits | Unchanged for Free (10 ms CPU, 5 Cron Triggers, 50 subrequests, 100,000 requests a day). Paid now also lists 15 minutes CPU for a Cron interval of 1 hour or more. |
 | FAA SLC-40 EA page | Loads; documents are on drs.faa.gov, which needs a browser. |
 
-## Proposed changes (not applied) and downstream impact
+## Proposed changes and downstream impact
+
+Status 2026-10-15 evening: items 2, 3 and 5 are applied; item 4 is applied as an extra source (the WCBD page could not be opened); items 1, 6 and 7 are not applied. See PLAN "Audit follow-ups".
 
 1. Observer point to the Census ZCTA point (0.6 km). Impact: tripwire "SLC-40 to observer 466.0 km" may move in the tenths; backtest verdicts likely unchanged (FINDINGS shows 7 to 19 km moves change 0 or 1 of 59), but the tripwire counts must be re-run; FINDINGS Reference numbers for SpX-35 and the sky view would shift slightly. Value: low. Recommend: keep, and note the source difference.
 2. ZIP points in scripts/observer-sensitivity.js to Census points, and add Johns Island back. Impact: the FINDINGS entry "The observer can be anywhere near Charleston" (distances and counts). No engine or page change.
