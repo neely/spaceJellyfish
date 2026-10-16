@@ -1,0 +1,175 @@
+{
+  "fetchedStart": "2026-10-16T12:24:23.654Z",
+  "period": {
+    "start": "2025-01-01",
+    "end": "2026-10-15"
+  },
+  "files": {
+    "ILM-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=ILM&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 673205,
+      "sha256": "c7a20a6d8a95b4ed6dc0c56afe62c8ae9a8b7340f8fc2bbc50277bab16f23b8c"
+    },
+    "ILM-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1308117,
+      "sha256": "f460ebb366df3a4de23f998bec45778e01f9d772e476974575b11bac2a6ae6ac"
+    },
+    "ILM-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=34.26681&longitude=-77.89987&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1059851,
+      "sha256": "60086fa5e6888792436e268a646ca5eb4ac6938ef42db73056910964c82716c0"
+    },
+    "CRE-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=CRE&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 666166,
+      "sha256": "c00ec4e654b5bf34391761d6c8b3bca02fa73eb62537f24ef015a6c21a33b28b"
+    },
+    "CRE-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1304684,
+      "sha256": "066ff4773c87f82216dffeba7327b15369668b764905fcd4420e7d3175a84bca"
+    },
+    "CRE-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=33.81619&longitude=-78.72043&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1057241,
+      "sha256": "d6a4e9e22847db5e98b5ccf26a6d55651d840944b1c90d8ff13bac45ff113e21"
+    },
+    "MYR-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=MYR&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 658796,
+      "sha256": "e3cf1a2df6b4d22ef0790f7f253a826631bed86a63615d8c05d1b4998c9e557f"
+    },
+    "MYR-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1303640,
+      "sha256": "cd8f78efc88f610a52caee934279c094d8d84523d32c9d42d90bb1f7a0b5cdb6"
+    },
+    "MYR-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=33.67975&longitude=-78.92833&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1057605,
+      "sha256": "31ce5f35afc0c421eac49b95f6cbb3be069b8f234359c13a24b7db937ffc013e"
+    },
+    "LRO-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=LRO&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 676167,
+      "sha256": "9f50536db3c0af3f3edcd8fa1bfabd9295e19c93cceb544b9dfab0a95c3acdc3"
+    },
+    "LRO-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1307194,
+      "sha256": "fe9ccb998d865e8110e9534f0e8b72a31e2144b3101db7da4f89415bfb9c6b05"
+    },
+    "LRO-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=32.898&longitude=-79.783&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1061148,
+      "sha256": "01ec50894a9b962e6f338287029cc0ce03a1afb3fee89d016117b0b1d7143f38"
+    },
+    "CHS-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=CHS&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 785999,
+      "sha256": "3be17758a39dde29edac16e0bce264471a88719cea0b93922dfb778815662ce4"
+    },
+    "CHS-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1304329,
+      "sha256": "e8883ca26b12a5d4045fa88f6a9efa16dbbe3e34f1ef1fa43054b63f91798425"
+    },
+    "CHS-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=32.89889&longitude=-80.04056&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1059705,
+      "sha256": "e778a2b4062a43a8d9071559cac36517da48ead3ae57cd6ae77719270aa13c52"
+    },
+    "JZI-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=JZI&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 681418,
+      "sha256": "98a9fd54a11a44231af14bc4838daee79c3408c41ade6307176b013c95e5aa4e"
+    },
+    "JZI-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1305227,
+      "sha256": "f56c826a281208dc667daade4bb40e5f1ee30d0589d6a85327741ee926ac566f"
+    },
+    "JZI-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=32.701&longitude=-80.003&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1059715,
+      "sha256": "a3fd9d3772f538e3b36a76c7bc7c13fd0f7c7d1d9e149634f55f8ffaa0052bba"
+    },
+    "NBC-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=NBC&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 696644,
+      "sha256": "8d920ce6a8a17d003a579c349e3d7f1b8059c0ce922394d5335c4c314202ede8"
+    },
+    "NBC-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1302575,
+      "sha256": "34dd17aee98f634a4ed9796a23fd465af941e0b058c7608f91ecc3d3a6b6e0ee"
+    },
+    "NBC-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=32.49361&longitude=-80.70306&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1059098,
+      "sha256": "4082f986c12cda397af07ed4756cd62725f596d7c5cd635b9e2ce57872ae1c7f"
+    },
+    "HXD-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=HXD&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 653028,
+      "sha256": "8cf98e952aec11afde62223c8daecdae6b40d57627fca858a9690e69376dd13b"
+    },
+    "HXD-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1302153,
+      "sha256": "602e87ced54ac5eb4777a278776a5b93089236d20ad4497890e3dfb0c3f0b32e"
+    },
+    "HXD-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=32.21667&longitude=-80.7&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1057130,
+      "sha256": "a60fb8048e9283a4f9681a3dcb063a23f6bb1edf8646fe68232199fdafee2f91"
+    },
+    "SAV-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SAV&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 771024,
+      "sha256": "3a73c0c3a724be968a06f7b85a740d9732aef13c89ea626c718e95924f0ce50e"
+    },
+    "SAV-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1301392,
+      "sha256": "51839d9a4522fafe24af7f92ed87ab5011d8df9f424a298222af19d2b174696e"
+    },
+    "SAV-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=32.13137&longitude=-81.20226&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1058864,
+      "sha256": "ba84f9f0186b217ceb7c7f9ee14e093a1242709e1efd3db7a7cb47efd5c99ecc"
+    },
+    "SSI-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SSI&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 678016,
+      "sha256": "dc97909b8bff10dbe749e34ac50368b16d6fbbafc210bc3b45ba0a3bf650bf66"
+    },
+    "SSI-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1305847,
+      "sha256": "93c071d17aedc8b6862c6e5e5fc70dae0f62c32e05a23768573f027cc19aa0d8"
+    },
+    "SSI-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=31.15167&longitude=-81.39139&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1058992,
+      "sha256": "ede0e5844aba9716f26060760286c9e4adc3f3fa258b5c4c3e0b5b6898eec794"
+    },
+    "JAX-iem.csv.gz": {
+      "url": "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=JAX&tz=Etc%2FUTC&format=onlycomma&latlon=no&missing=M&trace=T&direct=no&report_type=3&year1=2025&month1=1&day1=1&year2=2026&month2=10&day2=16&data=skyc1&data=skyc2&data=skyc3&data=skyc4&data=skyl1&data=skyl2&data=skyl3&data=skyl4",
+      "bytes": 829331,
+      "sha256": "28345675fc3bbcc7eab28823baf10f7ac1998e376685614e131185c3c43cc763"
+    },
+    "JAX-previous.json.gz": {
+      "url": "see requests inside the file",
+      "bytes": 1307523,
+      "sha256": "e4b6c39d8693f51edaa1a6385b6bbc1064f58e4473148749a729e74651001ab2"
+    },
+    "JAX-historical.json.gz": {
+      "url": "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=30.49534&longitude=-81.6937&hourly=cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&models=ecmwf_ifs025,gfs_global,ncep_nbm_conus,gfs_hrrr&start_date=2025-01-01&end_date=2026-10-15&timezone=GMT",
+      "bytes": 1060494,
+      "sha256": "0a59927f171fdee701cda8e40292d5f819525b6c4f1e579b7214fc2cc104810e"
+    }
+  },
+  "fetchedEnd": "2026-10-16T12:34:12.005Z"
+}
