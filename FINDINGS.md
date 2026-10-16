@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 90 tests, 90 pass, 0 fail (2026-10-16). It also
+- `npm test` — expected 92 tests, 92 pass, 0 fail (2026-10-16). It also
   passes with no `node_modules` (h5wasm is needed only to fetch GOES files). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
@@ -67,6 +67,13 @@ these before you trust it. Hard-stop on mismatch.
   and 782 scans. `--recheck 5` gave 5 of 5 identical (file SHA-256 and
   box values). `data/goes/station-pixels.json`: 11 stations, pixel 0.04 to
   1.36 km from the airport.
+- `data/goes/ccl-stations.json` (fetched 2026-10-16) — expected 782 CCL
+  files, one per mask scan, 0 not found. `--recheck 5` gave 5 of 5
+  identical.
+- `clouds/goes-ccl-results.json` — twilight, max(CF1, CF2) against the
+  sky below 10,000 ft: 1,517 pairs, skill 21 (hit 23, false alarm 2).
+  Dropped pairs: missing value 1,175 (all TCF = 65531), no report 65, no
+  scan 10.
 - `clouds/goes-results.json` — twilight, below 12,000 ft: 2,506 pairs,
   skill 48 (hit 84, false alarm 36). Twilight, full sky: 916 pairs, skill
   66. Dropped pairs: no report 65, no scan 10, few good pixels 3.
@@ -297,6 +304,18 @@ clouds/goes-results.md. Note: reference/topics/goes-clear-sky-mask.md.
 - The ECM ATBD v1.2 gives day and night accuracy, but none for twilight.
   The GOES-19 ECM Provisional ReadMe (18 February 2025) reports no major
   issues and says nothing about twilight.
+
+#### Satellite check, test 2: GOES Cloud Cover Layers against airports (2026-10-16)
+Report: clouds/README.md, "Satellite check, test 2". Tables:
+clouds/goes-ccl-results.md.
+- Result: no-go under the approved rules (skill 80 or more at twilight).
+  Skill 21; HRRR low cloud scores 64 on that truth.
+- The missing-value rule dropped TCF = 65531, which marks full cloud
+  (65531 x 1.526e-5 = 1.0000; 1,163 of the 1,175 boxes were mostly cloudy
+  in the mask). Counted back in, skill is near 19. No NOAA document read
+  states the meaning of 65531.
+- CCL layers overlap in the files, so the product uses cloud base, not
+  only cloud top as the ATBD v1.0 says.
 
 #### Site cache headers (2026-10-15)
 - `.js`, `.css` and `.png` from jellyfish.benneely.com come with
@@ -742,3 +761,16 @@ Choices made, and why. Mark settled ones `(locked)`.
   margin). Coding the projection formula (the PUG was not reachable;
   NOAA's own grid is the source). HDF5 range reads (whole files were
   simpler for a sample).
+
+### Satellite check, test 2: rules fixed before the data (2026-10-16)
+- What: GOES ABI-L2-CCLC, max(CF1, CF2) in the 10 km cell that holds the
+  station, against the airport sky below 10,000 ft; same 300 hours and
+  scans as test 1; DQF not used; go only if twilight skill is 80 or more.
+  Rules: config/goes-ccl.json. Approved by Ben before the data.
+- Why: test 1's mask counts high cloud that the airports cannot see.
+  The bar follows test 1's rule: a truth must clearly beat the forecast
+  it will grade (HRRR low cloud, 64).
+- Rejected: CF1 + CF2 (counts overlapping pixels twice); a DQF filter
+  (clear cells carry DQF 2); a 3 by 3 block of cells (30 km, larger than
+  the sky an airport reports).
+

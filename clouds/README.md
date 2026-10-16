@@ -247,6 +247,40 @@ grid check above replaced it. The fetch took 782 scans (3.6 GB, deleted
 after use), not the 300 planned, because the stations report at
 different minutes. Notes: `reference/topics/goes-clear-sky-mask.md`.
 
+## Satellite check, test 2
+
+Test 1 used the mask, which counts high cloud that the airports cannot
+see. Test 2 used GOES Cloud Cover Layers (`ABI-L2-CCLC`), which splits
+cloud by height, and compared only low cloud. Rules were approved by Ben
+before any data was compared (`config/goes-ccl.json`). Tables:
+[goes-ccl-results.md](goes-ccl-results.md).
+
+**Short answer: no-go, and further off than test 1.** CCL low cloud,
+max(CF1, CF2), against the airport sky below 10,000 ft, at twilight, had
+twilight skill 21 on 1,517 pairs. The bar was 80. HRRR's low-cloud
+forecast scores 64 against the same truth.
+
+**Method.** The same 300 hours and the same scan for each report as
+test 1. The CCL file with the same scan start as that mask scan (782 of
+782 found). The 10 km CCL cell that holds the station. CF1 and CF2 are
+the cloud fractions below 5,000 ft and from 5,000 to 10,000 ft. The
+layers overlap in the files, so their union is unknown; max(CF1, CF2) is
+its lower bound.
+
+**What we saw** (observations, not causes):
+
+- CCL calls low cloud seldom. Hit rate 23 percent at twilight; false
+  alarms 2 percent. The upper bound, min(TCF, CF1 + CF2), gives skill 24.
+- **A rule error.** The rules dropped a pair when TCF was outside its
+  valid range (0 to 65530). 1,175 pairs had TCF = 65531, and in 1,163 of
+  them the mask box from test 1 was mostly cloudy. 65531 times the scale
+  factor is 1.0000, so 65531 looks like full cloud, not a missing value.
+  The dropped pairs were mostly overcast. The decisive value does not use
+  TCF, so a check counted them back in: across all hours, they hold 102
+  hits in 477 airport-cloudy cases and 46 false alarms in 698 clear ones.
+  With them, skill is near 19 instead of 21. The verdict does not change.
+  The approved rules were not edited after the result.
+
 ## Reproduce it
 
 Everything is pinned. Raw data: `data/clouds/raw/` (33 gzip files, 5.3 MB),

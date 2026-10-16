@@ -12,7 +12,8 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   (v0.6.0: NBM, HRRR low cloud, TAF; clouds/README.md). Phase 3 (alerts)
   starts only when Ben asks.
 - **Last updated:** 2026-10-16
-- **Satellite check:** stopped after step 1 (no-go, FINDINGS). The page
+- **Satellite check:** two satellite truths failed (tests 1 and 2,
+  FINDINGS). The page
   forecast is unchanged. Offshore skill stays unscored; what comes next
   is Ben's call (Open questions, "score the offshore part").
 - **Next action:** Sunday 2026-10-18: the Bandwagon 5 item at the top of
@@ -171,9 +172,12 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
     places against the mask. Blocked by step 1. A new test (for example
     the four-level ACM, or cloud top height) needs new rules set before
     its data, and Ben's go-ahead.
-  - [ ] Test 2: GOES Cloud Cover Layers low cloud, max(CF1, CF2),
+  - [x] Test 2: GOES Cloud Cover Layers low cloud, max(CF1, CF2),
     against the airport sky below 10,000 ft, on the same 300 hours.
     Rules approved by Ben 2026-10-16 (config/goes-ccl.json; bar 80).
+    Done 2026-10-16: no-go (FINDINGS, Satellite check, test 2). Observed:
+    the scorer output in clouds/goes-ccl-results.md; 5 of 5 rechecked
+    files identical; the dropped-pair count that keeps the verdict.
   - Still not read: PUG Vol 5 (OSPO copy answered 503 on 2026-10-16).
   - Option: cloud top height (ACHA, 0.3 MB a file) would give the cloud
     top for the sight-line test directly.

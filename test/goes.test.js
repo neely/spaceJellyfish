@@ -53,3 +53,19 @@ test('report: go/no-go line in clouds/README.md equals goes-results.json', () =>
   assert.ok(readme.includes(`twilight skill ${r.goNoGo.skillPct} on ${r.goNoGo.n.toLocaleString('en-US')} pairs`));
   assert.equal(r.goNoGo.pass, r.goNoGo.skillPct >= json('config/goes-acm.json').goNoGo.minSkillPct);
 });
+
+test('cloud layers extract: one CCL file for each mask scan', () => {
+  const acm = json('data/goes/acm-stations.json');
+  const ccl = json('data/goes/ccl-stations.json');
+  assert.equal(ccl.unmatchedMaskScans, 0);
+  assert.deepEqual(ccl.scans.map((s) => s.acmKey).sort(), acm.scans.map((s) => s.key).sort());
+  for (const s of ccl.scans) assert.match(s.sha256, /^[0-9a-f]{64}$/);
+});
+
+test('report: test 2 go/no-go line in clouds/README.md equals goes-ccl-results.json', () => {
+  const r = json('clouds/goes-ccl-results.json');
+  const readme = readFileSync(new URL('../clouds/README.md', import.meta.url), 'utf8');
+  assert.ok(readme.includes(`twilight skill ${r.goNoGo.skillPct} on ${r.goNoGo.n.toLocaleString('en-US')} pairs`));
+  assert.equal(r.goNoGo.pass, r.goNoGo.skillPct >= json('config/goes-ccl.json').goNoGo.minSkillPct);
+  assert.equal(r.dropped.missingValue, 1175);
+});

@@ -99,7 +99,9 @@ is test 2).
 - File facts: TCF uint16, scale 1.526e-5, fill 65535; 65531 also appears
   (outside valid_range 0 to 65530). CF1 to CF5 uint8 percent, valid 0 to
   100; 128 also appears. CL is a bit flag per cell (bit 0 lowest layer).
-  DQF 0 good, 1 degraded, 2 bad; ATBD 3.4.3.2: "There is currently no
+  At the 11 stations, TCF = 65531 came with mostly cloudy mask boxes
+  (1,163 of 1,175); 65531 x 1.526e-5 = 1.0000, so it looks like full
+  cloud. No document read states this. DQF 0 good, 1 degraded, 2 bad; ATBD 3.4.3.2: "There is currently no
   quality flag for CCL cloud fraction" and the layer flag "shares the
   same quality flag as ACHA". Clear cells carry DQF 2.
 - Grid: x and y steps are 5 times the ACMC steps, offset by 2 ACMC

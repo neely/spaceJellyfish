@@ -310,6 +310,8 @@ A few things we found along the way:
 - `clouds/`: the cloud forecast study. `README.md` is the report;
   `results.json` and `results.md` are written by
   `scripts/score-clouds.js` from the pinned data in `data/clouds/`.
+  `goes-ccl-results.json` and `goes-ccl-results.md` are test 2 of the
+  satellite check (cloud layers), written by `scripts/score-goes-ccl.js`.
   `goes-results.json` and `goes-results.md` are the satellite check
   (GOES cloud mask against the airports), written by
   `scripts/score-goes.js` from the pinned extract in `data/goes/`.
@@ -320,7 +322,7 @@ A few things we found along the way:
   point; `profiles.json` holds the ascent profiles; `visibility.json` holds
   the thresholds and azimuths; `weather.json` holds the cloud check
   settings; `cloud-stations.json` holds the airports and models of the
-  cloud study; `goes-acm.json` holds the rules of the satellite check; `launch-directions.json` holds directions
+  cloud study; `goes-acm.json` and `goes-ccl.json` hold the rules of the satellite check; `launch-directions.json` holds directions
   we set by hand for upcoming launches; `skyview.json` holds the sky view
   defaults.
 - `test/`: tests for the engine, and `test/fixtures/` with the pinned
@@ -335,7 +337,8 @@ A few things we found along the way:
   saved copy of upcoming launches that the page shows only when every live
   source fails. `goes/` holds the satellite check extract: the
   cloud mask values around each airport for 782 scans, with the S3 name
-  and checksum of each file, and the pixel of each airport.
+  and checksum of each file, the cloud layer values for the matching
+  782 files, and the pixel of each airport.
 - `scripts/`: one-off tools. `fetch-reference-fixtures.js` regenerates the
   fixtures from USNO and NOAA NGS; `build-profiles.js` regenerates the ascent
   profiles; `snapshot-ll2.js` regenerates the launch snapshot; `backtest.js`
@@ -345,8 +348,8 @@ A few things we found along the way:
   DM-2) on SpX-35 and prints the miss against our measured points;
   `lib/webcast-telemetry.js` turns webcast speed and altitude into downrange
   distance for the profiles;
-  `goes-station-pixels.js`, `fetch-goes-acm.js` and `score-goes.js` run
-  the satellite check;
+  `goes-station-pixels.js`, `fetch-goes-acm.js`, `score-goes.js`,
+  `fetch-goes-ccl.js` and `score-goes-ccl.js` run the satellite check;
   `serve.js` serves the page locally.
 - `reference/`: our knowledge base of outside sources, so that each value in
   the engine can be traced to where it came from. Each note opens with a
