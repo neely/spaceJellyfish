@@ -29,18 +29,23 @@ these before you trust it. Hard-stop on mismatch.
   (Bangabandhu-1, SES-12, Hispasat 30W-6). Altitude at 300 s: 177 to 183 km
   for LEO members, 150 to 158 km for GTO members. Altitude at the end of
   the data: 207 to 208 km for LEO, 164 to 165 km for GTO.
-- `data/ll2-snapshot.json` — expected 506 launches, 2017-01-21 to
-  2026-10-02. 434 are Falcon 9. 358 have orbit LEO and 73 have GTO. 502
-  have status Success and 4 have Failure. 8 pads.
-- `node scripts/backtest.js` (2026-10-08, screening height 10 km) — expected
-  41 likely, 18 possible, 447 no, out of 506. 32 of the 59 are prime.
-  Labels: 0 of 4 `seen-plume` labels are missed. 1 of 8 `seen` labels has
+- `data/ll2-snapshot.json` (fetched 2026-10-16T00:41Z) — expected 507
+  launches, 2017-01-21 to 2026-10-13. 435 are Falcon 9. 359 have orbit LEO
+  and 73 have GTO. 503 have status Success and 4 have Failure. 8 pads.
+  The first 506 records are byte-identical to the 2026-10-08 snapshot
+  (SHA-256 of the records array, first 12 hex: 00eb5fefa0e2); the only
+  new record is SpX-35. Whole array: 67beee3934d2.
+- `node scripts/backtest.js` (2026-10-15, screening height 10 km) — expected
+  42 likely, 18 possible, 447 no, out of 507. 33 of the 60 are prime.
+  Share scored visible (likely or possible): 60 of 507, 11.8 percent.
+  Labels: 0 of 5 `seen-plume` labels are missed. 1 of 8 `seen` labels has
   verdict 'no' (the Atlas V of 2026-04-27).
   Negatives chosen by clock time: 0 wrong of 82 (10:00 to 15:00 local) and
   0 wrong of 83 (23:00 to 02:00 local).
-- Screening height sensitivity: 5 km gives 59 not 'no'; 30 km gives 52. The
+- Screening height sensitivity (507 launches): 5 km gives 60 not 'no', the
+  same as 10 km; 30 km gives 53. The
   Atlas V of 2026-04-27 is 'no' at all three heights.
-- `data/labels.json` — expected 12 labels: 8 `seen`, 4 `seen-plume`.
+- `data/labels.json` — expected 13 labels: 8 `seen`, 5 `seen-plume`.
 
 ### Intentional, not bugs
 Things that look wrong but are correct. Do not "fix" these.
@@ -103,25 +108,28 @@ before you rely on it.
 - A northeast launch is 2 to 3 times higher in the Charleston sky than a
   southeast or due-east launch.
 
-#### Reported sightings against the snapshot (2026-10-08)
-- data/labels.json holds 12 launches with a report that the launch was seen
-  from the Charleston area: 10 from local news pages and 2 from Reddit
-  posts alone. Each matches exactly one launch in data/ll2-snapshot.json.
+#### Reported sightings against the snapshot (2026-10-08, SpX-35 added 2026-10-15)
+- data/labels.json holds 13 launches with a report that the launch was seen
+  from the Charleston area: 10 from local news pages, 2 from Reddit posts
+  alone, and SpX-35 from Ben's own sighting and two news pages. Each matches exactly one launch in data/ll2-snapshot.json.
   Sources and quotes: reference/topics/charleston-sighting-reports.md.
-- 9 of the 12 lifted off between 05:00 and 06:00 local time. The other 3
+- 9 of the first 12 lifted off between 05:00 and 06:00 local time (SpX-35:
+  06:33). The other 3
   lifted off in the evening (17:32, 17:56, and 19:32) or later (20:53).
 - The news pages mostly say only that the rocket was seen. One uses the word
-  "jellyfish": 2026-07-09, Starlink Group 10-42. The 4 `seen-plume` labels
-  rest on that page and on photos in Reddit posts.
+  "jellyfish": 2026-07-09, Starlink Group 10-42. Four of the 5 `seen-plume`
+  labels rest on that page and on photos in Reddit posts. The fifth
+  (SpX-35, 2026-10-13) rests on Ben's own measured sighting and two news
+  reports, one of which names a jellyfish cloud.
 - One source conflict: the ABC News 4 page for 2020-11-13 says the Atlas V
   launched at "5:13 p.m."; the snapshot gives 22:32 UTC, which is 5:32 p.m.
   local time.
 
-#### How often the engine says a launch can be seen (backtest, 2026-10-08)
-- 59 of 506 launches since 2017 are likely or possible (11.7 percent). By
-  year: 1, 1, 2, 2, 4, 8, 8, 15, 9, and 9 for 2017 to 2026 (2026 runs to
-  2026-10-02).
-- 32 of the 59 are prime: the Sun is 6 degrees or more below the horizon.
+#### How often the engine says a launch can be seen (backtest, 2026-10-15)
+- 60 of 507 launches since 2017 are likely or possible (11.8 percent). By
+  year: 1, 1, 2, 2, 4, 8, 8, 15, 9, and 10 for 2017 to 2026 (2026 runs to
+  2026-10-13).
+- 33 of the 60 are prime: the Sun is 6 degrees or more below the horizon.
 - These counts have no weather in them, and they rest on provisional
   thresholds and on Falcon 9 profiles from 2018.
 
@@ -150,8 +158,8 @@ before you rely on it.
   Starship, with no date given. Source: Spectrum News 13, 2026-08-25,
   quoting Kiko Dontchev (SpaceX VP of Launch) on X. Read 2026-10-15. The X
   post itself was not read.
-- 35 of the 59 backtest launches rated likely or possible are Starlink,
-  and 22 of the 32 prime ones (script run 2026-10-15). The past rate of
+- 35 of the 60 backtest launches rated likely or possible are Starlink,
+  and 22 of the 33 prime ones (script run 2026-10-15, 507 launches). The past rate of
   chances is therefore much higher than the future rate.
 - LL2 upcoming list for Florida (one request, 2026-10-08): 203 entries. One
   has status Go: Falcon 9 Dragon CRS-2 SpX-35, 2026-10-13T10:33:44Z, SLC-40.
@@ -256,8 +264,9 @@ Full table: reference/source-audit.md. No pinned value was changed.
 - The compass check (above) rules out a 20 degree compass error, but it
   faced west, not southeast. Leading cause: the 2018 ascent profiles put
   the rocket too far back along its track. One launch; not proven.
-- Fifth `seen-plume` report. It is not in data/labels.json, because SpX-35
-  is not in the pinned snapshot.
+- Fifth `seen-plume` label in data/labels.json (added 2026-10-15, after
+  the snapshot refresh). The verdict was known before the label was
+  written.
 - Ascent data check (2026-10-15, `node scripts/compare-ascent-sources.js`):
   the sighting needs about 364 km downrange at 254 s and 389 km at 277 s,
   plus or minus 10 km. CRS-14 and CRS-16 (2018) give 264 and 203 km at
@@ -275,12 +284,12 @@ Full table: reference/source-audit.md. No pinned value was changed.
   URLs in reference/source-audit.md.
 
 #### The observer can be anywhere near Charleston
-- `node scripts/observer-sensitivity.js` (506 snapshot launches, Census
+- `node scripts/observer-sensitivity.js` (507 snapshot launches, Census
   ZCTA points, run 2026-10-15). Folly Beach to Isle of Palms (6 to 23 km):
-  same verdict for 58 or 59 of the 59 that James Island rates likely or
-  possible; Johns Island (13 km): 57 of 59. Peak height within 0.2 to 1.3
-  degrees (median). Summerville (43 km): 57 of 59, about 4.6 degrees
-  lower. Columbia (172 km): 53 of 59, about 14 lower.
+  same verdict for 59 or 60 of the 60 that James Island rates likely or
+  possible; Johns Island (13 km): 58 of 60. Peak height within 0.2 to 1.3
+  degrees (median). Summerville (43 km): 58 of 60, about 4.6 degrees
+  lower. Columbia (172 km): 54 of 60, about 14 lower.
 - The rocket is 290 to 1,180 km away while visible. This compares the
   model with itself; it does not test it.
 
@@ -317,6 +326,12 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Why: LL2 allows 15 requests per hour. Live data would also make the
   results drift.
 - Rejected: Live LL2 calls in the backtest.
+- Refresh rule (Ben, 2026-10-15): refresh the snapshot on purpose after
+  every launch we watch, and before any exit-gate claim. Each refresh
+  commit states what moved (counts, labels, tripwires). Never refresh as
+  a side effect of other work.
+- Rejected (2026-10-15): unpinning the backtest. Drift in LL2 records
+  would hide code bugs behind moving numbers.
 
 ### Ground truth is a hand-curated list of public sighting reports (locked)
 - What: Positive cases are public reports that the plume was seen from the

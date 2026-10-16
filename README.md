@@ -55,21 +55,21 @@ addresses to check are in
 [reference/topics/cape-launch-azimuths-and-inclinations.md](reference/topics/cape-launch-azimuths-and-inclinations.md)
 (section "Runbook").
 
-**The backtest so far.** We ran the engine over the 506 Cape Canaveral and
+**The backtest so far.** We ran the engine over the 507 Cape Canaveral and
 Kennedy Space Center launches that Launch Library 2 lists from January 2017
-to 2 October 2026. It rates 59 of them (11.7%) as likely or possible to show
-a sunlit rocket in a dark Charleston sky, and 32 of those fall after the end
+to 13 October 2026. It rates 60 of them (11.8%) as likely or possible to show
+a sunlit rocket in a dark Charleston sky, and 33 of those fall after the end
 of civil twilight, when the sky is darkest. That count carries no weather and
 rests on three provisional thresholds, so it is an upper bound on the chances
 rather than a forecast of sightings. It also overstates the future rate: 35
-of the 59 are Falcon 9 Starlink launches, and SpaceX has said the August 25,
+of the 60 are Falcon 9 Starlink launches, and SpaceX has said the August 25,
 2026 Starlink flight was the last of those from Florida (reported by
 Spectrum News 13), so we expect fewer chances each year from now on.
 
-We compared the engine with 12 launches that people in the Charleston area
-reported seeing (local news stories and r/Charleston posts, listed in
-[data/labels.json](data/labels.json)). Four of the reports show a wide
-glowing plume, and the engine rates all four as likely. Of the other eight,
+We compared the engine with 13 launches that people in the Charleston area
+reported seeing (local news stories, r/Charleston posts, and our own SpX-35
+sighting, listed in [data/labels.json](data/labels.json)). Five of the
+reports show a wide glowing plume, and the engine rates all five as likely. Of the other eight,
 which say only that the rocket was seen, it rates seven as likely or
 possible. It also rates none of 165 midday or late-night launches as
 visible, although any rule based on the clock alone would pass that check, so
@@ -81,16 +81,16 @@ finds no sunlit part of that ascent at any screening height we tried (5, 10,
 and 30 km). The photo shows a bright moving point rather than a glowing cloud,
 which is what a rocket flame looks like at night, so we count it as a sighting
 of the rocket and not of a jellyfish. This is consistent with the engine but
-does not confirm it: only one of our four plume reports is an evening launch,
+does not confirm it: only one of our five plume reports is an evening launch,
 and all of our ascent profiles are Falcon 9 flights, so results for evening
 launches and for other vehicles should be treated with caution.
 
 We set five plume reports as the minimum before any alert is built. The
-four public reports above and Ben's own SpX-35 sighting of 13 October 2026
-(see Our own observations, below) now make five, so that bar is met. Five is
-still a small number, and the fifth is not yet in `data/labels.json` (it
-waits for the next snapshot), so the backtest figures above still count
-four.
+four public reports and Ben's own SpX-35 sighting of 13 October 2026 (see
+Our own observations, below) now make five, all in the backtest, so that bar
+is met. Five is still a small number, and we wrote the SpX-35 label after we
+already knew the engine's verdict for it, so treat the bar as a minimum, not
+a proof.
 
 **Our own observations.** Public reports tell us only whether a launch was
 seen. Watching with the sky view from a known spot also tells us where the
@@ -101,7 +101,7 @@ and the engine's values for the same moments.
 
 | Date | Launch | Where | Verdict | Seen | Height and timing | Direction |
 |---|---|---|---|---|---|---|
-| 2026-10-13 | SpX-35 | James Island | likely, prime | plume | within about 1 deg | 19 to 29 deg farther east than predicted at the same moment; on or just under the drawn arc. The compass checked out within 1 deg two days later, so the ascent model, not the phone, is the likely cause |
+| 2026-10-13 | SpX-35 | James Island | likely, prime | plume | within about 1 deg | 19 to 29 deg farther east than predicted at the same moment; on or just under the drawn arc. The compass checked out within 1 deg two days later, so the ascent model, not the phone, is the likely cause. With 2020 Starlink ascent data instead of the 2018 flights, the miss drops to 6 to 14 deg (`scripts/compare-ascent-sources.js`) |
 
 <p align="center">
   <img src="assets/demo-plume-spx35.jpg" alt="A wide fan-shaped glowing rocket plume above dark trees in a twilight sky" width="520">
@@ -123,23 +123,23 @@ any single row.
 
 **Who this works for.** The engine computes everything for one point on
 James Island, but while it is visible the rocket is 290 to 1,180 km away
-(over all 506 snapshot launches), so moving the observer a
-few kilometres barely changes the answer. We re-ran all 506 snapshot launches
+(over the 506 launches of the 8 October snapshot), so moving the observer a
+few kilometres barely changes the answer. We re-ran all 507 snapshot launches
 for other places (`node scripts/observer-sensitivity.js`, Census ZIP code area points):
 
-| Place | km from James Island | Same verdict (of 506) | Same verdict when James Island says likely or possible (of 59) | Typical change in peak height |
+| Place | km from James Island | Same verdict (of 507) | Same verdict when James Island says likely or possible (of 60) | Typical change in peak height |
 |---|---|---|---|---|
-| Folly Beach | 6 | 506 | 59 | 0.6 deg |
-| Downtown Charleston | 7 | 505 | 58 | 0.2 deg |
-| Johns Island | 13 | 504 | 57 | 1.1 deg |
-| Sullivan's Island | 13 | 505 | 59 | 0.9 deg |
-| Mount Pleasant | 14 | 504 | 58 | 0.3 deg |
-| Isle of Palms | 23 | 505 | 59 | 1.3 deg |
-| Summerville | 43 | 503 | 57 | 4.6 deg |
-| Columbia | 172 | 499 | 53 | 14.0 deg |
+| Folly Beach | 6 | 507 | 60 | 0.6 deg |
+| Downtown Charleston | 7 | 506 | 59 | 0.2 deg |
+| Johns Island | 13 | 505 | 58 | 1.1 deg |
+| Sullivan's Island | 13 | 506 | 60 | 0.9 deg |
+| Mount Pleasant | 14 | 505 | 59 | 0.3 deg |
+| Isle of Palms | 23 | 506 | 60 | 1.3 deg |
+| Summerville | 43 | 504 | 58 | 4.6 deg |
+| Columbia | 172 | 500 | 54 | 14.0 deg |
 
 Anywhere from Folly Beach to Isle of Palms, the page is as good for you as it
-is for James Island: the verdict differs for at most 2 of 506 launches, and
+is for James Island: the verdict differs for at most 2 of 507 launches, and
 heights and directions shift by about 1 degree, less than a phone compass
 error. By Summerville (43 km) the verdict still holds but heights run about
 4.6 degrees off, and beyond roughly 50 km the page should be treated as a rough
@@ -240,9 +240,11 @@ What the engine consists of:
   defaults.
 - `test/`: tests for the engine, and `test/fixtures/` with the pinned
   reference values they compare against.
-- `data/`: pinned data. `ll2-snapshot.json` holds the 506 Cape Canaveral and
+- `data/`: pinned data. `ll2-snapshot.json` holds the 507 Cape Canaveral and
   Kennedy Space Center launches that Launch Library 2 listed from January
-  2017 to 2 October 2026; `labels.json` holds the reported sightings. The
+  2017 to 13 October 2026. We refresh it on purpose after each launch we
+  watch, never as a side effect, so the backtest numbers only move when we
+  mean them to; `labels.json` holds the reported sightings. The
   backtest reads these files and nothing else. `observations.json` holds our
   own measured sightings. `upcoming-fallback.json` is a
   saved copy of upcoming launches that the page shows only when every live

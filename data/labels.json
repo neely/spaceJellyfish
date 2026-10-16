@@ -166,6 +166,27 @@
           "note": "A search summary on X, screenshot from Ben: Falcon 9 \"passed over Charleston, South Carolina on August 25, 2026 at 5:37am\". Not a primary source."
         }
       ]
+    },
+    {
+      "launchId": "bf2c3027-a314-403e-a416-2bfd5d165ad1",
+      "launchName": "Falcon 9 Block 5 | Dragon CRS-2 SpX-35",
+      "net": "2026-10-13T10:33:44Z",
+      "localDate": "2026-10-13",
+      "label": "seen-plume",
+      "place": "James Island (Ben); Lowcountry; Charleston, West Ashley, Folly Beach, Moncks Corner",
+      "source": "data/observations.json",
+      "confidence": "high",
+      "note": "Ben saw a wide plume from James Island and measured it with the sky view. Added 2026-10-15, after the snapshot refresh brought SpX-35 in. The engine verdict was known before the label was written (likely, prime, from 2026-10-08).",
+      "moreSources": [
+        {
+          "url": "https://www.live5news.com/2026/10/13/photos-spacex-rocket-launch-takes-over-lowcountry-skies/",
+          "note": "Live 5 News, 2026-10-13. Lowcountry residents saw a so-called jellyfish cloud. Read 2026-10-15."
+        },
+        {
+          "url": "https://www.postandcourier.com/news/images-spacex-rocket-charleston-sc-coast/article_edd30f89-5bfb-4ecb-8995-c01ea71b241c.html",
+          "note": "Post and Courier, 2026-10-13. Trail seen from Charleston, Folly Beach, Moncks Corner and other places; no plume wording. Read 2026-10-15."
+        }
+      ]
     }
   ],
   "outOfScope": [

@@ -5,8 +5,8 @@
   "since": "2017-01-01T00:00:00Z",
   "ordering": "net"
  },
- "fetched": "2026-10-08T17:18:05.670Z",
- "count": 506,
+ "fetched": "2026-10-16T00:41:18.369Z",
+ "count": 507,
  "launches": [
   {
    "id": "18c98e18-b460-478c-884b-2778b68d2805",
@@ -11614,6 +11614,29 @@
     "latitudeDeg": 28.60822681,
     "longitudeDeg": -80.60428186,
     "locationId": 27
+   }
+  },
+  {
+   "id": "bf2c3027-a314-403e-a416-2bfd5d165ad1",
+   "name": "Falcon 9 Block 5 | Dragon CRS-2 SpX-35",
+   "net": "2026-10-13T10:33:44Z",
+   "windowStart": "2026-10-13T10:33:44Z",
+   "windowEnd": "2026-10-13T10:33:44Z",
+   "status": "Success",
+   "vehicle": "Falcon 9",
+   "vehicleFamilies": [
+    "Falcon",
+    "Falcon 9"
+   ],
+   "provider": "SpaceX",
+   "mission": "Dragon CRS-2 SpX-35",
+   "orbit": "LEO",
+   "pad": {
+    "id": 80,
+    "name": "Space Launch Complex 40",
+    "latitudeDeg": 28.56194122,
+    "longitudeDeg": -80.57735736,
+    "locationId": 12
    }
   }
  ]

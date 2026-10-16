@@ -97,9 +97,10 @@ Backtest. Pinned data only.
       them by engine verdict. Search local outlets for each date. The cases
       that test the engine are twilight launches it rejects and launches it
       rates likely and prime.
-- [x] `data/labels.json`: 12 launches, each with launch ID, label, and
-      source. 8 are `seen` and 4 are `seen-plume`. Ben confirmed five
-      Reddit post dates. Original task text follows.
+- [x] `data/labels.json`: 13 launches, each with launch ID, label, and
+      source. 8 are `seen` and 5 are `seen-plume` (SpX-35 added
+      2026-10-15). Ben confirmed five Reddit post dates. Original task
+      text follows.
       Hand-curated cases, each with launch ID, label, and source URL. Positives: a public report (local news, NWS
       Charleston, a dated social post) that the plume was seen from the
       Charleston area. Negatives: only launches that physics rules out
@@ -119,10 +120,14 @@ Backtest. Pinned data only.
       `seen-plume` labels are missed, and 1 of 8 `seen` labels has verdict
       'no'. The script exits 1 when a `seen-plume` label is missed. It is
       not part of `npm test`.
-- [ ] **Exit gate:** at least 5 `seen-plume` cases are labelled, every
+- [x] **Exit gate:** at least 5 `seen-plume` cases are labelled, every
       `seen-plume` case is classified correctly, and the share of launches scored
       "visible" is recorded as a tripwire. Phase 3 must not start before
-      this box is ticked.
+      this box is ticked. Observed 2026-10-15 after the snapshot refresh:
+      `node scripts/backtest.js` prints "Missed: 0 of 5 seen-plume labels"
+      and exits 0; the share (60 of 507, 11.8 percent) is a FINDINGS
+      tripwire. Caveats: the fifth label was written after its verdict was
+      known, and the open question on the minimum of 5 stays open.
 
 Page.
 - [x] `index.html`, `app.js`, `style.css`: fetch upcoming Cape/KSC launches
@@ -258,9 +263,12 @@ Page.
       the wide plume is not a surprise.
 - [ ] Sky view: two-tap field-of-view calibration from the Sun (centre,
       then edge).
-- [ ] Ask Ben to regenerate the LL2 snapshot, after a downstream-impact
-      trace, so SpX-35 can become the fifth `seen-plume` label. This is what
-      the exit gate above waits for.
+- [x] Regenerate the LL2 snapshot so SpX-35 can become the fifth
+      `seen-plume` label. Ben asked on 2026-10-15 after the impact trace.
+      Observed: fetched in the browser on Ben's Mac with the same reduce
+      code as scripts/snapshot-ll2.js (6 requests); 507 launches; the
+      first 506 records are byte-identical to the old snapshot; backtest
+      42, 18, 447.
 - [ ] One Android test of the sky view (Chrome).
 
 ## Phase 2 — Weather modifier
