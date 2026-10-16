@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 52 tests, 52 pass, 0 fail (2026-10-15). The count
+- `npm test` — expected 64 tests, 64 pass, 0 fail (2026-10-15). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
   agree with each within 1/60 degree in GHA, declination, and altitude.
@@ -253,6 +253,13 @@ detail and quotes: reference/data-sources.md.
   block the view is the near part of the triangle. At 10 degrees or more,
   no cloud beyond 66 km can block it. That is inside the grid, which
   reaches at least 59 km offshore.
+- engine/weather.js with config/weather.json (cloud top 12 km, bins of
+  10 degrees, points every 15 km), over the 60 snapshot launches that are
+  not 'no': 7 to 97 directional points per launch (median 74), 13 rays
+  median, reach 15 to 123 km (median 104). The long reach comes from the
+  visible samples near the 5 degree lowest elevation. SpX-35 (fan): 14
+  rays, 91 points. With two requests per point, that is far above a
+  reasonable page load. Checked by a one-off command, not a script.
 
 #### Engine CPU time (2026-10-08, before the 2020 members)
 - On the development Mac with Node 26: 0.43 ms for each launch over the

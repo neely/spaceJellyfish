@@ -1,0 +1,13 @@
+{
+  "note": "Parameters for engine/weather.js. Decision: FINDINGS.md, 'Weather: local and directional sky cover'. Values marked provisional have no outside source.",
+  "params": {
+    "cloudTopM": 12000,
+    "bearingStepDeg": 10,
+    "spacingM": 15000
+  },
+  "sources": {
+    "cloudTopM": "Provisional. No source found. Chosen high so that only a sight line above almost all cloud is treated as clear. A lower value shortens every ray.",
+    "bearingStepDeg": "Provisional. Our choice, to keep the number of forecast requests small. Not a physical value.",
+    "spacingM": "Provisional. Our choice, to keep the number of forecast requests small."
+  }
+}
