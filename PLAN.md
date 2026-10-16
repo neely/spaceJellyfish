@@ -10,10 +10,9 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ## Status
 - **Active:** Phase 2 — Weather modifier
 - **Last updated:** 2026-10-15
-- **Next action:** Start Phase 2: confirm the api.weather.gov rules from
-  its own docs, then design engine/weather.js. Settle the open question
-  "which cloud matters" first. The Bandwagon 5 item at the top of the
-  Backlog has a deadline (Sunday 2026-10-18).
+- **Next action:** Phase 2 items are done; check the clouds section on
+  Ben's iPhone, then decide if Phase 2 is closed. The Bandwagon 5 item at
+  the top of the Backlog has a deadline (Sunday 2026-10-18).
 
 ---
 
@@ -97,8 +96,12 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       signal. Cloud top height in config, marked provisional.
       Observed 2026-10-15: 66 tests pass; top 20 percent of the arc and a
       60 km cap give 7 to 33 points per launch (FINDINGS Reference).
-- [ ] The page shows the modifier only when the forecast covers T-0.
+- [x] The page shows the modifier only when the forecast covers T-0.
       Otherwise it shows "forecast not available yet".
+      Observed 2026-10-15 on the live page (desktop browser): Bandwagon 5
+      card showed local sky cover 45 percent; the button checked 19
+      places in 5.7 s, all with a forecast, 49 to 68 percent. The beyond-
+      7-days text was seen only in code, not live.
 
 ## Phase 3 — Worker cron, KV state, email alerts
 - [ ] Confirm KV free-tier read and write limits against the planned cadence.
@@ -160,6 +163,10 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   search of Ben's repos found no other cron. That search may not cover
   private repos.
 - Alert timing: how long before T-0, and how many emails per launch?
+- Versioning: the repo has no changelog, no version number and no tags.
+  The page does not say which version it runs. Ben asked (2026-10-15).
+- Browser cache after a deploy: app.js came with max-age 14400 (4 h). A
+  visitor can run old code for hours, and old and new modules can mix.
 
 ---
 

@@ -241,6 +241,12 @@ detail and quotes: reference/data-sources.md.
 - Offshore on bearing 134 to 138: a grid at 27 and 59 km, no grid at 107
   and 174 km.
 
+#### Site cache headers (2026-10-15)
+- `/app.js` from jellyfish.benneely.com came with `cache-control: public,
+  max-age=14400, must-revalidate`. After a deploy, the browser kept the
+  old app.js until a cache-bypass request. The repo has no `_headers`
+  file. Where the header is set was not checked.
+
 #### Where cloud can block the line of sight (computed 2026-10-15)
 - Ground distance from the observer at which the sight line rises above a
   cloud height. Sphere of mean radius, no refraction. The cloud heights
