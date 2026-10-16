@@ -131,3 +131,11 @@ Docs: https://open-meteo.com/en/docs and https://open-meteo.com/en/terms (read 2
 - The list is newest first, one entry per issue slot (about every 6 hours), with `issueTime`, `start` and `end`. The file behind a slot can be an amendment issued later: the KCHS 05:00 slot returned a TAF amendment issued 12:46 UTC. Use the issue time inside the file.
 - Each file is IWXXM 2021-2 XML (`application/vnd.wmo.iwxxm+xml`): `baseForecast` and `changeForecast` groups with `changeIndicator`, `phenomenonTime`, and cloud layers with an amount code (`.../CloudAmountReportedAtAerodrome/FEW`) and a base in `[ft_i]`.
 - Change indicators in a WMO IWXXM example (old.wmo.int AvXML tutorial): FROM, BECOMING, TEMPORARY_FLUCTUATIONS. Probability indicators were not seen; lib/taf.js shows any other indicator as given.
+
+## GOES ABI cloud products on AWS (checked 2026-10-16, from the page)
+- Docs: AWS registry readme (docs.opendata.aws/noaa-goes16/cics-readme.html): path `<Product>/<Year>/<Day of Year>/<Hour>/<Filename>`, netCDF4 files, CONUS "normally every 5 minutes", public buckets. data.gov catalog: the Clear Sky Mask (ACM) is "a binary cloud mask" of "clear or cloudy" pixels "at 2 km resolution on the ABI fixed grid".
+- Live: S3 listings (`https://noaa-goes19.s3.amazonaws.com/?list-type=2&prefix=...`) were readable from the page.
+- GOES-16 `ABI-L2-ACMC` 2025 has days 001 to 097 only. GOES-19 `ABI-L2-ACMC` 2025 has 354 day folders (001 to 365), and 2024 and 2026 folders. So 2025-01-01 to 2025-04-07 needs GOES-16 and later dates need GOES-19 (from these listings; the switch date was not read from a NOAA notice).
+- Size: ACMC files 4.2 MB (GOES-16, 2025-01-01) and 4.9 to 5.5 MB (GOES-19), 12 files an hour. Cloud top height `ABI-L2-ACHAC`: 0.30 MB a file.
+- An HTTP Range request returned 206 with the bytes asked for, so a reader can fetch parts of a file.
+- Not yet read: the product user guide (how pixels map to latitude and longitude, quality flags), and how good the mask is at night and in twilight. The GOES-19 provisional ReadMe on noaasis.noaa.gov is the place to start.

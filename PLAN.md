@@ -158,7 +158,23 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 - Clouds: does thin high cloud hide a lit plume? No source. A sighting
   through a forecast of high cloud would show it.
 - Clouds: score the offshore part of the line of sight against GOES
-  satellite cloud. Not tried.
+  satellite cloud. Scoped 2026-10-16 (reference/data-sources.md, GOES):
+  - Truth: the GOES Clear Sky Mask (clear or cloudy, 2 km), GOES-16 to
+    2025-04-07, GOES-19 after. One scan per twilight hour is about 2,000
+    files (twilight hours per station in clouds/results.json); whole files
+    would be about 10 GB, so read only the pixels needed (Range requests
+    work) and pin a small extract: mask values at the sight-line places,
+    plus file names and S3 ETags for reproduction.
+  - Step 1: check the mask against the airport reports at the 11
+    stations. If it does not agree with them at twilight, stop.
+  - Step 2: fetch NBM, GFS, ECMWF and HRRR past forecasts at offshore
+    places (Open-Meteo, as before) and score them against the mask.
+  - Needs: a netCDF4/HDF5 reader on the machine that fetches (Python
+    h5py or a Node library; not yet checked on Ben's Mac), the ABI
+    fixed-grid to latitude and longitude formula from the product guide,
+    and the night and twilight quality notes from the GOES-19 ReadMe.
+  - Option: cloud top height (ACHA, 0.3 MB a file) would give the cloud
+    top for the sight-line test directly.
 
 ---
 
