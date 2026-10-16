@@ -8,6 +8,54 @@ journal/YYYY-MM.md (the month they were written, newest first).
 
 ---
 
+## 2026-10-16 · Cloud forecast study: four models scored, NBM chosen, TAF added (0.5.0, 0.6.0)
+
+**Did:** Tested cloud sources from the live page: Open-Meteo works
+(many places in one request, offshore to 174 km); aviationweather.gov and
+LAMP are blocked from a page; the NWS API serves TAFs. Ben asked to
+verify against observations, not against another forecast. Built a
+pinned study: 33 raw files from the IEM ASOS archive and Open-Meteo
+past runs, fetched on Ben's Mac; scripts/score-clouds.js scores four
+models at 1 to 7 days and by layer. NBM was best at every lead; HRRR
+best for low cloud at short lead; most "false alarms" were high cloud
+above the 12,000 ft ASOS limit. Wrote clouds/README.md and a knowledge
+base note. The page now uses NBM and HRRR low cloud (0.5.0), the KJZI
+TAF and a reach set by the sight line, not the old 60 km NWS cap
+(0.6.0). Scoped a GOES satellite check of offshore cloud.
+
+**Least confident about (Q1):**
+- That airport skill holds offshore, where the plume is seen. The GOES
+  check (PLAN) would show it.
+- The GOES clear sky mask at twilight and night. Its ReadMe is unread.
+  Step 1 of the satellite plan (mask against airports) would show it.
+- The trust line on the card uses four full-sky stations only. More
+  full-sky stations, or the satellite, would test it.
+- The TAF parser has seen only FROM groups live. A TAF with TEMPO or
+  PROB groups would show if it reads them right.
+- Open-Meteo counting for many places per request comes from a 2023
+  post, not the pricing page.
+
+**Unstated assumptions (Q2):** Open-Meteo hourly cloud is matched to the
+report nearest the hour. Model archives on Open-Meteo are what the
+models really forecast then. The NWS gridded forecast cannot be scored;
+the NDFD archive at NCEI was not tried.
+
+**Biggest thing being missed (Q3):** Ground truth for the view itself.
+Airports see the sky over land; the plume is seen low over the ocean.
+
+**Could've gone better (Q4):** I told Ben the 60 km cap only bit on low
+passes; it cut 48 percent of rays. I wrote two report numbers wrong
+before the check caught them, and a rounding bug made two files
+disagree. A doc script appended a section twice after an earlier edit
+failed. I should run the check before I state a number, and stop a
+script at the first failed edit.
+
+**Suggestions (Q5):** Do the satellite work locally, step 1 only first.
+Keep the report-vs-results test pattern for any hand-written numbers.
+After Bandwagon 5, add Ben's sky notes next to the card's forecast.
+
+---
+
 ## 2026-10-15 (night) · Phase 2 done: cloud forecast on the page, versions, cache fix
 
 **Did:** Read the api.weather.gov docs and tested it from the live page
@@ -166,41 +214,6 @@ reference/topics/model-sky-view.
 view. Add the Moon as a night calibration target. Show a per-minute marker
 for the current time during a launch, so the user can match the real plume
 to the drawn path.
-
-## 2026-10-08 — Page live, labels corrected, Cloudflare feed removed
-
-**Did:** Ben confirmed five Reddit post dates and described the Atlas V
-photo; that label is now `seen`. Wrote the page and Ben put it live at
-jellyfish.benneely.com. Added a station trajectory class. Tried a Cloudflare
-Pages Function as a shared LL2 feed; LL2 answered 429 to all 4 requests, so
-it was removed. Added model notes and a prior-art note to reference/. Listed
-the project on neely/apps and in neely/registry.
-
-**Least confident about (Q1):**
-- The prediction for SpX-35 on 2026-10-13 (likely, prime, 30 to 33 degrees
-  up, 6:36 to 6:42 local). Ben's own view that morning will prove it right
-  or wrong, if the sky is clear.
-- Evening launches. One `seen-plume` label is an evening launch. More
-  evening labels would test them.
-- That the page will not hit the LL2 limit in normal use. A week of use by
-  Ben will show it.
-
-**Unstated assumptions (Q2):** That the browser clock and time zone do not
-matter because the page formats times in America/New_York. That an LL2
-record with precision "Second", "Minute", or "Hour" is firm enough to show.
-
-**Biggest thing being missed (Q3):** Starlink launches may have left
-Florida. If so, the chances each year fall a lot, and the alert phase may
-not be worth its cost. Phase 3 also has no working source of launch times.
-
-**Could've gone better (Q4):** I shipped the Cloudflare feed and wrote in
-PLAN that it existed before I had seen it answer. I should have tested the
-live address first. I also changed the rule for what counts as a miss after
-the result was known; FINDINGS says so.
-
-**Suggested improvement (Q5):** Before Phase 3, spend one session only on
-the launch-time source: price and terms of an LL2 token, and one other
-source.
 
 ---
 

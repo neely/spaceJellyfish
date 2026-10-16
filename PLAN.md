@@ -8,14 +8,17 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ---
 
 ## Status
-- **Active:** none. Phase 2 is done and the cloud source is scored and
-  live (v0.5.0, clouds/README.md). Phase 3 (alerts) is next, when Ben
-  wants it.
+- **Active:** none. Phase 2 is done. The cloud source is scored and live
+  (v0.6.0: NBM, HRRR low cloud, TAF; clouds/README.md). Phase 3 (alerts)
+  starts only when Ben asks.
 - **Last updated:** 2026-10-16
-- **Next action:** Sunday 2026-10-18: the Bandwagon 5 item at the top of
-  the Backlog. On launch morning, note the sky toward the launch: it is
-  the first real check of the cloud section (HRRR low cloud should show
-  from about Saturday evening).
+- **Next action:** In a local Claude Code session on Ben's Mac: satellite
+  step 1 (Open questions, "score the offshore part"): check for a
+  netCDF4/HDF5 reader (`python3 -c "import h5py"`), read the GOES-19
+  ReadMe, then test the clear sky mask against the airport reports.
+  Sunday 2026-10-18: the Bandwagon 5 item at the top of the Backlog. On
+  launch morning, note the sky toward the launch: the first real check
+  of the cloud section.
 
 ---
 
@@ -179,10 +182,13 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ---
 
 ## Handoff → next session
-Start prompt:
+Start prompt (local Claude Code, repo cloned on Ben's Mac):
 > Read AGENTS.md, then the PLAN.md status block, Backlog and Open
 > questions, then FINDINGS.md (skim; Tripwires in full). Run `npm test` and
 > `node scripts/backtest.js` and check them against the tripwires. On
-> Sunday 2026-10-18, do the Bandwagon 5 item first. Phase 3 (alerts)
-> starts only when Ben asks. For any page change, bump the version in
-> package.json and add a CHANGELOG entry (FINDINGS, Versions).
+> Sunday 2026-10-18, do the Bandwagon 5 item first. Otherwise start the
+> satellite check, step 1 only: confirm a reader for GOES netCDF files,
+> read the GOES-19 Clear Sky Mask ReadMe (night and twilight quality),
+> and compare the mask with the airport reports in data/clouds/ before
+> scoring any forecast. Phase 3 starts only when Ben asks. For any page
+> change, bump the version and add a CHANGELOG entry (FINDINGS, Versions).
