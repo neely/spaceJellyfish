@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 92 tests, 92 pass, 0 fail (2026-10-16). It also
+- `npm test` — expected 94 tests, 94 pass, 0 fail (2026-10-16). It also
   passes with no `node_modules` (h5wasm is needed only to fetch GOES files). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
@@ -74,6 +74,13 @@ these before you trust it. Hard-stop on mismatch.
   sky below 10,000 ft: 1,517 pairs, skill 21 (hit 23, false alarm 2).
   Dropped pairs: missing value 1,175 (all TCF = 65531), no report 65, no
   scan 10.
+- `data/goes/relative-acm.json` (fetched 2026-10-16) — expected 2,001
+  twilight hours at JZI, 1,984 scans, 17 hours with no scan within 5
+  minutes. `--recheck 5` gave 5 of 5 identical. `data/goes/water-nbm.json.gz`:
+  12 water cells, 0.42 to 1.42 km from the places, elevation 0.
+- `clouds/goes-relative-results.json` — NBM day 1, twilight: skill 48
+  water, 51 land; Q 0.926 (0.888 to 0.947), 1,246 events, verdict holds.
+  Near-Charleston land: Q 0.886 (0.846 to 0.916).
 - `clouds/goes-results.json` — twilight, below 12,000 ft: 2,506 pairs,
   skill 48 (hit 84, false alarm 36). Twilight, full sky: 916 pairs, skill
   66. Dropped pairs: no report 65, no scan 10, few good pixels 3.
@@ -316,6 +323,20 @@ clouds/goes-ccl-results.md.
   states the meaning of 65531.
 - CCL layers overlap in the files, so the product uses cloud base, not
   only cloud top as the ATBD v1.0 says.
+
+#### Satellite check, test 3: NBM over land and water, judged by GOES (2026-10-16)
+Report: clouds/README.md, "Satellite check, test 3". Tables:
+clouds/goes-relative-results.md.
+- Result: holds under the approved rule (lower 95 percent bound of
+  Q = skill(water) / skill(land) at 0.85 or more). Day 1: Q 0.926
+  (0.888 to 0.947). Days 2 to 7: Q 0.94 to 1.06.
+- Near-Charleston land (LRO, CHS, JZI), which does not decide: Q 0.886
+  (0.846 to 0.916).
+- GOES calls 63 percent of water pairs cloudy and 47 percent of land pairs.
+- All known biases favour "holds" (mask a little better over ocean;
+  coastal airport boxes take in sea).
+- Open-Meteo `cell_selection` defaults to `land`. For the 12 water places,
+  `land`, `sea` and `nearest` gave the same NBM cell.
 
 #### Site cache headers (2026-10-15)
 - `.js`, `.css` and `.png` from jellyfish.benneely.com come with
@@ -773,4 +794,20 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Rejected: CF1 + CF2 (counts overlapping pixels twice); a DQF filter
   (clear cells carry DQF 2); a 3 by 3 block of cells (30 km, larger than
   the sky an airport reports).
+
+### Satellite check, test 3: compare land and water as a ratio (2026-10-16)
+- What: NBM against the GOES cloud mask at the 11 airports and at 12
+  water places off Charleston, by the same rules; decide on the ratio of
+  skills, day 1, twilight, lower 95 percent bound 0.85 or more; all 2,001
+  twilight hours; resample twilight events. Rules: config/goes-relative.json.
+  Approved by Ben before the data. The page shows the ratio for the
+  card's lead time (0.7.0).
+- Why: tests 1 and 2 showed that no satellite product here is a better
+  judge than the airports. A ratio needs the judge only to be about as
+  good over land as over water. Ben asked whether the forecast works
+  over water, where the plume is seen.
+- Rejected: the difference of skills (the judge's errors scale both
+  skills, so they cancel in a ratio, not a difference); the 240 picked
+  hours (sizing gave an interval too wide for a verdict); ship reports
+  (Ben, 2026-10-16: not wanted).
 

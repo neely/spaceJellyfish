@@ -69,3 +69,22 @@ test('report: test 2 go/no-go line in clouds/README.md equals goes-ccl-results.j
   assert.equal(r.goNoGo.pass, r.goNoGo.skillPct >= json('config/goes-ccl.json').goNoGo.minSkillPct);
   assert.equal(r.dropped.missingValue, 1175);
 });
+
+test('relative test: 12 water cells, each at sea and near its place', () => {
+  const places = json('config/goes-relative.json').waterPoints.places;
+  const water = json('data/goes/water-pixels.json').points;
+  assert.deepEqual(Object.keys(water).sort(), Object.keys(places).sort());
+  for (const p of Object.values(water)) assert.ok(p.offsetKm < 2);
+});
+
+test('report: test 3 numbers in clouds/README.md equal goes-relative-results.json', () => {
+  const r = json('clouds/goes-relative-results.json');
+  const readme = readFileSync(new URL('../clouds/README.md', import.meta.url), 'utf8');
+  const d1 = r.ratio.land[1];
+  assert.ok(readme.includes(`(skill ${d1.skillWaterPct} against ${d1.skillLandPct};`));
+  assert.ok(readme.includes(`ratio ${d1.q}, 95 percent interval ${d1.qCi95[0]} to ${d1.qCi95[1]}, over ${d1.events.toLocaleString('en-US')} twilight`));
+  const n = r.ratio.landNearCharleston[1];
+  assert.ok(readme.includes(`${n.q} (${n.qCi95[0]} to ${n.qCi95[1]})`));
+  assert.equal(r.verdict.verdict, 'holds');
+  assert.ok(readme.includes(`${r.inputs.twilightHours.toLocaleString('en-US')}\nhours; ${r.inputs.scans.toLocaleString('en-US')} with a GOES scan`));
+});

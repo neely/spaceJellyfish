@@ -9,6 +9,12 @@ session that changed the page.
 We bump the middle number when the page gains a feature and the last number
 for a fix. Model changes that move the backtest numbers are listed here too.
 
+## 0.7.0 · 2026-10-16 · pending
+- The cloud card says how the forecast does out over the water, toward the
+  launch: a satellite check scored it against GOES over land and over
+  water, and over water it kept about 93% of its skill one day ahead. The
+  test is in `clouds/README.md`.
+
 ## 0.6.0 · 2026-10-16 · c245716
 - Within about a day of a launch, the card adds the airport forecast (TAF)
   for Charleston Executive (or Charleston International): forecast cloud

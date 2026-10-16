@@ -8,7 +8,7 @@
 // Stops if the file's SHA-256 does not match the config.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { openH5, distanceKm } from './lib/goes.js';
+import { openH5, nearestPixel } from './lib/goes.js';
 
 const root = new URL('../', import.meta.url);
 const goes = JSON.parse(await readFile(new URL('config/goes-acm.json', root)));
@@ -26,17 +26,9 @@ const lon = f.get('longitude').value;
 
 const out = {};
 for (const [id, st] of Object.entries(stations)) {
-  let best = { km: Infinity };
-  for (let i = 0; i < rows * cols; i++) {
-    if (!(lat[i] >= -90 && lat[i] <= 90)) continue;
-    // Cheap filter before the exact distance.
-    if (Math.abs(lat[i] - st.latitudeDeg) > 0.1 || Math.abs(lon[i] - st.longitudeDeg) > 0.1) continue;
-    const km = distanceKm(st.latitudeDeg, st.longitudeDeg, lat[i], lon[i]);
-    if (km < best.km) best = { km, i };
-  }
-  if (!Number.isFinite(best.km)) throw new Error(`${id}: no pixel within 0.1 degrees`);
-  const row = Math.floor(best.i / cols), col = best.i % cols;
-  out[id] = { row, col, pixelLatDeg: +lat[best.i].toFixed(5), pixelLonDeg: +lon[best.i].toFixed(5), offsetKm: +best.km.toFixed(3) };
+  const p = nearestPixel(lat, lon, cols, st.latitudeDeg, st.longitudeDeg);
+  if (!p) throw new Error(`${id}: no pixel within 0.1 degrees`);
+  out[id] = { row: p.row, col: p.col, pixelLatDeg: +lat[p.i].toFixed(5), pixelLonDeg: +lon[p.i].toFixed(5), offsetKm: +p.km.toFixed(3) };
 }
 
 await mkdir(new URL('data/goes/', root), { recursive: true });

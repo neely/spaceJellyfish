@@ -44,6 +44,7 @@ const [observer, profiles, config, weather, directions] = await Promise.all([
 ]);
 // Scores from the cloud forecast test, quoted on each card (clouds/README.md).
 const cloudScores = await getJson('clouds/results.json').catch(() => null);
+const offshoreScores = await getJson('clouds/goes-relative-results.json').catch(() => null);
 
 const fmt = (opts) => new Intl.DateTimeFormat('en-US', { timeZone: observer.timeZone, ...opts });
 const dayFmt = fmt({ weekday: 'long', month: 'long', day: 'numeric' });
@@ -280,7 +281,13 @@ function weatherSection(result, liftoff) {
     const trust = s
       ? `How far to trust it: in 2025 and 2026, cloud forecasts like this one made ${lead} day${lead === '1' ? '' : 's'} ahead caught ${s.hitPct}% of cloudy twilight hours at the four coastal airports that report the whole sky, and called ${s.falsePct}% of clear ones cloudy. `
       : '';
-    out.append(el('p', { class: 'note' }, trust, 'Clouds do not change the jellyfish verdict above; the geometry does. ',
+    // Offshore, from the satellite check (clouds/README.md, test 3): the
+    // forecast's skill over water as a share of its skill over land.
+    const q = offshoreScores?.verdict?.verdict === 'holds' ? offshoreScores.ratio?.land?.[lead]?.q : null;
+    const offshore = q != null
+      ? `Out over the water, where the plume is seen, a satellite check found ${q >= 1 ? 'the same forecast did as well as over land' : `the same forecast kept about ${Math.round(100 * q)}% of its skill over land`}. `
+      : '';
+    out.append(el('p', { class: 'note' }, trust, offshore, 'Clouds do not change the jellyfish verdict above; the geometry does. ',
       el('a', { href: 'https://github.com/neely/spaceJellyfish/blob/main/clouds/README.md' }, 'How we chose this forecast'), '. ',
       'Forecasts: NOAA NBM', low ? ' and HRRR' : '', ' via ', el('a', { href: 'https://open-meteo.com/' }, 'Open-Meteo'), ' (CC BY 4.0).'));
   })();

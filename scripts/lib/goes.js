@@ -50,3 +50,21 @@ export function boxCloudyPct(bcm, dqf, goodDqf, minGood) {
   }
   return { pct: good >= minGood ? (100 * cloudy) / good : null, good };
 }
+
+/**
+ * The pixel nearest a place in a precomputed latitude and longitude grid
+ * (flat arrays, row-major). Returns { row, col, km, i } or null if no
+ * pixel lies within 0.1 degrees.
+ */
+export function nearestPixel(lat, lon, cols, latDeg, lonDeg) {
+  let best = null;
+  for (let i = 0; i < lat.length; i++) {
+    if (!(lat[i] >= -90 && lat[i] <= 90)) continue;
+    // Cheap filter before the exact distance.
+    if (Math.abs(lat[i] - latDeg) > 0.1 || Math.abs(lon[i] - lonDeg) > 0.1) continue;
+    const km = distanceKm(latDeg, lonDeg, lat[i], lon[i]);
+    if (!best || km < best.km) best = { km, i };
+  }
+  return best && { row: Math.floor(best.i / cols), col: best.i % cols, km: best.km, i: best.i };
+}
+

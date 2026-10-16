@@ -67,6 +67,9 @@ at short range. Skill fell steadily with lead time: at twilight, NBM's
 score (hit rate minus false-alarm rate) went from 51 at 1 day to 26 at 7
 days. One trap worth knowing: automatic airport stations only report cloud
 below 12,000 ft, so a forecast of high cloud can look wrong when it is not.
+The plume is seen over the ocean, where there are no airports, so we also
+scored NBM against the GOES weather satellite over land and over water
+alike: one day ahead, it kept about 93 percent of its land skill offshore.
 The full write-up, with what we tried, what came second and how to rerun
 it, is in [clouds/README.md](clouds/README.md). It is written to be reused
 for any "will the sky be clear?" app.
@@ -310,6 +313,9 @@ A few things we found along the way:
 - `clouds/`: the cloud forecast study. `README.md` is the report;
   `results.json` and `results.md` are written by
   `scripts/score-clouds.js` from the pinned data in `data/clouds/`.
+  `goes-relative-results.json` and `goes-relative-results.md` are test 3
+  (the forecast over land against over water), written by
+  `scripts/score-goes-relative.js`; the page reads the first.
   `goes-ccl-results.json` and `goes-ccl-results.md` are test 2 of the
   satellite check (cloud layers), written by `scripts/score-goes-ccl.js`.
   `goes-results.json` and `goes-results.md` are the satellite check
@@ -322,7 +328,7 @@ A few things we found along the way:
   point; `profiles.json` holds the ascent profiles; `visibility.json` holds
   the thresholds and azimuths; `weather.json` holds the cloud check
   settings; `cloud-stations.json` holds the airports and models of the
-  cloud study; `goes-acm.json` and `goes-ccl.json` hold the rules of the satellite check; `launch-directions.json` holds directions
+  cloud study; `goes-acm.json`, `goes-ccl.json` and `goes-relative.json` hold the rules of the satellite check; `launch-directions.json` holds directions
   we set by hand for upcoming launches; `skyview.json` holds the sky view
   defaults.
 - `test/`: tests for the engine, and `test/fixtures/` with the pinned
@@ -338,7 +344,9 @@ A few things we found along the way:
   source fails. `goes/` holds the satellite check extract: the
   cloud mask values around each airport for 782 scans, with the S3 name
   and checksum of each file, the cloud layer values for the matching
-  782 files, and the pixel of each airport.
+  782 files, the mask boxes at airports and water places for 1,984
+  twilight hours, NBM forecasts at the water places, and the pixel of each
+  airport and water place.
 - `scripts/`: one-off tools. `fetch-reference-fixtures.js` regenerates the
   fixtures from USNO and NOAA NGS; `build-profiles.js` regenerates the ascent
   profiles; `snapshot-ll2.js` regenerates the launch snapshot; `backtest.js`
@@ -349,7 +357,8 @@ A few things we found along the way:
   `lib/webcast-telemetry.js` turns webcast speed and altitude into downrange
   distance for the profiles;
   `goes-station-pixels.js`, `fetch-goes-acm.js`, `score-goes.js`,
-  `fetch-goes-ccl.js` and `score-goes-ccl.js` run the satellite check;
+  `fetch-goes-ccl.js`, `score-goes-ccl.js`, `fetch-goes-relative.js` and
+  `score-goes-relative.js` run the satellite check;
   `serve.js` serves the page locally.
 - `reference/`: our knowledge base of outside sources, so that each value in
   the engine can be traced to where it came from. Each note opens with a
@@ -366,7 +375,7 @@ A few things we found along the way:
 
 ## Running / developing
 The engine needs Node.js 22 or later and has no dependencies to install.
-Only `scripts/fetch-goes-acm.js` and `scripts/goes-station-pixels.js`
+Only the GOES fetch scripts and `scripts/goes-station-pixels.js`
 need one (h5wasm, to read satellite files); run `npm install` first for
 those.
 

@@ -13,6 +13,7 @@ key_points:
   - "Automatic airport stations report cloud only up to 12,000 ft; score against that part of the sky or against full-sky stations."
   - "Open-Meteo works from a page, takes many places in one request and reaches far offshore; NWS grid stops 59 to 107 km offshore."
   - "Aviation Weather Center API and LAMP bulletins are blocked from a page; the NWS API serves TAFs with CORS."
+  - "Offshore, NBM kept 93 percent of its land skill one day ahead, judged by GOES over land and water alike (ratio test)."
 related_papers: []
 ---
 
@@ -46,6 +47,16 @@ traps we found. The full study, tables and method are in
   after a test like this; ECMWF's low layer caught 27 percent of low cloud.
 - **Seasons:** summer was hardest (NBM skill 35 at 1 day), winter easiest
   (63).
+
+## Offshore, judged by satellite (2026-10-16)
+A satellite was not a better judge than the airports (the GOES cloud mask
+and cloud layers both agreed with airports no better than the forecasts
+did). Used as a judge of land and water alike, it showed that NBM keeps its
+skill offshore: day-1 twilight skill 48 over water against 51 over land,
+ratio 0.926 (0.888 to 0.947); near-Charleston land only, 0.886 (0.846 to
+0.916). Method and limits: clouds/README.md, test 3. A tip for reuse: when
+no judge is better than the thing judged, compare like with like and let
+the judge's errors cancel in a ratio.
 
 ## Traps
 

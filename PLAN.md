@@ -12,8 +12,9 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   (v0.6.0: NBM, HRRR low cloud, TAF; clouds/README.md). Phase 3 (alerts)
   starts only when Ben asks.
 - **Last updated:** 2026-10-16
-- **Satellite check:** two satellite truths failed (tests 1 and 2,
-  FINDINGS). The page
+- **Satellite check:** done. Two satellite truths failed (tests 1 and
+  2); the land-water ratio test held (test 3, FINDINGS), and the card
+  says so from 0.7.0. The page
   forecast is unchanged. Offshore skill stays unscored; what comes next
   is Ben's call (Open questions, "score the offshore part").
 - **Next action:** Sunday 2026-10-18: the Bandwagon 5 item at the top of
@@ -178,11 +179,14 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
     Done 2026-10-16: no-go (FINDINGS, Satellite check, test 2). Observed:
     the scorer output in clouds/goes-ccl-results.md; 5 of 5 rechecked
     files identical; the dropped-pair count that keeps the verdict.
-  - [ ] Test 3: NBM against GOES at the 11 airports and at 12 water
+  - [x] Test 3: NBM against GOES at the 11 airports and at 12 water
     points off Charleston, compared as a ratio of skills; the satellite
     need not beat the airports. Rules approved by Ben 2026-10-16
-    (config/goes-relative.json): all 2,002 twilight hours; holds if the
-    lower 95 percent bound of the ratio is 0.85 or more.
+    (config/goes-relative.json). Done 2026-10-16: holds (FINDINGS,
+    Satellite check, test 3); on the page from 0.7.0. Observed: scorer
+    output in clouds/goes-relative-results.md; 5 of 5 rechecked scans
+    identical; the card line seen on the local page for Bandwagon 5
+    ("kept about 94%", day 3).
   - Still not read: PUG Vol 5 (OSPO copy answered 503 on 2026-10-16).
   - Option: cloud top height (ACHA, 0.3 MB a file) would give the cloud
     top for the sight-line test directly.

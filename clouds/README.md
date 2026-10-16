@@ -164,6 +164,9 @@ both truths and why the page shows low cloud on its own when HRRR has it.
   forecast cloud layers over that airport (added in 0.6.0).
 - It says how far to trust the number: the NBM hit and false-alarm rates at
   twilight for that lead time, read from `results.json`.
+- From 0.7.0 it adds how the forecast does out over the water: the share of
+  its land skill that it kept offshore at that lead time, read from
+  `goes-relative-results.json` (satellite check, test 3).
 - Cloud never changes the jellyfish verdict. Geometry decides that.
 
 ## Second best, and not pursued
@@ -195,7 +198,9 @@ both truths and why the page shows low cloud on its own when HRRR has it.
   cells are about 25 km across.
 - Open-Meteo does not say whether hourly cloud is the value at the hour or
   a mean over it. We matched each report to the nearest whole hour.
-- The truth is cloud over land airports. The plume is seen over the ocean.
+- The truth is cloud over land airports. The plume is seen over the ocean;
+  test 3 below checks the forecast there against the satellite, relative to
+  land.
 - The cloudy line (50 percent), the full-sky rule (at least 1 percent of a
   station's reports name a layer above 12,000 ft) and the twilight window
   are our choices.
@@ -280,6 +285,47 @@ its lower bound.
   hits in 477 airport-cloudy cases and 46 false alarms in 698 clear ones.
   With them, skill is near 19 instead of 21. The verdict does not change.
   The approved rules were not edited after the result.
+
+## Satellite check, test 3
+
+Tests 1 and 2 asked a satellite to be a better judge than the airports, and
+it was not. Test 3 asks a smaller question that answers the one we care
+about: **does the forecast get worse over the water?** We scored NBM against
+the GOES cloud mask at the 11 airports and, the same way, at 12 places off
+Charleston (bearings 90 to 180 degrees from James Island, 30 to 90 km out),
+and compared the two skills as a ratio. If the satellite is about as good a
+judge over land as over water, its own errors cancel in the ratio, so it
+need not be perfect. Rules were approved by Ben before any data was
+compared (`config/goes-relative.json`). Tables:
+[goes-relative-results.md](goes-relative-results.md).
+
+**Short answer: the forecast holds offshore.** One day ahead, at twilight,
+NBM kept 93 percent of its land skill over the water (skill 48 against 51;
+ratio 0.926, 95 percent interval 0.888 to 0.947, over 1,246 twilight
+mornings and evenings). The bar was 0.85, about what NBM loses going from 1
+to 3 days ahead. From 2 to 7 days the ratio is 0.94 to 1.06.
+
+**Method.** Every twilight hour at JZI from 2025-01-01 to 2026-10-15 (2,001
+hours; 1,984 with a GOES scan within 5 minutes of the hour). The same scan
+for land and water. The same mask rules as test 1 (5 by 5 box, good pixels
+only, cloudy at 50 percent). NBM from Open-Meteo past runs; at sea we asked
+for the nearest grid cell and checked that each was at sea (0.4 to 1.4 km
+from the place asked for, elevation 0, none shared). The interval comes
+from resampling whole twilight events 2,000 times.
+
+**Read it with care:**
+
+- Against the three airports near Charleston only, the ratio is lower:
+  0.886 (0.846 to 0.916). That set does not decide, but it is the closer
+  match to the water places, and its interval just reaches below the bar.
+- The satellite calls the water cloudy far more often than the land (63
+  against 47 percent of pairs).
+- Every known bias leans toward "holds": the mask is a little better over
+  ocean in its own documents, and the coastal airport boxes take in some
+  sea. So "holds" is weaker evidence than "degrades" would have been.
+
+**Going forward.** Each launch we watch adds a real check: what the card
+said about cloud toward the launch, and what the sky did.
 
 ## Reproduce it
 
