@@ -12,10 +12,9 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   (v0.6.0: NBM, HRRR low cloud, TAF; clouds/README.md). Phase 3 (alerts)
   starts only when Ben asks.
 - **Last updated:** 2026-10-16
-- **Satellite check, step 1:** done 2026-10-16, result no-go. The GOES
-  binary cloud mask scored twilight skill 48 against the airports (bar
-  70; NBM day 1 is 51). Step 2 is not started. What comes next is Ben's
-  call (Open questions, "score the offshore part").
+- **Satellite check:** stopped after step 1 (no-go, FINDINGS). The page
+  forecast is unchanged. Offshore skill stays unscored; what comes next
+  is Ben's call (Open questions, "score the offshore part").
 - **Next action:** Sunday 2026-10-18: the Bandwagon 5 item at the top of
   the Backlog. On launch morning, note the sky toward the launch: the
   first real check of the cloud section.
@@ -160,25 +159,18 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 - Alert timing: how long before T-0, and how many emails per launch?
 - Clouds: does thin high cloud hide a lit plume? No source. A sighting
   through a forecast of high cloud would show it.
-- Clouds: score the offshore part of the line of sight against GOES
-  satellite cloud. Scoped 2026-10-16 (reference/data-sources.md, GOES):
-  - Truth: the GOES Clear Sky Mask (clear or cloudy, 2 km), GOES-16 to
-    2025-04-07, GOES-19 after. One scan per twilight hour is about 2,000
-    files (twilight hours per station in clouds/results.json); whole files
-    would be about 10 GB, so read only the pixels needed (Range requests
-    work) and pin a small extract: mask values at the sight-line places,
-    plus file names and S3 ETags for reproduction.
-  - [x] Step 1: check the mask against the airport reports at the 11
-    stations. If it does not agree with them at twilight, stop. Done
-    2026-10-16: no-go. Twilight skill 48 below 12,000 ft (2,506 pairs),
-    66 against the full sky; bar 70 (clouds/README.md, "Satellite check,
-    step 1"; FINDINGS). Observed: 5 of 5 rechecked scans identical; grid
-    centre matches the file's own centre point; tests pass.
-  - [ ] Step 2: fetch NBM, GFS, ECMWF and HRRR past forecasts at offshore
-    places (Open-Meteo, as before) and score them against the mask.
-    Blocked by the step 1 result. A new test (for example the four-level
-    ACM, or cloud top height) needs new rules set before its data, and
-    Ben's go-ahead.
+- Clouds: how good are the forecasts offshore, where the plume is seen?
+  Airport skill is known (FINDINGS, Cloud forecast test); offshore skill
+  is not. Satellite truth was tried first (rules: config/goes-acm.json):
+  - [x] Step 1: check the GOES Clear Sky Mask against the airport reports
+    at the 11 stations; stop if it does not agree at twilight. Done
+    2026-10-16: no-go (FINDINGS, Satellite check, step 1). Observed: the
+    scorer output in clouds/goes-results.md; 5 of 5 rechecked scans
+    identical; grid centre matches the file's own centre point; tests pass.
+  - [ ] Step 2: score NBM, GFS, ECMWF and HRRR past forecasts at offshore
+    places against the mask. Blocked by step 1. A new test (for example
+    the four-level ACM, or cloud top height) needs new rules set before
+    its data, and Ben's go-ahead.
   - Still not read: the GOES-19 cloud mask ReadMe and PUG Vol 5 (both
     hosts were down on 2026-10-16). Read them before any new satellite
     test.

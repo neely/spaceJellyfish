@@ -286,8 +286,7 @@ Report: clouds/README.md, "Satellite check, step 1". Tables:
 clouds/goes-results.md. Note: reference/topics/goes-clear-sky-mask.md.
 - Result: no-go under the rule set before the data (skill 70 or more at
   twilight below 12,000 ft). Skill 48; NBM day 1 scores 51 on that truth.
-  Full sky: 66. Step 2 (offshore forecast scoring with the mask) is not
-  started.
+  Full sky: 66.
 - False alarms are 36 percent below 12,000 ft and 17 percent against the
   full sky. Day skill 51, twilight 48, Sun 0 to -3 degrees 44.
 - ACMC files hold BCM, ACM (four levels), Cloud_Probabilities and DQF.
@@ -295,8 +294,7 @@ clouds/goes-results.md. Note: reference/topics/goes-clear-sky-mask.md.
 - The file's stated centre (30.0830, -87.0970) is the midpoint of NOAA
   STAR grid pixels (749, 1249) and (750, 1250). The east bound equals the
   grid's north-east corner longitude (-52.9469).
-- Not read: the GOES-19 cloud mask ReadMe and PUG Vol 5 (hosts down on
-  2026-10-16). The ECM ATBD v1.2 gives no twilight accuracy.
+- The ECM ATBD v1.2 gives day and night accuracy, but none for twilight.
 
 #### Site cache headers (2026-10-15)
 - `.js`, `.css` and `.png` from jellyfish.benneely.com come with
