@@ -1,0 +1,154 @@
+// Scores cloud forecasts against airport reports. Reads only the pinned
+// files in data/clouds/raw/ (written by scripts/fetch-cloud-history.js).
+// Writes clouds/results.json and clouds/results.md. Report: clouds/README.md.
+//
+//   node scripts/score-clouds.js
+//
+// Two tests:
+// 1. Lead time. Total cloud forecast 1 to 7 days before each hour (Open-Meteo
+//    Previous Model Runs API) against the airport sky. Truth "below 12,000 ft"
+//    uses only layers at or below 12,000 ft, the part of the sky that every
+//    automatic station reports. Truth "full sky" uses every layer, at the
+//    stations that report cloud above 12,000 ft.
+// 2. Layers. Short-lead forecasts of low cloud (up to 3 km, Open-Meteo
+//    definition) against the airport sky below 10,000 ft (3,048 m), and total
+//    cloud against the sky below 12,000 ft.
+// "Blend" is the mean of ECMWF, GFS and NBM where all three have a value.
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { gunzipSync } from 'node:zlib';
+import { createHash } from 'node:crypto';
+import {
+  parseIemCsv, reportsByHour, reportCoverPct, highestBaseFt, openMeteoSeries, sunElevationDeg, score, ASOS_LIMIT_FT,
+} from './lib/clouds.js';
+
+const root = new URL('../', import.meta.url);
+const config = JSON.parse(await readFile(new URL('config/cloud-stations.json', root)));
+const manifest = JSON.parse(await readFile(new URL('data/clouds/manifest.json', root)));
+const raw = async (name) => {
+  const buf = gunzipSync(await readFile(new URL(`data/clouds/raw/${name}`, root)));
+  const sha = createHash('sha256').update(buf).digest('hex');
+  if (sha !== manifest.files[name].sha256) throw new Error(`${name}: SHA-256 does not match the manifest`);
+  return buf.toString('utf8');
+};
+
+const CLOUDY = config.cloudyPct;
+const LOW_TOP_FT = 10000; // 3,048 m, near the 3 km top of Open-Meteo low cloud
+const BLEND = ['ecmwf_ifs025', 'gfs_global', 'ncep_nbm_conus'];
+const models = Object.keys(config.models);
+const season = (ms) => ['DJF', 'DJF', 'MAM', 'MAM', 'MAM', 'JJA', 'JJA', 'JJA', 'SON', 'SON', 'SON', 'DJF'][new Date(ms).getUTCMonth()];
+
+// pairs[test][truth][subset][model][lead] = [[forecast, observed], ...]
+const pairs = {};
+const push = (path, pair) => {
+  let node = pairs;
+  for (const key of path.slice(0, -1)) node = node[key] ??= {};
+  (node[path.at(-1)] ??= []).push(pair);
+};
+
+const stations = {};
+for (const [id, st] of Object.entries(config.stations)) {
+  const reports = parseIemCsv(await raw(`${id}-iem.csv.gz`));
+  const byHour = reportsByHour(reports);
+  const highs = reports.map((r) => highestBaseFt(r.layers)).filter((b) => b != null);
+  const above = highs.filter((b) => b > ASOS_LIMIT_FT).length;
+  stations[id] = {
+    reports: reports.length,
+    hours: byHour.size,
+    unknownCodes: reports.filter((r) => reportCoverPct(r.layers) == null).length,
+    reportsWithLayerAbove12000Ft: above,
+    maxBaseFt: highs.length ? Math.max(...highs) : null,
+  };
+  // A station counts as full-sky when at least 1 percent of its reports
+  // name a layer above 12,000 ft. The 1 percent is our choice.
+  const fullSky = above / reports.length >= 0.01;
+  stations[id].fullSky = fullSky;
+
+  const prev = openMeteoSeries(JSON.parse(await raw(`${id}-previous.json.gz`)));
+  const hist = openMeteoSeries(JSON.parse(await raw(`${id}-historical.json.gz`)));
+
+  for (const [hourMs, report] of byHour) {
+    const below12 = reportCoverPct(report.layers, ASOS_LIMIT_FT);
+    const below10 = reportCoverPct(report.layers, LOW_TOP_FT);
+    const all = reportCoverPct(report.layers);
+    if (below12 == null) continue;
+    const sun = sunElevationDeg(st, hourMs);
+    const subsets = ['all', season(hourMs)];
+    if (sun >= config.twilightSunDeg.min && sun <= config.twilightSunDeg.max) subsets.push('twilight');
+    if (config.nearCharleston.includes(id)) subsets.push('nearCharleston');
+    const truths = [['below12000ft', below12]];
+    if (fullSky) truths.push(['fullSky', all]);
+
+    // Test 1: lead time.
+    for (let lead = 1; lead <= 7; lead++) {
+      const f = {};
+      for (const m of models) {
+        const v = prev.get(`cloud_cover_previous_day${lead}_${m}`)?.get(hourMs);
+        if (v != null) f[m] = v;
+      }
+      if (BLEND.every((m) => f[m] != null)) f.blend = BLEND.reduce((s, m) => s + f[m], 0) / BLEND.length;
+      for (const [truth, o] of truths) for (const sub of subsets) for (const [m, v] of Object.entries(f)) push(['lead', truth, sub, m, lead], [v, o]);
+    }
+
+    // Test 2: layers, short lead.
+    for (const m of models) {
+      const low = hist.get(`cloud_cover_low_${m}`)?.get(hourMs);
+      const total = hist.get(`cloud_cover_${m}`)?.get(hourMs);
+      for (const sub of subsets) {
+        if (low != null && below10 != null) push(['layers', 'lowVsBelow10000ft', sub, m, 0], [low, below10]);
+        if (total != null) push(['layers', 'totalVsBelow12000ft', sub, m, 0], [total, below12]);
+      }
+    }
+  }
+}
+
+// Score every set.
+const results = {
+  about: 'Generated by scripts/score-clouds.js from data/clouds/raw. Do not edit by hand.',
+  inputs: { period: config.period, fetched: manifest.fetchedStart, files: Object.keys(manifest.files).length },
+  cloudyPct: CLOUDY,
+  stations,
+  tests: {},
+};
+const walk = (node, out) => {
+  for (const [k, v] of Object.entries(node)) {
+    if (Array.isArray(v)) out[k] = score(v, CLOUDY);
+    else walk(v, (out[k] = {}));
+  }
+};
+walk(pairs, results.tests);
+await mkdir(new URL('clouds/', root), { recursive: true });
+await writeFile(new URL('clouds/results.json', root), JSON.stringify(results, (k, v) => (typeof v === 'number' ? Math.round(v * 1000) / 1000 : v), 2) + '\n');
+
+// Tables for humans.
+const pct = (x) => (x == null ? '-' : `${Math.round(100 * x)}`);
+const num = (x) => (x == null ? '-' : x.toFixed(1));
+const label = (m) => (m === 'blend' ? 'Blend (ECMWF, GFS, NBM)' : config.models[m].label);
+const rows = ['ecmwf_ifs025', 'gfs_global', 'ncep_nbm_conus', 'gfs_hrrr', 'blend'];
+let md = '# Cloud forecast test: results\n\nGenerated by `node scripts/score-clouds.js`. Do not edit by hand. Method and discussion: [README.md](README.md).\n\n';
+md += `Period ${config.period.start} to ${config.period.end}. Cloudy means ${CLOUDY} percent or more. Skill is hit rate minus false-alarm rate (0 is no skill, 100 is perfect). MAE is the mean absolute error in percentage points; the "always clear" line is a forecast of 0 percent every hour.\n\n`;
+md += '## Stations\n\n| Station | Reports | Hours | Reports with a layer above 12,000 ft | Highest base (ft) | Full-sky truth |\n|---|---|---|---|---|---|\n';
+for (const [id, s] of Object.entries(stations)) md += `| ${id} | ${s.reports} | ${s.hours} | ${s.reportsWithLayerAbove12000Ft} | ${s.maxBaseFt ?? '-'} | ${s.fullSky ? 'yes' : 'no'} |\n`;
+
+const leadTable = (truth, sub) => {
+  const t = results.tests.lead?.[truth]?.[sub];
+  if (!t) return '';
+  const any = Object.values(t)[0][1];
+  let s = `\n### Lead time: ${truth}, ${sub}\n\n${any.n} hours, ${any.cloudy} cloudy (${pct(any.cloudy / any.n)} percent). Always clear: MAE ${num(any.maeClear)}.\n\n`;
+  s += '| Model | ' + [1, 2, 3, 4, 5, 6, 7].map((d) => `Day ${d} skill / MAE`).join(' | ') + ' |\n|---|' + '---|'.repeat(7) + '\n';
+  for (const m of rows) if (t[m]) s += `| ${label(m)} | ` + [1, 2, 3, 4, 5, 6, 7].map((d) => (t[m][d] ? `${pct(t[m][d].skill)} / ${num(t[m][d].mae)}` : '-')).join(' | ') + ' |\n';
+  return s;
+};
+md += '\n## Test 1: forecasts made 1 to 7 days ahead (total cloud)\n';
+for (const truth of ['below12000ft', 'fullSky']) for (const sub of ['all', 'twilight', 'nearCharleston', 'DJF', 'MAM', 'JJA', 'SON']) md += leadTable(truth, sub);
+
+md += '\n## Test 2: short-lead forecasts by layer\n';
+for (const test of ['lowVsBelow10000ft', 'totalVsBelow12000ft']) for (const sub of ['all', 'twilight', 'nearCharleston']) {
+  const t = results.tests.layers?.[test]?.[sub];
+  if (!t) continue;
+  const any = Object.values(t)[0][0];
+  md += `\n### ${test}, ${sub}\n\n${any.n} hours, ${any.cloudy} cloudy. Always clear: MAE ${num(any.maeClear)}.\n\n| Model | Skill | Hit rate | False-alarm rate | MAE |\n|---|---|---|---|---|\n`;
+  for (const m of rows) if (t[m]) md += `| ${label(m)} | ${pct(t[m][0].skill)} | ${pct(t[m][0].hitRate)} | ${pct(t[m][0].falseRate)} | ${num(t[m][0].mae)} |\n`;
+}
+await writeFile(new URL('clouds/results.md', root), md);
+console.log(md.split('\n').slice(0, 25).join('\n'));
+console.log('...\nWrote clouds/results.json and clouds/results.md');

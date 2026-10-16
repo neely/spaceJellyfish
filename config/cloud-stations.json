@@ -1,0 +1,31 @@
+{
+  "about": "Inputs for the cloud forecast test (scripts/fetch-cloud-history.js, scripts/score-clouds.js). Report: clouds/README.md.",
+  "period": { "start": "2025-01-01", "end": "2026-10-15" },
+  "periodSource": "Start: NBM forecasts from the Open-Meteo Previous Model Runs API have values on 2025-01-01 and none on 2024-10-01 (probe from the page, 2026-10-16). End: the last full UTC day before the fetch was planned.",
+  "stations": {
+    "ILM": { "name": "Wilmington International Airport", "latitudeDeg": 34.26681, "longitudeDeg": -77.89987 },
+    "CRE": { "name": "North Myrtle Beach Grand Strand Airport", "latitudeDeg": 33.81619, "longitudeDeg": -78.72043 },
+    "MYR": { "name": "Myrtle Beach International Airport", "latitudeDeg": 33.67975, "longitudeDeg": -78.92833 },
+    "LRO": { "name": "Mount Pleasant Regional-Faison Field", "latitudeDeg": 32.898, "longitudeDeg": -79.783 },
+    "CHS": { "name": "Charleston, Charleston Air Force Base", "latitudeDeg": 32.89889, "longitudeDeg": -80.04056 },
+    "JZI": { "name": "Charleston Executive Airport", "latitudeDeg": 32.701, "longitudeDeg": -80.003 },
+    "NBC": { "name": "Beaufort, Marine Corps Air Station", "latitudeDeg": 32.49361, "longitudeDeg": -80.70306 },
+    "HXD": { "name": "Hilton Head Island, Hilton Head Airport", "latitudeDeg": 32.21667, "longitudeDeg": -80.7 },
+    "SAV": { "name": "Savannah-Hilton Head International Airport", "latitudeDeg": 32.13137, "longitudeDeg": -81.20226 },
+    "SSI": { "name": "Brunswick, Malcolm McKinnon Airport", "latitudeDeg": 31.15167, "longitudeDeg": -81.39139 },
+    "JAX": { "name": "Jacksonville International Airport", "latitudeDeg": 30.49534, "longitudeDeg": -81.6937 }
+  },
+  "stationsSource": "Names and coordinates from api.weather.gov/stations/K<ID>, read 2026-10-16. Coastal airports from Wilmington to Jacksonville, chosen because they share the sea-breeze and marine cloud of Charleston. Atlanta was tried and gave 39 usable hours in one week; it is inland.",
+  "nearCharleston": ["LRO", "CHS", "JZI"],
+  "models": {
+    "ecmwf_ifs025": { "label": "ECMWF IFS 0.25°", "leadDays": [1, 2, 3, 4, 5, 6, 7], "layers": true },
+    "gfs_global": { "label": "NOAA GFS", "leadDays": [1, 2, 3, 4, 5, 6, 7], "layers": true },
+    "ncep_nbm_conus": { "label": "NOAA NBM (National Blend of Models)", "leadDays": [1, 2, 3, 4, 5, 6, 7], "layers": false },
+    "gfs_hrrr": { "label": "NOAA HRRR", "leadDays": [1], "layers": true }
+  },
+  "modelsSource": "Open-Meteo model ids, checked from the page on 2026-10-16. 'gfs_seamless' was not used: its day-1 values equal gfs_hrrr. HRRR has only day 1 in the Previous Model Runs API. NBM has no low, mid or high cloud in the Historical Forecast API. 'layers' is true when that API returned low, mid and high cloud for the model.",
+  "cloudyPct": 50,
+  "cloudySource": "Our choice. 50 percent lies between scattered (3 to 4 eighths) and broken (5 to 7 eighths), so an hour is cloudy when the sky is broken or overcast.",
+  "twilightSunDeg": { "min": -18, "max": 0 },
+  "twilightSource": "Hours when the Sun is between the horizon and the end of astronomical twilight at the station, the window in which a plume can be lit while the ground is dark. See reference/topics/twilight-definitions-and-earth-shadow.md."
+}
