@@ -252,9 +252,13 @@ detail and quotes: reference/data-sources.md.
 - Cause, from the Cloudflare docs (developers.cloudflare.com/cache/how-to/
   edge-browser-cache-ttl/, read 2026-10-15): the zone setting Browser
   Cache TTL defaults to 4 hours and overrides an origin Cache-Control
-  that is lower. "Respect Existing Headers" stops that. This needs a
-  change in Ben's Cloudflare dashboard; it was not checked which other
-  sites on the zone it would affect.
+  that is lower. "Respect Existing Headers" stops that.
+- Fix (2026-10-15, about 02:30 UTC): Ben asked for the whole zone. The
+  benneely.com Browser Cache TTL was changed from 4 hours to Respect
+  Existing Headers in the dashboard. About 15 s later, `/app.js`,
+  `/style.css`, `/engine/weather.js` and `/assets/jellyfish.png` came
+  with `max-age=0, must-revalidate`. Other sites on the zone now send
+  their own headers; their headers were not checked.
 
 #### Where cloud can block the line of sight (computed 2026-10-15)
 - Ground distance from the observer at which the sight line rises above a
