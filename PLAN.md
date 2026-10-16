@@ -10,13 +10,16 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ## Status
 - **Active:** Phase 1 — Geometry engine, backtest, static page
 - **Last updated:** 2026-10-15
-- **Next action:** Source audit is done (reference/source-audit.md).
-  Bandwagon 5 is Monday 2026-10-19, 06:30 to 07:30 local (LL2, read
-  2026-10-15). On Sunday 10-18, find where the drone ship waits and set
-  its heading in config/launch-directions.json (runbook in
-  reference/topics/cape-launch-azimuths-and-inclinations.md). Ben watches
-  with the sky view and takes screenshots for data/observations.json. Then
-  Ben picks from "Audit follow-ups" and the easy wins.
+- **Next action:** Phase 1 exit gate is met (2026-10-15): 5 of 5
+  `seen-plume` labels pass on the refreshed snapshot (507 launches) with
+  the 7-member LEO profile. Bandwagon 5 is Monday 2026-10-19, 06:30 to
+  07:30 local (LL2, read 2026-10-15). On Sunday 10-18, find where the
+  drone ship ASOG waits and set the heading in
+  config/launch-directions.json (runbook in
+  reference/topics/cape-launch-azimuths-and-inclinations.md; ship notes in
+  reference/topics/recovery-fleet.md). Ben watches with the sky view;
+  then refresh the snapshot (refresh rule in FINDINGS) and add the
+  observation. Phase 3 (alerts) may now start when Ben chooses.
 
 ---
 

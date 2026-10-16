@@ -231,6 +231,42 @@ What the engine consists of:
   some are. The thresholds are in `config/visibility.json`, each with its
   source or marked provisional.
 
+## Sources worth a look
+
+Everything the engine uses traces back to a public source, and some of them
+are fun reading on their own. Our notes on each are in
+[reference/](reference/INDEX.md); the full audit of every outside input, with
+dates and known problems, is
+[reference/source-audit.md](reference/source-audit.md).
+
+| Source | What we use it for | Our note |
+|---|---|---|
+| [Launch Library 2](https://thespacedevs.com/llapi) | Launch times, pads and orbits, live on the page and pinned for the backtest | [data-sources](reference/data-sources.md) |
+| [Telemetry-Data](https://github.com/shahar603/Telemetry-Data) and [SpaceXTelemetry-Api](https://github.com/R4yGM/SpaceXTelemetry-Api) | Altitude and speed read off SpaceX webcasts (2018 and 2020 flights), turned into ascent profiles | [2018 data](reference/topics/falcon9-webcast-telemetry.md), [2020 data](reference/topics/falcon9-starlink-2020-telemetry.md) |
+| [USNO Sun position](https://aa.usno.navy.mil/faq/sun_approx) and [sidereal time](https://aa.usno.navy.mil/faq/GAST) | Where the Sun is, to about 1 arcminute | [usno-sun-and-sidereal-time](reference/usno-sun-and-sidereal-time.md) |
+| [NOAA NGS coordinate tool](https://geodesy.noaa.gov/api/ncat/llh) and the World Magnetic Model (WMM-2025) | Test values for the Earth geometry; the compass correction in the sky view | [model-sun-and-earth-geometry](reference/topics/model-sun-and-earth-geometry.md) |
+| SpaceX drone ship *A Shortfall of Gravitas* ([orbitalradar](https://orbitalradar.com/recovery-fleet/a-shortfall-of-gravitas)) | Where it waits tells us which way a launch will go | [recovery-fleet](reference/topics/recovery-fleet.md) |
+| Cape launch corridors ([CSIS, *Spaceports of the World*](https://www.researchgate.net/figure/Azimuth-Limitations-at-Cape-Canaveral-and-Vandenberg-Launches-from-Cape-Canaveral-and_fig2_332211453); [Spaceflight Now](https://spaceflightnow.com/) launch reports) | The range of directions a Cape launch can fly | [cape-launch-azimuths-and-inclinations](reference/topics/cape-launch-azimuths-and-inclinations.md) |
+| [NASA APOD, "Launch Plume: SpaceX Jellyfish"](https://apod.nasa.gov/apod/ap260319.html) | What the jellyfish is and when it happens | [twilight-phenomenon-space-jellyfish](reference/topics/twilight-phenomenon-space-jellyfish.md) |
+| Local news and r/Charleston posts | Which past launches people here actually saw | [charleston-sighting-reports](reference/topics/charleston-sighting-reports.md) |
+| [Space Jellyfish Predictor](https://jellyfish.johnkrausphotos.com/) | The Florida tool that inspired this one; we compared notes but took no code or data | [prior-art-jellyfish-predictor](reference/topics/prior-art-jellyfish-predictor.md) |
+
+A few things we found along the way:
+
+- The Cape is 466 km (290 miles) from James Island, and while a rocket is
+  visible from here it is 290 to 1,180 km away, which is why one forecast
+  works for the whole Charleston area.
+- A launch to the northeast, toward the Carolinas, climbs two to three times
+  higher in our sky than one heading southeast or due east. Space station
+  flights go northeast.
+- The booster lands on a drone ship that waits 300 to 650 km out to sea. If
+  the ship is parked off the Carolinas the day before, the launch is coming
+  our way; if it is near the Bahamas, it will stay low in the south.
+- About six in ten of the launches the engine rates as visible since 2017
+  were Falcon 9 Starlink flights, and SpaceX has said those no longer fly
+  from Florida, so the chances from here on are fewer and come mostly from
+  station supply runs, crew flights and rideshares.
+
 ## Structure
 - `index.html`, `app.js`, `style.css`: the page. It has no build step; the
   repo root is the site.

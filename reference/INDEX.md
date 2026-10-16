@@ -8,14 +8,14 @@ Read this index. Pick the few notes whose answers match your question. Read only
 
 ## Tags (count of notes)
 
-sun-position 6, sidereal-time 2, geodesy 6, trajectory 8, ascent-profile 6, telemetry 5, launch-data 7, twilight 6, illumination 7, plume 5, visibility 9, sightings 4, weather 1, cloudflare 2, email 1, data-access 5, sky-view 2
+sun-position 6, sidereal-time 2, geodesy 6, trajectory 9, ascent-profile 6, telemetry 5, launch-data 8, twilight 6, illumination 7, plume 5, visibility 9, sightings 4, weather 1, cloudflare 2, email 1, data-access 6, sky-view 2
 
 ## Papers (0), high relevance first, then newest
 
 | key | year | relevance | topics | answers |
 |---|---|---|---|---|
 
-## Topic notes (12)
+## Topic notes (13)
 
 | key | distilled | relevance | topics | answers |
 |---|---|---|---|---|
@@ -29,6 +29,7 @@ sun-position 6, sidereal-time 2, geodesy 6, trajectory 8, ascent-profile 6, tele
 | [topics/model-trajectory](topics/model-trajectory.md) | 2026-10-08 | high | trajectory, ascent-profile, geodesy, launch-data, telemetry | How does the engine turn a pad, a launch azimuth and an ascent profile member into the rocket's latitude, longitude and height against time, how are azimuths... |
 | [topics/model-visibility-and-verdict](topics/model-visibility-and-verdict.md) | 2026-10-08 | high | visibility, illumination, twilight, plume, sun-position, sightings | How does the engine decide that a rocket is sunlit and visible, how are many tracks combined into likely, possible or no, what do prime and confidence mean... |
 | [topics/prior-art-jellyfish-predictor](topics/prior-art-jellyfish-predictor.md) | 2026-10-08 | high | visibility, plume, twilight, illumination, trajectory, launch-data | How does the Space Jellyfish Predictor work, what are its terms, which rules are exposed, is its source public, and how does our engine compare? |
+| [topics/recovery-fleet](topics/recovery-fleet.md) | 2026-10-15 | medium | launch-data, trajectory, data-access | What is a SpaceX drone ship, which one supports Cape launches now, how far downrange does it wait, and how does its position tell us whether a launch goes... |
 | [topics/twilight-definitions-and-earth-shadow](topics/twilight-definitions-and-earth-shadow.md) | 2026-10-08 | high | twilight, illumination, sun-position, visibility, geodesy | How are civil, nautical and astronomical twilight defined, how high above a point on Earth is an object still in sunlight when the Sun is D degrees below the... |
 | [topics/twilight-phenomenon-space-jellyfish](topics/twilight-phenomenon-space-jellyfish.md) | 2026-10-08 | high | twilight, plume, visibility, illumination, sightings | What do reputable sources say about when and how far a rocket plume glows in twilight (time window, plume altitude, duration, distance), and where do they... |
 
