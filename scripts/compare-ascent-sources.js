@@ -10,15 +10,11 @@
 //
 //   node scripts/compare-ascent-sources.js
 //
-// Downrange method: horizontal speed = sqrt(v^2 - vz^2), with vz from a
-// centred altitude difference over +/-5 s, integrated by the trapezoid
-// rule on 1 s steps. On 2026-10-15 the same method, run on the velocity
-// and altitude of SpaceX CRS-14 and CRS-16 in Telemetry-Data (commit
-// b245d3b), reproduced that author's downrange within 1 km at 254, 277,
-// 300 and 400 s. See reference/topics/falcon9-starlink-2020-telemetry.md.
+// The downrange method and its check are in scripts/lib/webcast-telemetry.js.
 import { readFileSync } from 'node:fs';
 import { rocketPosition, launchAzimuthsDeg, profilePointAt, destinationPoint } from '../engine/trajectory.js';
 import { lookAngles } from '../engine/geo.js';
+import { parseR4ygmCsv, deriveDownrangeKm } from './lib/webcast-telemetry.js';
 
 const url = (p) => new URL(p, import.meta.url);
 const read = (p) => JSON.parse(readFileSync(url(p)));
@@ -28,45 +24,10 @@ const observation = read('../data/observations.json').observations.find((o) => /
 const pad = read('../data/upcoming-fallback.json').results.find((l) => l.id === observation.llId).pad;
 const VENDOR = '../reference/vendor/r4ygm-spacextelemetry/';
 const FLIGHTS = ['starlink-5', 'starlink-6', 'starlink-7', 'starlink-8', 'dm-2'];
-const HALF_WINDOW_S = 5;
-
-function readTelemetry(name) {
-  const rows = readFileSync(url(VENDOR + name + '.csv'), 'utf8').trim().split(/\r?\n/).slice(1);
-  const bySecond = new Map();
-  for (const row of rows) {
-    const [clock, alt, speed] = row.split(',').map((s) => s.trim());
-    if (!speed) continue;
-    const [h, m, s] = clock.split(':').map(Number);
-    bySecond.set(h * 3600 + m * 60 + s, [Number(speed) / 3.6, Number(alt)]);
-  }
-  // Resample to 1 s steps by linear interpolation.
-  const keys = [...bySecond.keys()].sort((a, b) => a - b);
-  const t = [], v = [], alt = [];
-  for (let k = 0, s = keys[0]; s <= keys[keys.length - 1]; s++) {
-    while (keys[k + 1] <= s) k++;
-    const [t0, t1] = [keys[k], keys[Math.min(k + 1, keys.length - 1)]];
-    const f = t1 === t0 ? 0 : (s - t0) / (t1 - t0);
-    const [v0, a0] = bySecond.get(t0);
-    const [v1, a1] = bySecond.get(t1);
-    t.push(s); v.push(v0 + f * (v1 - v0)); alt.push(a0 + f * (a1 - a0));
-  }
-  return { t, v, alt };
-}
-
-function toMember({ t, v, alt }) {
-  const n = t.length;
-  const vz = (i) => {
-    const a = Math.max(0, i - HALF_WINDOW_S), b = Math.min(n - 1, i + HALF_WINDOW_S);
-    return ((alt[b] - alt[a]) * 1000) / (t[b] - t[a]);
-  };
-  const vx = (i) => Math.sqrt(Math.max(v[i] ** 2 - vz(i) ** 2, 0));
-  const points = [[t[0], alt[0], 0]];
-  let dr = 0;
-  for (let i = 1; i < n; i++) {
-    dr += (0.5 * (vx(i) + vx(i - 1)) * (t[i] - t[i - 1])) / 1000;
-    points.push([t[i], alt[i], dr]);
-  }
-  return { points };
+const readTelemetry = (name) => parseR4ygmCsv(readFileSync(url(VENDOR + name + '.csv'), 'utf8'));
+function toMember(tel) {
+  const dr = deriveDownrangeKm(tel);
+  return { points: tel.t.map((t, i) => [t, tel.alt[i], dr[i]]) };
 }
 
 const members = {

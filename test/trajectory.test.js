@@ -50,8 +50,13 @@ test('profiles.json: expected members and profiles (tripwire)', () => {
     'Bangabandhu-1',
     'Hispasat 30W-6',
     'SES-12',
+    'SpX-DM2',
     'SpaceX CRS-14',
     'SpaceX CRS-16',
+    'Starlink 5',
+    'Starlink 6',
+    'Starlink 7',
+    'Starlink 8',
   ]);
   assert.deepEqual(Object.keys(profiles.profiles).sort(), ['falcon9-gto', 'falcon9-leo']);
   for (const names of Object.values(profiles.profiles)) {
@@ -61,8 +66,10 @@ test('profiles.json: expected members and profiles (tripwire)', () => {
 
 test('profiles.json: altitude at 300 s is inside the expected band (tripwire)', () => {
   const at300 = (name) => profilePointAt(profiles.members[name], 300).altitudeKm;
+  // LEO band widened on 2026-10-15 when the 2020 flights joined: Starlink
+  // 169 to 172 km, DM-2 189 km, CRS 177 to 183 km.
   for (const name of profiles.profiles['falcon9-leo']) {
-    assert.ok(at300(name) > 170 && at300(name) < 190, `${name}: ${at300(name)}`);
+    assert.ok(at300(name) > 165 && at300(name) < 195, `${name}: ${at300(name)}`);
   }
   for (const name of profiles.profiles['falcon9-gto']) {
     assert.ok(at300(name) > 145 && at300(name) < 165, `${name}: ${at300(name)}`);

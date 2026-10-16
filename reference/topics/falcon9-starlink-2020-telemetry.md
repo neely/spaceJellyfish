@@ -12,7 +12,7 @@ key_points:
   - "Our downrange method reproduces shahar603 CRS-14 and CRS-16 downrange within 1 km at 254 to 400 s."
   - "SpX-35 needs about 364 km downrange at 254 s and 389 km at 277 s (plus or minus 10 km)."
   - "2020 Starlink gives 294 to 297 and 354 to 357 km; CRS-14 gives 264 and 323. Azimuth miss falls to 13 and 7 degrees."
-  - "No licence file. Vendored with Ben's approval; not yet used by the engine."
+  - "No licence file. Vendored with Ben's approval. Since 2026-10-15 all five flights are members of falcon9-leo."
 related_papers: []
 ---
 
@@ -66,4 +66,4 @@ Launch azimuth 45.0 degrees (51.6 degrees, northeast, from SLC-40). Measured poi
 Interpretation, not sourced fact.
 - A Starlink-shaped ascent halves the SpX-35 direction miss and keeps the height match. It supports the FINDINGS view that the 2018 profiles run too short downrange. It does not close the miss.
 - SpX-35 returned its booster to the pad, like CRS-16, yet it was seen farther downrange than all members. So landing mode alone does not predict the ascent shape.
-- Adopting these flights as a profile is a model change with downstream impact (all backtest tripwires). It is a separate decision (PLAN).
+- Adopted 2026-10-15: all five flights are members of `falcon9-leo` (FINDINGS decision "The 2020 R4yGM flights join falcon9-leo"). Built by scripts/build-profiles.js, which ends each member at its highest speed between 400 and 750 s (541 to 549 s for Starlink, 538 s for DM-2) and adds a 0 s point on the pad, because some files start after liftoff (DM-2 at 16 s).

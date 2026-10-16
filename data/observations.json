@@ -51,6 +51,7 @@
           ]
         }
       ],
+      "modelProfiles": "The model values above use the falcon9-leo members of 2026-10-13 (SpaceX CRS-16 and CRS-14, 2018). For the 2020 members added on 2026-10-15, run node scripts/compare-ascent-sources.js.",
       "compassCorrectionDeg": -3.4,
       "compassCheck": {
         "date": "2026-10-15T21:36:00Z",

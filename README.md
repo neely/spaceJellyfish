@@ -69,7 +69,8 @@ Spectrum News 13), so we expect fewer chances each year from now on.
 We compared the engine with 13 launches that people in the Charleston area
 reported seeing (local news stories, r/Charleston posts, and our own SpX-35
 sighting, listed in [data/labels.json](data/labels.json)). Five of the
-reports show a wide glowing plume, and the engine rates all five as likely. Of the other eight,
+reports show a wide glowing plume, and the engine rates four as likely and
+one (Starlink 10-49, launched in deep twilight) as possible. Of the other eight,
 which say only that the rocket was seen, it rates seven as likely or
 possible. It also rates none of 165 midday or late-night launches as
 visible, although any rule based on the clock alone would pass that check, so
@@ -101,7 +102,7 @@ and the engine's values for the same moments.
 
 | Date | Launch | Where | Verdict | Seen | Height and timing | Direction |
 |---|---|---|---|---|---|---|
-| 2026-10-13 | SpX-35 | James Island | likely, prime | plume | within about 1 deg | 19 to 29 deg farther east than predicted at the same moment; on or just under the drawn arc. The compass checked out within 1 deg two days later, so the ascent model, not the phone, is the likely cause. With 2020 Starlink ascent data instead of the 2018 flights, the miss drops to 6 to 14 deg (`scripts/compare-ascent-sources.js`) |
+| 2026-10-13 | SpX-35 | James Island | likely, prime | plume | within about 1 deg | 19 to 29 deg farther east than predicted at the same moment; on or just under the drawn arc. The compass checked out within 1 deg two days later, so the ascent model, not the phone, is the likely cause. Since 15 October the engine also flies 2020 Starlink and DM-2 ascents; the Starlink ones miss by 6 to 14 deg, still east of the prediction (`scripts/compare-ascent-sources.js`) |
 
 <p align="center">
   <img src="assets/demo-plume-spx35.jpg" alt="A wide fan-shaped glowing rocket plume above dark trees in a twilight sky" width="520">
@@ -130,16 +131,16 @@ for other places (`node scripts/observer-sensitivity.js`, Census ZIP code area p
 | Place | km from James Island | Same verdict (of 507) | Same verdict when James Island says likely or possible (of 60) | Typical change in peak height |
 |---|---|---|---|---|
 | Folly Beach | 6 | 507 | 60 | 0.6 deg |
-| Downtown Charleston | 7 | 506 | 59 | 0.2 deg |
-| Johns Island | 13 | 505 | 58 | 1.1 deg |
+| Downtown Charleston | 7 | 507 | 60 | 0.2 deg |
+| Johns Island | 13 | 507 | 60 | 1.1 deg |
 | Sullivan's Island | 13 | 506 | 60 | 0.9 deg |
-| Mount Pleasant | 14 | 505 | 59 | 0.3 deg |
+| Mount Pleasant | 14 | 506 | 60 | 0.3 deg |
 | Isle of Palms | 23 | 506 | 60 | 1.3 deg |
-| Summerville | 43 | 504 | 58 | 4.6 deg |
-| Columbia | 172 | 500 | 54 | 14.0 deg |
+| Summerville | 43 | 506 | 60 | 4.6 deg |
+| Columbia | 172 | 503 | 57 | 14.0 deg |
 
 Anywhere from Folly Beach to Isle of Palms, the page is as good for you as it
-is for James Island: the verdict differs for at most 2 of 507 launches, and
+is for James Island: the verdict differs for at most 1 of 507 launches, and
 heights and directions shift by about 1 degree, less than a phone compass
 error. By Summerville (43 km) the verdict still holds but heights run about
 4.6 degrees off, and beyond roughly 50 km the page should be treated as a rough
@@ -207,13 +208,19 @@ What the engine consists of:
 
 - **Trajectory** (`engine/trajectory.js`): the rocket's position against
   time, taken as one great circle from the pad with altitude and downrange
-  distance from real Falcon 9 flights. The flight data are five 2018
-  missions (two to the ISS, three to geostationary transfer orbit) from the
-  public [Telemetry-Data](https://github.com/shahar603/Telemetry-Data)
-  collection, whose author derived them from SpaceX webcast telemetry. The
-  collection has no Starlink launch and no other vehicle, so results for
-  those rest on the assumption that they climb like the 2018 missions, which
-  is untested.
+  distance from real Falcon 9 flights, read off the speed and altitude that
+  SpaceX shows on its launch webcasts. Five flights are 2018 missions (two to
+  the ISS, three to geostationary transfer orbit) from the public
+  [Telemetry-Data](https://github.com/shahar603/Telemetry-Data) collection.
+  Five more are 2020 flights to low orbit (four Starlink launches and the
+  Dragon demonstration flight DM-2) from
+  [SpaceXTelemetry-Api](https://github.com/R4yGM/SpaceXTelemetry-Api); we
+  work out their downrange distance ourselves, with a method that reproduces
+  the first collection's numbers within 1 km. We use every flight rather
+  than an average, so the page shows the spread between real ascents. There
+  is nothing newer than 2020 and no vehicle other than Falcon 9, so results
+  for Vulcan, Atlas V or New Glenn rest on the assumption that they climb
+  like a Falcon 9, which is untested.
 
 - **Visibility** (`engine/visibility.js`): whether the rocket is in sunlight
   (outside a cylindrical Earth shadow), whether the Sun is below the
@@ -256,12 +263,15 @@ What the engine consists of:
   `observer-sensitivity.js` re-runs it for other Charleston-area places;
   `compare-ascent-sources.js` flies other ascent data (2020 Starlink and
   DM-2) on SpX-35 and prints the miss against our measured points;
+  `lib/webcast-telemetry.js` turns webcast speed and altitude into downrange
+  distance for the profiles;
   `serve.js` serves the page locally.
 - `reference/`: our knowledge base of outside sources, so that each value in
   the engine can be traced to where it came from. Each note opens with a
   short statement of what it answers; `INDEX.md` lists them all, and
   `README.md` explains how to read and extend it. `reference/vendor/` holds
-  copies of outside data files we analyse but do not yet use in the engine.
+  copies of outside data files that are not fetched from a pinned commit
+  (the 2020 webcast telemetry).
 - `assets/`: images. `demo-*.jpg` are the SpX-35 photo and sky view
   screenshot shown above. `jellyfish.png` is the project art (1024 x 1024), also
   the source for a future app icon.

@@ -24,19 +24,24 @@ these before you trust it. Hard-stop on mismatch.
   with each within 2 mm. Largest difference observed: 0.4 mm.
 - SLC-40 to the observer along the surface — expected 466.0 km (289.5
   statute miles), within 0.5 km.
-- `config/profiles.json` — expected 5 members and 2 profiles:
-  `falcon9-leo` (SpaceX CRS-16, SpaceX CRS-14) and `falcon9-gto`
-  (Bangabandhu-1, SES-12, Hispasat 30W-6). Altitude at 300 s: 177 to 183 km
-  for LEO members, 150 to 158 km for GTO members. Altitude at the end of
-  the data: 207 to 208 km for LEO, 164 to 165 km for GTO.
+- `config/profiles.json` (2026-10-15) — expected 10 members and 2
+  profiles: `falcon9-leo` (SpaceX CRS-16, SpaceX CRS-14, Starlink 5 to 8,
+  SpX-DM2) and `falcon9-gto` (Bangabandhu-1, SES-12, Hispasat 30W-6).
+  Altitude at 300 s: 169 to 189 km for LEO members (CRS 177 to 183,
+  Starlink 169 to 172, DM-2 189), 150 to 158 km for GTO members. Altitude
+  at the end of the data: 198 to 216 km for LEO, 164 to 165 km for GTO.
+  Rebuilding with `node scripts/build-profiles.js` changes only the
+  "built" date.
 - `data/ll2-snapshot.json` (fetched 2026-10-16T00:41Z) — expected 507
   launches, 2017-01-21 to 2026-10-13. 435 are Falcon 9. 359 have orbit LEO
   and 73 have GTO. 503 have status Success and 4 have Failure. 8 pads.
   The first 506 records are byte-identical to the 2026-10-08 snapshot
   (SHA-256 of the records array, first 12 hex: 00eb5fefa0e2); the only
   new record is SpX-35. Whole array: 67beee3934d2.
-- `node scripts/backtest.js` (2026-10-15, screening height 10 km) — expected
-  42 likely, 18 possible, 447 no, out of 507. 33 of the 60 are prime.
+- `node scripts/backtest.js` (2026-10-15, screening height 10 km, 10
+  profile members) — expected 40 likely, 20 possible, 447 no, out of 507.
+  33 of the 60 are prime. Starlink 10-45 and 10-49 are possible (they
+  were likely with the 2018 members only).
   Share scored visible (likely or possible): 60 of 507, 11.8 percent.
   Labels: 0 of 5 `seen-plume` labels are missed. 1 of 8 `seen` labels has
   verdict 'no' (the Atlas V of 2026-04-27).
@@ -58,14 +63,15 @@ Things that look wrong but are correct. Do not "fix" these.
 - `surfaceDistanceM` uses a sphere of the mean radius. It is good to about
   0.5 percent. Look angles and ranges use the WGS 84 ellipsoid and do not
   have this limit.
-- The ascent profiles come from 2018 launches (Block 4 and Block 5). The
-  source has no Starlink launch and no vehicle other than Falcon 9. ISS
-  missions stand in for all Falcon 9 LEO launches. Treat a Starlink result
-  with lower confidence until a Starlink profile exists.
-- Downrange distance in the profiles is derived by the telemetry author
-  from webcast speed and altitude. It is not a tracked position. Members of
-  one profile differ by up to 120 km in downrange at 400 s.
-- The profiles end at about second-stage cutoff (493 to 538 s). The engine
+- The ascent profiles come from 2018 launches (Block 4 and Block 5) and,
+  for LEO, from four 2020 Starlink launches and DM-2 (2020). There is no
+  flight after 2020 and no vehicle other than Falcon 9.
+- Downrange distance in the profiles is derived from webcast speed and
+  altitude (by the telemetry author for the 2018 members, by
+  scripts/lib/webcast-telemetry.js for the 2020 members). It is not a
+  tracked position. LEO members differ by up to 162 km in downrange at
+  400 s (610 to 773 km); GTO members by up to 76 km.
+- The profiles end at about second-stage cutoff (493 to 549 s). The engine
   models nothing after that, and no first-stage boostback or entry burn.
 - The trajectory is one great circle at a fixed azimuth. The engine does not
   model the turn caused by Earth rotation or a dogleg. The bearing range
@@ -131,7 +137,7 @@ before you rely on it.
   2026-10-13).
 - 33 of the 60 are prime: the Sun is 6 degrees or more below the horizon.
 - These counts have no weather in them, and they rest on provisional
-  thresholds and on Falcon 9 profiles from 2018.
+  thresholds and on Falcon 9 profiles from 2018 and 2020.
 
 #### Sources for the visibility thresholds (research, 2026-10-08)
 - No source gives a Sun depression limit for plume visibility, a lowest
@@ -286,10 +292,11 @@ Full table: reference/source-audit.md. No pinned value was changed.
 #### The observer can be anywhere near Charleston
 - `node scripts/observer-sensitivity.js` (507 snapshot launches, Census
   ZCTA points, run 2026-10-15). Folly Beach to Isle of Palms (6 to 23 km):
-  same verdict for 59 or 60 of the 60 that James Island rates likely or
-  possible; Johns Island (13 km): 58 of 60. Peak height within 0.2 to 1.3
-  degrees (median). Summerville (43 km): 58 of 60, about 4.6 degrees
-  lower. Columbia (172 km): 54 of 60, about 14 lower.
+  same verdict for all 60 that James Island rates likely or possible,
+  Johns Island (13 km) included. Peak height within 0.2 to 1.3 degrees
+  (median). Summerville (43 km): 60 of 60, about 4.6 degrees lower.
+  Columbia (172 km): 57 of 60, about 14 lower. (Run with 10 profile
+  members.)
 - The rocket is 290 to 1,180 km away while visible. This compares the
   model with itself; it does not test it.
 
@@ -497,6 +504,21 @@ Choices made, and why. Mark settled ones `(locked)`.
   ascent found. Ben approved vendoring on 2026-10-15 after he was told the
   repository has no licence file.
 - Rejected: Ask the author first; read it without copying.
+
+### The 2020 R4yGM flights join falcon9-leo (locked)
+- What: Starlink 5 to 8 and SpX-DM2 (2020) are members of `falcon9-leo`
+  with CRS-16 and CRS-14. Every R4yGM flight to low orbit with second-stage
+  data is used. Each ends at its highest speed between 400 and 750 s.
+- Why: The 2018 members put SpX-35 19 to 29 degrees too far west. The
+  Starlink members cut that to 6 to 14 degrees with height still within 1
+  degree. DM-2 fits worse but stays: choosing members by their fit to one
+  sighting would be tuning. Ben left the decision to the agent on
+  2026-10-15.
+- Rejected: A separate `falcon9-starlink-2020` profile (Florida Starlink
+  on Falcon 9 has ended, so no launch class would use it). Keeping only the
+  2018 members. Starlink members only.
+- Effect: backtest 40 likely, 20 possible, 447 no (was 42, 18, 447); the
+  same 60 launches are not 'no'; 0 of 5 `seen-plume` labels missed.
 
 ### Hand-set directions for launches LL2 gives no direction for (locked)
 - What: `config/launch-directions.json`, keyed by LL2 id, sets an azimuth,

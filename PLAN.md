@@ -59,9 +59,10 @@ Tests run with `node --test`.
       no `config/pads.json`: each LL2 launch record carries its pad
       coordinates. Observed: 5 members in 2 profiles; LEO members are at 177
       to 183 km at 300 s and GTO members at 150 to 158 km.
-- [ ] A newer Falcon 9 profile. SpX-35 (2026-10-13) was seen 19 to 29
+- [x] A newer Falcon 9 profile. SpX-35 (2026-10-13) was seen 19 to 29
       degrees farther east than the 2018 profiles at the same moments,
-      with the compass checked (FINDINGS).
+      with the compass checked (FINDINGS). Done 2026-10-15 with the 2020
+      R4yGM flights; the Starlink members still miss by 6 to 14 degrees.
 - [ ] A profile for vehicles other than Falcon 9. No source found yet. Until
       then, other vehicles use the Falcon 9 members with low confidence.
 - [x] `engine/trajectory.js`: great-circle position against time from pad,
@@ -226,10 +227,14 @@ Page.
       Ben's approval; `node scripts/compare-ascent-sources.js` compares
       them on SpX-35. Observed: Starlink cuts the azimuth miss to 13 to 14
       degrees (254 s) and 6 to 7 (277 s); CRS rows equal FINDINGS.
-- [ ] Decide: add a `falcon9-starlink-2020` profile (or put the four
-      flights in `falcon9-leo`). Model change: needs a downstream trace
-      first (backtest counts, prime counts, label results, README numbers,
-      FINDINGS tripwires). Ben decides.
+- [x] The 2020 flights (Starlink 5 to 8, DM-2) are members of
+      `falcon9-leo` (Ben left the choice to the agent). Observed: `npm
+      test` 52 pass; backtest 40, 20, 447 (Starlink 10-45 and 10-49
+      went from likely to possible; the same 60 are not 'no'); 0 of 5
+      `seen-plume` missed. FINDINGS, README and the tests are updated.
+- [ ] The page and the sky view put the minute labels on the first track
+      that is visible, which is CRS-16, the member that fits SpX-35 worst.
+      Decide if the labels should follow a middle member.
 - [ ] Launch Dashboard API and Flight Club. 2026-10-15 on Ben's iPhone:
       the API gave "Safari can't reach the page"; both Flight Club pages
       loaded, then Safari stopped with "a problem repeatedly occurred". Try
@@ -256,9 +261,9 @@ Page.
 - [ ] `scripts/compare-observations.js`: read data/observations.json, run
       the engine for each point, and print the differences. Replaces the
       hand computation done for SpX-35.
-- [ ] A newer Falcon 9 ascent profile. Start with the Launch Dashboard API
-      named in reference/topics/falcon9-webcast-telemetry.md. Test it
-      against the SpX-35 points before adopting it.
+- [x] A newer Falcon 9 ascent profile. Done 2026-10-15 with the 2020
+      R4yGM flights (tested on the SpX-35 points first). The Launch
+      Dashboard API was unreachable. Flights after 2020 are still wanted.
 - [ ] Sky view: draw a soft glow band behind the sunlit rocket line, so
       the wide plume is not a surprise.
 - [ ] Sky view: two-tap field-of-view calibration from the Sun (centre,
