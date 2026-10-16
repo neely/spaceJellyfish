@@ -86,6 +86,29 @@ Source: https://www.weather.gov/documentation/services-web-api
 - Cache headers: `/points` max-age 86400 s; grid forecast max-age 3600 s.
 - Coverage offshore (bearings 134 to 141 degrees from the observer): points 27 km and 59 km out returned a grid (CHS/95,67 and CHS/105,60). Points 107 km and 174 km out returned status 200 with no grid id. A point 58 km out on bearing 184 (32.2, -80.0) returned CHS/87,51. The edge of the grid offshore was not found exactly; it is between 59 and 107 km on bearing 134 to 138. Other bearings were not tested.
 
+## Other cloud sources (tested 2026-10-16, about 10:20 UTC, from a page at https://jellyfish.benneely.com)
+
+### Open-Meteo
+Docs: https://open-meteo.com/en/docs and https://open-meteo.com/en/terms (read 2026-10-15).
+- Hourly `cloud_cover`, `cloud_cover_low` ("up to 3 km altitude"), `cloud_cover_mid` ("from 3 to 8 km") and `cloud_cover_high` ("from 8 km"). No cloud base or ceiling variable is listed.
+- Terms: free for non-commercial use only, "Less than 10'000 API calls per day, 5'000 per hour and 600 per minute". Data under CC BY 4.0.
+- Live: the page read the JSON body, so CORS works. One request with five comma-separated places returned five answers. 168 hourly values (7 days, from 00:00 UTC today). `cell_selection=sea` was used.
+- Offshore: answers came back for points 107 km and 174 km out on bearing 138 and 141, where the NWS grid gives none.
+- The model behind the default answer was not checked.
+
+### Conflict: NWS and Open-Meteo for 2026-10-19 10:00 and 11:00 UTC (Bandwagon 5 window)
+- Observer: NWS skyCover 24 and 22 percent; Open-Meteo total 0 and 0.
+- 27 km out (bearing 134): NWS 39 and 36; Open-Meteo 0 and 0.
+- 59 km out (bearing 134): NWS 61 and 56; Open-Meteo 100 and 100, all of it low cloud.
+- One forecast, read about 3 days ahead. It shows the two sources can disagree a lot. It does not show which is right.
+
+### NWS ceilingHeight
+- In the same grid response as skyCover, unit m. On 2026-10-16 it held one value, null, for 28 hours. Not useful on that day.
+
+### Aviation Weather Center (TAF)
+- Docs: https://aviationweather.gov/data/api/ says "Cross-origin resource sharing is not permitted at this time." Live: the page fetch failed (TypeError: Failed to fetch). A page cannot use it.
+- The KCHS TAF read on 2026-10-15 23:26 UTC covered 24 h and gave layer heights (for example FEW004).
+
 ## How the fixtures are used
 - The tests read the pinned fixtures and never call the network.
 - Run `node scripts/fetch-reference-fixtures.js` by hand to fetch them again. Do this only when the owner asks (see AGENTS.md on change-regenerate).

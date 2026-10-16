@@ -86,7 +86,11 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       Until then, other vehicles use the Falcon 9 members with low
       confidence.
 - [ ] Ascent data from flights after 2020. None found yet.
-- [ ] Cloud by layer (Ben, 2026-10-15). Sources read, not yet tested live:
+- [ ] Cloud by layer (Ben, 2026-10-15). Tested live 2026-10-16: Open-Meteo
+      works from the page, five places in one request, and offshore past
+      the NWS grid; it disagrees strongly with NWS for Bandwagon 5
+      (reference/data-sources.md). NWS ceilingHeight was null; the TAF is
+      blocked from a page. Ben to decide. Notes from 2026-10-15:
       Open-Meteo gives hourly cloud cover low (to 3 km), mid (3 to 8 km)
       and high (above 8 km) from NOAA models, 7 to 16 days, free for
       non-commercial use up to 10,000 calls a day, data CC BY 4.0
