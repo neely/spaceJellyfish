@@ -15,8 +15,10 @@ for a fix. Model changes that move the backtest numbers are listed here too.
   the top of the rocket's arc, up to 60 km out. It says how many requests
   it sends before you press it.
 - The footer shows the version.
-- Scripts and styles are revalidated on each visit, so a new version
-  reaches visitors at once instead of after up to 4 hours.
+- Added a `_headers` file that asks browsers to check scripts and styles on
+  every visit. It has no effect yet: the Cloudflare zone setting Browser
+  Cache TTL (4 hours) overrides it. Until that setting changes, a new
+  version can take up to 4 hours to reach a returning visitor.
 
 ## 0.3.0 · 2026-10-15
 - Directions set by hand for upcoming launches that Launch Library 2 gives

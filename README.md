@@ -286,8 +286,9 @@ A few things we found along the way:
 
 ## Structure
 - `index.html`, `app.js`, `style.css`: the page. It has no build step; the
-  repo root is the site. `_headers` tells Cloudflare Pages to have browsers
-  check every file for a new version on each visit.
+  repo root is the site. `_headers` asks Cloudflare Pages to have browsers
+  check every file for a new version on each visit. (Not in effect yet: the
+  Cloudflare zone's 4 hour browser cache setting overrides it.)
 - `package.json` holds the version, which the page footer shows;
   `CHANGELOG.md` lists what changed in each version, and each version has
   a git tag.

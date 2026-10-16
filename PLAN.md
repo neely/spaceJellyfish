@@ -163,6 +163,12 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   search of Ben's repos found no other cron. That search may not cover
   private repos.
 - Alert timing: how long before T-0, and how many emails per launch?
+- Stale page code: scripts and styles stay cached 4 hours after a deploy.
+  The repo side is done (`_headers`). Ben to set the Cloudflare zone
+  Browser Cache TTL to "Respect Existing Headers", or add a cache rule
+  for this site only (FINDINGS, Site cache headers). Then check that
+  app.js comes with max-age=0. Tags v0.1.0 to v0.4.0 exist only in the
+  local clone: the session's git proxy refused the tag push (403).
 
 ---
 

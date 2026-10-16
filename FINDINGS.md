@@ -242,10 +242,19 @@ detail and quotes: reference/data-sources.md.
   and 174 km.
 
 #### Site cache headers (2026-10-15)
-- `/app.js` from jellyfish.benneely.com came with `cache-control: public,
-  max-age=14400, must-revalidate`. After a deploy, the browser kept the
-  old app.js until a cache-bypass request. The repo has no `_headers`
-  file. Where the header is set was not checked.
+- `.js`, `.css` and `.png` from jellyfish.benneely.com come with
+  `cache-control: public, max-age=14400, must-revalidate`. HTML and JSON
+  come with `max-age=0`. After a deploy, the browser kept the old app.js
+  until a cache-bypass request.
+- A `_headers` file with `/*` and `max-age=0` was deployed (commit
+  9309d24). Pages consumed it (`/_headers` is not served), but `.js`,
+  `.css` and `.png` still came with max-age 14400.
+- Cause, from the Cloudflare docs (developers.cloudflare.com/cache/how-to/
+  edge-browser-cache-ttl/, read 2026-10-15): the zone setting Browser
+  Cache TTL defaults to 4 hours and overrides an origin Cache-Control
+  that is lower. "Respect Existing Headers" stops that. This needs a
+  change in Ben's Cloudflare dashboard; it was not checked which other
+  sites on the zone it would affect.
 
 #### Where cloud can block the line of sight (computed 2026-10-15)
 - Ground distance from the observer at which the sight line rises above a
@@ -624,4 +633,4 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Rejected: GitHub Releases for each version (more to write than Ben
   wants). A version string copied into index.html (a second copy drifts).
   Version query strings on every import (the page has no build step; the
-  `_headers` file fixes stale code instead).
+  `_headers` file is the fix, once the zone respects it).
