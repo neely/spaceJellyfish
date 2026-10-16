@@ -178,6 +178,13 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
     Done 2026-10-16: no-go (FINDINGS, Satellite check, test 2). Observed:
     the scorer output in clouds/goes-ccl-results.md; 5 of 5 rechecked
     files identical; the dropped-pair count that keeps the verdict.
+  - [ ] Test 3 (drafted 2026-10-16, not approved): NBM against GOES at
+    the 11 airports and at 12 water points off Charleston, compared as a
+    ratio of skills; the satellite need not beat the airports. Rules:
+    config/goes-relative.json. Ben to set: the sample (all 2,002 twilight
+    hours, about 10 GB, or the 240 picked hours, likely too few) and the
+    bar (proposed: lower 95 percent bound of the ratio 0.85 or more). If
+    it holds, add it to clouds/README.md.
   - Still not read: PUG Vol 5 (OSPO copy answered 503 on 2026-10-16).
   - Option: cloud top height (ACHA, 0.3 MB a file) would give the cloud
     top for the sight-line test directly.

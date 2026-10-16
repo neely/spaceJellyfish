@@ -1,0 +1,46 @@
+{
+  "status": "DRAFT, 2026-10-16. Not approved by Ben. No forecast has been compared with GOES offshore. Do not fetch or score until Ben approves these rules; after that, they do not change.",
+  "about": "Inputs for the satellite check, test 3: does the cloud forecast hold up offshore? Score the NBM forecast against the GOES Clear Sky Mask at land points and at water points by the same method, and compare the two skills as a ratio. The satellite need not beat the airports. If the mask's errors do not depend on the forecast's, they scale the measured skill down by about the same factor on both sides when the mask is about as good over land as over water, so the factor cancels in the ratio (not in the difference). Stations, period, cloudy class and twilight come from config/cloud-stations.json; the mask rules (BCM, DQF 0, 5 by 5 box, at least 13 good pixels) come from config/goes-acm.json.",
+  "question": "Is NBM day-1 twilight skill against GOES over water at least 85 percent of its skill over land?",
+  "forecast": { "model": "ncep_nbm_conus", "variable": "cloud_cover", "decisiveLeadDay": 1, "reportedLeadDays": [1, 2, 3, 4, 5, 6, 7] },
+  "forecastSource": "The page's all-sky forecast (config/weather.json). Past forecasts from the Open-Meteo Previous Model Runs API, as in scripts/fetch-cloud-history.js. Land values: the pinned files in data/clouds/raw/. Water values: a new fetch for the water points, same period.",
+  "cellSelection": "Water points are requested with cell_selection=nearest. The returned latitude and longitude (the grid cell centre) are pinned. Stop if a returned cell is more than 5 km from the request, has an elevation above 0 m, or is shared by two water points.",
+  "cellSelectionSource": "Open-Meteo docs (open-meteo.com/en/docs, read 2026-10-16): the default 'land' \"finds a suitable grid-cell on land\"; 'nearest' \"selects the nearest possible grid-cell\". Probe on 2026-10-16 (NBM, day 1, 2026-04-10): land, sea and nearest returned the same cell, within about 1 km, at elevation 0, for b090-030, b150-030, b180-030 and b120-090.",
+  "landPoints": "The 11 airports in config/cloud-stations.json (their 2 km pixels in data/goes/station-pixels.json).",
+  "waterPoints": {
+    "from": "config/observer.json",
+    "bearingsDeg": [90, 120, 150, 180],
+    "distancesKm": [30, 60, 90],
+    "places": {
+      "b090-030": [32.7176, -79.6330], "b090-060": [32.7164, -79.3124], "b090-090": [32.7143, -78.9917],
+      "b120-030": [32.5828, -79.6764], "b120-060": [32.4470, -79.4000], "b120-090": [32.3106, -79.1243],
+      "b150-030": [32.4842, -79.7938], "b150-060": [32.2503, -79.6347], "b150-090": [32.0161, -79.4764],
+      "b180-030": [32.4482, -79.9537], "b180-060": [32.1784, -79.9537], "b180-090": [31.9086, -79.9537]
+    }
+  },
+  "waterPointsSource": "Our choice: the bearings where the plume is seen (config/weather.json checks 60 to 180), at distances where cloud can block the sight line (FINDINGS: at 10 degrees elevation no cloud beyond 66 km can block it; the longest ray is 123 km). Bearing 60 is left out because its near points lie on the coast. Places: great circle on a sphere of mean radius from the observer. Over water: the Open-Meteo Marine API (cell_selection=nearest) returned a wave height at all 12 and none at CHS and JZI (2026-10-16). Each GOES box uses the 2 km pixel nearest the place in the NOAA STAR grid (config/goes-acm.json, grid).",
+  "sample": "Every hour from 2025-01-01 to 2026-10-15 with the Sun at JZI between 0 and -18 degrees: 2,002 hours. For each hour, one ACMC scan (GOES-16 to 2025-04-07, GOES-19 after): the one whose middle time is nearest the whole hour, the time of the hourly forecast value. The same scan serves land and water points. About 2,000 files, about 10 GB, deleted after use; the extract is pinned.",
+  "sampleSource": "Ben chose the size after the sizing check (pending). Sizing, 2026-10-16, against the airports (not GOES), NBM day 1, twilight: bootstrap SD of skill 3.4 points over the 240 picked twilight hours, 1.0 point over all 2,002 twilight hours (839 twilight events). The 12 water points share weather more than the 11 airports, so the water side is noisier. With 240 hours the interval on the comparison is likely too wide to give a verdict.",
+  "skill": "Hit rate minus false-alarm rate, cloudy at 50 percent or more for the forecast and for the GOES box, as in scripts/score-clouds.js. Computed separately for land and water, twilight hours (Sun at each point between 0 and -18 degrees).",
+  "statistic": "Q = skill(water) / skill(land), NBM day 1, twilight. D = skill(water) - skill(land) is reported beside it, in measured skill points; it does not decide.",
+  "uncertainty": "Bootstrap over twilight events (one date and one of morning or evening; all hours and points of an event move together), 2,000 times, seed 20261016. 95 percent interval from the 2.5 and 97.5 percentiles of Q.",
+  "uncertaintySource": "Our choice. Points in one event share the weather, and a morning twilight can span two hours, so events, not pairs or hours, are the unit that is resampled.",
+  "verdict": {
+    "holds": "the lower end of the 95 percent interval of Q is 0.85 or more",
+    "degrades": "the upper end of the interval is below 0.85",
+    "inconclusive": "otherwise"
+  },
+  "verdictSource": "Proposed, for Ben to set: 0.85 is about the loss from day 1 to day 3 at the airports (NBM twilight skill 51 to 44, a ratio of 0.86; clouds/results.json), a loss a reader would notice.",
+  "consequences": {
+    "holds": "Add a short section to clouds/README.md (the cloud forecast report): the forecast keeps its airport skill offshore, within the bounds found. The page trust line may then say so.",
+    "degrades": "Record in FINDINGS and clouds/README.md; the page keeps its airport numbers and says the offshore sky may be less certain.",
+    "inconclusive": "Record in FINDINGS only. Nothing changes on the page."
+  },
+  "knownBiases": [
+    "Every known bias below leans toward 'holds', so a 'holds' result is weaker evidence than a 'degrades' result.",
+    "The mask is a little better over ocean than land in its ATBD (ABI Table 11: deep ocean 0.95 day and 0.93 night; land 0.93 and 0.92). A better reference over water raises skill(water).",
+    "The 5 by 5 boxes at coastal airports (MYR, CRE, JZI, LRO, HXD) take in sea and coast pixels, so the land side is partly water; the mask ATBD skips some tests on coast pixels, so the land boxes may be noisier.",
+    "The land points run from Wilmington to Jacksonville; the water points are all off Charleston. The near-Charleston airports (LRO, CHS, JZI) are reported as a second land set; they do not decide.",
+    "The cancellation in Q assumes the mask's errors do not depend on the forecast's errors. Both can miss the same thin or broken cloud, which this test cannot rule out."
+  ]
+}
