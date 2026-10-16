@@ -163,10 +163,6 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   search of Ben's repos found no other cron. That search may not cover
   private repos.
 - Alert timing: how long before T-0, and how many emails per launch?
-- Versioning: the repo has no changelog, no version number and no tags.
-  The page does not say which version it runs. Ben asked (2026-10-15).
-- Browser cache after a deploy: app.js came with max-age 14400 (4 h). A
-  visitor can run old code for hours, and old and new modules can mix.
 
 ---
 

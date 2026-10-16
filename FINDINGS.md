@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 66 tests, 66 pass, 0 fail (2026-10-15). The count
+- `npm test` — expected 67 tests, 67 pass, 0 fail (2026-10-15). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
   agree with each within 1/60 degree in GHA, declination, and altitude.
@@ -607,3 +607,21 @@ Choices made, and why. Mark settled ones `(locked)`.
   Directional values on every page load.
 - Not settled here: the weights that turn the two values into a
   modifier.
+
+### Versions: package.json, CHANGELOG.md, git tags (locked)
+- What: The version is written once, in `package.json`. The page footer
+  reads it from there. `CHANGELOG.md` has one short entry per version,
+  newest first; a test checks that its top entry matches `package.json`.
+  Each version gets an annotated git tag `vX.Y.Z` on the commit that ships
+  it. The README badge reads `package.json` through shields.io. Middle
+  number for a page feature, last number for a fix.
+- Why: Ben asked for a version in the footer and a badge, and no heavy
+  changelog (2026-10-15). One source cannot drift.
+- Versions 0.1.0 to 0.3.0 were set after the fact, one per session that
+  changed the page: v0.1.0 at d06855b (2026-10-08, first live page),
+  v0.2.0 at d1fce0a (2026-10-12, sky view), v0.3.0 at 1ac496b
+  (2026-10-15, hand-set directions and 2020 profiles). 0.4.0 adds clouds.
+- Rejected: GitHub Releases for each version (more to write than Ben
+  wants). A version string copied into index.html (a second copy drifts).
+  Version query strings on every import (the page has no build step; the
+  `_headers` file fixes stale code instead).

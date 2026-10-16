@@ -1,5 +1,7 @@
 # Space Jellyfish
 
+[![version](https://img.shields.io/github/package-json/v/neely/spacejellyfish)](CHANGELOG.md)
+
 <p align="center">
   <img src="assets/jellyfish.png" alt="A glowing jellyfish in space with a rocket at the top of its bell" width="320">
 </p>
@@ -7,7 +9,7 @@
 Hyperlocal predictor and email alerts for twilight "space jellyfish" launch
 visibility from Charleston, SC.
 
-**Live:** https://jellyfish.benneely.com
+**Live:** https://jellyfish.benneely.com · [What changed](CHANGELOG.md)
 
 ## What it is
 A "space jellyfish" is the glowing plume that appears when a rocket climbs
@@ -284,7 +286,11 @@ A few things we found along the way:
 
 ## Structure
 - `index.html`, `app.js`, `style.css`: the page. It has no build step; the
-  repo root is the site.
+  repo root is the site. `_headers` tells Cloudflare Pages to have browsers
+  check every file for a new version on each visit.
+- `package.json` holds the version, which the page footer shows;
+  `CHANGELOG.md` lists what changed in each version, and each version has
+  a git tag.
 - `sky.html`, `sky.js`, `sky.css`: the camera sky view. `lib/skyproject.js`
   holds its projection math and `config/skyview.json` its defaults.
 - `lib/`: code shared by the page and the scripts. `nws.js` asks the

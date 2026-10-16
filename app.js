@@ -359,5 +359,14 @@ async function start(force = false) {
   }
 }
 
+// The version comes from package.json, the one place it is written.
+// CHANGELOG.md lists what changed in each version.
+fetch('package.json')
+  .then((r) => r.json())
+  .then(({ version }) => {
+    $('#version').replaceChildren(`Version ${version} · `, el('a', { href: 'https://github.com/neely/spaceJellyfish/blob/main/CHANGELOG.md' }, 'what changed'));
+  })
+  .catch(() => { /* the footer stays empty */ });
+
 $('#observer-name').textContent = observer.name;
 start();

@@ -1,0 +1,9 @@
+# Cloudflare Pages response headers. Docs:
+# https://developers.cloudflare.com/pages/configuration/headers/
+# Scripts and styles were sent with max-age 14400 (4 h), so a visitor could
+# run old code for hours after a deploy, and old and new modules could mix
+# (FINDINGS, Site cache headers). Revalidate every file on every load
+# instead, as the HTML and JSON files already were; the ETag makes an
+# unchanged file a short 304 answer.
+/*
+  Cache-Control: public, max-age=0, must-revalidate
