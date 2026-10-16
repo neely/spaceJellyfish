@@ -86,6 +86,16 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       Until then, other vehicles use the Falcon 9 members with low
       confidence.
 - [ ] Ascent data from flights after 2020. None found yet.
+- [ ] Cloud by layer (Ben, 2026-10-15). Sources read, not yet tested live:
+      Open-Meteo gives hourly cloud cover low (to 3 km), mid (3 to 8 km)
+      and high (above 8 km) from NOAA models, 7 to 16 days, free for
+      non-commercial use up to 10,000 calls a day, data CC BY 4.0
+      (open-meteo.com/en/docs and /en/terms, read 2026-10-15). With
+      layers, each layer can use its own sight-line reach. Test from the
+      page: CORS, several places in one request, points offshore. Also
+      try the NWS `ceilingHeight` layer, already in the grid response.
+      The KCHS TAF has layer heights but covers only about 24 h and one
+      airport, and aviationweather.gov says CORS is not permitted.
 
 ## Phase 3 — Worker cron, KV state, email alerts  ← NEXT
 - [ ] Confirm KV free-tier read and write limits against the planned cadence.
