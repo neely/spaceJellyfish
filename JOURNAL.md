@@ -8,6 +8,55 @@ journal/YYYY-MM.md (the month they were written, newest first).
 
 ---
 
+## 2026-10-15 (night) · Phase 2 done: cloud forecast on the page, versions, cache fix
+
+**Did:** Read the api.weather.gov docs and tested it from the live page
+(CORS works; skyCover in percent for about 7 days; grid at 59 km
+offshore, none at 107 km). Ben chose local plus directional cloud, as a
+triangle under the sight line. Computed where the sight line clears
+cloud height. Wrote engine/weather.js and lib/nws.js: local sky cover
+loads by itself; a labelled button checks the top 20 percent of the arc
+out to 60 km (7 to 33 places, was 74 median). Seen working on Ben's Mac
+and iPhone. Added a version (0.4.0) in package.json, a page footer, a
+README badge and a short CHANGELOG with commits; dropped git tags (the
+proxy refused the push). Found that the Cloudflare zone Browser Cache TTL
+(4 h) held old code; changed it to Respect Existing Headers in the
+dashboard at Ben's request, and saw max-age=0 after. Closed Phase 2.
+
+**Least confident about (Q1):**
+- The cloud top (12 km), the 0.8 arc fraction and the 60 km cap. None has
+  a source. A sighting with a cloud forecast beside it would test them.
+- skyCover is one total number. Thin high cloud counts the same as a low
+  deck. A sighting through a high forecast value would show the cost.
+- The offshore grid edge. Only bearings 134 to 184 were tested, and the
+  edge lies somewhere between 59 and 107 km.
+- The NWS rate limit is not published. A fan launch asks for up to about
+  64 requests per press. A 429 in the browser would show the limit.
+- The other sites on benneely.com now send their own cache headers.
+  Their headers were not checked.
+
+**Unstated assumptions (Q2):** One skyCover value per interval (1 to 6 h)
+is fine for a 6 minute view. The /points grid mapping holds for 24 h.
+Launch weather rules at the Cape are about the pad sky; not quoted from a
+source.
+
+**Biggest thing being missed (Q3):** Forecast skill. A sky cover number
+5 days out may say little about the sky at 06:30 on the day. And the
+verdict still ignores weather, by design.
+
+**Could've gone better (Q4):** One doc script wrote CHANGELOG, then failed
+on FINDINGS, and the half edit was committed; I should check all
+replacements before writing any file. I first wrote in the changelog that
+_headers fixed caching before I had checked the live headers.
+
+**Suggestions (Q5):** Turn the one-off point-count commands into
+`scripts/weather-points.js` and add its counts as a tripwire. Check the
+"forecast not available yet" text when a launch more than 7 days out
+appears. Check the other benneely.com sites' cache headers once.
+
+---
+
+
 ## 2026-10-15 (evening) · Source audit, snapshot refresh, exit gate met, 2020 profiles
 
 **Did:** Audited every outside input (reference/source-audit.md). Found
@@ -152,44 +201,6 @@ the result was known; FINDINGS says so.
 **Suggested improvement (Q5):** Before Phase 3, spend one session only on
 the launch-time source: price and terms of an LL2 token, and one other
 source.
-
----
-
-## 2026-10-08 — Repo setup, engine, first backtest
-
-**Did:** Made the repo from the template and drafted the phases. Wrote the
-sun, geometry, trajectory, and visibility modules with pinned reference
-tests. Pinned 506 launches from LL2. Built reference/ as a knowledge base.
-Collected 12 sighting labels from news pages and from Reddit screenshots
-that Ben supplied. Ran the first backtest: 11 of 12 labels are not 'no'.
-
-**Least confident about (Q1):**
-- The ascent profiles. They are five 2018 flights. Most labels are Starlink
-  flights. A Starlink profile with altitude against time would prove them
-  right or wrong.
-- The missed Atlas V label of 2026-04-27. The post date and a description
-  of the photo from Ben would show which of the four causes is true.
-- The news labels. A subagent read the pages; I did not open each URL
-  myself. Ben has not reviewed them.
-- The three provisional thresholds. Twilight launches that the engine
-  rejects, with or without a sighting report, would test them.
-
-**Unstated assumptions (Q2):** That a report of "seen" means a sunlit
-plume. A rocket flame can be seen at night. That the Reddit screenshot ages
-were counted from 2026-10-08. That the observer height of 0 m does not
-matter.
-
-**Biggest thing being missed (Q3):** The backtest cannot yet tell the engine
-from a rule that says "twilight launches are visible". Only the one miss and
-the 'possible' cases carry information about the geometry.
-
-**Could've gone better (Q4):** I ran `git add -A` while a subagent was still
-writing notes, so commit 55ab7aa holds four unfinished notes. Its message
-says 6 plume labels; the number is 5. I should stage files by name while
-agents write.
-
-**Suggested improvement (Q5):** Add a line to the kit AGENTS.md: do not use
-`git add -A` while a subagent is writing in the repo.
 
 ---
 
