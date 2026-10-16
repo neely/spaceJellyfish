@@ -8,11 +8,14 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ---
 
 ## Status
-- **Active:** none. Phase 2 is done; Phase 3 (alerts) is next, when Ben
+- **Active:** none. Phase 2 is done and the cloud source is scored and
+  live (v0.5.0, clouds/README.md). Phase 3 (alerts) is next, when Ben
   wants it.
-- **Last updated:** 2026-10-15
+- **Last updated:** 2026-10-16
 - **Next action:** Sunday 2026-10-18: the Bandwagon 5 item at the top of
-  the Backlog (drone ship position, then set the heading).
+  the Backlog. On launch morning, note the sky toward the launch: it is
+  the first real check of the cloud section (HRRR low cloud should show
+  from about Saturday evening).
 
 ---
 
