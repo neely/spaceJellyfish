@@ -163,9 +163,6 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   search of Ben's repos found no other cron. That search may not cover
   private repos.
 - Alert timing: how long before T-0, and how many emails per launch?
-- Tags v0.1.0 to v0.4.0: the session's git proxy refused the tag push
-  (403). Ben to create and push them from his clone (commits in FINDINGS,
-  Versions).
 
 ---
 

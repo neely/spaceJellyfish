@@ -290,8 +290,8 @@ A few things we found along the way:
   check every file for a new version on each visit. It works because the
   Cloudflare zone is set to respect the site's own cache headers.
 - `package.json` holds the version, which the page footer shows;
-  `CHANGELOG.md` lists what changed in each version, and each version has
-  a git tag.
+  `CHANGELOG.md` lists what changed in each version and the commit that
+  shipped it.
 - `sky.html`, `sky.js`, `sky.css`: the camera sky view. `lib/skyproject.js`
   holds its projection math and `config/skyview.json` its defaults.
 - `lib/`: code shared by the page and the scripts. `nws.js` asks the

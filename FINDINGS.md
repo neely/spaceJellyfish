@@ -621,12 +621,14 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Not settled here: the weights that turn the two values into a
   modifier.
 
-### Versions: package.json, CHANGELOG.md, git tags (locked)
+### Versions: package.json and CHANGELOG.md (locked)
 - What: The version is written once, in `package.json`. The page footer
   reads it from there. `CHANGELOG.md` has one short entry per version,
   newest first; a test checks that its top entry matches `package.json`.
-  Each version gets an annotated git tag `vX.Y.Z` on the commit that ships
-  it. The README badge reads `package.json` through shields.io. Middle
+  Each changelog heading ends with the commit that ships the version. A
+  commit cannot hold its own hash, so the hash goes in by a small
+  follow-up commit.
+  The README badge reads `package.json` through shields.io. Middle
   number for a page feature, last number for a fix.
 - Why: Ben asked for a version in the footer and a badge, and no heavy
   changelog (2026-10-15). One source cannot drift.
@@ -634,7 +636,9 @@ Choices made, and why. Mark settled ones `(locked)`.
   changed the page: v0.1.0 at d06855b (2026-10-08, first live page),
   v0.2.0 at d1fce0a (2026-10-12, sky view), v0.3.0 at 1ac496b
   (2026-10-15, hand-set directions and 2020 profiles). 0.4.0 adds clouds.
-- Rejected: GitHub Releases for each version (more to write than Ben
+- Rejected: Git tags (2026-10-15). This session's git proxy refused the
+  tag push (403), so each tag would need a command on Ben's laptop; Ben
+  said it is not worth it. GitHub Releases for each version (more to write than Ben
   wants). A version string copied into index.html (a second copy drifts).
   Version query strings on every import (the page has no build step; the
   `_headers` file is the fix, once the zone respects it).
