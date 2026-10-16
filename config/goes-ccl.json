@@ -1,0 +1,22 @@
+{
+  "status": "Approved by Ben, 2026-10-16, as written (bar 80, max(CF1, CF2)), before any CCL value was compared with an airport report. Do not change after the result is seen.",
+  "about": "Inputs for the satellite check, test 2: GOES Cloud Cover Layers (CCL) low cloud against the airport sky below 10,000 ft. Stations, period, cloudy class and twilight come from config/cloud-stations.json. Sample hours and scan matching come from config/goes-acm.json and data/goes/acm-stations.json (the same 300 hours).",
+  "product": "ABI-L2-CCLC",
+  "productSource": "GOES-19 CCL Provisional ReadMe (6 March 2025) and CCL ATBD v1.0 (Li and Heidinger, February 2021), read 2026-10-16 (reference/topics/goes-clear-sky-mask.md). 10 km cells; cloud fraction in five flight-level layers (SFC-FL050, FL050-FL100, FL100-FL180, FL180-FL240, FL240-TOA) and a total (TCF). About 0.42 MB a file, every 5 minutes on AWS.",
+  "lowValue": "max(CF1, CF2)",
+  "lowValueSource": "Our choice. The airport truth is cloud with a base at or below 10,000 ft. CF1 and CF2 are the two layers below FL100. The layers overlap in the files (in 20 of 66 station values in 6 scans, CF1 to CF5 add to more than TCF), so the union of CF1 and CF2 cannot be computed. max(CF1, CF2) is its lower bound. The upper bound, min(TCF, CF1 + CF2), is reported beside it but does not decide.",
+  "cell": "The CCL cell that holds the station's 2 km pixel: row floor(r / 5), column floor(c / 5), with r and c from data/goes/station-pixels.json.",
+  "cellSource": "The CCL x and y grids are the ACMC grids at 5 times the step, offset by 2 pixels (CCL y offset 0.12810 = 0.128212 - 2 x 0.000056; x -0.10122 = -0.101332 + 2 x 0.000056, from the files). So cell i covers 2 km rows 5i to 5i+4. The station can sit up to about 7 km from the cell centre.",
+  "missing": "Drop the pair if TCF is outside 0 to 65530 or CF1 or CF2 is outside 0 to 100 (the files use 65531 and 128, outside the valid ranges).",
+  "dqf": "Not used as a filter.",
+  "dqfSource": "CCL DQF is the ACHA quality flag (ATBD 3.4.3.2). Clear cells carry DQF 2 (bad_quality_qf) because there is no cloud top to retrieve, so a DQF filter would drop most clear cases. The ATBD says CCL cloud fraction has no quality flag of its own.",
+  "truth": "below10000ft",
+  "truthSource": "scripts/score-clouds.js: reportCoverPct(layers, 10000), the same truth that HRRR low cloud was scored on. Flight levels are above sea level; the 11 airports are near sea level.",
+  "goNoGo": { "truth": "below10000ft", "subset": "twilight", "value": "max(CF1, CF2)", "minSkillPct": 80, "compareWith": "HRRR low cloud, twilight, short lead: skill 64 (clouds/results.json, layers.lowVsBelow10000ft)" },
+  "goNoGoSource": "Ben, 2026-10-16: the same rule as test 1, a truth must clearly beat the forecast it will grade. The forecast to grade offshore for low cloud is HRRR (64 at twilight). Test 1 asked for 19 points above NBM (70 against 51); 80 asks for 16 above HRRR.",
+  "knownMismatches": [
+    "Seen from above: low cloud under a higher deck may be missed. A CIRA report (Haynes, 2020) gives 73 percent of low clouds found by ABI CCL, and 22 percent under cirrus (search summary; not checked against the document).",
+    "Cloud base comes from a lookup table and, at night, from NWP data; the CIRA quick guide (2023) says night retrievals are degraded, mainly for cloud base and low cloud.",
+    "The ATBD (2021) says the operational CCL uses cloud top only. The files show overlapping layers, so the product now uses cloud base. The algorithm version in the file is OR_ABI-L2-ALG-CCL_v02r00."
+  ]
+}

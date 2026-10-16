@@ -295,6 +295,8 @@ clouds/goes-results.md. Note: reference/topics/goes-clear-sky-mask.md.
   STAR grid pixels (749, 1249) and (750, 1250). The east bound equals the
   grid's north-east corner longitude (-52.9469).
 - The ECM ATBD v1.2 gives day and night accuracy, but none for twilight.
+  The GOES-19 ECM Provisional ReadMe (18 February 2025) reports no major
+  issues and says nothing about twilight.
 
 #### Site cache headers (2026-10-15)
 - `.js`, `.css` and `.png` from jellyfish.benneely.com come with

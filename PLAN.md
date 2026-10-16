@@ -171,9 +171,10 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
     places against the mask. Blocked by step 1. A new test (for example
     the four-level ACM, or cloud top height) needs new rules set before
     its data, and Ben's go-ahead.
-  - Still not read: the GOES-19 cloud mask ReadMe and PUG Vol 5 (both
-    hosts were down on 2026-10-16). Read them before any new satellite
-    test.
+  - [ ] Test 2: GOES Cloud Cover Layers low cloud, max(CF1, CF2),
+    against the airport sky below 10,000 ft, on the same 300 hours.
+    Rules approved by Ben 2026-10-16 (config/goes-ccl.json; bar 80).
+  - Still not read: PUG Vol 5 (OSPO copy answered 503 on 2026-10-16).
   - Option: cloud top height (ACHA, 0.3 MB a file) would give the cloud
     top for the sight-line test directly.
 
