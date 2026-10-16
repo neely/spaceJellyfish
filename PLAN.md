@@ -8,11 +8,11 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ---
 
 ## Status
-- **Active:** Phase 2 — Weather modifier
+- **Active:** none. Phase 2 is done; Phase 3 (alerts) is next, when Ben
+  wants it.
 - **Last updated:** 2026-10-15
-- **Next action:** Phase 2 items are done; check the clouds section on
-  Ben's iPhone, then decide if Phase 2 is closed. The Bandwagon 5 item at
-  the top of the Backlog has a deadline (Sunday 2026-10-18).
+- **Next action:** Sunday 2026-10-18: the Bandwagon 5 item at the top of
+  the Backlog (drone ship position, then set the heading).
 
 ---
 
@@ -37,6 +37,12 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   snapshot. Live at jellyfish.benneely.com. Results and tripwires are in
   FINDINGS; the full checklist with its "Observed" notes is in git history
   (PLAN.md at commit 735e47d).
+- Phase 2 — Weather modifier. Done 2026-10-15 (v0.4.0): NWS sky cover
+  over the observer, and a button for sky cover along the top of the arc
+  out to 60 km. Seen working on the live page on Ben's Mac and on his
+  iPhone. The beyond-7-days text has not been seen live yet. Decisions and
+  numbers are in FINDINGS; the checklist with its "Observed" notes is in
+  git history (PLAN.md at commit 223a889).
 - Source audit, 2026-10-15: reference/source-audit.md. Follow-ups done:
   declination -8.3 (WMM-2025), Census ZIP points, Bandwagon source note,
   2020 R4yGM flights added to `falcon9-leo`, snapshot refreshed, SpX-35
@@ -81,29 +87,7 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       confidence.
 - [ ] Ascent data from flights after 2020. None found yet.
 
-## Phase 2 — Weather modifier  ← ACTIVE
-- [x] Confirm api.weather.gov requirements (headers, CORS, forecast range)
-      from its own docs. Record them in FINDINGS.
-      Observed 2026-10-15: docs read; from jellyfish.benneely.com the
-      page read `/points` and the grid forecast (CORS works); skyCover in
-      percent for about 7 days; grid at 59 km offshore, none at 107 km.
-- [x] Decide which cloud matters: local and directional sky cover (FINDINGS
-      Decisions). Observed: sight-line distances computed (FINDINGS
-      Reference).
-- [x] `engine/weather.js` (pure): from a launch's visible track, give the
-      directional sample points; from skyCover series, give the local and
-      directional values at the visible time. Geometry stays the primary
-      signal. Cloud top height in config, marked provisional.
-      Observed 2026-10-15: 66 tests pass; top 20 percent of the arc and a
-      60 km cap give 7 to 33 points per launch (FINDINGS Reference).
-- [x] The page shows the modifier only when the forecast covers T-0.
-      Otherwise it shows "forecast not available yet".
-      Observed 2026-10-15 on the live page (desktop browser): Bandwagon 5
-      card showed local sky cover 45 percent; the button checked 19
-      places in 5.7 s, all with a forecast, 49 to 68 percent. The beyond-
-      7-days text was seen only in code, not live.
-
-## Phase 3 — Worker cron, KV state, email alerts
+## Phase 3 — Worker cron, KV state, email alerts  ← NEXT
 - [ ] Confirm KV free-tier read and write limits against the planned cadence.
 - [ ] Choose how the Worker gets launch times. LL2 answered 429 to every
       request from a Cloudflare Pages Function on 2026-10-08 (see FINDINGS,
@@ -168,11 +152,9 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 
 ## Handoff → next session
 Start prompt:
-> Read AGENTS.md, then the PLAN.md status block, Phase 2 and Open
+> Read AGENTS.md, then the PLAN.md status block, Backlog and Open
 > questions, then FINDINGS.md (skim; Tripwires in full). Run `npm test` and
-> `node scripts/backtest.js` and check them against the tripwires. Do the
-> Backlog item with a deadline if it is due. Then start Phase 2: confirm
-> the api.weather.gov rules from its own docs (record them in FINDINGS
-> Reference and reference/data-sources.md), and discuss "which cloud
-> matters" with Ben before writing engine/weather.js. Do not tune a
-> threshold to fix a miss.
+> `node scripts/backtest.js` and check them against the tripwires. On
+> Sunday 2026-10-18, do the Bandwagon 5 item first. Phase 3 (alerts)
+> starts only when Ben asks. For any page change, bump the version in
+> package.json and add a CHANGELOG entry (FINDINGS, Versions).
