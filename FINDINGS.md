@@ -227,6 +227,12 @@ before you rely on it.
 - Orbit data on an upcoming launch can be as thin as the abbreviation "LEO".
   Three upcoming launches were checked and all three showed only "LEO".
 
+#### Engine CPU time (2026-10-08, before the 2020 members)
+- On the development Mac with Node 26: 0.43 ms for each launch over the
+  snapshot, and 13 ms for a 25-step slip table of a fan launch. Not
+  measured inside a Worker. The LEO profile now has 7 members, not 2, so
+  LEO work is about 3.5 times larger. Measure again before Phase 3.
+
 #### Cloudflare Workers limits
 Source: https://developers.cloudflare.com/workers/platform/limits/
 - Workers Free: 10 ms CPU for each HTTP request and each Cron Trigger run.
@@ -253,6 +259,7 @@ Full table: reference/source-audit.md. No pinned value was changed.
 - Magnetic declination at the observer is -8.28 degrees by WMM-2025 for
   2026.79. config/skyview.json has -8.
 - The Census ZCTA point for 29412 is 0.6 km from config/observer.json.
+  The zippopotam point is kept; 0.6 km does not change a verdict.
   Four ZIP points in scripts/observer-sensitivity.js are 4.3 to 10.1 km
   from the Census points.
 - Azimuth limits: a second source gives 35 to 120 degrees (CSIS, Roberts,
