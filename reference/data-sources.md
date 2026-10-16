@@ -105,6 +105,13 @@ Docs: https://open-meteo.com/en/docs and https://open-meteo.com/en/terms (read 2
 ### NWS ceilingHeight
 - In the same grid response as skyCover, unit m. On 2026-10-16 it held one value, null, for 28 hours. Not useful on that day.
 
+### Observations and past forecasts for scoring (tested 2026-10-16, from the page)
+- NWS `/stations/{id}/observations` works from the page and holds about 7 days of airport reports, with `cloudLayers` (amount and base in m). Automatic stations report CLR when they see no cloud; they do not see cloud above a limit that was not checked from a source.
+- NWS `/stations/{id}/tafs` works from the page (CORS), unlike aviationweather.gov. It lists 33 TAFs for KCHS. Each TAF comes as IWXXM XML (`application/vnd.wmo.iwxxm+xml`).
+- Iowa Environmental Mesonet ASOS archive (`mesonet.agron.iastate.edu/cgi-bin/request/asos.py`) works from the page: CSV with sky cover and base for each layer, back to at least 2024-01-01 for CHS.
+- Open-Meteo Previous Model Runs API (`previous-runs-api.open-meteo.com`, docs https://open-meteo.com/en/docs/previous-runs-api): `cloud_cover_previous_dayN` is the forecast made N days before. Low, mid and high cloud are not available there (no values came back). Probe of single days at CHS: ECMWF IFS 0.25 and GFS have day 1 and day 3 from 2024-03-01; NBM from 2025-01-01 (none on 2024-10-01); HRRR day 1 only. 2024-01-01 had no values for any model.
+- LAMP text bulletins (lamp.mdl.nws.noaa.gov): the page fetch failed. A page cannot use them.
+
 ### Aviation Weather Center (TAF)
 - Docs: https://aviationweather.gov/data/api/ says "Cross-origin resource sharing is not permitted at this time." Live: the page fetch failed (TypeError: Failed to fetch). A page cannot use it.
 - The KCHS TAF read on 2026-10-15 23:26 UTC covered 24 h and gave layer heights (for example FEW004).

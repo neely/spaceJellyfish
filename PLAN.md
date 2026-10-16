@@ -91,6 +91,13 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       the NWS grid; it disagrees strongly with NWS for Bandwagon 5
       (reference/data-sources.md). NWS ceilingHeight was null; the TAF is
       blocked from a page. Ben to decide. Notes from 2026-10-15:
+      Scoring (2026-10-16): forecasts made 1 to 3 days before against
+      airport reports. One week, 11 coastal stations, 816 hours, 142
+      cloudy: all four models (ECMWF, GFS, HRRR, NBM) beat "always
+      clear" (MAE 13 to 18 against 18) and caught 84 to 95 percent of
+      cloudy hours; ECMWF had the lowest MAE. One clear week; not
+      enough. Next: score 2025-01 onward from the IEM archive and the
+      previous-runs API, twilight hours apart, before choosing a source.
       Open-Meteo gives hourly cloud cover low (to 3 km), mid (3 to 8 km)
       and high (above 8 km) from NOAA models, 7 to 16 days, free for
       non-commercial use up to 10,000 calls a day, data CC BY 4.0
