@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 80 tests, 80 pass, 0 fail (2026-10-16). The count
+- `npm test` — expected 84 tests, 84 pass, 0 fail (2026-10-16). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
   agree with each within 1/60 degree in GHA, declination, and altitude.
@@ -311,9 +311,12 @@ note: reference/topics/cloud-forecasts-for-sky-viewing.md.
     elevation.
   - Fixed limit of 20 degrees: 17 of the 60 launches get no ray, because
     they never reach 20 degrees.
-  - Top 20 percent of each track's arc and a 60 km cap (config in use):
-    7 to 33 (median 28). Fan class 32 median (50 launches), due-east class
-    19 (10 launches). SpX-35 flown as a station launch: 8 points.
+  - Top 20 percent of each track's arc and a 60 km cap (0.4.0 and
+    0.5.0): 7 to 33 (median 28). Fan class 32 median (50 launches),
+    due-east class 19 (10 launches). SpX-35 flown as a station launch: 8
+    points. The cap cut 248 of 521 rays (checked 2026-10-16).
+  - Top 20 percent of the arc, cap 150 km (config in use from 0.6.0): 7 to
+    52 places (median 32); no ray reaches the cap; longest ray 123 km.
 
 #### Engine CPU time (2026-10-08, before the 2020 members)
 - On the development Mac with Node 26: 0.43 ms for each launch over the
@@ -633,7 +636,9 @@ Choices made, and why. Mark settled ones `(locked)`.
   two limits: where the sight line rises above a cloud top height, or
   the ground point under the plume. No point lies beyond either limit.
   Only the top of the arc counts: samples at or above 0.8 of each
-  track's highest visible elevation. No point is farther than 60 km.
+  track's highest visible elevation. No point is farther than 150 km,
+  the farthest distance where NBM and HRRR were seen to answer on every
+  bearing tested (was 60 km, the NWS grid edge, until 0.6.0).
   The page shows both values. A point with no grid is reported as no
   data, not filled in. Since 0.5.0 both load by themselves: Open-Meteo
   takes every place in one request. (0.4.0 used the NWS API, two requests
@@ -681,13 +686,14 @@ Choices made, and why. Mark settled ones `(locked)`.
   to about 7 days ahead, and adds HRRR low cloud (`gfs_hrrr`,
   `cloud_cover_low`) when the launch is inside HRRR's range. Each card
   quotes NBM's twilight hit and false-alarm rates for its lead time from
-  clouds/results.json.
+  clouds/results.json. From 0.6.0 it also shows the newest TAF for KJZI,
+  else KCHS, when that TAF covers the viewing time (not scored).
 - Why: The cloud forecast test (FINDINGS Reference; clouds/README.md).
   Ben asked to verify against observations, to stress 1 to 3 days, and to
   switch sources nearer the launch (2026-10-16).
 - Rejected: The NWS gridded `skyCover` (no archive to score it, one total
   value, no grid past 59 to 107 km offshore, two requests per place). The
   blend of three models (close on the full sky, worse on low cloud, three
-  requests). TAF from the NWS API (airports only, about a day; kept as a
-  later add-on). Aviation Weather Center API and LAMP (no cross-origin
+  requests). TAF as the main forecast (airports only, about a day); it is
+  shown as an extra line instead. Aviation Weather Center API and LAMP (no cross-origin
   access).

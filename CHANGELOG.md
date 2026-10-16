@@ -9,6 +9,14 @@ session that changed the page.
 We bump the middle number when the page gains a feature and the last number
 for a fix. Model changes that move the backtest numbers are listed here too.
 
+## 0.6.0 · 2026-10-16 · pending
+- Within about a day of a launch, the card adds the airport forecast (TAF)
+  for Charleston Executive (or Charleston International): forecast cloud
+  amounts and heights over the airport.
+- The cloud check toward the launch now reaches as far as the sight line
+  can be blocked (up to about 120 km for a low pass) instead of stopping at
+  60 km. The 60 km limit came from the old NWS grid edge.
+
 ## 0.5.0 · 2026-10-16 · 83fe123
 - Clouds now come from the forecast that scored best when we tested four
   against 21 months of airport reports: NOAA NBM for all cloud, plus NOAA

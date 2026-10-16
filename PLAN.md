@@ -42,7 +42,7 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   (PLAN.md at commit 735e47d).
 - Phase 2 — Weather modifier. Done 2026-10-15 (v0.4.0): NWS sky cover
   over the observer, and a button for sky cover along the top of the arc
-  out to 60 km. Seen working on the live page on Ben's Mac and on his
+  out to 60 km (150 km from 0.6.0). Seen working on the live page on Ben's Mac and on his
   iPhone. The beyond-7-days text has not been seen live yet. Decisions and
   numbers are in FINDINGS; the checklist with its "Observed" notes is in
   git history (PLAN.md at commit 223a889).
@@ -155,14 +155,10 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   search of Ben's repos found no other cron. That search may not cover
   private repos.
 - Alert timing: how long before T-0, and how many emails per launch?
-- Clouds: the 60 km cap (config/weather.json maxReachM) was set by the NWS
-  grid edge. NBM answers farther out. Keep it or let the sight line set
-  the reach?
 - Clouds: does thin high cloud hide a lit plume? No source. A sighting
   through a forecast of high cloud would show it.
 - Clouds: score the offshore part of the line of sight against GOES
   satellite cloud. Not tried.
-- Clouds: add the TAF (NWS API) for the last day? Airports only.
 
 ---
 

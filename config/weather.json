@@ -3,17 +3,18 @@
   "params": {
     "cloudTopM": 12000,
     "topArcFraction": 0.8,
-    "maxReachM": 60000,
+    "maxReachM": 150000,
     "bearingStepDeg": 10,
     "spacingM": 15000
   },
   "sources": {
     "cloudTopM": "Provisional. No source found. Chosen high so that only a sight line above almost all cloud is treated as clear. A lower value shortens every ray.",
     "topArcFraction": "Ben's choice, 2026-10-15: only the top of the arc matters; he agreed to 0.8. It keeps the top 20 percent of each track's highest elevation. A fixed 20 degree limit was rejected: 17 of 60 visible snapshot launches never reach 20 degrees.",
-    "maxReachM": "Ben's choice, 2026-10-15, when the NWS grid gave a forecast 59 km offshore and none at 107 km. The page now uses Open-Meteo NBM, which answered 174 km offshore (2026-10-16), so the grid edge no longer sets this limit. Kept at 60 km; see PLAN, Open questions.",
+    "maxReachM": "Ben asked to revisit the cap (2026-10-16). Was 60 km, set by the NWS grid edge; it cut 248 of 521 rays over the 60 visible snapshot launches. NBM and HRRR (Open-Meteo) answered at every place tested from the page on 2026-10-16: 60 to 150 km out on bearings 60, 90, 120, 150 and 180. 150 km is the farthest tested; with the sight line and the 12 km cloud top, no ray reaches it (longest 123 km), so the geometry sets the reach.",
     "bearingStepDeg": "Provisional. Our choice, to keep the number of forecast requests small. Not a physical value.",
     "spacingM": "Provisional. Our choice, to keep the number of forecast requests small.",
-    "forecast": "Cloud forecast test, clouds/README.md: NBM total cloud scored best of four models at every lead from 1 to 7 days; HRRR low cloud scored best for low cloud at short lead. NBM answered 8 days ahead and HRRR about 42 hours ahead from the page on 2026-10-16. 'days' is the forecast_days asked for; the page treats a launch as out of range when no value comes back."
+    "forecast": "Cloud forecast test, clouds/README.md: NBM total cloud scored best of four models at every lead from 1 to 7 days; HRRR low cloud scored best for low cloud at short lead. NBM answered 8 days ahead and HRRR about 42 hours ahead from the page on 2026-10-16. 'days' is the forecast_days asked for; the page treats a launch as out of range when no value comes back.",
+    "taf": "Airports near the observer that issue a TAF (NWS API /stations/{id}/tafs, checked 2026-10-16): KJZI (Charleston Executive, about 2 km from the observer) and KCHS. KLRO and KNBC returned no TAFs. The page uses the first station whose newest TAF covers the viewing time."
   },
   "forecast": {
     "allSky": {
@@ -26,5 +27,11 @@
       "variable": "cloud_cover_low",
       "days": 3
     }
+  },
+  "taf": {
+    "stations": [
+      "KJZI",
+      "KCHS"
+    ]
   }
 }

@@ -5,6 +5,7 @@ import { LL2_UPCOMING_URL, reduceLaunch } from './lib/ll2.js';
 import { applyDirections } from './lib/directions.js';
 import { directionalPoints, skySummary } from './engine/weather.js';
 import { forecastUrl, valuesAt, fetchForecast } from './lib/openmeteo.js';
+import { latestTaf, conditionsAt, describeClouds, describeIndicator } from './lib/taf.js';
 
 // LL2 allows 15 unauthenticated requests per hour for each address. The
 // page keeps the last answer and asks again only when it is this old.
@@ -259,6 +260,19 @@ function weatherSection(result, liftoff) {
           el('td', {}, range(idx.map((i) => all[i]))), ...(low ? [el('td', {}, range(idx.map((i) => low[i])))] : [])));
       }
       out.append(table);
+    }
+    // The airport forecast (TAF), when it covers the viewing time: cloud
+    // bases from a forecaster, for the airport only.
+    for (const id of weather.taf.stations) {
+      let taf = null;
+      try { taf = await latestTaf(id); } catch { taf = null; }
+      const c = taf && conditionsAt(taf, viewMs);
+      if (!c) continue;
+      const line = el('p', {}, el('strong', {}, `Airport forecast (TAF, ${id}): `), `${describeClouds(c.prevailing)}.`);
+      for (const f of c.atTimes) line.append(` ${describeIndicator(f.indicator)}: ${describeClouds(f)}.`);
+      line.append(el('span', { class: 'note' }, ` Issued ${timeFmt.format(taf.issueMs)}; the sky over the airport, not toward the launch.`));
+      out.append(line);
+      break;
     }
     // How good forecasts this far ahead have been, from the cloud test.
     const lead = String(Math.min(7, Math.max(1, Math.ceil(daysAhead))));

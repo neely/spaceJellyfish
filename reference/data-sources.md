@@ -125,3 +125,9 @@ Docs: https://open-meteo.com/en/docs and https://open-meteo.com/en/terms (read 2
 - `gfs_hrrr` `cloud_cover_low`: values to 2026-10-18T06:00 UTC, about 42 hours ahead, at the same points.
 - `cell_selection` nearest, land and sea gave the same NBM cells for the observer and a point 59 km out.
 - Open-Meteo `gfs_seamless` day-1 values equal `gfs_hrrr` (Previous Model Runs API, CHS, 2025-06-01). `gfs_global` is GFS.
+
+## NWS API TAFs (checked 2026-10-16, from the page)
+- `/stations/{id}/tafs` returned TAF lists for KCHS (33), KJZI (34), KSAV (32) and KMYR (37); none for KLRO and KNBC.
+- The list is newest first, one entry per issue slot (about every 6 hours), with `issueTime`, `start` and `end`. The file behind a slot can be an amendment issued later: the KCHS 05:00 slot returned a TAF amendment issued 12:46 UTC. Use the issue time inside the file.
+- Each file is IWXXM 2021-2 XML (`application/vnd.wmo.iwxxm+xml`): `baseForecast` and `changeForecast` groups with `changeIndicator`, `phenomenonTime`, and cloud layers with an amount code (`.../CloudAmountReportedAtAerodrome/FEW`) and a base in `[ft_i]`.
+- Change indicators in a WMO IWXXM example (old.wmo.int AvXML tutorial): FROM, BECOMING, TEMPORARY_FLUCTUATIONS. Probability indicators were not seen; lib/taf.js shows any other indicator as given.

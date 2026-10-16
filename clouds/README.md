@@ -155,9 +155,13 @@ both truths and why the page shows low cloud on its own when HRRR has it.
 
 - Within about 7 days of a launch, the page asks Open-Meteo for **NBM total
   cloud** over the observer and at places along the line of sight to the
-  top of the rocket's arc (one request).
+  top of the rocket's arc (one request). The places stop where the sight
+  line rises above 12 km of height, up to about 120 km out for a low pass.
 - When the launch is within HRRR's range (about 42 hours on 2026-10-16), it
   also shows **HRRR low cloud** at the same places.
+- When the newest **TAF** for Charleston Executive (KJZI), or else
+  Charleston International (KCHS), covers the viewing time, it shows the
+  forecast cloud layers over that airport (added in 0.6.0).
 - It says how far to trust the number: the NBM hit and false-alarm rates at
   twilight for that lead time, read from `results.json`.
 - Cloud never changes the jellyfish verdict. Geometry decides that.
@@ -170,8 +174,8 @@ both truths and why the page shows low cloud on its own when HRRR has it.
 - **ECMWF.** Second best on the low sky at most leads. Its low layer is
   weak (finding 2).
 - **TAF from the NWS API.** Real forecasters, cloud bases in feet, readable
-  from a page. Only airports and only about a day. A good add-on for the
-  last 24 hours.
+  from a page. Only airports and only about a day, and not scored here.
+  Added to the page in 0.6.0 as an extra line, not as the main forecast.
 - **Satellite truth.** Airports see only the sky over land. GOES satellite
   cloud products would let us score the offshore part of the line of sight.
   Not tried.

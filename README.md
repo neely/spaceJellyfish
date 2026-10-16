@@ -48,11 +48,13 @@ so we removed it.)
 
 **Clouds.** Within about 7 days of a launch, each card shows the forecast
 cloud cover over the observer and at places between the observer and the
-top of the rocket's arc, out to 60 km. The sight line climbs as it goes
-out, so cloud farther away usually sits below it (at 10 degrees up, the line
-is above 12 km of height by about 66 km out). The forecast is NOAA's
+top of the rocket's arc. The places stop where the sight line rises above
+12 km of height (at 10 degrees up, about 66 km out; at 5 degrees, about
+123 km), because cloud farther away sits below the line. The forecast is NOAA's
 National Blend of Models (NBM) through Open-Meteo, and, within about a day
-and a half, NOAA's HRRR low cloud as well. Each card also says how often
+and a half, NOAA's HRRR low cloud as well. Within about a day it adds the
+airport forecast (TAF) for Charleston Executive, with cloud heights from a
+forecaster. Each card also says how often
 forecasts that far ahead were right at twilight. The cloud top height, the
 spacing of the places, and how much of the arc counts are our choices, not
 values from a source.
