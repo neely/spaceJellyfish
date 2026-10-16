@@ -9,7 +9,7 @@ session that changed the page.
 We bump the middle number when the page gains a feature and the last number
 for a fix. Model changes that move the backtest numbers are listed here too.
 
-## 0.6.0 · 2026-10-16 · pending
+## 0.6.0 · 2026-10-16 · c245716
 - Within about a day of a launch, the card adds the airport forecast (TAF)
   for Charleston Executive (or Charleston International): forecast cloud
   amounts and heights over the airport.
