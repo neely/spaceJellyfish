@@ -8,7 +8,7 @@ Read this index. Pick the few notes whose answers match your question. Read only
 
 ## Tags (count of notes)
 
-sun-position 6, sidereal-time 2, geodesy 6, trajectory 9, ascent-profile 6, telemetry 5, launch-data 8, twilight 6, illumination 7, plume 5, visibility 9, sightings 4, weather 1, cloudflare 2, email 1, data-access 6, sky-view 2
+sun-position 6, sidereal-time 2, geodesy 6, trajectory 9, ascent-profile 6, telemetry 5, launch-data 8, twilight 6, illumination 7, plume 5, visibility 9, sightings 4, weather 2, cloudflare 2, email 1, data-access 6, sky-view 2
 
 ## Papers (0), high relevance first, then newest
 
@@ -37,7 +37,7 @@ sun-position 6, sidereal-time 2, geodesy 6, trajectory 9, ascent-profile 6, tele
 
 | key | distilled | relevance | topics | answers |
 |---|---|---|---|---|
-| [data-sources](data-sources.md) | 2026-10-08 | high | data-access, launch-data, cloudflare, sun-position, geodesy | Where does each external input come from (Launch Library 2, Cloudflare Workers limits, USNO, NOAA NGS) and how is it reached? Gives URLs, rate limits, CORS... |
+| [data-sources](data-sources.md) | 2026-10-08 | high | data-access, launch-data, cloudflare, sun-position, geodesy, weather | Where does each external input come from (Launch Library 2, Cloudflare Workers limits, USNO, NOAA NGS, NWS api.weather.gov) and how is it reached? Gives URLs... |
 | [handoff-brief](handoff-brief.md) | 2026-10-08 | medium | launch-data, twilight, illumination, plume, visibility, weather, cloudflare, email, trajectory | What did the owner first plan to build (data source, engine, weather, scheduler, state, alerts), which risks did the brief name, and in what order should it be... |
 | [source-audit](source-audit.md) | 2026-10-15 | high | data-access, launch-data, ascent-profile, telemetry, trajectory, sightings, visibility, sky-view, geodesy, sun-position | Which outside inputs does the engine and the page use, where does each come from, how old is it, was it checked again, what is wrong with it, and what would... |
 | [usno-sun-and-sidereal-time](usno-sun-and-sidereal-time.md) | 2026-10-08 | high | sun-position, sidereal-time, illumination | Which formulas give the Sun's coordinates and Greenwich mean sidereal time, how accurate are they, and what does engine/sun.js add on top? |

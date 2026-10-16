@@ -83,10 +83,18 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 - [ ] Ascent data from flights after 2020. None found yet.
 
 ## Phase 2 — Weather modifier  ← ACTIVE
-- [ ] Confirm api.weather.gov requirements (headers, CORS, forecast range)
+- [x] Confirm api.weather.gov requirements (headers, CORS, forecast range)
       from its own docs. Record them in FINDINGS.
-- [ ] `engine/weather.js` (pure): turn a sky-cover forecast into a modifier
-      on the geometry score. Geometry stays the primary signal.
+      Observed 2026-10-15: docs read; from jellyfish.benneely.com the
+      page read `/points` and the grid forecast (CORS works); skyCover in
+      percent for about 7 days; grid at 59 km offshore, none at 107 km.
+- [x] Decide which cloud matters: local and directional sky cover (FINDINGS
+      Decisions). Observed: sight-line distances computed (FINDINGS
+      Reference).
+- [ ] `engine/weather.js` (pure): from a launch's visible track, give the
+      directional sample points; from skyCover series, give the local and
+      directional values at the visible time. Geometry stays the primary
+      signal. Cloud top height in config, marked provisional.
 - [ ] The page shows the modifier only when the forecast covers T-0.
       Otherwise it shows "forecast not available yet".
 
@@ -136,11 +144,14 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   with the 2020 Starlink members (FINDINGS). Is the rest the profiles, the
   fixed-azimuth great circle, or reading error? A second measured launch
   will tell.
-- Weather: which cloud matters? The plume is 300 km or more away, low in
-  the southeast or east. Sky cover at the observer's point may not
-  describe that line of sight. Options: the point forecast alone, or also
-  points along the viewing direction. Decide before writing
-  engine/weather.js.
+- Weather: how often was the line of sight clouded on past twilight
+  launches? This needs historical cloud data, not the forecast API. Not
+  part of Phase 2.
+- Weather: how do the local and directional sky cover values combine into
+  one modifier? No source gives weights. Show both raw values first.
+- Launch weather rules at the Cape: a launch that goes says the pad sky
+  was acceptable, not the Charleston sky. Ben asked (2026-10-15). Quote
+  the rules from a source before the docs rely on this.
 - Is 5 positive cases the right minimum for the exit gate? It depends on how
   many Charleston reports the search finds.
 - Does the free-tier limit of 5 Cron Triggers per account leave room? A code

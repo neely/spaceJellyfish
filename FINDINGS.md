@@ -227,6 +227,33 @@ before you rely on it.
 - Orbit data on an upcoming launch can be as thin as the abbreviation "LEO".
   Three upcoming launches were checked and all three showed only "LEO".
 
+#### NWS API, api.weather.gov (2026-10-15)
+Docs read and live requests from a page at jellyfish.benneely.com. Full
+detail and quotes: reference/data-sources.md.
+- The docs require a User-Agent. A browser sends its own; a page cannot
+  set one. The rate limit is not published.
+- CORS works: the page read the JSON of `/points` and of the grid
+  forecast.
+- The observer maps to grid CHS/86,74. `skyCover` is in percent, over
+  ISO 8601 intervals (1, 3 and 6 hours seen), for about 7 days ahead.
+  There is no split by cloud height.
+- Cache: `/points` 24 h, grid forecast 1 h.
+- Offshore on bearing 134 to 138: a grid at 27 and 59 km, no grid at 107
+  and 174 km.
+
+#### Where cloud can block the line of sight (computed 2026-10-15)
+- Ground distance from the observer at which the sight line rises above a
+  cloud height. Sphere of mean radius, no refraction. The cloud heights
+  are examples, not sourced values.
+  - Elevation 5 degrees: 22 km (2 km cloud), 65 km (6 km), 123 km (12 km).
+  - 10 degrees: 11, 33, 66 km. 15 degrees: 7, 22, 44 km.
+  - 20 degrees: 5, 16, 33 km. 30 degrees: 3, 10, 21 km. 40 degrees: 2,
+    7, 14 km.
+- Cloud near the plume is far below the sight line. The cloud that can
+  block the view is the near part of the triangle. At 10 degrees or more,
+  no cloud beyond 66 km can block it. That is inside the grid, which
+  reaches at least 59 km offshore.
+
 #### Engine CPU time (2026-10-08, before the 2020 members)
 - On the development Mac with Node 26: 0.43 ms for each launch over the
   snapshot, and 13 ms for a 25-step slip table of a fan launch. Not
@@ -536,3 +563,24 @@ Choices made, and why. Mark settled ones `(locked)`.
 - Rejected: Guess the direction from the orbit class alone.
 - How to find a direction, with URLs: the Runbook section in
   reference/topics/cape-launch-azimuths-and-inclinations.md.
+
+### Weather: local and directional sky cover (locked)
+- What: The weather modifier uses two inputs. Local: `skyCover` at the
+  observer. Directional: `skyCover` at points along the bearing of the
+  visible track. The points run from the observer out to the nearer of
+  two limits: where the sight line rises above a cloud top height, or
+  the ground point under the plume. No point lies beyond either limit.
+  The page shows both values. A point with no grid is reported as no
+  data, not filled in.
+- Why: Only cloud under the sight line can block the view (Ben,
+  2026-10-15: "think of it like a triangle"). Overhead cloud hides
+  everything; a clear sky overhead can still have a cloud bank on the
+  horizon. Cloud past the plume, or above the sight line, is behind the
+  rocket from the observer.
+- The cloud top height is provisional. No source gives one. It lives in
+  config with that label.
+- Rejected: The point forecast alone, which can say clear when the
+  horizon toward the plume is not. Points out to the plume, which count
+  cloud far below the sight line.
+- Not settled here: the weights that turn the two values into a
+  modifier.
