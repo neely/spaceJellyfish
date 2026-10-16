@@ -1,6 +1,6 @@
 # Space Jellyfish
 
-[![version](https://img.shields.io/github/package-json/v/neely/spacejellyfish)](CHANGELOG.md)
+[![version](https://img.shields.io/github/package-json/v/Neely/spacejellyfish)](CHANGELOG.md)
 
 <p align="center">
   <img src="assets/jellyfish.png" alt="A glowing jellyfish in space with a rocket at the top of its bell" width="320">
