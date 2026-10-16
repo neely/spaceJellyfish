@@ -9,7 +9,7 @@ session that changed the page.
 We bump the middle number when the page gains a feature and the last number
 for a fix. Model changes that move the backtest numbers are listed here too.
 
-## 0.5.0 · 2026-10-16 · pending
+## 0.5.0 · 2026-10-16 · 83fe123
 - Clouds now come from the forecast that scored best when we tested four
   against 21 months of airport reports: NOAA NBM for all cloud, plus NOAA
   HRRR low cloud within about a day and a half. The study is in
