@@ -138,4 +138,4 @@ Docs: https://open-meteo.com/en/docs and https://open-meteo.com/en/terms (read 2
 - GOES-16 `ABI-L2-ACMC` 2025 has days 001 to 097 only. GOES-19 `ABI-L2-ACMC` 2025 has 354 day folders (001 to 365), and 2024 and 2026 folders. So 2025-01-01 to 2025-04-07 needs GOES-16 and later dates need GOES-19 (from these listings; the switch date was not read from a NOAA notice).
 - Size: ACMC files 4.2 MB (GOES-16, 2025-01-01) and 4.9 to 5.5 MB (GOES-19), 12 files an hour. Cloud top height `ABI-L2-ACHAC`: 0.30 MB a file.
 - An HTTP Range request returned 206 with the bytes asked for, so a reader can fetch parts of a file.
-- Not yet read: the product user guide (how pixels map to latitude and longitude, quality flags), and how good the mask is at night and in twilight. The GOES-19 provisional ReadMe on noaasis.noaa.gov is the place to start.
+- 2026-10-16: file contents, quality flags, stated accuracy and the station pixel lookup are in reference/topics/goes-clear-sky-mask.md. Still not read: the product user guide and the GOES-19 provisional ReadMe (noaasis.noaa.gov did not resolve and the OSPO copy answered 503 that day).

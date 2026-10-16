@@ -8,14 +8,14 @@ Read this index. Pick the few notes whose answers match your question. Read only
 
 ## Tags (count of notes)
 
-sun-position 6, sidereal-time 2, geodesy 6, trajectory 9, ascent-profile 6, telemetry 5, launch-data 8, twilight 7, illumination 7, plume 5, visibility 10, sightings 4, weather 3, cloudflare 2, email 1, data-access 7, sky-view 2
+sun-position 6, sidereal-time 2, geodesy 6, trajectory 9, ascent-profile 6, telemetry 5, launch-data 8, twilight 8, illumination 7, plume 5, visibility 10, sightings 4, weather 4, cloudflare 2, email 1, data-access 8, sky-view 2
 
 ## Papers (0), high relevance first, then newest
 
 | key | year | relevance | topics | answers |
 |---|---|---|---|---|
 
-## Topic notes (14)
+## Topic notes (15)
 
 | key | distilled | relevance | topics | answers |
 |---|---|---|---|---|
@@ -25,6 +25,7 @@ sun-position 6, sidereal-time 2, geodesy 6, trajectory 9, ascent-profile 6, tele
 | [topics/falcon9-ascent-timeline](topics/falcon9-ascent-timeline.md) | 2026-10-08 | high | ascent-profile, telemetry, trajectory, launch-data | At what time after liftoff do Falcon 9 MECO, stage separation, SES-1, fairing separation, entry burn, landing and SECO-1 happen for current Cape missions, what... |
 | [topics/falcon9-starlink-2020-telemetry](topics/falcon9-starlink-2020-telemetry.md) | 2026-10-15 | high | telemetry, ascent-profile, trajectory, data-access | What ascent data exists for Falcon 9 Starlink flights, where is it vendored, how is downrange derived from it, and does a Starlink-shaped ascent explain the... |
 | [topics/falcon9-webcast-telemetry](topics/falcon9-webcast-telemetry.md) | 2026-10-08 | high | telemetry, ascent-profile, trajectory, data-access | Where do the altitude and downrange curves in config/profiles.json come from, which missions are used and why, and what are the limits of that data? |
+| [topics/goes-clear-sky-mask](topics/goes-clear-sky-mask.md) | 2026-10-16 | high | weather, data-access, twilight | What is in a GOES ABI-L2-ACMC file, which field is the binary cloud mask, what do the quality flags mean, how good does NOAA say the mask is by day and night... |
 | [topics/model-sky-view](topics/model-sky-view.md) | 2026-10-12 | medium | sky-view, geodesy, visibility | How does sky.html turn the phone's orientation into camera axes, project a sky direction (azimuth, elevation) onto the screen, correct the compass, set the... |
 | [topics/model-sun-and-earth-geometry](topics/model-sun-and-earth-geometry.md) | 2026-10-08 | high | sun-position, sidereal-time, geodesy, illumination | Which formulas turn a Unix time and a place into the Sun's direction, the Sun's elevation and azimuth, and the look angles and range to a point, which... |
 | [topics/model-trajectory](topics/model-trajectory.md) | 2026-10-08 | high | trajectory, ascent-profile, geodesy, launch-data, telemetry | How does the engine turn a pad, a launch azimuth and an ascent profile member into the rocket's latitude, longitude and height against time, how are azimuths... |

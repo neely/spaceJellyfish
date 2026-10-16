@@ -9,5 +9,8 @@
   "scripts": {
     "test": "node --test",
     "dev": "node scripts/serve.js"
+  },
+  "devDependencies": {
+    "h5wasm": "0.10.3"
   }
 }

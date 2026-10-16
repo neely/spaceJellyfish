@@ -205,6 +205,48 @@ both truths and why the page shows low cloud on its own when HRRR has it.
 - A few archive hours are missing (under 2 percent, the same hours at every
   station). Those hours are skipped.
 
+## Satellite check, step 1
+
+The plume is seen low over the ocean, where no airport looks. A satellite
+sees that sky. Before we use one to score forecasts offshore, it must
+agree with the airports on land. Step 1 tested that, with rules fixed
+before any data came in (`config/goes-acm.json`). Tables:
+[goes-results.md](goes-results.md).
+
+**Short answer: no-go.** Against airport reports below 12,000 ft, at
+twilight, the mask had twilight skill 48 on 2,506 pairs. The bar was 70.
+NBM's 1-day forecast scores 51 against the same truth. So the mask agrees
+with the airports no better than the forecast it would grade. Against
+the four full-sky stations, twilight skill was 66, also under 70.
+
+**Method.** The GOES Clear Sky Mask (ABI-L2-ACMC, binary field `BCM`,
+2 km, about every 5 minutes) from GOES-16 to 2025-04-07 and GOES-19 after.
+300 sample hours picked by the Sun at JZI (240 twilight, 60 day), evenly
+spaced over 2025-01-01 to 2026-10-15. For each station report, the scan
+nearest the report time (within 5 minutes). The mask value is the
+percent cloudy of good-quality pixels (DQF 0) in a 5 by 5 pixel box at
+the station. Cloudy is 50 percent or more for both, and skill is hit rate
+minus false-alarm rate, as above. The station pixel comes from NOAA
+STAR's precomputed CONUS latitude and longitude; each is 0.04 to 1.36 km
+from the airport. The file's stated centre point is the midpoint of the
+grid's two centre pixels to 0.0001 degrees, so the grid lines up.
+
+**What we saw** (observations, not causes):
+
+- False alarms fall from 36 to 17 percent when the truth changes from
+  below 12,000 ft to the full sky. Hit rates are 83 to 84 percent in both.
+- Day skill is 51 and twilight skill is 48. With the Sun 0 to 3 degrees
+  down, the mask's own twilight band, skill is 44.
+- GOES-16 and GOES-19 differ by a few points (twilight 53 and 47).
+
+**Not done.** The GOES-19 ReadMe and the product user guide were not read:
+their hosts did not answer on 2026-10-16. The algorithm document (NOAA
+Enterprise Cloud Mask ATBD v1.2) gives day and night accuracy, but no
+number for twilight. A visual check of single scans was not done; the
+grid check above replaced it. The fetch took 782 scans (3.6 GB, deleted
+after use), not the 300 planned, because the stations report at
+different minutes. Notes: `reference/topics/goes-clear-sky-mask.md`.
+
 ## Reproduce it
 
 Everything is pinned. Raw data: `data/clouds/raw/` (33 gzip files, 5.3 MB),

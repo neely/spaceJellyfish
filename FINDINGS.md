@@ -15,7 +15,8 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 84 tests, 84 pass, 0 fail (2026-10-16). The count
+- `npm test` — expected 90 tests, 90 pass, 0 fail (2026-10-16). It also
+  passes with no `node_modules` (h5wasm is needed only to fetch GOES files). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
   agree with each within 1/60 degree in GHA, declination, and altitude.
@@ -61,6 +62,14 @@ these before you trust it. Hard-stop on mismatch.
 - `clouds/results.json` — NBM twilight skill below 12,000 ft, days 1 to 7:
   51, 47, 44, 41, 37, 31, 26. HRRR low-cloud skill, all hours: 65.
   `test/clouds-report.test.js` checks the report tables against it.
+- `data/goes/acm-stations.json` (fetched 2026-10-16) — expected 300
+  sample hours (240 twilight, 60 day; 2,002 and 6,765 candidates at JZI)
+  and 782 scans. `--recheck 5` gave 5 of 5 identical (file SHA-256 and
+  box values). `data/goes/station-pixels.json`: 11 stations, pixel 0.04 to
+  1.36 km from the airport.
+- `clouds/goes-results.json` — twilight, below 12,000 ft: 2,506 pairs,
+  skill 48 (hit 84, false alarm 36). Twilight, full sky: 916 pairs, skill
+  66. Dropped pairs: no report 65, no scan 10, few good pixels 3.
 
 ### Intentional, not bugs
 Things that look wrong but are correct. Do not "fix" these.
@@ -271,6 +280,23 @@ note: reference/topics/cloud-forecasts-for-sky-viewing.md.
   clear (142 cloudy hours).
 - Open-Meteo `gfs_seamless` day-1 values equal `gfs_hrrr`; `gfs_global`
   is GFS.
+
+#### Satellite check, step 1: GOES Clear Sky Mask against airports (2026-10-16)
+Report: clouds/README.md, "Satellite check, step 1". Tables:
+clouds/goes-results.md. Note: reference/topics/goes-clear-sky-mask.md.
+- Result: no-go under the rule set before the data (skill 70 or more at
+  twilight below 12,000 ft). Skill 48; NBM day 1 scores 51 on that truth.
+  Full sky: 66. Step 2 (offshore forecast scoring with the mask) is not
+  started.
+- False alarms are 36 percent below 12,000 ft and 17 percent against the
+  full sky. Day skill 51, twilight 48, Sun 0 to -3 degrees 44.
+- ACMC files hold BCM, ACM (four levels), Cloud_Probabilities and DQF.
+  GOES-16 and GOES-19 CONUS files share one x and y grid.
+- The file's stated centre (30.0830, -87.0970) is the midpoint of NOAA
+  STAR grid pixels (749, 1249) and (750, 1250). The east bound equals the
+  grid's north-east corner longitude (-52.9469).
+- Not read: the GOES-19 cloud mask ReadMe and PUG Vol 5 (hosts down on
+  2026-10-16). The ECM ATBD v1.2 gives no twilight accuracy.
 
 #### Site cache headers (2026-10-15)
 - `.js`, `.css` and `.png` from jellyfish.benneely.com come with
@@ -697,3 +723,22 @@ Choices made, and why. Mark settled ones `(locked)`.
   requests). TAF as the main forecast (airports only, about a day); it is
   shown as an extra line instead. Aviation Weather Center API and LAMP (no cross-origin
   access).
+
+### Satellite check, step 1: rules fixed before the data (2026-10-16)
+- What: GOES ABI-L2-ACMC binary mask `BCM`, DQF 0 only, 5 by 5 pixel box
+  at each station, cloudy at 50 percent or more; each report paired with
+  the nearest scan within 5 minutes; 300 hours evenly spaced by the Sun at
+  JZI; go only if twilight skill below 12,000 ft is 70 or more. Files are
+  read with h5wasm 0.10.3 (npm devDependency, loaded only when a file is
+  opened). Station pixels come from NOAA STAR's CONUS lat/lon file.
+  Rules: config/goes-acm.json.
+- Why: Ben chose the reader, the sample size and the bar (2026-10-16). A
+  truth for offshore scoring must clearly beat the forecast it grades
+  (NBM day 1: 51).
+- Rejected: h5py through pip (a second language in the pipeline). The
+  four-level ACM and Cloud_Probabilities (not the product data.gov
+  describes; not scored, and not to be tried as a rescue of this result).
+  A one-pixel match (too small against an observer's sky; no parallax
+  margin). Coding the projection formula (the PUG was not reachable;
+  NOAA's own grid is the source). HDF5 range reads (whole files were
+  simpler for a sample).

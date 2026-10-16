@@ -1,0 +1,31 @@
+{
+  "about": "Inputs for the satellite check, step 1: the GOES Clear Sky Mask against the airport reports (scripts/goes-station-pixels.js, scripts/fetch-goes-acm.js, scripts/score-goes.js). Stations, period, cloudy class and twilight come from config/cloud-stations.json. These rules were set on 2026-10-16 before any mask value was read.",
+  "product": "ABI-L2-ACMC",
+  "productSource": "NOAA GOES-R on AWS, CONUS sector, about every 5 minutes. Variables seen in one GOES-16 file (2025-03-01) and one GOES-19 file (2026-04-10): BCM, ACM, Cloud_Probabilities, DQF, same grid (x and y scale and offset, projection at -75 degrees).",
+  "variable": "BCM",
+  "variableSource": "Our choice. BCM is the binary mask (flag_meanings 'clear_or_probably_clear cloudy_or_probably_cloudy'), the product that data.gov describes. ACM (four levels) and Cloud_Probabilities are not scored in step 1.",
+  "goodDqf": [0],
+  "dqfSource": "DQF flag_meanings in the files: 0 good_quality_qf, 1 bad_quality_qf, 2 space_qf, 6 degraded_quality_qf. Only 0 counts.",
+  "satellites": [
+    { "id": "G16", "bucket": "noaa-goes16", "from": "2025-01-01", "to": "2025-04-07" },
+    { "id": "G19", "bucket": "noaa-goes19", "from": "2025-04-08", "to": "2026-10-15" }
+  ],
+  "satellitesSource": "S3 listings read from the page on 2026-10-16 (reference/data-sources.md): GOES-16 ABI-L2-ACMC 2025 has days 001 to 097 only. The switch date was not read from a NOAA notice.",
+  "boxPixels": 5,
+  "boxSource": "Our choice, set before any data: 5 by 5 pixels (about 10 km at 2 km) centred on the station pixel. A point pixel is too small against the sky an observer sees, and a box absorbs parallax of high cloud. The box value is the percent of good-quality pixels that are cloudy; it is cloudy at cloudyPct or more, the same class as the forecasts.",
+  "minGoodPixels": 13,
+  "minGoodSource": "Our choice: more than half of the 25 box pixels must have good quality, or the pair is dropped.",
+  "maxMatchMinutes": 5,
+  "matchSource": "Our choice. A station report is paired with the scan whose middle time is nearest the report time; the pair is dropped when they are more than 5 minutes apart.",
+  "sample": { "twilightHours": 240, "dayHours": 60, "anchorStation": "JZI", "daySunMinDeg": 10 },
+  "sampleSource": "Ben's choice, 2026-10-16: about 300 hours. Hours are picked by the Sun at JZI: twilight is config/cloud-stations.json twilightSunDeg; day is the Sun at 10 degrees or more (our choice). Candidates are sorted by time and picked at even spacing, so the satellites and seasons are covered in proportion to their hours. Each station is still put in twilight or day by its own Sun.",
+  "goNoGo": { "truth": "below12000ft", "subset": "twilight", "minSkillPct": 70, "compareWith": "NBM day 1 twilight skill 51 (clouds/results.json)" },
+  "goNoGoSource": "Ben, 2026-10-16: a truth for offshore scoring must clearly beat the forecast it will grade. Mask skill against the airports below 12,000 ft, all 11 stations, twilight, must be 70 or more. Below 70, stop. Not to be changed after the result is seen.",
+  "grid": {
+    "file": "goes19_abi_conus_lat_lon.nc",
+    "url": "https://www.star.nesdis.noaa.gov/atmospheric-composition-training/documents/goes19_abi_conus_lat_lon.zip",
+    "zipSha256": "e99d07b1e0ac18979dabddd729f4f9ca44419370b2523e99e22411d6b17612cc",
+    "ncSha256": "9e166379a70b83e1174384099803380559a7e98f264f3e38498270bc66d2d021"
+  },
+  "gridSource": "NOAA STAR precomputed latitude and longitude for the GOES-19 ABI CONUS sector ('Converted from GOES Imager Projection'), downloaded 2026-10-16. Used to find the pixel over each station, so this project does not code the projection formula. The GOES-16 files use the same x and y grid."
+}

@@ -12,13 +12,13 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   (v0.6.0: NBM, HRRR low cloud, TAF; clouds/README.md). Phase 3 (alerts)
   starts only when Ben asks.
 - **Last updated:** 2026-10-16
-- **Next action:** In a local Claude Code session on Ben's Mac: satellite
-  step 1 (Open questions, "score the offshore part"): check for a
-  netCDF4/HDF5 reader (`python3 -c "import h5py"`), read the GOES-19
-  ReadMe, then test the clear sky mask against the airport reports.
-  Sunday 2026-10-18: the Bandwagon 5 item at the top of the Backlog. On
-  launch morning, note the sky toward the launch: the first real check
-  of the cloud section.
+- **Satellite check, step 1:** done 2026-10-16, result no-go. The GOES
+  binary cloud mask scored twilight skill 48 against the airports (bar
+  70; NBM day 1 is 51). Step 2 is not started. What comes next is Ben's
+  call (Open questions, "score the offshore part").
+- **Next action:** Sunday 2026-10-18: the Bandwagon 5 item at the top of
+  the Backlog. On launch morning, note the sky toward the launch: the
+  first real check of the cloud section.
 
 ---
 
@@ -168,14 +168,20 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
     would be about 10 GB, so read only the pixels needed (Range requests
     work) and pin a small extract: mask values at the sight-line places,
     plus file names and S3 ETags for reproduction.
-  - Step 1: check the mask against the airport reports at the 11
-    stations. If it does not agree with them at twilight, stop.
-  - Step 2: fetch NBM, GFS, ECMWF and HRRR past forecasts at offshore
+  - [x] Step 1: check the mask against the airport reports at the 11
+    stations. If it does not agree with them at twilight, stop. Done
+    2026-10-16: no-go. Twilight skill 48 below 12,000 ft (2,506 pairs),
+    66 against the full sky; bar 70 (clouds/README.md, "Satellite check,
+    step 1"; FINDINGS). Observed: 5 of 5 rechecked scans identical; grid
+    centre matches the file's own centre point; tests pass.
+  - [ ] Step 2: fetch NBM, GFS, ECMWF and HRRR past forecasts at offshore
     places (Open-Meteo, as before) and score them against the mask.
-  - Needs: a netCDF4/HDF5 reader on the machine that fetches (Python
-    h5py or a Node library; not yet checked on Ben's Mac), the ABI
-    fixed-grid to latitude and longitude formula from the product guide,
-    and the night and twilight quality notes from the GOES-19 ReadMe.
+    Blocked by the step 1 result. A new test (for example the four-level
+    ACM, or cloud top height) needs new rules set before its data, and
+    Ben's go-ahead.
+  - Still not read: the GOES-19 cloud mask ReadMe and PUG Vol 5 (both
+    hosts were down on 2026-10-16). Read them before any new satellite
+    test.
   - Option: cloud top height (ACHA, 0.3 MB a file) would give the cloud
     top for the sight-line test directly.
 
@@ -186,9 +192,7 @@ Start prompt (local Claude Code, repo cloned on Ben's Mac):
 > Read AGENTS.md, then the PLAN.md status block, Backlog and Open
 > questions, then FINDINGS.md (skim; Tripwires in full). Run `npm test` and
 > `node scripts/backtest.js` and check them against the tripwires. On
-> Sunday 2026-10-18, do the Bandwagon 5 item first. Otherwise start the
-> satellite check, step 1 only: confirm a reader for GOES netCDF files,
-> read the GOES-19 Clear Sky Mask ReadMe (night and twilight quality),
-> and compare the mask with the airport reports in data/clouds/ before
-> scoring any forecast. Phase 3 starts only when Ben asks. For any page
+> Sunday 2026-10-18, do the Bandwagon 5 item first. The satellite check
+> stopped at step 1 (no-go); do not start step 2 or a new satellite test
+> unless Ben asks. Phase 3 starts only when Ben asks. For any page
 > change, bump the version and add a CHANGELOG entry (FINDINGS, Versions).
