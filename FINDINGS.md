@@ -764,7 +764,7 @@ Choices made, and why. Mark settled ones `(locked)`.
   shown as an extra line instead. Aviation Weather Center API and LAMP (no cross-origin
   access).
 
-### Satellite check, step 1: rules fixed before the data (2026-10-16)
+### Satellite check, step 1: rules fixed before the data (2026-10-16) (locked)
 - What: GOES ABI-L2-ACMC binary mask `BCM`, DQF 0 only, 5 by 5 pixel box
   at each station, cloudy at 50 percent or more; each report paired with
   the nearest scan within 5 minutes; 300 hours evenly spaced by the Sun at
@@ -783,7 +783,7 @@ Choices made, and why. Mark settled ones `(locked)`.
   NOAA's own grid is the source). HDF5 range reads (whole files were
   simpler for a sample).
 
-### Satellite check, test 2: rules fixed before the data (2026-10-16)
+### Satellite check, test 2: rules fixed before the data (2026-10-16) (locked)
 - What: GOES ABI-L2-CCLC, max(CF1, CF2) in the 10 km cell that holds the
   station, against the airport sky below 10,000 ft; same 300 hours and
   scans as test 1; DQF not used; go only if twilight skill is 80 or more.
@@ -795,7 +795,7 @@ Choices made, and why. Mark settled ones `(locked)`.
   (clear cells carry DQF 2); a 3 by 3 block of cells (30 km, larger than
   the sky an airport reports).
 
-### Satellite check, test 3: compare land and water as a ratio (2026-10-16)
+### Satellite check, test 3: compare land and water as a ratio (2026-10-16) (locked)
 - What: NBM against the GOES cloud mask at the 11 airports and at 12
   water places off Charleston, by the same rules; decide on the ratio of
   skills, day 1, twilight, lower 95 percent bound 0.85 or more; all 2,001

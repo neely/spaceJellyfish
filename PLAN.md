@@ -8,18 +8,13 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ---
 
 ## Status
-- **Active:** none. Phase 2 is done. The cloud source is scored and live
-  (v0.6.0: NBM, HRRR low cloud, TAF; clouds/README.md). Phase 3 (alerts)
-  starts only when Ben asks.
+- **Active:** none. Phases 0 to 2 and the cloud work are done (v0.7.0:
+  NBM, HRRR low cloud, TAF, and the offshore check on the card;
+  clouds/README.md). Phase 3 (alerts) starts only when Ben asks.
 - **Last updated:** 2026-10-16
-- **Satellite check:** done. Two satellite truths failed (tests 1 and
-  2); the land-water ratio test held (test 3, FINDINGS), and the card
-  says so from 0.7.0. The page
-  forecast is unchanged. Offshore skill stays unscored; what comes next
-  is Ben's call (Open questions, "score the offshore part").
-- **Next action:** Sunday 2026-10-18: the Bandwagon 5 item at the top of
-  the Backlog. On launch morning, note the sky toward the launch: the
-  first real check of the cloud section.
+- **Next action:** Sunday 2026-10-18: the Bandwagon 5 item in the
+  Backlog. On launch morning, note the sky toward the launch:
+  the first real check of the cloud section.
 
 ---
 
@@ -50,19 +45,33 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   iPhone. The beyond-7-days text has not been seen live yet. Decisions and
   numbers are in FINDINGS; the checklist with its "Observed" notes is in
   git history (PLAN.md at commit 223a889).
+- Cloud forecast study and satellite check, 2026-10-16 (0.5.0 to 0.7.0):
+  four models scored against 11 airports (NBM and HRRR chosen); GOES
+  cloud mask and cloud layers both failed as a better judge than the
+  airports (tests 1 and 2); NBM kept its skill offshore when GOES judged
+  land and water alike (test 3), shown on the card from 0.7.0. Report:
+  clouds/README.md. Results and decisions in FINDINGS; the checklists
+  with their "Observed" notes are in git history (PLAN.md at commit
+  b4383da).
 - Source audit, 2026-10-15: reference/source-audit.md. Follow-ups done:
   declination -8.3 (WMM-2025), Census ZIP points, Bandwagon source note,
   2020 R4yGM flights added to `falcon9-leo`, snapshot refreshed, SpX-35
   labelled.
 
 ## Backlog (open items from Phase 1, in order)
+- [x] Check the live page (jellyfish.benneely.com) shows 0.7.0 in the
+      footer and the "Out over the water" line on the cloud card.
+      Observed 2026-10-16 in the in-app browser: footer "Version 0.7.0";
+      Bandwagon 5 card "kept about 94% of its skill over land".
 - [ ] Before Bandwagon 5 (Monday 2026-10-19, 06:30 local): on Sunday,
       find where the drone ship ASOG waits and set northeast or southeast
       in config/launch-directions.json (runbook in
       reference/topics/cape-launch-azimuths-and-inclinations.md; ship notes
-      in reference/topics/recovery-fleet.md). After the launch: add Ben's
-      sky view points to data/observations.json and refresh the snapshot
-      (refresh rule in FINDINGS).
+      in reference/topics/recovery-fleet.md). On launch morning, save the
+      card's cloud lines (a screenshot) before going out, so Ben's sky
+      note can be set beside what the card said. After the launch: add
+      Ben's sky view points to data/observations.json and refresh the
+      snapshot (refresh rule in FINDINGS).
 - [ ] Morning Sun check facing southeast at the SpX-35 spot (Ben, about
       08:30 to 09:30, Sun at azimuth 109 to 119), to close the compass
       question for that direction.
@@ -93,11 +102,14 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       Until then, other vehicles use the Falcon 9 members with low
       confidence.
 - [ ] Ascent data from flights after 2020. None found yet.
-- [x] Cloud by layer and a scored cloud source (Ben, 2026-10-15 and 16).
-      Done 2026-10-16 (v0.5.0): 21-month test of four models against 11
-      coastal airports (clouds/README.md); the page uses NBM all-sky cloud
-      and HRRR low cloud. Observed: tests pass; report tables checked
-      against results.json by test; live page checked (see JOURNAL).
+- [ ] A unit test for the ratio and bootstrap in
+      scripts/score-goes-relative.js (a small made-up set of counts with a
+      known answer). Today only its output is checked against the report.
+- [ ] Past twilight launches and cloud: read the GOES mask at the
+      sight-line places at T+300 s for the 60 visible snapshot launches,
+      with scripts/fetch-goes-relative.js as the pattern. It answers the
+      open question below and shows whether the 5 `seen-plume` launches had
+      a clear line of sight. New rules before data, as for tests 1 to 3.
 
 ## Phase 3 — Worker cron, KV state, email alerts  ← NEXT
 - [ ] Confirm KV free-tier read and write limits against the planned cadence.
@@ -129,6 +141,9 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 - Workers Paid — only if the engine does not fit in 10 ms.
 - Wallops launches — one Charleston sighting is on record (Antares,
   2022-11-07). Out of scope now; Ben decides if the scope grows.
+- GOES cloud top height (ABI-L2-ACHAC, 0.3 MB a file) would give the
+  cloud top for the sight-line test directly. Read PUG Vol 5 first (the
+  OSPO copy answered 503 on 2026-10-16).
 
 ## Open questions
 - Evening launches. The Atlas V of 2026-04-27 (20:53 local, Sun 11.6 to
@@ -146,8 +161,8 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   fixed-azimuth great circle, or reading error? A second measured launch
   will tell.
 - Weather: how often was the line of sight clouded on past twilight
-  launches? This needs historical cloud data, not the forecast API. Not
-  part of Phase 2.
+  launches? The GOES pipeline (clouds/README.md, tests 1 to 3) can now
+  read past cloud; see the Backlog item.
 - Weather: how do the local and directional sky cover values combine into
   one modifier? No source gives weights. Show both raw values first.
 - Launch weather rules at the Cape: a launch that goes says the pad sky
@@ -161,35 +176,6 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 - Alert timing: how long before T-0, and how many emails per launch?
 - Clouds: does thin high cloud hide a lit plume? No source. A sighting
   through a forecast of high cloud would show it.
-- Clouds: how good are the forecasts offshore, where the plume is seen?
-  Airport skill is known (FINDINGS, Cloud forecast test); offshore skill
-  is not. Satellite truth was tried first (rules: config/goes-acm.json):
-  - [x] Step 1: check the GOES Clear Sky Mask against the airport reports
-    at the 11 stations; stop if it does not agree at twilight. Done
-    2026-10-16: no-go (FINDINGS, Satellite check, step 1). Observed: the
-    scorer output in clouds/goes-results.md; 5 of 5 rechecked scans
-    identical; grid centre matches the file's own centre point; tests pass.
-  - [ ] Step 2: score NBM, GFS, ECMWF and HRRR past forecasts at offshore
-    places against the mask. Blocked by step 1. A new test (for example
-    the four-level ACM, or cloud top height) needs new rules set before
-    its data, and Ben's go-ahead.
-  - [x] Test 2: GOES Cloud Cover Layers low cloud, max(CF1, CF2),
-    against the airport sky below 10,000 ft, on the same 300 hours.
-    Rules approved by Ben 2026-10-16 (config/goes-ccl.json; bar 80).
-    Done 2026-10-16: no-go (FINDINGS, Satellite check, test 2). Observed:
-    the scorer output in clouds/goes-ccl-results.md; 5 of 5 rechecked
-    files identical; the dropped-pair count that keeps the verdict.
-  - [x] Test 3: NBM against GOES at the 11 airports and at 12 water
-    points off Charleston, compared as a ratio of skills; the satellite
-    need not beat the airports. Rules approved by Ben 2026-10-16
-    (config/goes-relative.json). Done 2026-10-16: holds (FINDINGS,
-    Satellite check, test 3); on the page from 0.7.0. Observed: scorer
-    output in clouds/goes-relative-results.md; 5 of 5 rechecked scans
-    identical; the card line seen on the local page for Bandwagon 5
-    ("kept about 94%", day 3).
-  - Still not read: PUG Vol 5 (OSPO copy answered 503 on 2026-10-16).
-  - Option: cloud top height (ACHA, 0.3 MB a file) would give the cloud
-    top for the sight-line test directly.
 
 ---
 
@@ -199,6 +185,7 @@ Start prompt (local Claude Code, repo cloned on Ben's Mac):
 > questions, then FINDINGS.md (skim; Tripwires in full). Run `npm test` and
 > `node scripts/backtest.js` and check them against the tripwires. On
 > Sunday 2026-10-18, do the Bandwagon 5 item first. The satellite check
-> stopped at step 1 (no-go); do not start step 2 or a new satellite test
-> unless Ben asks. Phase 3 starts only when Ben asks. For any page
+> is done (clouds/README.md, tests 1 to 3); start a new satellite test
+> only when Ben asks, with rules set before the data. Phase 3 starts only
+> when Ben asks. For any page
 > change, bump the version and add a CHANGELOG entry (FINDINGS, Versions).

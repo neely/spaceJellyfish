@@ -8,6 +8,45 @@ journal/YYYY-MM.md (the month they were written, newest first).
 
 ---
 
+## 2026-10-16 · Satellite check: two judges failed, the offshore ratio test held (0.7.0)
+
+**Did:** Pulled 7 commits and ran the satellite plan locally. Test 1: the
+GOES cloud mask against 11 airports, twilight skill 48, bar 70: no-go.
+Test 2: GOES cloud layers low cloud, skill 21, bar 80: no-go. Read the
+microwave and validation papers (mostly abstracts). Test 3: NBM judged by
+GOES over land and water alike, as a ratio: 0.926 (0.888 to 0.947), bar
+0.85: holds. The card shows the offshore ratio from 0.7.0. Ben approved
+every rule set before its data. Cleaned PLAN and FINDINGS of each
+other's content.
+
+**Least confident about (Q1):**
+- That the GOES mask is about equally good over land and water, which the
+  ratio needs. A product test against an active sensor (EarthCARE or
+  CALIPSO) over both would show it.
+- The near-Charleston ratio (0.886, interval down to 0.846). More hours,
+  or the past-launch check in the Backlog, would show if it is below 0.85.
+- TCF = 65531 as full cloud. A NOAA document or the PUG would prove it.
+
+**Unstated assumptions (Q2):** Open-Meteo past runs are what NBM really
+forecast. The mask's errors do not depend on NBM's. The hourly forecast
+value is for the whole hour. Twilight at JZI stands for twilight at the
+water places.
+
+**Biggest thing being missed (Q3):** Still no ground truth for the view
+itself. Ben's sky notes on launch mornings are the only direct check.
+
+**Could've gone better (Q4):** I wrote a missing-value rule from the
+valid_range attribute alone and it dropped overcast cases (test 2). I
+should look at what each odd value goes with before I name it missing.
+My sizing script merged some evening and morning events. I let a
+download run to 3.6 GB against a 1.5 GB plan without asking first.
+
+**Suggestions (Q5):** Save the card before Bandwagon 5. Add a unit test for the ratio code. Use the GOES pipeline on past
+twilight launches (all in the Backlog). The open question on a minimum of
+5 positive cases for the exit gate looks stale: the gate was met.
+
+---
+
 ## 2026-10-16 · Cloud forecast study: four models scored, NBM chosen, TAF added (0.5.0, 0.6.0)
 
 **Did:** Tested cloud sources from the live page: Open-Meteo works
@@ -190,30 +229,6 @@ it.
 
 **Suggestions (Q5):** Script the observation comparison. Get a newer
 profile and test it on SpX-35. Add a plume glow band to the sky view.
-
-## 2026-10-12 — Camera sky view, tested with the Sun
-
-**Did:** Built an add-on page, `sky.html`. It shows the phone's back camera
-and draws the predicted path, horizon, height lines and compass marks over
-it. Sun calibration stores the compass error; Freeze and Save picture make
-an augmented photo. Each launch card links to it; the main page is
-unchanged. Ben tested it on his iPhone: the drawn Sun sat on the real Sun
-(172 degrees, 49 up). Field of view 65 was too narrow; 70 worked and is now
-the default. The SpX-35 sunlit path clears his trees from 6:36. Added
-reference/topics/model-sky-view.
-
-**Least confident about (Q1):**
-- The raw iOS compass. It is not recorded whether Ben tapped Sun
-  calibration before the matching screenshot. Opening Settings and reading
-  "Compass correction" would show it (0.0 means no tap).
-- The declination of −8 degrees. A NOAA calculator value would prove it.
-- Field of view 70 for other phones. One phone, one test by eye.
-- Android. Not tested on any device.
-
-**Suggestions (Q5):** Build the two-point Sun calibration for the field of
-view. Add the Moon as a night calibration target. Show a per-minute marker
-for the current time during a launch, so the user can match the real plume
-to the drawn path.
 
 ---
 
