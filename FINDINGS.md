@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 75 tests, 75 pass, 0 fail (2026-10-15). The count
+- `npm test` — expected 80 tests, 80 pass, 0 fail (2026-10-16). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
   agree with each within 1/60 degree in GHA, declination, and altitude.
@@ -51,6 +51,16 @@ these before you trust it. Hard-stop on mismatch.
   same as 10 km; 30 km gives 53. The
   Atlas V of 2026-04-27 is 'no' at all three heights.
 - `data/labels.json` — expected 13 labels: 8 `seen`, 5 `seen-plume`.
+- `data/clouds/` (fetched 2026-10-16 12:24 to 12:34 UTC) — expected 33
+  raw files and a manifest; `scripts/score-clouds.js` stops if a SHA-256
+  does not match. 11 stations, 15,019 to 15,667 hours each of 15,672.
+  Below 12,000 ft: 169,038 hours scored for ECMWF day 1, 43,753 cloudy.
+  Full sky (CHS, NBC, SAV, JAX): 62,224 hours. Twilight: 22,357 and 8,219.
+  Station reports with a layer above 12,000 ft: CHS 7,966, NBC 2,559,
+  SAV 6,988, JAX 10,662, HXD 17, others 0.
+- `clouds/results.json` — NBM twilight skill below 12,000 ft, days 1 to 7:
+  51, 47, 44, 41, 37, 31, 26. HRRR low-cloud skill, all hours: 65.
+  `test/clouds-report.test.js` checks the report tables against it.
 
 ### Intentional, not bugs
 Things that look wrong but are correct. Do not "fix" these.
@@ -240,6 +250,27 @@ detail and quotes: reference/data-sources.md.
 - Cache: `/points` 24 h, grid forecast 1 h.
 - Offshore on bearing 134 to 138: a grid at 27 and 59 km, no grid at 107
   and 174 km.
+
+#### Cloud forecast test (2026-10-16)
+Full report: clouds/README.md. Tables: clouds/results.md. Knowledge-base
+note: reference/topics/cloud-forecasts-for-sky-viewing.md.
+- Four models (ECMWF IFS 0.25, GFS, NBM, HRRR) through Open-Meteo, against
+  hourly reports from 11 coastal airports, 2025-01-01 to 2026-10-15.
+- NBM total cloud scored best at every lead from 1 to 7 days on the sky
+  below 12,000 ft. Against the full sky (four stations) NBM and the blend
+  of ECMWF, GFS and NBM were close; the blend led near Charleston at 1 to
+  2 days.
+- HRRR low cloud scored best for low cloud at short lead (skill 65, GFS
+  38, ECMWF 25). ECMWF's low layer caught 27 percent of low cloud.
+- HRRR total cloud fell from skill 59 at short lead to 35 at 1 day.
+- 67 to 70 percent of the "false alarms" against the sky below 12,000 ft
+  had a reported layer above 12,000 ft at the full-sky stations: high
+  cloud that automatic stations cannot report.
+- The earlier one-week score (2026-10-09 to 16, 816 hours) put ECMWF
+  lowest on MAE. The 21-month test does not agree; that week was mostly
+  clear (142 cloudy hours).
+- Open-Meteo `gfs_seamless` day-1 values equal `gfs_hrrr`; `gfs_global`
+  is GFS.
 
 #### Site cache headers (2026-10-15)
 - `.js`, `.css` and `.png` from jellyfish.benneely.com come with
@@ -595,17 +626,18 @@ Choices made, and why. Mark settled ones `(locked)`.
   reference/topics/cape-launch-azimuths-and-inclinations.md.
 
 ### Weather: local and directional sky cover (locked)
-- What: The weather modifier uses two inputs. Local: `skyCover` at the
-  observer. Directional: `skyCover` at points along the bearing of the
-  visible track. The points run from the observer out to the nearer of
+- What: The weather modifier uses two inputs. Local: cloud cover at the
+  observer. Directional: cloud cover at points along the bearing of the
+  visible track. The source is set by the decision "Cloud forecast
+  source". The points run from the observer out to the nearer of
   two limits: where the sight line rises above a cloud top height, or
   the ground point under the plume. No point lies beyond either limit.
   Only the top of the arc counts: samples at or above 0.8 of each
   track's highest visible elevation. No point is farther than 60 km.
   The page shows both values. A point with no grid is reported as no
-  data, not filled in. The local value loads by itself; the directional
-  values load only when the visitor presses a button that says what it
-  asks for and how many requests it sends.
+  data, not filled in. Since 0.5.0 both load by themselves: Open-Meteo
+  takes every place in one request. (0.4.0 used the NWS API, two requests
+  per place, and loaded the directional values only on a button.)
 - Why: Only cloud under the sight line can block the view (Ben,
   2026-10-15: "think of it like a triangle"). Overhead cloud hides
   everything; a clear sky overhead can still have a cloud bank on the
@@ -617,7 +649,8 @@ Choices made, and why. Mark settled ones `(locked)`.
   horizon toward the plume is not. Points out to the plume, which count
   cloud far below the sight line. Every visible sample with no cap (74
   points median). A fixed 20 degree limit (no ray for 17 of 60 launches).
-  Directional values on every page load.
+  Directional values on every page load while each place cost two NWS
+  requests (rejected for 0.4.0; no longer applies with one request).
 - Not settled here: the weights that turn the two values into a
   modifier.
 
@@ -626,8 +659,8 @@ Choices made, and why. Mark settled ones `(locked)`.
   reads it from there. `CHANGELOG.md` has one short entry per version,
   newest first; a test checks that its top entry matches `package.json`.
   Each changelog heading ends with the commit that ships the version. A
-  commit cannot hold its own hash, so the hash goes in by a small
-  follow-up commit.
+  commit cannot hold its own hash, so the heading says `pending` until a
+  small follow-up commit puts the hash in (the test accepts either).
   The README badge reads `package.json` through shields.io. Middle
   number for a page feature, last number for a fix.
 - Why: Ben asked for a version in the footer and a badge, and no heavy
@@ -642,3 +675,19 @@ Choices made, and why. Mark settled ones `(locked)`.
   wants). A version string copied into index.html (a second copy drifts).
   Version query strings on every import (the page has no build step; the
   `_headers` file is the fix, once the zone respects it).
+
+### Cloud forecast source (locked)
+- What: The page shows NBM total cloud (Open-Meteo, `ncep_nbm_conus`) up
+  to about 7 days ahead, and adds HRRR low cloud (`gfs_hrrr`,
+  `cloud_cover_low`) when the launch is inside HRRR's range. Each card
+  quotes NBM's twilight hit and false-alarm rates for its lead time from
+  clouds/results.json.
+- Why: The cloud forecast test (FINDINGS Reference; clouds/README.md).
+  Ben asked to verify against observations, to stress 1 to 3 days, and to
+  switch sources nearer the launch (2026-10-16).
+- Rejected: The NWS gridded `skyCover` (no archive to score it, one total
+  value, no grid past 59 to 107 km offshore, two requests per place). The
+  blend of three models (close on the full sky, worse on low cloud, three
+  requests). TAF from the NWS API (airports only, about a day; kept as a
+  later add-on). Aviation Weather Center API and LAMP (no cross-origin
+  access).

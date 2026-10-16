@@ -9,6 +9,16 @@ session that changed the page.
 We bump the middle number when the page gains a feature and the last number
 for a fix. Model changes that move the backtest numbers are listed here too.
 
+## 0.5.0 · 2026-10-16 · pending
+- Clouds now come from the forecast that scored best when we tested four
+  against 21 months of airport reports: NOAA NBM for all cloud, plus NOAA
+  HRRR low cloud within about a day and a half. The study is in
+  `clouds/README.md`.
+- The cloud check toward the launch loads by itself (one request instead of
+  up to 38), with a row for each direction.
+- Each card says how often forecasts that far ahead were right at twilight.
+- Credit to Open-Meteo (CC BY 4.0) on the card and in the footer.
+
 ## 0.4.0 · 2026-10-15 · 9309d24
 - Each launch card within about 7 days of liftoff shows the National
   Weather Service sky cover over the observer at viewing time.

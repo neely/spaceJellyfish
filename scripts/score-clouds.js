@@ -111,16 +111,26 @@ const results = {
 };
 const walk = (node, out) => {
   for (const [k, v] of Object.entries(node)) {
-    if (Array.isArray(v)) out[k] = score(v, CLOUDY);
+    if (Array.isArray(v)) {
+      // Whole percentages are rounded once, from full precision; the
+      // tables and the report use these.
+      const sc = score(v, CLOUDY);
+      const whole = (x) => (x == null ? null : Math.round(100 * x));
+      out[k] = { ...sc, skillPct: whole(sc.skill), hitPct: whole(sc.hitRate), falsePct: whole(sc.falseRate) };
+    }
     else walk(v, (out[k] = {}));
   }
 };
 walk(pairs, results.tests);
 await mkdir(new URL('clouds/', root), { recursive: true });
-await writeFile(new URL('clouds/results.json', root), JSON.stringify(results, (k, v) => (typeof v === 'number' ? Math.round(v * 1000) / 1000 : v), 2) + '\n');
+// Round once, then build both files from the rounded numbers so they agree.
+const json = JSON.stringify(results, (k, v) => (typeof v === 'number' ? Math.round(v * 10000) / 10000 : v), 2) + '\n';
+await writeFile(new URL('clouds/results.json', root), json);
+Object.assign(results, JSON.parse(json));
 
 // Tables for humans.
 const pct = (x) => (x == null ? '-' : `${Math.round(100 * x)}`);
+const whole = (x) => (x == null ? '-' : `${x}`);
 const num = (x) => (x == null ? '-' : x.toFixed(1));
 const label = (m) => (m === 'blend' ? 'Blend (ECMWF, GFS, NBM)' : config.models[m].label);
 const rows = ['ecmwf_ifs025', 'gfs_global', 'ncep_nbm_conus', 'gfs_hrrr', 'blend'];
@@ -135,7 +145,7 @@ const leadTable = (truth, sub) => {
   const any = Object.values(t)[0][1];
   let s = `\n### Lead time: ${truth}, ${sub}\n\n${any.n} hours, ${any.cloudy} cloudy (${pct(any.cloudy / any.n)} percent). Always clear: MAE ${num(any.maeClear)}.\n\n`;
   s += '| Model | ' + [1, 2, 3, 4, 5, 6, 7].map((d) => `Day ${d} skill / MAE`).join(' | ') + ' |\n|---|' + '---|'.repeat(7) + '\n';
-  for (const m of rows) if (t[m]) s += `| ${label(m)} | ` + [1, 2, 3, 4, 5, 6, 7].map((d) => (t[m][d] ? `${pct(t[m][d].skill)} / ${num(t[m][d].mae)}` : '-')).join(' | ') + ' |\n';
+  for (const m of rows) if (t[m]) s += `| ${label(m)} | ` + [1, 2, 3, 4, 5, 6, 7].map((d) => (t[m][d] ? `${whole(t[m][d].skillPct)} / ${num(t[m][d].mae)}` : '-')).join(' | ') + ' |\n';
   return s;
 };
 md += '\n## Test 1: forecasts made 1 to 7 days ahead (total cloud)\n';
@@ -147,7 +157,7 @@ for (const test of ['lowVsBelow10000ft', 'totalVsBelow12000ft']) for (const sub 
   if (!t) continue;
   const any = Object.values(t)[0][0];
   md += `\n### ${test}, ${sub}\n\n${any.n} hours, ${any.cloudy} cloudy. Always clear: MAE ${num(any.maeClear)}.\n\n| Model | Skill | Hit rate | False-alarm rate | MAE |\n|---|---|---|---|---|\n`;
-  for (const m of rows) if (t[m]) md += `| ${label(m)} | ${pct(t[m][0].skill)} | ${pct(t[m][0].hitRate)} | ${pct(t[m][0].falseRate)} | ${num(t[m][0].mae)} |\n`;
+  for (const m of rows) if (t[m]) md += `| ${label(m)} | ${whole(t[m][0].skillPct)} | ${whole(t[m][0].hitPct)} | ${whole(t[m][0].falsePct)} | ${num(t[m][0].mae)} |\n`;
 }
 await writeFile(new URL('clouds/results.md', root), md);
 console.log(md.split('\n').slice(0, 25).join('\n'));

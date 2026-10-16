@@ -119,3 +119,9 @@ Docs: https://open-meteo.com/en/docs and https://open-meteo.com/en/terms (read 2
 ## How the fixtures are used
 - The tests read the pinned fixtures and never call the network.
 - Run `node scripts/fetch-reference-fixtures.js` by hand to fetch them again. Do this only when the owner asks (see AGENTS.md on change-regenerate).
+
+## Open-Meteo forecast ranges seen from the page (2026-10-16, 12:38 UTC)
+- `ncep_nbm_conus` `cloud_cover`: 192 hourly values (8 days) at the observer and at points 27 to 174 km offshore on bearings 134 to 141.
+- `gfs_hrrr` `cloud_cover_low`: values to 2026-10-18T06:00 UTC, about 42 hours ahead, at the same points.
+- `cell_selection` nearest, land and sea gave the same NBM cells for the observer and a point 59 km out.
+- Open-Meteo `gfs_seamless` day-1 values equal `gfs_hrrr` (Previous Model Runs API, CHS, 2025-06-01). `gfs_global` is GFS.

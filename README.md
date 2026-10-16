@@ -24,7 +24,7 @@ It is a question of illumination geometry: where the rocket is, where the Sun
 is, and whether the plume is lit while Charleston is dark.
 
 This is an independent build from public data sources: the Launch Library 2
-API for launches and api.weather.gov for forecasts. We take no code,
+API for launches and NOAA cloud forecasts through Open-Meteo. We take no code,
 predictions, or images from other launch-visibility sites, although we have
 read how they describe their methods (see `reference/`).
 
@@ -46,19 +46,28 @@ the last copy it has, with its date. (We tried a shared feed on Cloudflare;
 Launch Library 2 rejected every request from Cloudflare's shared addresses,
 so we removed it.)
 
-**Clouds.** Within about 7 days of a launch, each card shows the National
-Weather Service forecast sky cover over the observer at viewing time. Cloud
-overhead is only part of the story, so a button on the card checks sky cover
-at places between the observer and the top of the rocket's arc, out to
-60 km at most. We chose that limit for two reasons. The sight line climbs as
-it goes out, so cloud farther away usually sits below it (at 10 degrees up,
-the line is above 12 km of height by about 66 km out). And the forecast grid
-ran out somewhere between 59 and 107 km offshore when we tested it. A launch
-with a known direction needs about 8 places; one with only a fan of possible
-paths needs about 30 (median 32 over past visible launches), which means up to
-about 60 requests from the visitor's browser, so the page asks only when the button is pressed. The cloud top
-height, the spacing of the places, and how much of the arc counts are our
-choices, not values from a source.
+**Clouds.** Within about 7 days of a launch, each card shows the forecast
+cloud cover over the observer and at places between the observer and the
+top of the rocket's arc, out to 60 km. The sight line climbs as it goes
+out, so cloud farther away usually sits below it (at 10 degrees up, the line
+is above 12 km of height by about 66 km out). The forecast is NOAA's
+National Blend of Models (NBM) through Open-Meteo, and, within about a day
+and a half, NOAA's HRRR low cloud as well. Each card also says how often
+forecasts that far ahead were right at twilight. The cloud top height, the
+spacing of the places, and how much of the arc counts are our choices, not
+values from a source.
+
+**Which cloud forecast, and why.** We did not just pick one. We scored four
+models (ECMWF, GFS, NBM and HRRR) against 21 months of hourly reports from
+11 coastal airports between Wilmington and Jacksonville. NBM was best at
+every lead time from 1 to 7 days, and HRRR was much the best for low cloud
+at short range. Skill fell steadily with lead time: at twilight, NBM's
+score (hit rate minus false-alarm rate) went from 51 at 1 day to 26 at 7
+days. One trap worth knowing: automatic airport stations only report cloud
+below 12,000 ft, so a forecast of high cloud can look wrong when it is not.
+The full write-up, with what we tried, what came second and how to rerun
+it, is in [clouds/README.md](clouds/README.md). It is written to be reused
+for any "will the sky be clear?" app.
 
 **Launch directions.** Launch Library 2 gives no flight direction. The page
 knows it for space station flights (northeast) and for flights to high
@@ -294,15 +303,19 @@ A few things we found along the way:
   shipped it.
 - `sky.html`, `sky.js`, `sky.css`: the camera sky view. `lib/skyproject.js`
   holds its projection math and `config/skyview.json` its defaults.
-- `lib/`: code shared by the page and the scripts. `nws.js` asks the
-  National Weather Service API for sky cover from the browser.
+- `lib/`: code shared by the page and the scripts. `openmeteo.js` asks
+  Open-Meteo for cloud forecasts from the browser.
+- `clouds/`: the cloud forecast study. `README.md` is the report;
+  `results.json` and `results.md` are written by
+  `scripts/score-clouds.js` from the pinned data in `data/clouds/`.
 - `engine/`: the geometry engine. Pure ES modules with no DOM, no network
   access, and no dependencies, so that the same code can run in the page and
   in a Cloudflare Worker.
 - `config/`: reviewed, versioned inputs. `observer.json` is the observer
   point; `profiles.json` holds the ascent profiles; `visibility.json` holds
   the thresholds and azimuths; `weather.json` holds the cloud check
-  settings; `launch-directions.json` holds directions
+  settings; `cloud-stations.json` holds the airports and models of the
+  cloud study; `launch-directions.json` holds directions
   we set by hand for upcoming launches; `skyview.json` holds the sky view
   defaults.
 - `test/`: tests for the engine, and `test/fixtures/` with the pinned

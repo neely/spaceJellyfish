@@ -86,27 +86,11 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       Until then, other vehicles use the Falcon 9 members with low
       confidence.
 - [ ] Ascent data from flights after 2020. None found yet.
-- [ ] Cloud by layer (Ben, 2026-10-15). Tested live 2026-10-16: Open-Meteo
-      works from the page, five places in one request, and offshore past
-      the NWS grid; it disagrees strongly with NWS for Bandwagon 5
-      (reference/data-sources.md). NWS ceilingHeight was null; the TAF is
-      blocked from a page. Ben to decide. Notes from 2026-10-15:
-      Scoring (2026-10-16): forecasts made 1 to 3 days before against
-      airport reports. One week, 11 coastal stations, 816 hours, 142
-      cloudy: all four models (ECMWF, GFS, HRRR, NBM) beat "always
-      clear" (MAE 13 to 18 against 18) and caught 84 to 95 percent of
-      cloudy hours; ECMWF had the lowest MAE. One clear week; not
-      enough. Next: score 2025-01 onward from the IEM archive and the
-      previous-runs API, twilight hours apart, before choosing a source.
-      Open-Meteo gives hourly cloud cover low (to 3 km), mid (3 to 8 km)
-      and high (above 8 km) from NOAA models, 7 to 16 days, free for
-      non-commercial use up to 10,000 calls a day, data CC BY 4.0
-      (open-meteo.com/en/docs and /en/terms, read 2026-10-15). With
-      layers, each layer can use its own sight-line reach. Test from the
-      page: CORS, several places in one request, points offshore. Also
-      try the NWS `ceilingHeight` layer, already in the grid response.
-      The KCHS TAF has layer heights but covers only about 24 h and one
-      airport, and aviationweather.gov says CORS is not permitted.
+- [x] Cloud by layer and a scored cloud source (Ben, 2026-10-15 and 16).
+      Done 2026-10-16 (v0.5.0): 21-month test of four models against 11
+      coastal airports (clouds/README.md); the page uses NBM all-sky cloud
+      and HRRR low cloud. Observed: tests pass; report tables checked
+      against results.json by test; live page checked (see JOURNAL).
 
 ## Phase 3 — Worker cron, KV state, email alerts  ← NEXT
 - [ ] Confirm KV free-tier read and write limits against the planned cadence.
@@ -168,6 +152,14 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   search of Ben's repos found no other cron. That search may not cover
   private repos.
 - Alert timing: how long before T-0, and how many emails per launch?
+- Clouds: the 60 km cap (config/weather.json maxReachM) was set by the NWS
+  grid edge. NBM answers farther out. Keep it or let the sight line set
+  the reach?
+- Clouds: does thin high cloud hide a lit plume? No source. A sighting
+  through a forecast of high cloud would show it.
+- Clouds: score the offshore part of the line of sight against GOES
+  satellite cloud. Not tried.
+- Clouds: add the TAF (NWS API) for the last day? Airports only.
 
 ---
 

@@ -8,19 +8,20 @@ Read this index. Pick the few notes whose answers match your question. Read only
 
 ## Tags (count of notes)
 
-sun-position 6, sidereal-time 2, geodesy 6, trajectory 9, ascent-profile 6, telemetry 5, launch-data 8, twilight 6, illumination 7, plume 5, visibility 9, sightings 4, weather 2, cloudflare 2, email 1, data-access 6, sky-view 2
+sun-position 6, sidereal-time 2, geodesy 6, trajectory 9, ascent-profile 6, telemetry 5, launch-data 8, twilight 7, illumination 7, plume 5, visibility 10, sightings 4, weather 3, cloudflare 2, email 1, data-access 7, sky-view 2
 
 ## Papers (0), high relevance first, then newest
 
 | key | year | relevance | topics | answers |
 |---|---|---|---|---|
 
-## Topic notes (13)
+## Topic notes (14)
 
 | key | distilled | relevance | topics | answers |
 |---|---|---|---|---|
 | [topics/cape-launch-azimuths-and-inclinations](topics/cape-launch-azimuths-and-inclinations.md) | 2026-10-08 | high | trajectory, launch-data, ascent-profile, visibility | Which launch azimuths are allowed from the Cape, how do azimuth and inclination relate, what inclination goes with each mission class, and how can we know the... |
 | [topics/charleston-sighting-reports](topics/charleston-sighting-reports.md) | 2026-10-08 | high | sightings, visibility, plume, twilight | Which past Florida launches did Charleston-area outlets report as seen, and which of those reports are solid enough to use as positive labels for a backtest? |
+| [topics/cloud-forecasts-for-sky-viewing](topics/cloud-forecasts-for-sky-viewing.md) | 2026-10-16 | high | weather, data-access, visibility, twilight | For any app that asks whether the sky will be clear (launches, satellites, meteors, comets), which free cloud forecasts can a browser page use, which scored... |
 | [topics/falcon9-ascent-timeline](topics/falcon9-ascent-timeline.md) | 2026-10-08 | high | ascent-profile, telemetry, trajectory, launch-data | At what time after liftoff do Falcon 9 MECO, stage separation, SES-1, fairing separation, entry burn, landing and SECO-1 happen for current Cape missions, what... |
 | [topics/falcon9-starlink-2020-telemetry](topics/falcon9-starlink-2020-telemetry.md) | 2026-10-15 | high | telemetry, ascent-profile, trajectory, data-access | What ascent data exists for Falcon 9 Starlink flights, where is it vendored, how is downrange derived from it, and does a Starlink-shaped ascent explain the... |
 | [topics/falcon9-webcast-telemetry](topics/falcon9-webcast-telemetry.md) | 2026-10-08 | high | telemetry, ascent-profile, trajectory, data-access | Where do the altitude and downrange curves in config/profiles.json come from, which missions are used and why, and what are the limits of that data? |

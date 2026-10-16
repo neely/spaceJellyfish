@@ -3,8 +3,8 @@
 import { evaluateLaunch } from './engine/visibility.js';
 import { LL2_UPCOMING_URL, reduceLaunch } from './lib/ll2.js';
 import { applyDirections } from './lib/directions.js';
-import { directionalPoints, layerValueAt, skySummary } from './engine/weather.js';
-import { skyCoverAt, skyCoverMany } from './lib/nws.js';
+import { directionalPoints, skySummary } from './engine/weather.js';
+import { forecastUrl, valuesAt, fetchForecast } from './lib/openmeteo.js';
 
 // LL2 allows 15 unauthenticated requests per hour for each address. The
 // page keeps the last answer and asks again only when it is this old.
@@ -15,8 +15,6 @@ const HORIZON_KEY = 'spacejellyfish.horizonDeg';
 const PRECISE = ['Second', 'Minute', 'Hour'];
 const SLIP_STEP_MIN = 10;
 const SLIP_RANGE_MIN = 120;
-// The NWS grid forecast reaches about seven days ahead (reference/data-sources.md).
-const FORECAST_DAYS = 7;
 
 const $ = (sel) => document.querySelector(sel);
 const el = (tag, attrs = {}, ...children) => {
@@ -43,6 +41,8 @@ const [observer, profiles, config, weather, directions] = await Promise.all([
   getJson('config/weather.json'),
   getJson('config/launch-directions.json').catch(() => ({})),
 ]);
+// Scores from the cloud forecast test, quoted on each card (clouds/README.md).
+const cloudScores = await getJson('clouds/results.json').catch(() => null);
 
 const fmt = (opts) => new Intl.DateTimeFormat('en-US', { timeZone: observer.timeZone, ...opts });
 const dayFmt = fmt({ weekday: 'long', month: 'long', day: 'numeric' });
@@ -193,69 +193,83 @@ function slipTable(launch) {
   return el('div', {}, el('p', { class: 'note first' }, summary), box);
 }
 
-// Cloud forecast for one launch. The local value loads by itself (one
-// place). The values toward the launch load only when the button is pressed,
-// because they need one or two requests for each of many places.
-// Decision: FINDINGS, "Weather: local and directional sky cover".
+// Cloud forecast for one launch, loaded by itself: one request for every
+// place. All-sky cloud from NBM, which scored best at every lead time from
+// 1 to 7 days; low cloud from HRRR once the launch is in its range, which
+// scored best for low cloud at short lead. Test and numbers: clouds/README.md.
+// Which places: FINDINGS, "Weather: local and directional sky cover".
 function weatherSection(result, liftoff) {
   const box = el('div', { class: 'weather' });
   box.append(el('h3', {}, 'Clouds'));
   const viewMs = liftoff + ((result.firstVisibleS + result.lastVisibleS) / 2) * 1000;
-  if (viewMs - Date.now() > FORECAST_DAYS * 86400e3) {
-    box.append(el('p', { class: 'note first' }, `Forecast not available yet. The National Weather Service forecast reaches about ${FORECAST_DAYS} days ahead; check back closer to launch.`));
+  const { allSky, lowCloud } = weather.forecast;
+  const daysAhead = (viewMs - Date.now()) / 86400e3;
+  if (daysAhead > allSky.days - 0.5) {
+    box.append(el('p', { class: 'note first' }, `Forecast not available yet. Cloud forecasts reach about ${allSky.days - 1} days ahead; check back closer to launch.`));
     return box;
   }
   const pct = (v) => (v == null ? 'no forecast' : `${Math.round(v)}%`);
-
-  const local = el('p', {}, 'Sky cover over you: loading the forecast...');
-  box.append(local);
-  skyCoverAt(observer).then(({ values, reason }) => {
-    const v = values ? layerValueAt(values, viewMs) : null;
-    local.textContent = v == null
-      ? `Sky cover over you: forecast not available yet${reason ? ` (${reason})` : ''}.`
-      : `Sky cover over you at viewing time: ${pct(v)} (National Weather Service forecast).`;
-  });
-
   const { rays, points } = directionalPoints({ observer, tracks: result.tracks, params: weather.params });
-  if (points.length === 0) return box;
-  const reachKm = Math.round(Math.max(...rays.map((r) => r.reachM)) / 1000);
-  box.append(el('p', { class: 'note first' },
-    `Clear sky overhead is not enough: cloud low toward the launch can hide it. ` +
-    `The button below asks the National Weather Service for the forecast sky cover at ${points.length} places ` +
-    `between you and the top of the rocket's arc, up to ${reachKm} km away. That is where cloud can block your view; ` +
-    `cloud farther out is below your line of sight. It sends up to ${2 * points.length} requests from your device ` +
-    `and can take several seconds. Answers are kept for an hour.`));
-  const button = el('button', { type: 'button' }, `Check clouds toward the launch (${points.length} places)`);
+  const places = [observer, ...points];
+  const status = el('p', {}, 'Loading the cloud forecast...');
   const out = el('div');
-  button.addEventListener('click', async () => {
-    button.disabled = true;
-    const series = await skyCoverMany(points, (done, total) => {
-      button.textContent = `Checking ${done} of ${total} places...`;
-    });
-    const values = series.map((s) => (s.values ? layerValueAt(s.values, viewMs) : null));
-    const sum = skySummary({ local: null, directional: values });
-    const table = el('table', { class: 'minutes' });
-    table.append(el('tr', {}, el('th', {}, 'Toward'), el('th', {}, 'Out to'), el('th', {}, 'Sky cover')));
-    for (const ray of rays) {
-      const vs = points.map((p, i) => (p.bearingDeg === ray.bearingDeg ? values[i] : undefined)).filter((v) => v !== undefined);
-      const known = vs.filter((v) => v != null);
-      const lo = known.length ? Math.round(Math.min(...known)) : null;
-      const hi = known.length ? Math.round(Math.max(...known)) : null;
-      const text = known.length === 0 ? 'no forecast' : lo === hi ? `${hi}%` : `${lo}% to ${hi}%`;
-      const gap = vs.length - known.length;
-      table.append(el('tr', {}, el('td', {}, `${compass(ray.bearingDeg)} (${ray.bearingDeg}°)`), el('td', {}, `${Math.round(ray.reachM / 1000)} km`), el('td', {}, gap && known.length ? `${text}, ${gap} with no forecast` : text)));
+  box.append(status, out);
+
+  (async () => {
+    let all;
+    try {
+      all = valuesAt(await fetchForecast(forecastUrl({ places, ...allSky })), allSky.variable, viewMs);
+    } catch (error) {
+      status.textContent = `Cloud forecast not available (${error.message}). Try again later.`;
+      return;
     }
-    out.replaceChildren(
-      el('p', {}, sum.directional.maxPct == null
-        ? 'No forecast for these places at viewing time.'
-        : `Toward the launch: up to ${pct(sum.directional.maxPct)} sky cover, ${pct(sum.directional.meanPct)} on average over ${sum.directional.points - sum.directional.missing} places.` +
-          (sum.directional.missing ? ` ${sum.directional.missing} places had no forecast.` : '')),
-      table,
-      el('p', { class: 'note' }, 'Weather does not change the jellyfish verdict above; the geometry does. A high number on a row means cloud is forecast somewhere along that direction.'),
-    );
-    button.textContent = 'Checked. Answers are kept for an hour.';
-  });
-  box.append(button, out);
+    let low = null;
+    if (daysAhead < lowCloud.days) {
+      try {
+        low = valuesAt(await fetchForecast(forecastUrl({ places, ...lowCloud })), lowCloud.variable, viewMs);
+        if (low.every((v) => v == null)) low = null; // launch beyond HRRR's range
+      } catch { low = null; }
+    }
+    const toward = skySummary({ local: all[0], directional: all.slice(1) });
+    status.replaceChildren(el('strong', {}, 'Over you: '), `${pct(all[0])} cloud cover at viewing time.`);
+    if (points.length) {
+      const reachKm = Math.round(Math.max(...rays.map((r) => r.reachM)) / 1000);
+      out.append(el('p', {}, el('strong', {}, 'Toward the launch: '), toward.directional.maxPct == null
+        ? 'no forecast for these places.'
+        : `up to ${pct(toward.directional.maxPct)}, ${pct(toward.directional.meanPct)} on average, over ${points.length} places from you out to ${reachKm} km under the top of the rocket's arc. Cloud farther out is below your line of sight.`));
+    }
+    if (low) {
+      const lowToward = skySummary({ local: low[0], directional: low.slice(1) });
+      out.append(el('p', {}, el('strong', {}, 'Low cloud (below about 3 km): '),
+        `${pct(low[0])} over you` + (points.length ? `, up to ${pct(lowToward.directional.maxPct)} toward the launch.` : '.')));
+    }
+    if (points.length) {
+      const table = el('table', { class: 'minutes' });
+      table.append(el('tr', {}, el('th', {}, 'Toward'), el('th', {}, 'Out to'), el('th', {}, 'Cloud'), ...(low ? [el('th', {}, 'Low cloud')] : [])));
+      const range = (vals) => {
+        const known = vals.filter((v) => v != null);
+        if (!known.length) return 'no forecast';
+        const lo = Math.round(Math.min(...known));
+        const hi = Math.round(Math.max(...known));
+        return lo === hi ? `${hi}%` : `${lo}% to ${hi}%`;
+      };
+      for (const ray of rays) {
+        const idx = points.map((p, i) => (p.bearingDeg === ray.bearingDeg ? i + 1 : -1)).filter((i) => i > 0);
+        table.append(el('tr', {}, el('td', {}, `${compass(ray.bearingDeg)} (${ray.bearingDeg}°)`), el('td', {}, `${Math.round(ray.reachM / 1000)} km`),
+          el('td', {}, range(idx.map((i) => all[i]))), ...(low ? [el('td', {}, range(idx.map((i) => low[i])))] : [])));
+      }
+      out.append(table);
+    }
+    // How good forecasts this far ahead have been, from the cloud test.
+    const lead = String(Math.min(7, Math.max(1, Math.ceil(daysAhead))));
+    const s = cloudScores?.tests?.lead?.fullSky?.twilight?.[allSky.model]?.[lead];
+    const trust = s
+      ? `How far to trust it: in 2025 and 2026, cloud forecasts like this one made ${lead} day${lead === '1' ? '' : 's'} ahead caught ${s.hitPct}% of cloudy twilight hours at the four coastal airports that report the whole sky, and called ${s.falsePct}% of clear ones cloudy. `
+      : '';
+    out.append(el('p', { class: 'note' }, trust, 'Clouds do not change the jellyfish verdict above; the geometry does. ',
+      el('a', { href: 'https://github.com/neely/spaceJellyfish/blob/main/clouds/README.md' }, 'How we chose this forecast'), '. ',
+      'Forecasts: NOAA NBM', low ? ' and HRRR' : '', ' via ', el('a', { href: 'https://open-meteo.com/' }, 'Open-Meteo'), ' (CC BY 4.0).'));
+  })();
   return box;
 }
 
