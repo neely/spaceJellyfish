@@ -2,11 +2,15 @@
   "note": "Parameters for engine/weather.js. Decision: FINDINGS.md, 'Weather: local and directional sky cover'. Values marked provisional have no outside source.",
   "params": {
     "cloudTopM": 12000,
+    "topArcFraction": 0.8,
+    "maxReachM": 60000,
     "bearingStepDeg": 10,
     "spacingM": 15000
   },
   "sources": {
     "cloudTopM": "Provisional. No source found. Chosen high so that only a sight line above almost all cloud is treated as clear. A lower value shortens every ray.",
+    "topArcFraction": "Ben's choice, 2026-10-15: only the top of the arc matters; he agreed to 0.8. It keeps the top 20 percent of each track's highest elevation. A fixed 20 degree limit was rejected: 17 of 60 visible snapshot launches never reach 20 degrees.",
+    "maxReachM": "Ben's choice, 2026-10-15. The NWS grid gave a forecast 59 km offshore and none at 107 km on bearing 134 to 138 (reference/data-sources.md). 60 km is near the last point known to have a grid.",
     "bearingStepDeg": "Provisional. Our choice, to keep the number of forecast requests small. Not a physical value.",
     "spacingM": "Provisional. Our choice, to keep the number of forecast requests small."
   }

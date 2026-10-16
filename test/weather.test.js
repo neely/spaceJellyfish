@@ -57,7 +57,9 @@ const sample = (bearingDeg, elevationDeg, visible) => ({
   rangeM: 600000,
   visible,
 });
-const params = { cloudTopM: 12000, bearingStepDeg: 10, spacingM: 15000 };
+// Test values only. The values in use are in config/weather.json. The cap
+// and the top-arc filter are off here unless a test sets them.
+const params = { cloudTopM: 12000, topArcFraction: 0, maxReachM: Infinity, bearingStepDeg: 10, spacingM: 15000 };
 
 test('directionalPoints: no visible sample gives no rays and no points', () => {
   const out = directionalPoints({ observer, tracks: [{ samples: [sample(120, 20, false)] }], params });
@@ -135,4 +137,24 @@ test('skySummary: reports missing points and does not fill them', () => {
     localPct: null,
     directional: { points: 1, missing: 1, maxPct: null, meanPct: null },
   });
+});
+
+test('directionalPoints: only the top of each track\'s arc sets a ray', () => {
+  // Peak 30 degrees, fraction 0.8: the limit is 24 degrees for this track.
+  const tracks = [
+    { samples: [sample(100, 10, true), sample(120, 30, true), sample(130, 25, true), sample(160, 20, true)] },
+    // A low track keeps its own top: peak 9, limit 7.2.
+    { samples: [sample(170, 9, true), sample(175, 6, true)] },
+  ];
+  const { rays } = directionalPoints({ observer, tracks, params: { ...params, topArcFraction: 0.8 } });
+  assert.deepEqual(rays.map((r) => r.bearingDeg), [120, 130, 170]);
+});
+
+test('directionalPoints: no point lies beyond maxReachM', () => {
+  // 5 degrees reaches 12 km of height at about 123 km; the cap is 60 km.
+  const tracks = [{ samples: [sample(140, 5, true)] }];
+  const { rays, points } = directionalPoints({ observer, tracks, params: { ...params, maxReachM: 60000 } });
+  assert.equal(rays[0].reachM, 60000);
+  assert.equal(Math.max(...points.map((p) => p.distanceM)), 60000);
+  assert.equal(points.length, 4);
 });

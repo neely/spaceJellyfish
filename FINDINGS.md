@@ -15,7 +15,7 @@ Discovered truths. Facts you did not choose.
 ### Tripwires
 Expected counts, known splits, sanity bounds. Recompute a derived set against
 these before you trust it. Hard-stop on mismatch.
-- `npm test` — expected 64 tests, 64 pass, 0 fail (2026-10-15). The count
+- `npm test` — expected 66 tests, 66 pass, 0 fail (2026-10-15). The count
   grows when tests are added; update this line in the same commit.
 - `test/fixtures/usno-celnav-sun.json` — expected 12 cases. The engine must
   agree with each within 1/60 degree in GHA, declination, and altitude.
@@ -253,13 +253,17 @@ detail and quotes: reference/data-sources.md.
   block the view is the near part of the triangle. At 10 degrees or more,
   no cloud beyond 66 km can block it. That is inside the grid, which
   reaches at least 59 km offshore.
-- engine/weather.js with config/weather.json (cloud top 12 km, bins of
-  10 degrees, points every 15 km), over the 60 snapshot launches that are
-  not 'no': 7 to 97 directional points per launch (median 74), 13 rays
-  median, reach 15 to 123 km (median 104). The long reach comes from the
-  visible samples near the 5 degree lowest elevation. SpX-35 (fan): 14
-  rays, 91 points. With two requests per point, that is far above a
-  reasonable page load. Checked by a one-off command, not a script.
+- Directional points per launch, over the 60 snapshot launches that are
+  not 'no' (one-off commands, 2026-10-15; bins of 10 degrees, points every
+  15 km, cloud top 12 km):
+  - Every visible sample, no cap: 7 to 97 (median 74); reach up to 123
+    km. The long reach comes from samples near the 5 degree lowest
+    elevation.
+  - Fixed limit of 20 degrees: 17 of the 60 launches get no ray, because
+    they never reach 20 degrees.
+  - Top 20 percent of each track's arc and a 60 km cap (config in use):
+    7 to 33 (median 28). Fan class 32 median (50 launches), due-east class
+    19 (10 launches). SpX-35 flown as a station launch: 8 points.
 
 #### Engine CPU time (2026-10-08, before the 2020 members)
 - On the development Mac with Node 26: 0.43 ms for each launch over the
@@ -577,8 +581,12 @@ Choices made, and why. Mark settled ones `(locked)`.
   visible track. The points run from the observer out to the nearer of
   two limits: where the sight line rises above a cloud top height, or
   the ground point under the plume. No point lies beyond either limit.
+  Only the top of the arc counts: samples at or above 0.8 of each
+  track's highest visible elevation. No point is farther than 60 km.
   The page shows both values. A point with no grid is reported as no
-  data, not filled in.
+  data, not filled in. The local value loads by itself; the directional
+  values load only when the visitor presses a button that says what it
+  asks for and how many requests it sends.
 - Why: Only cloud under the sight line can block the view (Ben,
   2026-10-15: "think of it like a triangle"). Overhead cloud hides
   everything; a clear sky overhead can still have a cloud bank on the
@@ -588,6 +596,8 @@ Choices made, and why. Mark settled ones `(locked)`.
   config with that label.
 - Rejected: The point forecast alone, which can say clear when the
   horizon toward the plume is not. Points out to the plume, which count
-  cloud far below the sight line.
+  cloud far below the sight line. Every visible sample with no cap (74
+  points median). A fixed 20 degree limit (no ray for 17 of 60 launches).
+  Directional values on every page load.
 - Not settled here: the weights that turn the two values into a
   modifier.

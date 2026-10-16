@@ -44,25 +44,36 @@ export function subRocketGroundDistanceM({ rangeM, elevationDeg, heightM }) {
  * tracks: engine tracks with samples (evaluateLaunch withSamples: true).
  * params (config/weather.json):
  *   cloudTopM        a sight line above this height cannot be blocked
+ *   topArcFraction   use only the visible samples of a track at or above
+ *                    this fraction of that track's highest visible
+ *                    elevation (the top of the arc)
+ *   maxReachM        no point lies farther than this from the observer
  *   bearingStepDeg   visible bearings are grouped in bins of this width
  *   spacingM         distance between points along one bearing
  *
  * For each bin of bearing, the reach is the largest distance over the
- * visible samples in that bin of min(sight line reaches cloudTopM, point
- * under the rocket). No point lies beyond the reach. The observer point
- * itself is not included; it is the local value.
+ * top-arc samples in that bin of min(sight line reaches cloudTopM, point
+ * under the rocket, maxReachM). No point lies beyond the reach. The
+ * observer point itself is not included; it is the local value.
  *
  * Returns { rays: [{ bearingDeg, reachM, minElevationDeg }],
  *           points: [{ bearingDeg, distanceM, latitudeDeg, longitudeDeg }] }.
  * Both are empty when no sample is visible.
  */
 export function directionalPoints({ observer, tracks, params }) {
-  const { cloudTopM, bearingStepDeg, spacingM } = params;
+  const { cloudTopM, topArcFraction, maxReachM, bearingStepDeg, spacingM } = params;
   const bins = new Map();
   for (const track of tracks) {
-    for (const s of track.samples ?? []) {
-      if (!s.visible) continue;
-      const reachM = Math.min(sightLineGroundDistanceM(s.elevationDeg, cloudTopM), subRocketGroundDistanceM(s));
+    const visible = (track.samples ?? []).filter((s) => s.visible);
+    if (visible.length === 0) continue;
+    const peakDeg = Math.max(...visible.map((s) => s.elevationDeg));
+    for (const s of visible) {
+      if (s.elevationDeg < topArcFraction * peakDeg) continue;
+      const reachM = Math.min(
+        sightLineGroundDistanceM(s.elevationDeg, cloudTopM),
+        subRocketGroundDistanceM(s),
+        maxReachM,
+      );
       const bin = Math.round(s.bearingDeg / bearingStepDeg) % Math.round(360 / bearingStepDeg);
       const prev = bins.get(bin);
       if (!prev) bins.set(bin, { reachM, minElevationDeg: s.elevationDeg });

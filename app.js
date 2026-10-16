@@ -3,6 +3,8 @@
 import { evaluateLaunch } from './engine/visibility.js';
 import { LL2_UPCOMING_URL, reduceLaunch } from './lib/ll2.js';
 import { applyDirections } from './lib/directions.js';
+import { directionalPoints, layerValueAt, skySummary } from './engine/weather.js';
+import { skyCoverAt, skyCoverMany } from './lib/nws.js';
 
 // LL2 allows 15 unauthenticated requests per hour for each address. The
 // page keeps the last answer and asks again only when it is this old.
@@ -13,6 +15,8 @@ const HORIZON_KEY = 'spacejellyfish.horizonDeg';
 const PRECISE = ['Second', 'Minute', 'Hour'];
 const SLIP_STEP_MIN = 10;
 const SLIP_RANGE_MIN = 120;
+// The NWS grid forecast reaches about seven days ahead (reference/data-sources.md).
+const FORECAST_DAYS = 7;
 
 const $ = (sel) => document.querySelector(sel);
 const el = (tag, attrs = {}, ...children) => {
@@ -32,10 +36,11 @@ const svgEl = (tag, attrs = {}, text) => {
 };
 
 const getJson = async (path) => (await fetch(path)).json();
-const [observer, profiles, config, directions] = await Promise.all([
+const [observer, profiles, config, weather, directions] = await Promise.all([
   getJson('config/observer.json'),
   getJson('config/profiles.json'),
   getJson('config/visibility.json'),
+  getJson('config/weather.json'),
   getJson('config/launch-directions.json').catch(() => ({})),
 ]);
 
@@ -188,6 +193,72 @@ function slipTable(launch) {
   return el('div', {}, el('p', { class: 'note first' }, summary), box);
 }
 
+// Cloud forecast for one launch. The local value loads by itself (one
+// place). The values toward the launch load only when the button is pressed,
+// because they need one or two requests for each of many places.
+// Decision: FINDINGS, "Weather: local and directional sky cover".
+function weatherSection(result, liftoff) {
+  const box = el('div', { class: 'weather' });
+  box.append(el('h3', {}, 'Clouds'));
+  const viewMs = liftoff + ((result.firstVisibleS + result.lastVisibleS) / 2) * 1000;
+  if (viewMs - Date.now() > FORECAST_DAYS * 86400e3) {
+    box.append(el('p', { class: 'note first' }, `Forecast not available yet. The National Weather Service forecast reaches about ${FORECAST_DAYS} days ahead; check back closer to launch.`));
+    return box;
+  }
+  const pct = (v) => (v == null ? 'no forecast' : `${Math.round(v)}%`);
+
+  const local = el('p', {}, 'Sky cover over you: loading the forecast...');
+  box.append(local);
+  skyCoverAt(observer).then(({ values, reason }) => {
+    const v = values ? layerValueAt(values, viewMs) : null;
+    local.textContent = v == null
+      ? `Sky cover over you: forecast not available yet${reason ? ` (${reason})` : ''}.`
+      : `Sky cover over you at viewing time: ${pct(v)} (National Weather Service forecast).`;
+  });
+
+  const { rays, points } = directionalPoints({ observer, tracks: result.tracks, params: weather.params });
+  if (points.length === 0) return box;
+  const reachKm = Math.round(Math.max(...rays.map((r) => r.reachM)) / 1000);
+  box.append(el('p', { class: 'note first' },
+    `Clear sky overhead is not enough: cloud low toward the launch can hide it. ` +
+    `The button below asks the National Weather Service for the forecast sky cover at ${points.length} places ` +
+    `between you and the top of the rocket's arc, up to ${reachKm} km away. That is where cloud can block your view; ` +
+    `cloud farther out is below your line of sight. It sends up to ${2 * points.length} requests from your device ` +
+    `and can take several seconds. Answers are kept for an hour.`));
+  const button = el('button', { type: 'button' }, `Check clouds toward the launch (${points.length} places)`);
+  const out = el('div');
+  button.addEventListener('click', async () => {
+    button.disabled = true;
+    const series = await skyCoverMany(points, (done, total) => {
+      button.textContent = `Checking ${done} of ${total} places...`;
+    });
+    const values = series.map((s) => (s.values ? layerValueAt(s.values, viewMs) : null));
+    const sum = skySummary({ local: null, directional: values });
+    const table = el('table', { class: 'minutes' });
+    table.append(el('tr', {}, el('th', {}, 'Toward'), el('th', {}, 'Out to'), el('th', {}, 'Sky cover')));
+    for (const ray of rays) {
+      const vs = points.map((p, i) => (p.bearingDeg === ray.bearingDeg ? values[i] : undefined)).filter((v) => v !== undefined);
+      const known = vs.filter((v) => v != null);
+      const lo = known.length ? Math.round(Math.min(...known)) : null;
+      const hi = known.length ? Math.round(Math.max(...known)) : null;
+      const text = known.length === 0 ? 'no forecast' : lo === hi ? `${hi}%` : `${lo}% to ${hi}%`;
+      const gap = vs.length - known.length;
+      table.append(el('tr', {}, el('td', {}, `${compass(ray.bearingDeg)} (${ray.bearingDeg}°)`), el('td', {}, `${Math.round(ray.reachM / 1000)} km`), el('td', {}, gap && known.length ? `${text}, ${gap} with no forecast` : text)));
+    }
+    out.replaceChildren(
+      el('p', {}, sum.directional.maxPct == null
+        ? 'No forecast for these places at viewing time.'
+        : `Toward the launch: up to ${pct(sum.directional.maxPct)} sky cover, ${pct(sum.directional.meanPct)} on average over ${sum.directional.points - sum.directional.missing} places.` +
+          (sum.directional.missing ? ` ${sum.directional.missing} places had no forecast.` : '')),
+      table,
+      el('p', { class: 'note' }, 'Weather does not change the jellyfish verdict above; the geometry does. A high number on a row means cloud is forecast somewhere along that direction.'),
+    );
+    button.textContent = 'Checked. Answers are kept for an hour.';
+  });
+  box.append(button, out);
+  return box;
+}
+
 function fact(label, value) {
   return el('div', {}, el('dt', {}, label), el('dd', {}, value));
 }
@@ -220,6 +291,7 @@ function launchCard(launch) {
       : `starts ${compass(lead.firstBearingDeg)}, peaks ${compass(lead.peakBearingDeg)}, ends ${compass(lead.lastBearingDeg)}`));
     facts.append(fact('Sun below horizon', `${Math.abs(result.sunElevationDeg).toFixed(0)}°`));
     card.append(facts);
+    card.append(weatherSection(result, liftoff));
 
     card.append(el('h3', {}, 'Where to look'));
     card.append(el('p', {}, el('a', { class: 'sky-link', href: `sky.html?id=${encodeURIComponent(launch.id)}` }, 'Point your phone at the sky: see this path over your trees →')));

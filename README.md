@@ -28,7 +28,8 @@ read how they describe their methods (see `reference/`).
 
 ## Status
 There is a live web page and a tested geometry engine, but there are no alerts
-yet and weather is not included.
+yet. The page shows a cloud forecast next to the verdict; the verdict itself
+is still geometry only.
 [PLAN.md](PLAN.md) holds the roadmap.
 
 **The page.** `index.html` lists upcoming Cape Canaveral and Kennedy Space
@@ -42,6 +43,20 @@ the page asks from each visitor's own browser, and if that fails it shows
 the last copy it has, with its date. (We tried a shared feed on Cloudflare;
 Launch Library 2 rejected every request from Cloudflare's shared addresses,
 so we removed it.)
+
+**Clouds.** Within about 7 days of a launch, each card shows the National
+Weather Service forecast sky cover over the observer at viewing time. Cloud
+overhead is only part of the story, so a button on the card checks sky cover
+at places between the observer and the top of the rocket's arc, out to
+60 km at most. We chose that limit for two reasons. The sight line climbs as
+it goes out, so cloud farther away usually sits below it (at 10 degrees up,
+the line is above 12 km of height by about 66 km out). And the forecast grid
+ran out somewhere between 59 and 107 km offshore when we tested it. A launch
+with a known direction needs about 8 places; one with only a fan of possible
+paths needs about 30 (median 32 over past visible launches), which means up to
+about 60 requests from the visitor's browser, so the page asks only when the button is pressed. The cloud top
+height, the spacing of the places, and how much of the arc counts are our
+choices, not values from a source.
 
 **Launch directions.** Launch Library 2 gives no flight direction. The page
 knows it for space station flights (northeast) and for flights to high
@@ -272,13 +287,15 @@ A few things we found along the way:
   repo root is the site.
 - `sky.html`, `sky.js`, `sky.css`: the camera sky view. `lib/skyproject.js`
   holds its projection math and `config/skyview.json` its defaults.
-- `lib/`: code shared by the page and the scripts.
+- `lib/`: code shared by the page and the scripts. `nws.js` asks the
+  National Weather Service API for sky cover from the browser.
 - `engine/`: the geometry engine. Pure ES modules with no DOM, no network
   access, and no dependencies, so that the same code can run in the page and
   in a Cloudflare Worker.
 - `config/`: reviewed, versioned inputs. `observer.json` is the observer
   point; `profiles.json` holds the ascent profiles; `visibility.json` holds
-  the thresholds and azimuths; `launch-directions.json` holds directions
+  the thresholds and azimuths; `weather.json` holds the cloud check
+  settings; `launch-directions.json` holds directions
   we set by hand for upcoming launches; `skyview.json` holds the sky view
   defaults.
 - `test/`: tests for the engine, and `test/fixtures/` with the pinned

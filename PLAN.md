@@ -91,13 +91,12 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 - [x] Decide which cloud matters: local and directional sky cover (FINDINGS
       Decisions). Observed: sight-line distances computed (FINDINGS
       Reference).
-- [ ] `engine/weather.js` (pure): from a launch's visible track, give the
+- [x] `engine/weather.js` (pure): from a launch's visible track, give the
       directional sample points; from skyCover series, give the local and
       directional values at the visible time. Geometry stays the primary
       signal. Cloud top height in config, marked provisional.
-      Done 2026-10-15: engine/weather.js, config/weather.json, 12 tests.
-      Not ticked: the point count is too high (FINDINGS Reference). Choose
-      which part of the pass sets the rays first (see Open questions).
+      Observed 2026-10-15: 66 tests pass; top 20 percent of the arc and a
+      60 km cap give 7 to 33 points per launch (FINDINGS Reference).
 - [ ] The page shows the modifier only when the forecast covers T-0.
       Otherwise it shows "forecast not available yet".
 
@@ -150,11 +149,6 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 - Weather: how often was the line of sight clouded on past twilight
   launches? This needs historical cloud data, not the forecast API. Not
   part of Phase 2.
-- Weather: which part of the pass sets the directional rays? Every
-  visible sample gives a median of 74 points per launch, mostly from the
-  low start and end of the pass near 5 degrees. Options: only bins near
-  the peak bearing; a higher lowest elevation for weather only; larger
-  spacing; cap the reach at the grid edge. Ben decides.
 - Weather: how do the local and directional sky cover values combine into
   one modifier? No source gives weights. Show both raw values first.
 - Launch weather rules at the Cape: a launch that goes says the pad sky
