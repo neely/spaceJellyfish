@@ -120,6 +120,11 @@ Things that look wrong but are correct. Do not "fix" these.
   share, and LL2 counts 15 requests per hour for each address. Do not ask
   LL2 from Cloudflare without a token.
 - Did NOT tune a threshold to remove a missed label. See Decisions.
+- NGA MSI broadcast warnings API
+  (`msi.nga.mil/api/publications/broadcast-warn`) for launch hazard areas
+  → newest NAVAREA IV entry is from May 2024, none about a launch
+  (checked 2026-10-15 and 2026-10-18) → not used. Use the Coast Guard
+  BNM sources in the Runbook, step 6.
 
 ### Reference
 API quirks, schemas, formulas, constants. Organized by topic.

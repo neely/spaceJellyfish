@@ -8,15 +8,16 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ---
 
 ## Status
-- **Active:** none. Phases 0 to 2 and the cloud work are done (v0.7.0:
-  NBM, HRRR low cloud, TAF, and the offshore check on the card;
-  clouds/README.md). Next phase: 2b, unknown trajectories (Ben,
+- **Active:** none. Phases 0 to 2 and the cloud work are done. Live
+  version 0.7.2 (shorter cloud text, miles and feet on the card; not
+  yet seen live). Next phase: 2b, unknown trajectories (Ben,
   2026-10-18). Phase 3 (alerts) starts only when Ben asks.
 - **Last updated:** 2026-10-18
 - **Next action:** Monday 2026-10-19, Bandwagon 5 (window 06:30 to
   07:30 local): save the card's cloud lines, then note the sky toward
   the launch. Direction set to southeast on 2026-10-18 (Coast Guard
-  hazard area); see the Backlog item.
+  hazard area); see the Backlog item. Before that, the three easy wins
+  at the top of the Backlog.
 
 ---
 
@@ -61,6 +62,18 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   labelled.
 
 ## Backlog (open items from Phase 1, in order)
+- [ ] Easy win: check the live page shows "Version 0.7.2", the one-line
+      cloud note with its links, and miles in the cloud table (Bandwagon
+      5 card).
+- [ ] Easy win: Sunday evening, check orbitalradar.com/recovery-fleet
+      for ASOG. If it has sailed, note where it heads in
+      reference/topics/recovery-fleet.md. Southeast agrees with the
+      hazard area.
+- [ ] Easy win: with the Claude desktop app or the Chrome extension
+      running on Ben's Mac, open navcen.uscg.gov/chart and read its
+      network log for the hazard-area feed. This starts Phase 2b,
+      method 1. If the BNM 9080-26 text is found, put its waypoints in
+      the Bandwagon 5 source in config/launch-directions.json.
 - [x] Check the live page (jellyfish.benneely.com) shows 0.7.0 in the
       footer and the "Out over the water" line on the cloud card.
       (0.7.1 folds that line into one shorter sentence.)

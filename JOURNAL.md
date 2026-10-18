@@ -8,6 +8,45 @@ journal/YYYY-MM.md (the month they were written, newest first).
 
 ---
 
+## 2026-10-18 · Bandwagon 5 direction, stale links, Phase 2b, shorter cloud card (0.7.1, 0.7.2)
+
+**Did:** Set Bandwagon 5 to southeast from Coast Guard BNM 9080-26
+(hazard polygon on the NAVCEN chart viewer, Ben's screenshot). ASOG
+was still in port; LL2 still says ASOG at 600 km. Engine: likely,
+prime, but low (9 to 13 degrees, south-southeast). Fixed README and
+runbook links that pointed to a stale orbitalradar ship page. Looked
+for a feed the page could read: Coast Guard BNM pages, RSS and
+GovDelivery exist, but WebFetch could not read them and no browser was
+reachable. Added Phase 2b (unknown trajectories). Shortened the cloud
+note to one sentence (0.7.1). Miles and feet on the card and in the
+README (0.7.2).
+
+**Least confident about (Q1):**
+- That the hazard polygon lies on the ascent track. Its point came from
+  the map cursor. The launch-day report, or the ship's station, will
+  show it.
+- That 0.7.1 and 0.7.2 look right on the page. Not seen live.
+- The miles in the README table. They come from rounded km. A rerun of
+  scripts/observer-sensitivity.js with miles would prove them.
+
+**Unstated assumptions (Q2):** The BNM windows are for this launch and
+not a backup. The great-circle bearing from the pad is close enough to
+the launch azimuth over 700 km. The NAVCEN chart data comes from a feed
+a script can read.
+
+**Biggest thing being missed (Q3):** No automatic direction source is
+proven yet. Every method so far needs a person with a browser.
+
+**Could've gone better (Q4):** I first told Ben the landing was a return
+to the pad, from a search snippet, before I read the repo. The repo and
+LL2 both said ASOG. Read the repo first. One JSON edit broke the file;
+I caught it with a parse check.
+
+**Suggestions (Q5):** The three easy wins at the top of the Backlog.
+Start Phase 2b with the network log of the NAVCEN chart viewer.
+
+---
+
 ## 2026-10-16 · Satellite check: two judges failed, the offshore ratio test held (0.7.0)
 
 **Did:** Pulled 7 commits and ran the satellite plan locally. Test 1: the
@@ -190,45 +229,6 @@ define project terms when I report.
 **Suggestions (Q5):** Start Phase 2 in a new session. Generalise
 compare-ascent-sources.js into the planned compare-observations.js. Measure
 engine CPU again with 7 LEO members before Phase 3.
-
-## 2026-10-13 to 15 · SpX-35 seen, sky view hardened, hand-set directions
-
-**Did:** Ben saw SpX-35 as a wide plume from James Island, as predicted.
-Height and timing matched within about 1 degree; the rocket was 19 to 29
-degrees east of the predicted position. A Sun check two days later put the
-compass within 1 degree, so the 2018 ascent profiles are the leading cause.
-Added data/observations.json and a README table for measured sightings.
-Fixed the sky view sliding sideways when the phone rolls (the iOS compass
-heading moves with roll); made it portrait only; wrote setup steps in the
-page and README. Showed by script that the forecast holds from Folly Beach
-to Isle of Palms. Added hand-set launch directions and a runbook with URLs
-for finding one. Added demo images to the README.
-
-**Least confident about (Q1):**
-- That the SpX-35 direction miss is the profile. A Sun check facing
-  southeast at the same spot, and a second measured launch, would show it.
-- The roll fix on Android. One Chrome test would show it.
-- Bandwagon 5 at 45 degrees. Only a secondary source gives 45 for
-  Bandwagon 3; the drone ship position will show the side, not the
-  inclination.
-- My readings of rocket position from screenshots (about 2 degrees).
-
-**Unstated assumptions (Q2):** That the iOS heading is right when the phone
-is level in portrait. That the gyro does not drift over a few minutes. That
-LL2 ids stay the same when a launch slips.
-
-**Biggest thing being missed (Q3):** The engine has only 2018 Falcon 9
-profiles. Modern flights may fly a different ascent, which moves the
-predicted position and maybe the verdict for edge cases.
-
-**Could've gone better (Q4):** I told Ben the style guide was not used; a
-locked FINDINGS decision from 2026-10-08 already records the rules taken
-from it. I should have searched FINDINGS first. I also first wrote a roll
-test with the wrong Euler angles (gimbal lock at beta 90); the test caught
-it.
-
-**Suggestions (Q5):** Script the observation comparison. Get a newer
-profile and test it on SpX-35. Add a plume glow band to the sky view.
 
 ---
 
