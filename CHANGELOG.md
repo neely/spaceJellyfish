@@ -9,7 +9,7 @@ session that changed the page.
 We bump the middle number when the page gains a feature and the last number
 for a fix. Model changes that move the backtest numbers are listed here too.
 
-## 0.8.0 · 2026-10-18 · pending
+## 0.8.0 · 2026-10-18 · be075b6
 - The card is shorter. A hand-set path is one line ("Path: ...") with a
   link to its source and to the full record, instead of the whole record.
   The chart and delay notes are a few words each.
