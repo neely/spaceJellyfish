@@ -264,6 +264,67 @@ What the engine consists of:
   some are. The thresholds are in `config/visibility.json`, each with its
   source or marked provisional.
 
+## Reading a launch card
+
+The card keeps to what you need outside. The explanations are here, and each
+note on the card links back to the part it shortens.
+
+**The verdict.** *Likely* means every past Falcon 9 flight we fly on this
+launch's path has a sunlit rocket in a dark sky, at least 5 degrees up and
+for at least a minute (both values are our choice, with no source yet). *Possible* means only some do. *No jellyfish*
+means none do; at night the rocket may still show as a moving point of
+light. *Prime: dark sky* means the Sun is at least 6 degrees below the
+horizon at the peak, so the sky is dark enough for the plume to stand out.
+*Confidence* is medium when the path is one known direction and the
+vehicle is a Falcon 9, and low otherwise. Clouds never change the verdict; the geometry does.
+
+**The facts.** *Look between* is the clock window when some path is lit and
+visible. *Highest point* is how high it climbs, in degrees above the horizon
+(a fist at arm's length is roughly 10 degrees). *Direction* is where it
+starts, peaks and ends, or the range of directions when the path is not
+known. *Sun below horizon* is how dark the sky is: about 6 degrees is the
+end of civil twilight, 12 the end of nautical twilight.
+
+**Clouds.** How the forecast was chosen is under Status, above. The card shows cloud over you, cloud at places toward the launch (out to
+where your sight line rises above the clouds), low cloud from HRRR within
+about a day and a half, and the Charleston Executive airport forecast
+within about a day. Its one-line note says how often forecasts that far
+ahead caught cloudy twilight hours, and how much of that skill held over
+the water; the full test is in [clouds/README.md](clouds/README.md).
+
+### The chart
+The chart is the view when you face southeast: east is on the left, south on
+the right, and height runs up the side. Each line is one past Falcon 9 flight
+flown on this launch's path, so the spread of lines is the spread between
+real ascents. The orange part is the rocket in sunlight while your sky is
+dark: that is where the jellyfish shows. The dotted part is before the
+plume is counted or after the rocket leaves sunlight. Our flight data stops
+at second-stage cutoff, about 8 to 9 minutes after liftoff, so the rocket
+may stay visible a little longer than the lines. The tree slider shades the
+sky below your treeline (the setting stays in your browser), and the sky view link draws the same path over
+your phone camera.
+
+When only the orbit is known, the chart shows both ways to reach it:
+northeast (the higher arcs, toward the Carolinas, over the southeast sky)
+and southeast (the low arcs in the south). When nothing is known, it shows a
+fan of possible paths. When we have found the path ourselves, the card says
+**Path:** with a one-line reason, a link to the source (for example the
+Coast Guard launch hazard map), and a link to the full record in
+[config/launch-directions.json](config/launch-directions.json). How we find
+a path is in the
+[runbook](reference/topics/cape-launch-azimuths-and-inclinations.md), and
+why a drone ship's position gives it away is in
+[recovery-fleet](reference/topics/recovery-fleet.md).
+
+### If liftoff moves
+Each box is a possible liftoff time, ten minutes apart, two hours either
+side of the plan. It is not a time to look. Orange is likely, blue is
+possible, dark is no jellyfish. Outside the orange and blue run, the sky
+is either too dark for the rocket to reach sunlight while we can see it,
+or too bright to see it. The edges come from the same geometry as the
+verdict. Launches slip often, so
+if the time changes, reopen the page for the new viewing window.
+
 ## Sources worth a look
 
 Everything the engine uses traces back to a public source, and some of them

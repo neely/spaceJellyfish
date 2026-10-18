@@ -711,6 +711,17 @@ Choices made, and why. Mark settled ones `(locked)`.
 - How to find a direction, with URLs: the Runbook section in
   reference/topics/cape-launch-azimuths-and-inclinations.md.
 
+### The card shows what you need outside; the README explains (locked)
+- What: Card notes are one line each and link to the README section
+  "Reading a launch card". A hand-set path shows `cardNote` and links to
+  `link` and to config/launch-directions.json; `source` is not shown.
+  Ben asked (2026-10-18): keep the card short, lose no information, use
+  links.
+- Why: The full direction record (about 200 words for Bandwagon 5)
+  filled the card. Readers outside need the time, height and direction.
+- Rejected: Collapsible sections on the card (more code, the text still
+  rots in two places). Dropping the explanations (loses information).
+
 ### Units: miles and feet for people, metric inside (locked)
 - What: The page and the README give distances in statute miles and
   heights in feet. The engine, config, data, FINDINGS and reference/

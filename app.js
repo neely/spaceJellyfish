@@ -184,7 +184,7 @@ function slipTable(launch) {
   } else {
     const first = timeFmt.format(good[0].ms);
     const last = timeFmt.format(good.at(-1).ms);
-    summary = `Planned liftoff is ${planned}. A jellyfish is likely or possible for any liftoff from ${first} to ${last}. Outside that window the sky is too dark for the rocket to be in sunlight, or too bright to see it.`;
+    summary = `Planned liftoff is ${planned}. A jellyfish is likely or possible for any liftoff from ${first} to ${last}.`;
   }
   const box = el('div', { class: 'slip' });
   for (const s of steps) {
@@ -202,6 +202,11 @@ function slipTable(launch) {
 // Which places: FINDINGS, "Weather: local and directional sky cover".
 // Distances on the page are in statute miles; the engine works in metres.
 const miles = (m) => Math.round(m / 1609.344);
+
+// Explanations live in the README, not on the card. Links point there.
+const REPO = 'https://github.com/neely/spaceJellyfish/blob/main/';
+const GUIDE = `${REPO}README.md#reading-a-launch-card`;
+const guideLink = (anchor, text) => el('a', { href: `${REPO}README.md#${anchor}` }, text);
 
 function weatherSection(result, liftoff) {
   const box = el('div', { class: 'weather' });
@@ -310,6 +315,7 @@ function launchCard(launch) {
   if (result.prime) badges.append(el('span', { class: 'badge prime' }, 'Prime: dark sky'));
   badges.append(el('span', { class: 'badge plain' }, `confidence: ${result.confidence}`));
   card.append(badges);
+  card.append(el('p', { class: 'note' }, el('a', { href: GUIDE }, 'How to read this card')));
 
   if (result.verdict === 'no') {
     card.append(el('p', { class: 'note' }, 'No flight path we tried has a sunlit rocket in a dark sky above 5°. The rocket itself may still show as a moving point of light at night.'));
@@ -344,17 +350,26 @@ function launchCard(launch) {
     });
     card.append(el('div', { class: 'slider' }, 'My trees block the sky up to', input, read));
     if (result.direction === 'known') card.append(minuteTable(result, liftoff));
-    if (result.directionSource) card.append(el('p', { class: 'note' }, `Direction set by hand: ${result.directionSource}`));
-    card.append(el('p', { class: 'note' }, result.direction === 'two'
-      ? `Only the orbit is known, so the chart shows both ways to reach it: northeast (the higher arcs, over the southeast sky) and southeast (the low arcs in the south). Orange is the sunlit part in a dark sky.`
+    // A hand-set path: one line and links. The full record stays in
+    // config/launch-directions.json.
+    if (launch.direction) {
+      const d = launch.direction;
+      const p = el('p', { class: 'note' }, el('strong', {}, 'Path: '), d.cardNote ?? 'set by hand', '. ');
+      if (d.link) p.append(el('a', { href: d.link }, 'Source'), ' · ');
+      p.append(el('a', { href: `${REPO}config/launch-directions.json` }, 'Full record'));
+      card.append(p);
+    }
+    const lead2 = result.direction === 'two'
+      ? 'Two possible paths: northeast (high arcs) or southeast (low arcs). '
       : result.direction === 'unknown'
-      ? 'Launch Library 2 does not give the direction of this launch, so each line is one possible path. Orange is the sunlit part in a dark sky.'
-      : `The chart is the view when you face southeast: south is on the right and east is on the left. Each line is one past Falcon 9 flight flown on this launch's path. Orange is the sunlit part in a dark sky; the dotted part is before the plume is counted or after it leaves sunlight. The data ends about ${Math.round(lead.samples.at(-1).tS / 60)} minutes after liftoff; the rocket may stay visible longer.`));
+      ? 'Path not known, so each line is one possible path. '
+      : `Facing southeast: east on the left, south on the right. Data ends about ${Math.round(lead.samples.at(-1).tS / 60)} min after liftoff. `;
+    card.append(el('p', { class: 'note' }, lead2, 'Orange: sunlit in a dark sky. ', guideLink('the-chart', 'How to read the chart')));
   }
 
   card.append(el('h3', {}, 'What if liftoff is delayed or moved?'));
   card.append(slipTable(launch));
-  card.append(el('p', { class: 'note' }, 'Each box is a possible liftoff time, not a time to look. Orange: likely. Blue: possible. Dark: no jellyfish. If the launch moves, reopen this page for the new viewing times.'));
+  card.append(el('p', { class: 'note' }, 'Boxes are liftoff times, not times to look. Orange: likely. Blue: possible. Dark: no. ', guideLink('if-liftoff-moves', 'More')));
   return card;
 }
 

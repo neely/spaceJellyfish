@@ -9,8 +9,8 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 
 ## Status
 - **Active:** none. Phases 0 to 2 and the cloud work are done. Live
-  version 0.7.2 (shorter cloud text, miles and feet on the card; not
-  yet seen live). Next phase: 2b, unknown trajectories (Ben,
+  version 0.8.0 (shorter card with links to the README guide, miles and
+  feet; not yet seen live). Next phase: 2b, unknown trajectories (Ben,
   2026-10-18). Phase 3 (alerts) starts only when Ben asks.
 - **Last updated:** 2026-10-18
 - **Next action:** Monday 2026-10-19, Bandwagon 5 (window 06:30 to
@@ -62,9 +62,10 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   labelled.
 
 ## Backlog (open items from Phase 1, in order)
-- [ ] Easy win: check the live page shows "Version 0.7.2", the one-line
-      cloud note with its links, and miles in the cloud table (Bandwagon
-      5 card).
+- [ ] Easy win: check the live page shows "Version 0.8.0", the one-line
+      cloud note, the one-line "Path:" note with its two links, miles in
+      the cloud table, and that the README guide links land on their
+      sections (Bandwagon 5 card).
 - [ ] Easy win: Sunday evening, check orbitalradar.com/recovery-fleet
       for ASOG. If it has sailed, note where it heads in
       reference/topics/recovery-fleet.md. Southeast agrees with the
