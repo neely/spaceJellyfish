@@ -11,7 +11,7 @@ key_points:
   - "Sunlit test: the Earth's shadow is a cylinder of radius R_mean + screening height (10 km in use); no penumbra."
   - "A sample is visible when sunlit, Sun at or below 0 degrees, rocket 5 degrees or more up, and 65 km or more high."
   - "Verdict: 'likely' when every track has 60 s or more visible, 'possible' when some do, 'no' when none do."
-  - "Prime means the lowest Sun elevation among visible tracks is at or below -6 degrees. Confidence is 'medium' only for due-east Falcon launches."
+  - "Prime means the lowest Sun elevation among visible tracks is at or below -6 degrees. Confidence is 'medium' for one known direction on a Falcon."
   - "Starlink 10-42 (2026-07-09): Sun at -10.5 degrees at liftoff; likely, prime, confidence low, 16 of 16 tracks."
 related_papers: []
 ---
@@ -104,7 +104,7 @@ Function: `evaluateLaunch`. It builds all tracks (every member of the class prof
 - When seen is not empty, the result also holds: `sunElevationDeg` = the lowest of the tracks' peak Sun elevations; `prime` = (that lowest value <= primeSunElevationDeg, config: -6); and the min and max over seen tracks of peak elevation, peak bearing and visibleS, plus the earliest firstVisibleS and the latest lastVisibleS. Tracks outside `seen` do not enter these ranges.
 - For 'no' the result has no `prime` and no ranges.
 - The prime flag is a quality grade. The value -6 is the end of civil twilight (config source); its use as a grade is our interpretation (config text).
-- Confidence: `'medium'` when the class is 'east' and the vehicle name starts with 'Falcon'; otherwise `'low'`. It is set for all verdicts, including 'no'.
+- Confidence: `'medium'` when the launch has one direction (station or due-east class, or a hand-set single direction) and the vehicle name starts with 'Falcon'; otherwise `'low'` (engine/visibility.js, checked 2026-10-18). It is set for all verdicts, including 'no'.
 - FINDINGS.md (locked): the three levels reflect the spread over tracks, which stands for trajectory uncertainty.
 
 Backtest numbers (FINDINGS.md tripwires; reproduced by `node scripts/backtest.js` on 2026-10-08): 41 likely, 18 possible, 447 no of 506; 32 of the 59 are prime; 11 of the 12 labels are not 'no'.

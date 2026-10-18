@@ -328,8 +328,9 @@ if the time changes, reopen the page for the new viewing window.
 ## Sources worth a look
 
 Everything the engine uses traces back to a public source, and some of them
-are fun reading on their own. Our notes on each are in
-[reference/](reference/INDEX.md); the full audit of every outside input, with
+are fun reading on their own. For a guided tour of our notes, start at
+[reference/START-HERE.md](reference/START-HERE.md); the full list is in
+[reference/INDEX.md](reference/INDEX.md); the full audit of every outside input, with
 dates and known problems, is
 [reference/source-audit.md](reference/source-audit.md).
 

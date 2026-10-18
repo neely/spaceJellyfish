@@ -32,7 +32,9 @@ VOCAB = [
     "visibility", "sightings", "weather", "cloudflare", "email", "data-access",
     "sky-view",
 ]
-SKIP_FILES = ("TEMPLATE.md", "INDEX.md")
+# START-HERE.md is a reading tour for people. It is not a note and not in
+# the index, so the agent read path (README, INDEX, front matter) stays small.
+SKIP_FILES = ("TEMPLATE.md", "INDEX.md", "START-HERE.md")
 ANSWER_WIDTH = 160
 
 

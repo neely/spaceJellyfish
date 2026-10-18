@@ -604,6 +604,10 @@ Choices made, and why. Mark settled ones `(locked)`.
   the model there: the notes named `topics/model-*.md` explain how the
   engine works and list ideas to test.
 - Rejected: Putting source detail in FINDINGS.
+- Added 2026-10-18 (Ben): `reference/START-HERE.md`, a reading tour for
+  people. It is not a note: build_index.py skips it, and the agent read
+  path does not include it. Rejected: a human tour inside INDEX.md or
+  reference/README.md (more text on the agent path).
 
 ### Thresholds live in config/visibility.json, each with a source (locked)
 - What: engine/visibility.js holds no threshold. Each value in the config

@@ -21,6 +21,8 @@ related_papers: []
 
 The knowledge base. It holds two kinds of note. The first kind distils outside material: papers, web pages, data sources, other tools. The second kind explains how our own model works: the mathematics, the symbols, the simplifications, and ideas to test. Those notes are named `topics/model-*.md`. Our own measurements, tripwires, and decisions are in FINDINGS.md, not here.
 
+`START-HERE.md` is a reading tour for people. Agents skip it; it is not in the index.
+
 ## How to look something up (progressive disclosure)
 1. Read INDEX.md. It lists every note with one line on what it answers. It is generated. Do not edit it by hand.
 2. Read only the front matter of the notes that match (the first lines of the file: answers and key_points).
