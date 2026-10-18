@@ -9,7 +9,7 @@ session that changed the page.
 We bump the middle number when the page gains a feature and the last number
 for a fix. Model changes that move the backtest numbers are listed here too.
 
-## 0.7.2 · 2026-10-18 · pending
+## 0.7.2 · 2026-10-18 · 376e9fe
 - Distances on the card are in miles and the low cloud limit in feet
   (about 10,000 ft). The engine still works in metres.
 
