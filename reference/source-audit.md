@@ -105,7 +105,7 @@ Distances above are haversine distances on a 6371 km sphere, computed in the ses
 |---|---|
 | LL2 search and record | Answers. |
 | orbitcodex Bandwagon 3 | Not re-read; SpaceNews is now the better source. |
-| orbitalradar recovery fleet | Page loads; positions show only "Loading". No position readable by WebFetch. Needs a browser. |
+| orbitalradar recovery fleet | Page loads; positions show only "Loading". No position readable by WebFetch. Needs a browser. 2026-10-18: works in a browser at https://orbitalradar.com/recovery-fleet (Ben's iPhone). The ASOG ship page is a description with no map, last updated 31 May 2026. |
 | msi.nga.mil broadcast-warn API | Answers, but the newest NAVAREA IV entry is still May 2024. Not useful. |
 | navcen.uscg.gov local notices | WebFetch failed again. |
 | spacelaunchschedule.com Bandwagon 5 | Loads. Names drone ship ASOG and gives the Flight Club link. Its trajectory image file name says "FL-South-RTLS", which conflicts with the drone ship landing; treat it as a generic image. |

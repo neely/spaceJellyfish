@@ -100,13 +100,14 @@ source. Each step says what it gave when checked on 2026-10-15.
    126.4 degrees about 25.3 N 75.8 W (near the Bahamas). Computed with
    `destinationPoint` in engine/trajectory.js. Ship position, the day
    before launch:
-   - https://orbitalradar.com/recovery-fleet/a-shortfall-of-gravitas is a
-     description page with no map (Ben, 2026-10-15). It says the ship works
-     300 to 650 km downrange and that the support ship Bob or Doug escorts
-     it.
-   - https://api.orbitalradar.com/recovery-fleet (the fleet hub) says it
-     shows AIS positions every 5 minutes. WebFetch saw no position. In a
-     browser it works (Ben, 2026-10-18). On the morning before Bandwagon 5
+   - Use https://orbitalradar.com/recovery-fleet (the fleet hub, "Live
+     Vessel Tracker"). It shows AIS positions every 5 minutes. WebFetch
+     sees only "Loading". In a browser it works (Ben, 2026-10-18).
+   - Do not use https://orbitalradar.com/recovery-fleet/a-shortfall-of-gravitas
+     for the position. It is a description page with no map, last updated
+     31 May 2026, and it still says ASOG works with Just Read the
+     Instructions on the East Coast (read 2026-10-18). Wikipedia says JRTI
+     left Falcon work in April 2026. Conflict; the page may be stale. On the morning before Bandwagon 5
      the ship was still at Port Canaveral, so check again in the evening,
      or use step 6 first.
    - AIS sites by ship name (MarineTraffic, VesselFinder). Not checked; no
@@ -117,7 +118,8 @@ source. Each step says what it gave when checked on 2026-10-15.
    - https://msi.nga.mil/NavWarnings (NGA web page; open in a browser).
    - https://msi.nga.mil/api/publications/broadcast-warn?output=html&status=A
      answered, but its newest entry was from May 2024, so it is not useful
-     through WebFetch.
+     through WebFetch. Checked again 2026-10-18 with navArea=4 and JSON
+     output: 71 warnings, newest 2024-05-08, none about a launch.
    - https://www.navcen.uscg.gov/local-notices-to-mariners (Coast Guard
      District 7 notices). WebFetch failed.
    - https://navcen.uscg.gov/chart (NAVCEN chart viewer, a Leaflet map).
@@ -132,6 +134,24 @@ source. Each step says what it gave when checked on 2026-10-15.
      direction source the day before launch, before the drone ship sailed.
      The polygon coordinates were not read as text; the notice text itself
      is not yet found.
+   - The notice text (with the polygon as a list of waypoints) is published
+     as a Coast Guard Broadcast Notice to Mariners. Places it appears
+     (2026-10-18; none read for BNM 9080-26 yet):
+     - NAVCEN BNM search by district:
+       https://navcen.uscg.gov/broadcast-notice-to-mariners-search?district=7
+       (Southeast District), with message pages
+       https://www.navcen.uscg.gov/broadcast-notice-to-mariners-message?guid=N.
+       WebFetch failed on the search and the message pages.
+     - NAVCEN RSS feeds, one for District 7 and one for each sector
+       (Charleston, Jacksonville, Miami and others):
+       https://navcen.uscg.gov/subscribe-email-rss-feeds. WebFetch saw the
+       feed names but not their addresses.
+     - Coast Guard GovDelivery bulletins. Example: BNM 9127-25 (Starship
+       Flight 11, October 2025) at
+       https://content.govdelivery.com/accounts/USDHSCG/bulletins/3f6f6d6
+       holds the hazard polygon as waypoints and the times in Zulu.
+     - The data feed behind the NAVCEN chart viewer is not known. It needs
+       the browser's network log to find.
 7. Trajectory simulations: the LL2 flightclub_url, or https://flightclub.io/.
    Not opened. https://www.spacelaunchschedule.com/launch/falcon-9-block-5-bandwagon-5-dedicated-mid-inclination-rideshare/
    links to it and repeats the LL2 data.

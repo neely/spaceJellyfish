@@ -35,6 +35,7 @@ related_papers: []
 ## Which ship works the Cape
 - A Shortfall of Gravitas (ASOG): home port Port Canaveral. It waits about 300 to 650 km downrange; the exact spot depends on the trajectory and the fuel the booster has left (Source 1).
 - Just Read the Instructions (JRTI): Wikipedia says it was based at Port Canaveral but moved from Falcon work to Starship transport in April 2026 (Source 2). Not checked against a primary source.
+- Conflict: the ASOG page (Source 1, last updated 31 May 2026, re-read 2026-10-18) still says ASOG works with JRTI on the East Coast. Wikipedia (Source 2) says JRTI left Falcon work in April 2026. The ASOG page may be stale.
 - Of Course I Still Love You (OCISLY): Long Beach, California, for Vandenberg launches (Source 2). Not relevant to us.
 
 ## Why it matters for Space Jellyfish
@@ -45,7 +46,7 @@ Interpretation and our own calculation.
 - Conflict: for Bandwagon 5, LL2 (Source 3) and the first spacelaunchschedule URL name ASOG at 600 km. A search snippet of the second spacelaunchschedule URL (Source 5, 2026-10-18) says a return to Landing Zone 40. The snippet may be a page template; LL2 is the newer record.
 
 ## How to find the ship's position
-- orbitalradar's fleet hub (https://api.orbitalradar.com/recovery-fleet) shows positions on a map. Our tools saw only "Loading" on 2026-10-15. In a browser it works (Source 4): on 2026-10-18 at 06:53 local it tracked 5 vessels. A drone-ship marker at Port Canaveral carried overlapping labels that include A Shortfall of Gravitas (more than one vessel there, names not all readable). Of Course I Still Love You was at Long Beach and the transport Finn Falgout on the Gulf coast.
+- orbitalradar's fleet hub (https://orbitalradar.com/recovery-fleet, "Live Vessel Tracker") shows positions on a map. The ship page (Source 1) has no map. Our tools saw only "Loading" on 2026-10-15. In a browser it works (Source 4): on 2026-10-18 at 06:53 local it tracked 5 vessels. A drone-ship marker at Port Canaveral carried overlapping labels that include A Shortfall of Gravitas (more than one vessel there, names not all readable). Of Course I Still Love You was at Long Beach and the transport Finn Falgout on the Gulf coast.
 - Timing: on the morning before Bandwagon 5 (window 10:30Z on 2026-10-19), ASOG had not sailed. Check the hub again later the same day. The ship's position the evening before is a better test than the morning.
 - For the launch direction, the Coast Guard hazard areas are often public before the ship sails. See the Runbook in reference/topics/cape-launch-azimuths-and-inclinations.md, step 6.
 - AIS ship-tracking sites by ship name. Not checked.

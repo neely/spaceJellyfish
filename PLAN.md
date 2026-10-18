@@ -77,6 +77,15 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       note can be set beside what the card said. After the launch: add
       Ben's sky view points to data/observations.json and refresh the
       snapshot (refresh rule in FINDINGS).
+- [ ] Hazard areas on the launch card. Ben asked (2026-10-18). Find a
+      source the page or a Worker can read: the NAVCEN chart viewer's
+      data feed (read its network log in a desktop browser), the District
+      7 BNM RSS feeds, or the BNM message pages (sources in the Runbook,
+      step 6). WebFetch could not read any of them. Then: match the
+      notice to the launch by mission name, get the polygon, set the
+      direction from its bearing, and show it on the card. The drone ship
+      position (orbitalradar) is a third-party page with no known feed;
+      lower priority.
 - [ ] Morning Sun check facing southeast at the SpX-35 spot (Ben, about
       08:30 to 09:30, Sun at azimuth 109 to 119), to close the compass
       question for that direction.
@@ -173,8 +182,9 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 - Launch weather rules at the Cape: a launch that goes says the pad sky
   was acceptable, not the Charleston sky. Ben asked (2026-10-15). Quote
   the rules from a source before the docs rely on this.
-- Is 5 positive cases the right minimum for the exit gate? It depends on how
-  many Charleston reports the search finds.
+- Is 5 positive cases the right minimum for the exit gate? The gate was
+  met with 5 on 2026-10-15. Whether 5 is enough stays open; a new
+  plume report or observation adds to it.
 - Does the free-tier limit of 5 Cron Triggers per account leave room? A code
   search of Ben's repos found no other cron. That search may not cover
   private repos.
@@ -188,8 +198,9 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 Start prompt (local Claude Code, repo cloned on Ben's Mac):
 > Read AGENTS.md, then the PLAN.md status block, Backlog and Open
 > questions, then FINDINGS.md (skim; Tripwires in full). Run `npm test` and
-> `node scripts/backtest.js` and check them against the tripwires. On
-> Sunday 2026-10-18, do the Bandwagon 5 item first. The satellite check
+> `node scripts/backtest.js` and check them against the tripwires. After
+> Bandwagon 5 (2026-10-19), finish its Backlog item (observations,
+> snapshot refresh). The satellite check
 > is done (clouds/README.md, tests 1 to 3); start a new satellite test
 > only when Ben asks, with rules set before the data. Phase 3 starts only
 > when Ben asks. For any page
