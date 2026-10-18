@@ -9,6 +9,11 @@ session that changed the page.
 We bump the middle number when the page gains a feature and the last number
 for a fix. Model changes that move the backtest numbers are listed here too.
 
+## 0.7.1 · 2026-10-18 · pending
+- The cloud card is shorter: one sentence on how far to trust the
+  forecast (onshore and offshore), then the method link and the credit.
+  The "toward the launch" line is one short sentence.
+
 ## 0.7.0 · 2026-10-16 · 6351d79
 - The cloud card says how the forecast does out over the water, toward the
   launch: a satellite check scored it against GOES over land and over

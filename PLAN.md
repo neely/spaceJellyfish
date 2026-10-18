@@ -10,7 +10,8 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ## Status
 - **Active:** none. Phases 0 to 2 and the cloud work are done (v0.7.0:
   NBM, HRRR low cloud, TAF, and the offshore check on the card;
-  clouds/README.md). Phase 3 (alerts) starts only when Ben asks.
+  clouds/README.md). Next phase: 2b, unknown trajectories (Ben,
+  2026-10-18). Phase 3 (alerts) starts only when Ben asks.
 - **Last updated:** 2026-10-18
 - **Next action:** Monday 2026-10-19, Bandwagon 5 (window 06:30 to
   07:30 local): save the card's cloud lines, then note the sky toward
@@ -62,6 +63,7 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ## Backlog (open items from Phase 1, in order)
 - [x] Check the live page (jellyfish.benneely.com) shows 0.7.0 in the
       footer and the "Out over the water" line on the cloud card.
+      (0.7.1 folds that line into one shorter sentence.)
       Observed 2026-10-16 in the in-app browser: footer "Version 0.7.0";
       Bandwagon 5 card "kept about 94% of its skill over land".
 - [ ] Before Bandwagon 5 (Monday 2026-10-19, 06:30 local): on Sunday,
@@ -77,15 +79,6 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       note can be set beside what the card said. After the launch: add
       Ben's sky view points to data/observations.json and refresh the
       snapshot (refresh rule in FINDINGS).
-- [ ] Hazard areas on the launch card. Ben asked (2026-10-18). Find a
-      source the page or a Worker can read: the NAVCEN chart viewer's
-      data feed (read its network log in a desktop browser), the District
-      7 BNM RSS feeds, or the BNM message pages (sources in the Runbook,
-      step 6). WebFetch could not read any of them. Then: match the
-      notice to the launch by mission name, get the polygon, set the
-      direction from its bearing, and show it on the card. The drone ship
-      position (orbitalradar) is a third-party page with no known feed;
-      lower priority.
 - [ ] Morning Sun check facing southeast at the SpX-35 spot (Ben, about
       08:30 to 09:30, Sun at azimuth 109 to 119), to close the compass
       question for that direction.
@@ -109,9 +102,6 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       them by engine verdict. Search local outlets for each date. The cases
       that test the engine are twilight launches it rejects and launches it
       rates likely and prime.
-- [ ] Polar and sun-synchronous launches (13 in the snapshot) fly south.
-      They use the fan. Give them their own class when a source gives the
-      corridor azimuths.
 - [ ] A profile for vehicles other than Falcon 9. No source found yet.
       Until then, other vehicles use the Falcon 9 members with low
       confidence.
@@ -125,7 +115,46 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       open question below and shows whether the 5 `seen-plume` launches had
       a clear line of sight. New rules before data, as for tests 1 to 3.
 
-## Phase 3 — Worker cron, KV state, email alerts  ← NEXT
+## Phase 2b — Resolve unknown trajectories  ← NEXT
+Goal: a direction for every Cape launch before launch day, from a
+source, without Ben looking it up by hand. Today LL2 gives no direction,
+the page draws the fan for anything not a station or high-orbit flight,
+and the fix is a hand edit (config/launch-directions.json). Ben asked to
+make this a priority (2026-10-18).
+- [ ] Score each method on each launch. For every launch from now on,
+      record which methods gave a direction before launch, when they gave
+      it, and whether the launch-day report agreed. Keep it in one file
+      (for example data/direction-checks.json). Bandwagon 5 is the first
+      row: hazard area southeast (2026-10-18), ship still in port.
+- [ ] Count how many upcoming launches show the fan today, and how many
+      past twilight launches in the snapshot had no known direction. This
+      sizes the problem.
+- [ ] Hazard areas, read automatically (method 1). Ben asked (2026-10-18). Find a
+      source the page or a Worker can read: the NAVCEN chart viewer's
+      data feed (read its network log in a desktop browser), the District
+      7 BNM RSS feeds, or the BNM message pages (sources in the Runbook,
+      step 6). WebFetch could not read any of them. Then: match the
+      notice to the launch by mission name, get the polygon, set the
+      direction from its bearing, and show it on the card. The drone ship
+      position (orbitalradar) is a third-party page with no known feed;
+      lower priority.
+- [ ] LL2 landing location and downrange distance as an automatic hint
+      (method 2). A drone ship 500 km or more downrange with a mission
+      inclination gives two candidate tracks; the hazard area picks one.
+      A landing zone gives no hint.
+- [ ] Drone ship position (method 3). Find a feed a script may read (an
+      AIS source with terms that allow it). orbitalradar shows it in a
+      browser only.
+- [ ] Mission class rules (method 4): earlier flights of the same series
+      (Bandwagon, Transporter, CRS, Cygnus, Amazon Leo, crew). Record each
+      series' inclination and side with a source.
+- [ ] Polar and sun-synchronous launches (13 in the snapshot) fly south
+      and use the fan. Give them their own class with the corridor
+      azimuths, when a source gives them (moved from the Backlog).
+- [ ] The card says which method set the direction and when, and keeps
+      the fan with a "path not known" note when none did.
+
+## Phase 3 — Worker cron, KV state, email alerts
 - [ ] Confirm KV free-tier read and write limits against the planned cadence.
 - [ ] Choose how the Worker gets launch times. LL2 answered 429 to every
       request from a Cloudflare Pages Function on 2026-10-08 (see FINDINGS,

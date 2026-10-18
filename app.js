@@ -238,7 +238,7 @@ function weatherSection(result, liftoff) {
       const reachKm = Math.round(Math.max(...rays.map((r) => r.reachM)) / 1000);
       out.append(el('p', {}, el('strong', {}, 'Toward the launch: '), toward.directional.maxPct == null
         ? 'no forecast for these places.'
-        : `up to ${pct(toward.directional.maxPct)}, ${pct(toward.directional.meanPct)} on average, over ${points.length} places from you out to ${reachKm} km under the top of the rocket's arc. Cloud farther out is below your line of sight.`));
+        : `up to ${pct(toward.directional.maxPct)} (${pct(toward.directional.meanPct)} average) out to ${reachKm} km.`));
     }
     if (low) {
       const lowToward = skySummary({ local: low[0], directional: low.slice(1) });
@@ -275,21 +275,18 @@ function weatherSection(result, liftoff) {
       out.append(line);
       break;
     }
-    // How good forecasts this far ahead have been, from the cloud test.
+    // One sentence on how far to trust it: the cloud test (twilight hit and
+    // false-alarm rates at this lead) and the satellite check offshore
+    // (clouds/README.md, test 3). Then the links and the credit.
     const lead = String(Math.min(7, Math.max(1, Math.ceil(daysAhead))));
     const s = cloudScores?.tests?.lead?.fullSky?.twilight?.[allSky.model]?.[lead];
-    const trust = s
-      ? `How far to trust it: in 2025 and 2026, cloud forecasts like this one made ${lead} day${lead === '1' ? '' : 's'} ahead caught ${s.hitPct}% of cloudy twilight hours at the four coastal airports that report the whole sky, and called ${s.falsePct}% of clear ones cloudy. `
-      : '';
-    // Offshore, from the satellite check (clouds/README.md, test 3): the
-    // forecast's skill over water as a share of its skill over land.
     const q = offshoreScores?.verdict?.verdict === 'holds' ? offshoreScores.ratio?.land?.[lead]?.q : null;
-    const offshore = q != null
-      ? `Out over the water, where the plume is seen, a satellite check found ${q >= 1 ? 'the same forecast did as well as over land' : `the same forecast kept about ${Math.round(100 * q)}% of its skill over land`}. `
-      : '';
-    out.append(el('p', { class: 'note' }, trust, offshore, 'Clouds do not change the jellyfish verdict above; the geometry does. ',
-      el('a', { href: 'https://github.com/neely/spaceJellyfish/blob/main/clouds/README.md' }, 'How we chose this forecast'), '. ',
-      'Forecasts: NOAA NBM', low ? ' and HRRR' : '', ' via ', el('a', { href: 'https://open-meteo.com/' }, 'Open-Meteo'), ' (CC BY 4.0).'));
+    const trust = s
+      ? `${lead}-day forecasts like this caught ${s.hitPct}% of cloudy twilight hours (${s.falsePct}% false alarms)${q != null ? `, keeping ${q >= 1 ? 'all' : `about ${Math.round(100 * q)}%`} of that skill offshore` : ''}; clouds do not change the verdict. `
+      : 'Clouds do not change the verdict. ';
+    out.append(el('p', { class: 'note' }, trust,
+      el('a', { href: 'https://github.com/neely/spaceJellyfish/blob/main/clouds/README.md' }, 'Method'), ' · ',
+      'NOAA NBM', low ? ' and HRRR' : '', ' via ', el('a', { href: 'https://open-meteo.com/' }, 'Open-Meteo'), ' (CC BY 4.0)'));
   })();
   return box;
 }
