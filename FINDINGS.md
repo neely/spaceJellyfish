@@ -706,6 +706,15 @@ Choices made, and why. Mark settled ones `(locked)`.
 - How to find a direction, with URLs: the Runbook section in
   reference/topics/cape-launch-azimuths-and-inclinations.md.
 
+### Units: miles and feet for people, metric inside (locked)
+- What: The page and the README give distances in statute miles and
+  heights in feet. The engine, config, data, FINDINGS and reference/
+  stay metric. Ben asked (2026-10-18).
+- Why: Ben and the readers think in miles and feet. The sources and the
+  engine are metric; converting them risks errors and misquotes.
+- Rejected: Convert everything, including source quotes and config.
+  A km and miles toggle on the page (more code for one reader).
+
 ### Weather: local and directional sky cover (locked)
 - What: The weather modifier uses two inputs. Local: cloud cover at the
   observer. Directional: cloud cover at points along the bearing of the

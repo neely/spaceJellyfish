@@ -16,8 +16,9 @@ A "space jellyfish" is the glowing plume that appears when a rocket climbs
 high enough to be in sunlight while the observer on the ground is still in
 twilight or darkness. We aim to predict when a launch from Cape Canaveral or Kennedy
 Space Center will produce that effect as seen from Charleston, SC (James
-Island, ZIP 29412), which our geometry code places 466 km (290 statute miles)
-from Space Launch Complex 40.
+Island, ZIP 29412), which our geometry code places 290 miles (466 km)
+from Space Launch Complex 40. The page gives distances in miles and
+heights in feet; the engine and our notes work in metric, as the sources do.
 
 The question is therefore not only "is there a launch, and is the sky clear?"
 It is a question of illumination geometry: where the rocket is, where the Sun
@@ -49,8 +50,8 @@ so we removed it.)
 **Clouds.** Within about 7 days of a launch, each card shows the forecast
 cloud cover over the observer and at places between the observer and the
 top of the rocket's arc. The places stop where the sight line rises above
-12 km of height (at 10 degrees up, about 66 km out; at 5 degrees, about
-123 km), because cloud farther away sits below the line. The forecast is NOAA's
+about 39,000 ft of height (at 10 degrees up, about 41 miles out; at 5
+degrees, about 76 miles), because cloud farther away sits below the line. The forecast is NOAA's
 National Blend of Models (NBM) through Open-Meteo, and, within about a day
 and a half, NOAA's HRRR low cloud as well. Within about a day it adds the
 airport forecast (TAF) for Charleston Executive, with cloud heights from a
@@ -110,8 +111,8 @@ it says little about the geometry itself.
 
 **One sighting without a sunlit plume.** An Atlas V launch on 27 April 2026
 at 8:53 pm was seen and photographed from the Charleston area, and the engine
-finds no sunlit part of that ascent at any screening height we tried (5, 10,
-and 30 km). The photo shows a bright moving point rather than a glowing cloud,
+finds no sunlit part of that ascent at any screening height we tried (about 3, 6,
+and 19 miles up). The photo shows a bright moving point rather than a glowing cloud,
 which is what a rocket flame looks like at night, so we count it as a sighting
 of the rocket and not of a jellyfish. This is consistent with the engine but
 does not confirm it: only one of our five plume reports is an evening launch,
@@ -155,27 +156,27 @@ so we read this table for patterns across several launches rather than for
 any single row.
 
 **Who this works for.** The engine computes everything for one point on
-James Island, but while it is visible the rocket is 290 to 1,180 km away
+James Island, but while it is visible the rocket is about 180 to 730 miles away
 (over the 506 launches of the 8 October snapshot), so moving the observer a
-few kilometres barely changes the answer. We re-ran all 507 snapshot launches
+few miles barely changes the answer. We re-ran all 507 snapshot launches
 for other places (`node scripts/observer-sensitivity.js`, Census ZIP code area points):
 
-| Place | km from James Island | Same verdict (of 507) | Same verdict when James Island says likely or possible (of 60) | Typical change in peak height |
+| Place | Miles from James Island | Same verdict (of 507) | Same verdict when James Island says likely or possible (of 60) | Typical change in peak height |
 |---|---|---|---|---|
-| Folly Beach | 6 | 507 | 60 | 0.6 deg |
-| Downtown Charleston | 7 | 507 | 60 | 0.2 deg |
-| Johns Island | 13 | 507 | 60 | 1.1 deg |
-| Sullivan's Island | 13 | 506 | 60 | 0.9 deg |
-| Mount Pleasant | 14 | 506 | 60 | 0.3 deg |
-| Isle of Palms | 23 | 506 | 60 | 1.3 deg |
-| Summerville | 43 | 506 | 60 | 4.6 deg |
-| Columbia | 172 | 503 | 57 | 14.0 deg |
+| Folly Beach | 4 | 507 | 60 | 0.6 deg |
+| Downtown Charleston | 4 | 507 | 60 | 0.2 deg |
+| Johns Island | 8 | 507 | 60 | 1.1 deg |
+| Sullivan's Island | 8 | 506 | 60 | 0.9 deg |
+| Mount Pleasant | 9 | 506 | 60 | 0.3 deg |
+| Isle of Palms | 14 | 506 | 60 | 1.3 deg |
+| Summerville | 27 | 506 | 60 | 4.6 deg |
+| Columbia | 107 | 503 | 57 | 14.0 deg |
 
 Anywhere from Folly Beach to Isle of Palms, the page is as good for you as it
 is for James Island: the verdict differs for at most 1 of 507 launches, and
 heights and directions shift by about 1 degree, less than a phone compass
-error. By Summerville (43 km) the verdict still holds but heights run about
-4.6 degrees off, and beyond roughly 50 km the page should be treated as a rough
+error. By Summerville (27 miles) the verdict still holds but heights run about
+4.6 degrees off, and beyond roughly 30 miles the page should be treated as a rough
 guide only. These figures compare the model with itself; they say nothing
 about how right the model is, only that the answer does not depend on which
 Charleston-area neighbourhood you stand in.
@@ -248,7 +249,7 @@ What the engine consists of:
   Dragon demonstration flight DM-2) from
   [SpaceXTelemetry-Api](https://github.com/R4yGM/SpaceXTelemetry-Api); we
   work out their downrange distance ourselves, with a method that reproduces
-  the first collection's numbers within 1 km. We use every flight rather
+  the first collection's numbers within about half a mile. We use every flight rather
   than an average, so the page shows the spread between real ascents. There
   is nothing newer than 2020 and no vehicle other than Falcon 9, so results
   for Vulcan, Atlas V or New Glenn rest on the assumption that they climb
@@ -286,13 +287,13 @@ dates and known problems, is
 
 A few things we found along the way:
 
-- The Cape is 466 km (290 miles) from James Island, and while a rocket is
-  visible from here it is 290 to 1,180 km away, which is why one forecast
+- The Cape is 290 miles from James Island, and while a rocket is
+  visible from here it is about 180 to 730 miles away, which is why one forecast
   works for the whole Charleston area.
 - A launch to the northeast, toward the Carolinas, climbs two to three times
   higher in our sky than one heading southeast or due east. Space station
   flights go northeast.
-- The booster lands on a drone ship that waits 300 to 650 km out to sea. If
+- The booster lands on a drone ship that waits about 190 to 400 miles out to sea. If
   the ship is parked off the Carolinas, the launch is coming our way; if it
   is near the Bahamas, it will stay low in the south. The ship may not sail
   until the day before (for Bandwagon 5 it was still in port that morning),

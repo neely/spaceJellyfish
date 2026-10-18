@@ -200,6 +200,9 @@ function slipTable(launch) {
 // 1 to 7 days; low cloud from HRRR once the launch is in its range, which
 // scored best for low cloud at short lead. Test and numbers: clouds/README.md.
 // Which places: FINDINGS, "Weather: local and directional sky cover".
+// Distances on the page are in statute miles; the engine works in metres.
+const miles = (m) => Math.round(m / 1609.344);
+
 function weatherSection(result, liftoff) {
   const box = el('div', { class: 'weather' });
   box.append(el('h3', {}, 'Clouds'));
@@ -235,14 +238,14 @@ function weatherSection(result, liftoff) {
     const toward = skySummary({ local: all[0], directional: all.slice(1) });
     status.replaceChildren(el('strong', {}, 'Over you: '), `${pct(all[0])} cloud cover at viewing time.`);
     if (points.length) {
-      const reachKm = Math.round(Math.max(...rays.map((r) => r.reachM)) / 1000);
+      const reachMi = miles(Math.max(...rays.map((r) => r.reachM)));
       out.append(el('p', {}, el('strong', {}, 'Toward the launch: '), toward.directional.maxPct == null
         ? 'no forecast for these places.'
-        : `up to ${pct(toward.directional.maxPct)} (${pct(toward.directional.meanPct)} average) out to ${reachKm} km.`));
+        : `up to ${pct(toward.directional.maxPct)} (${pct(toward.directional.meanPct)} average) out to ${reachMi} miles.`));
     }
     if (low) {
       const lowToward = skySummary({ local: low[0], directional: low.slice(1) });
-      out.append(el('p', {}, el('strong', {}, 'Low cloud (below about 3 km): '),
+      out.append(el('p', {}, el('strong', {}, 'Low cloud (below about 10,000 ft): '),
         `${pct(low[0])} over you` + (points.length ? `, up to ${pct(lowToward.directional.maxPct)} toward the launch.` : '.')));
     }
     if (points.length) {
@@ -257,7 +260,7 @@ function weatherSection(result, liftoff) {
       };
       for (const ray of rays) {
         const idx = points.map((p, i) => (p.bearingDeg === ray.bearingDeg ? i + 1 : -1)).filter((i) => i > 0);
-        table.append(el('tr', {}, el('td', {}, `${compass(ray.bearingDeg)} (${ray.bearingDeg}°)`), el('td', {}, `${Math.round(ray.reachM / 1000)} km`),
+        table.append(el('tr', {}, el('td', {}, `${compass(ray.bearingDeg)} (${ray.bearingDeg}°)`), el('td', {}, `${miles(ray.reachM)} mi`),
           el('td', {}, range(idx.map((i) => all[i]))), ...(low ? [el('td', {}, range(idx.map((i) => low[i])))] : [])));
       }
       out.append(table);

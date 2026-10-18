@@ -9,6 +9,10 @@ session that changed the page.
 We bump the middle number when the page gains a feature and the last number
 for a fix. Model changes that move the backtest numbers are listed here too.
 
+## 0.7.2 · 2026-10-18 · pending
+- Distances on the card are in miles and the low cloud limit in feet
+  (about 10,000 ft). The engine still works in metres.
+
 ## 0.7.1 · 2026-10-18 · 3ed6a1f
 - The cloud card is shorter: one sentence on how far to trust the
   forecast (onshore and offshore), then the method link and the credit.
