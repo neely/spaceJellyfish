@@ -427,6 +427,18 @@ Full table: reference/source-audit.md. No pinned value was changed.
 - No source gives a screening height, a lowest elevation, or a shortest
   visible time for rocket plumes. The three values stay provisional.
 
+#### Bandwagon 5 direction (2026-10-18)
+- Coast Guard CGD-SE BNM 9080-26 (NAVCEN chart viewer, Ben's
+  screenshot) puts the launch hazard area east of the Bahamas, about
+  708 km out on bearing 118 from SLC-40. Heading set to southeast in
+  config/launch-directions.json.
+- ASOG was still at Port Canaveral at 06:53 local the day before. LL2
+  still gave ASOG at 600 km (record of 2026-10-17 17:51Z).
+- Engine at window open (10:30Z, local script run 2026-10-18):
+  southeast gives likely, prime, Sun -11.8 degrees, peak elevation 9 to
+  13 degrees at bearing 162 to 168, visible 200 to 240 s. Northeast
+  would have given 24 to 28 degrees. A low south-southeast pass.
+
 #### SpX-35 seen from James Island (2026-10-13)
 - Wide plume seen. Engine: likely, prime. At 254 and 277 s after liftoff,
   height agreed within about 1 degree; the rocket was 19 to 29 degrees

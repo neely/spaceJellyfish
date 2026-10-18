@@ -12,7 +12,7 @@ key_points:
   - "Southeast and south launches need a dog-leg around land; the polar corridor was first used on 2020-08-30 (Space Florida, snippet only)."
   - "Starlink 43 degree flight (2025-11-22) went southeast; 10-33 (2026-03-19) went northeast; a 53.2 degree flight (2022-01) was planned southeast."
   - "LL2 detailed launch records have no inclination or azimuth field. They have mission.orbit (coarse), landing location, downrange distance, timeline and flightclub_url."
-  - "Runbook with URLs for finding an upcoming launch direction (drone ship position, inclination of earlier flights, hazard warnings): section Runbook, 2026-10-15."
+  - "Runbook with URLs for finding a launch direction: drone ship, earlier flights, hazard areas. Best source: NAVCEN chart viewer polygons (Bandwagon 5, 2026-10-18)."
   - "Falcon 9 Starlink from Florida ended on 2026-08-25. SpaceX said so (Spectrum News, read 2026-10-15; see reference/source-audit.md)."
 related_papers: []
 ---
@@ -105,8 +105,10 @@ source. Each step says what it gave when checked on 2026-10-15.
      300 to 650 km downrange and that the support ship Bob or Doug escorts
      it.
    - https://api.orbitalradar.com/recovery-fleet (the fleet hub) says it
-     shows AIS positions every 5 minutes. WebFetch saw no position; not yet
-     checked in a browser.
+     shows AIS positions every 5 minutes. WebFetch saw no position. In a
+     browser it works (Ben, 2026-10-18). On the morning before Bandwagon 5
+     the ship was still at Port Canaveral, so check again in the evening,
+     or use step 6 first.
    - AIS sites by ship name (MarineTraffic, VesselFinder). Not checked; no
      ship page was confirmed.
 5. Spaceflight Now launch-day reports state "north-easterly" or
@@ -118,6 +120,18 @@ source. Each step says what it gave when checked on 2026-10-15.
      through WebFetch.
    - https://www.navcen.uscg.gov/local-notices-to-mariners (Coast Guard
      District 7 notices). WebFetch failed.
+   - https://navcen.uscg.gov/chart (NAVCEN chart viewer, a Leaflet map).
+     Works in a browser, also on an iPhone. It draws each active "Launch
+     Hazard Area" as a polygon. A tap gives the mission name, the Broadcast
+     Notice to Mariners id and the daily windows in Zulu. Checked
+     2026-10-18 (Ben): "Mission: BANDWAGON-5", "CGD-SE BNM 9080-26",
+     1030Z to 1213Z on 19 to 25 OCT 26, one polygon east of the Bahamas.
+     A point on it (25.42 N 74.355 W, from the map cursor) is about 708 km
+     from SLC-40 on bearing 118: southeast. WebFetch of the page gives
+     general text only, with no polygon or notice text. This was the best
+     direction source the day before launch, before the drone ship sailed.
+     The polygon coordinates were not read as text; the notice text itself
+     is not yet found.
 7. Trajectory simulations: the LL2 flightclub_url, or https://flightclub.io/.
    Not opened. https://www.spacelaunchschedule.com/launch/falcon-9-block-5-bandwagon-5-dedicated-mid-inclination-rideshare/
    links to it and repeats the LL2 data.
@@ -132,7 +146,7 @@ data/observations.json.
 - An inclination or azimuth field in LL2 (absent from the records seen).
 - A fetched source for the 33, 70 and 97.6 degree shells and their launch sites.
 - GPS inclination.
-- Any NAVAREA IV warning text.
+- Any NAVAREA IV warning text. (A Coast Guard BNM hazard polygon was found on the NAVCEN chart viewer, 2026-10-18; its text was not.)
 
 ## Papers the owner could download
 - "45th Space Wing/Patrick Air Force Base Launch Site Safety Assessment", NTIS PB2005105397 (2002). https://ntrl.ntis.gov/NTRL/dashboard/searchResults/titleDetail/PB2005105397.xhtml. Expected: the 37 to 114 degree figure and its basis.

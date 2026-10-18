@@ -11,10 +11,11 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 - **Active:** none. Phases 0 to 2 and the cloud work are done (v0.7.0:
   NBM, HRRR low cloud, TAF, and the offshore check on the card;
   clouds/README.md). Phase 3 (alerts) starts only when Ben asks.
-- **Last updated:** 2026-10-16
-- **Next action:** Sunday 2026-10-18: the Bandwagon 5 item in the
-  Backlog. On launch morning, note the sky toward the launch:
-  the first real check of the cloud section.
+- **Last updated:** 2026-10-18
+- **Next action:** Monday 2026-10-19, Bandwagon 5 (window 06:30 to
+  07:30 local): save the card's cloud lines, then note the sky toward
+  the launch. Direction set to southeast on 2026-10-18 (Coast Guard
+  hazard area); see the Backlog item.
 
 ---
 
@@ -67,7 +68,11 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       find where the drone ship ASOG waits and set northeast or southeast
       in config/launch-directions.json (runbook in
       reference/topics/cape-launch-azimuths-and-inclinations.md; ship notes
-      in reference/topics/recovery-fleet.md). On launch morning, save the
+      in reference/topics/recovery-fleet.md). Sunday part done 2026-10-18:
+      heading set to southeast from Coast Guard BNM 9080-26 (hazard
+      polygon east of the Bahamas, seen by Ben on navcen.uscg.gov/chart).
+      ASOG was still in port at 06:53; if it sails, check it goes
+      southeast. On launch morning, save the
       card's cloud lines (a screenshot) before going out, so Ben's sky
       note can be set beside what the card said. After the launch: add
       Ben's sky view points to data/observations.json and refresh the

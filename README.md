@@ -78,8 +78,9 @@ for any "will the sky be clear?" app.
 knows it for space station flights (northeast) and for flights to high
 orbits (due east); for anything else it draws a fan of possible paths from
 37 to 124 degrees. When we can find the direction or the orbit's
-inclination before a launch (from the drone ship's position, earlier flights
-of the same series, or hazard warnings), we set it by hand in
+inclination before a launch (from the Coast Guard launch hazard areas on the
+[NAVCEN chart viewer](https://navcen.uscg.gov/chart), the drone ship's
+position, or earlier flights of the same series), we set it by hand in
 [config/launch-directions.json](config/launch-directions.json) with its
 source, and the page draws those paths instead. The steps and the web
 addresses to check are in
@@ -276,6 +277,7 @@ dates and known problems, is
 | [Telemetry-Data](https://github.com/shahar603/Telemetry-Data) and [SpaceXTelemetry-Api](https://github.com/R4yGM/SpaceXTelemetry-Api) | Altitude and speed read off SpaceX webcasts (2018 and 2020 flights), turned into ascent profiles | [2018 data](reference/topics/falcon9-webcast-telemetry.md), [2020 data](reference/topics/falcon9-starlink-2020-telemetry.md) |
 | [USNO Sun position](https://aa.usno.navy.mil/faq/sun_approx) and [sidereal time](https://aa.usno.navy.mil/faq/GAST) | Where the Sun is, to about 1 arcminute | [usno-sun-and-sidereal-time](reference/usno-sun-and-sidereal-time.md) |
 | [NOAA NGS coordinate tool](https://geodesy.noaa.gov/api/ncat/llh) and the World Magnetic Model (WMM-2025) | Test values for the Earth geometry; the compass correction in the sky view | [model-sun-and-earth-geometry](reference/topics/model-sun-and-earth-geometry.md) |
+| Coast Guard launch hazard areas ([NAVCEN chart viewer](https://navcen.uscg.gov/chart)) | Which way a launch will go, days ahead | [cape-launch-azimuths-and-inclinations](reference/topics/cape-launch-azimuths-and-inclinations.md) |
 | SpaceX drone ship *A Shortfall of Gravitas* ([orbitalradar](https://orbitalradar.com/recovery-fleet/a-shortfall-of-gravitas)) | Where it waits tells us which way a launch will go | [recovery-fleet](reference/topics/recovery-fleet.md) |
 | Cape launch corridors ([CSIS, *Spaceports of the World*](https://www.researchgate.net/figure/Azimuth-Limitations-at-Cape-Canaveral-and-Vandenberg-Launches-from-Cape-Canaveral-and_fig2_332211453); [Spaceflight Now](https://spaceflightnow.com/) launch reports) | The range of directions a Cape launch can fly | [cape-launch-azimuths-and-inclinations](reference/topics/cape-launch-azimuths-and-inclinations.md) |
 | [NASA APOD, "Launch Plume: SpaceX Jellyfish"](https://apod.nasa.gov/apod/ap260319.html) | What the jellyfish is and when it happens | [twilight-phenomenon-space-jellyfish](reference/topics/twilight-phenomenon-space-jellyfish.md) |
@@ -291,8 +293,11 @@ A few things we found along the way:
   higher in our sky than one heading southeast or due east. Space station
   flights go northeast.
 - The booster lands on a drone ship that waits 300 to 650 km out to sea. If
-  the ship is parked off the Carolinas the day before, the launch is coming
-  our way; if it is near the Bahamas, it will stay low in the south.
+  the ship is parked off the Carolinas, the launch is coming our way; if it
+  is near the Bahamas, it will stay low in the south. The ship may not sail
+  until the day before (for Bandwagon 5 it was still in port that morning),
+  but the Coast Guard's launch hazard area, on the NAVCEN chart viewer, is
+  often posted days ahead and gives the same answer.
 - About six in ten of the launches the engine rates as visible since 2017
   were Falcon 9 Starlink flights, and SpaceX has said those no longer fly
   from Florida, so the chances from here on are fewer and come mostly from
