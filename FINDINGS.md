@@ -599,7 +599,12 @@ Choices made, and why. Mark settled ones `(locked)`.
   links, then how to read a card, then how it works now, how well it
   works, a short "how we got here" with links to FINDINGS and clouds/,
   and what could come next. Development detail stays in FINDINGS,
-  JOURNAL and reference/, linked, not repeated. The Atlas V sighting of
+  JOURNAL and reference/, linked, not repeated.
+- Test for README text (Ben, 2026-10-19): it must make sense to a reader
+  a year from now who never heard of the launch it came from. Single
+  launches, sessions and dated events go in JOURNAL or FINDINGS. The
+  README keeps only the lasting rule or link they taught us. CHANGELOG
+  is a dated history, so it is exempt. The Atlas V sighting of
   2026-04-27 left the README; it stays in data/labels.json and here.
 - Rejected: ASD-STE100 for the README. The build-order layout (a long
   Status section first; the links Ben needed on launch morning were near

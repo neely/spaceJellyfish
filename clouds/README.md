@@ -31,8 +31,8 @@ forecast (api.weather.gov). That worked, but it left three problems:
   forecasts that a browser or a short script can read, so we could not
   check how good it is.
 
-A second source made the problem plain. For the Bandwagon 5 launch window
-(2026-10-19, about 06:30 local), forecast three days out, NWS gave 56 to 61
+A second source made the problem plain. For one dawn launch window in
+October 2026, forecast three days out, NWS gave 56 to 61
 percent cloud 59 km offshore and Open-Meteo gave 100 percent. One forecast
 cannot say which is right. Scoring many past forecasts against what the sky
 really did can.
