@@ -450,6 +450,8 @@ Full table: reference/source-audit.md. No pinned value was changed.
   changed. LL2 had changed by 2026-10-19 10:08Z: NET and window open
   2026-10-20 10:30Z, window close 11:30Z, status Go, 85 percent,
   concern "Liftoff Winds" (read with WebFetch, 2026-10-19).
+  10:08Z is the record's last edit, not the time of the date change.
+  The time of the date change is not known.
 - Lesson: a scrub can reach the page late, because the page reads only
   LL2. Check a news source on the morning of a launch.
 - Engine for Tuesday (local script run 2026-10-19, southeast): 10:30Z
@@ -686,6 +688,9 @@ Choices made, and why. Mark settled ones `(locked)`.
   a day and commits only when the list changed (Ben, 2026-10-19: keep it
   automatic). Before this, the copy was saved by hand and was 11 days old
   on launch morning.
+- LL2 accepted a request with no token from a GitHub runner (first run,
+  2026-10-19, run 39239698228). One run only. This bears on the Phase 3
+  open item (a launch source for the Worker).
 - Rejected: A Cloudflare Pages Function as a shared feed. A GitHub Action
   that commits the list every hour, because it fills the commit history.
   Refresh by hand only (the copy goes stale).
