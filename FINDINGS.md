@@ -682,8 +682,13 @@ Choices made, and why. Mark settled ones `(locked)`.
   old.
 - Why: Each visitor has their own LL2 allowance of 15 requests per hour. A
   feed on Cloudflare was tried and failed (see Dead-ends).
+- Fallback refresh: a GitHub Action runs `save-upcoming-fallback.js` once
+  a day and commits only when the list changed (Ben, 2026-10-19: keep it
+  automatic). Before this, the copy was saved by hand and was 11 days old
+  on launch morning.
 - Rejected: A Cloudflare Pages Function as a shared feed. A GitHub Action
   that commits the list every hour, because it fills the commit history.
+  Refresh by hand only (the copy goes stale).
 
 ### Sky view: live camera, portrait only, calibrated on the Sun (locked)
 - What: `sky.html` draws the path over the live back camera from the phone

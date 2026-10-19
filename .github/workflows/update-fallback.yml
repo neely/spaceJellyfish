@@ -1,0 +1,39 @@
+# Refresh data/upcoming-fallback.json once a day from Launch Library 2.
+# Commits only when the launch list changed, so the history stays short.
+# FINDINGS.md: "The page asks LL2 from the browser".
+name: Update fallback launch list
+
+on:
+  schedule:
+    - cron: '17 8 * * *' # 08:17 UTC, early morning in Charleston
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-fallback
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch the upcoming launches
+        run: node scripts/save-upcoming-fallback.js
+      - name: Commit if the list changed
+        run: |
+          if git diff --quiet -- data/upcoming-fallback.json; then
+            echo "No change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/upcoming-fallback.json
+          git commit -m "Refresh the fallback launch list"
+          git push

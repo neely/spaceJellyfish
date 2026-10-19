@@ -409,7 +409,8 @@ A few things we found along the way:
   backtest reads these files and nothing else. `observations.json` holds our
   own measured sightings. `upcoming-fallback.json` is a
   saved copy of upcoming launches that the page shows only when every live
-  source fails. `goes/` holds the satellite check extract: the
+  source fails. A GitHub Action refreshes it once a day and commits only
+  when the list changed. `goes/` holds the satellite check extract: the
   cloud mask values around each airport for 782 scans, with the S3 name
   and checksum of each file, the cloud layer values for the matching
   782 files, the mask boxes at airports and water places for 1,984
