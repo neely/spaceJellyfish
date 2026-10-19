@@ -133,7 +133,10 @@ no dependencies) works out:
   2020 flights) along a great circle from the pad. We fly every flight
   rather than an average, so the page shows the spread. Nothing is newer
   than 2020 and nothing is a vehicle other than Falcon 9, so results for
-  Vulcan, Atlas V or New Glenn assume they climb like a Falcon 9.
+  Vulcan, Atlas V or New Glenn assume they climb like a Falcon 9. Through
+  October 2026, when we built this, Falcon 9 flew most Florida launches.
+  Other rockets are a growing share, so we plan to gather ascent data for
+  each one as it becomes a jellyfish chance.
 - **Whether you can see it lit**: the rocket outside the Earth's shadow, the
   Sun below your horizon, and the rocket at least 5 degrees up. Heights are
   geometric, with no correction for refraction. The thresholds are in

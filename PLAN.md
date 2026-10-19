@@ -196,6 +196,12 @@ make this a priority (2026-10-18).
   is live.
 - Tuned profiles for Vulcan, New Glenn, Falcon Heavy — only if the generic
   profile proves too coarse.
+  Leads (2026-10-19): no public ascent data found for Atlas V, Vulcan or
+  New Glenn. Read altitude and speed off the webcast of the first one in
+  twilight (the SpaceXtract approach). Flight Club simulations are a
+  second lead, not checked. ULA mission booklets give the launch azimuth.
+  Next 30 launches (list of 2026-10-19): 13 Falcon 9, 8 Vulcan, 3 New
+  Glenn, 2 Falcon Heavy, 2 Terran R, 2 unknown.
 - Workers Paid — only if the engine does not fit in 10 ms.
 - Wallops launches — one Charleston sighting is on record (Antares,
   2022-11-07). Out of scope now; Ben decides if the scope grows.
