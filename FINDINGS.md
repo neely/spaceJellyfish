@@ -595,7 +595,15 @@ Choices made, and why. Mark settled ones `(locked)`.
   named limitations. PLAN, FINDINGS, and JOURNAL stay in ASD-STE100.
 - Why: Ben gave a personal style guide for public text on 2026-10-08. The
   guide is not in this repo; the rules above are the part that applies.
-- Rejected: ASD-STE100 for the README.
+- Order (Ben, 2026-10-19): what a reader needs first. Launch-morning
+  links, then how to read a card, then how it works now, how well it
+  works, a short "how we got here" with links to FINDINGS and clouds/,
+  and what could come next. Development detail stays in FINDINGS,
+  JOURNAL and reference/, linked, not repeated. The Atlas V sighting of
+  2026-04-27 left the README; it stays in data/labels.json and here.
+- Rejected: ASD-STE100 for the README. The build-order layout (a long
+  Status section first; the links Ben needed on launch morning were near
+  the bottom).
 
 ### Pad coordinates come from the LL2 record (locked)
 - What: There is no pad config file. The engine takes the pad latitude and

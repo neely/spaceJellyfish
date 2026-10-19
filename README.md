@@ -6,160 +6,230 @@
   <img src="assets/jellyfish.png" alt="A glowing jellyfish in space with a rocket at the top of its bell" width="320">
 </p>
 
-Hyperlocal predictor and email alerts for twilight "space jellyfish" launch
-visibility from Charleston, SC.
+Hyperlocal predictor for twilight "space jellyfish" launch visibility from
+Charleston, SC.
 
 **Live:** https://jellyfish.benneely.com · [What changed](CHANGELOG.md)
 
 ## What it is
-A "space jellyfish" is the glowing plume that appears when a rocket climbs
-high enough to be in sunlight while the observer on the ground is still in
-twilight or darkness. We aim to predict when a launch from Cape Canaveral or Kennedy
-Space Center will produce that effect as seen from Charleston, SC (James
-Island, ZIP 29412), which our geometry code places 290 miles (466 km)
-from Space Launch Complex 40. The page gives distances in miles and
-heights in feet; the engine and our notes work in metric, as the sources do.
+A "space jellyfish" is the glowing plume you see when a rocket climbs into
+sunlight while the ground below is still in twilight or dark. The page
+predicts when a launch from Cape Canaveral or Kennedy Space Center will show
+one from Charleston (James Island, ZIP 29412), 290 miles from the pad. So the
+question is not only "is there a launch, and is the sky clear?" but where
+the rocket is, where the Sun is, and whether the plume is lit while we are
+dark.
 
-The question is therefore not only "is there a launch, and is the sky clear?"
-It is a question of illumination geometry: where the rocket is, where the Sun
-is, and whether the plume is lit while Charleston is dark.
+We built it from public data (Launch Library 2 for launches, NOAA forecasts
+through Open-Meteo for clouds) and took no code, predictions or images from
+other launch-visibility sites. The page works today; email alerts are not
+built yet.
 
-This is an independent build from public data sources: the Launch Library 2
-API for launches and NOAA cloud forecasts through Open-Meteo. We take no code,
-predictions, or images from other launch-visibility sites, although we have
-read how they describe their methods (see `reference/`).
+## On launch morning
+The links we actually use, in the order we use them.
 
-## Status
-There is a live web page and a tested geometry engine, but there are no alerts
-yet. The page shows a cloud forecast next to the verdict; the verdict itself
-is still geometry only.
-[PLAN.md](PLAN.md) holds the roadmap.
+**Is it still on?**
+- [The page](https://jellyfish.benneely.com) reads Launch Library 2 and
+  refreshes at most every 20 minutes. When Launch Library 2 is slow to post
+  a scrub, so is the page.
+- [Spaceflight Now](https://spaceflightnow.com/launch-schedule/) launch
+  reports and live coverage. It reported the Bandwagon 5 weather scrub on
+  18 October 2026; SpaceX's own page still showed a countdown at window
+  open the next morning.
+- [SpaceX launches](https://www.spacex.com/launches/), the official page,
+  but it lagged that same scrub.
 
-**The page.** `index.html` lists upcoming Cape Canaveral and Kennedy Space
-Center launches and, for each one with a set time, shows whether a sunlit
-plume is likely, the clock window in which to look, the compass direction it
-moves through, how high it climbs, a chart of its path across the sky, and how
-the answer changes if liftoff slips (ten-minute steps for two hours either
-side). It refreshes launch times each time it is opened, at most once every 20
-minutes. Launch Library 2 allows only 15 requests an hour from one address, so
-the page asks from each visitor's own browser, and if that fails it shows
-the last copy it has, with its date. (We tried a shared feed on Cloudflare;
-Launch Library 2 rejected every request from Cloudflare's shared addresses,
-so we removed it.)
+**Which way will it go?** Northeast climbs two to three times higher in our
+sky than southeast.
+- [NAVCEN chart viewer](https://navcen.uscg.gov/chart): Coast Guard launch
+  hazard areas, often posted days ahead. A box off the Carolinas means
+  northeast; one near the Bahamas means southeast.
+- [orbitalradar live fleet map](https://orbitalradar.com/recovery-fleet):
+  where the drone ship waits gives the same answer, but it may not sail
+  until the day before (both ships were in port on Bandwagon 5's scrubbed
+  morning, with rough seas).
+- Step by step:
+  [the runbook](reference/topics/cape-launch-azimuths-and-inclinations.md)
+  (section "Runbook"). What we set lives in
+  [config/launch-directions.json](config/launch-directions.json).
+
+**Watching.** Calibrate the [sky view](#sky-view) the day before, from the
+spot you will stand. During the launch, take sky view screenshots and note
+whether you saw nothing, a moving point, or a wide plume (see
+[Our own observations](#our-own-observations)).
+
+## Reading a launch card
+
+The card keeps to what you need outside. The explanations are here, and each
+note on the card links back to the part it shortens.
+
+**The verdict.** *Likely* means every past Falcon 9 flight we fly on this
+launch's path has a sunlit rocket in a dark sky, at least 5 degrees up and
+for at least a minute (both values are our choice, with no source yet).
+*Possible* means only some do. *No jellyfish* means none do; at night the
+rocket may still show as a moving point of light. *Prime: dark sky* means
+the Sun is at least 6 degrees below the horizon at the peak, so the sky is
+dark enough for the plume to stand out. *Confidence* is medium when the path
+is one known direction and the vehicle is a Falcon 9, and low otherwise.
+Clouds never change the verdict; the geometry does.
+
+**The facts.** *Look between* is the clock window when some path is lit and
+visible. *Highest point* is how high it climbs, in degrees above the horizon
+(a fist at arm's length is roughly 10 degrees). *Direction* is where it
+starts, peaks and ends, or the range of directions when the path is not
+known. *Sun below horizon* is how dark the sky is: about 6 degrees is the
+end of civil twilight, 12 the end of nautical twilight.
+
+**Clouds.** Cloud over you, cloud at places toward the launch, low cloud
+from HRRR within about a day and a half, and the Charleston Executive
+airport forecast within about a day. Why the places stop where they do is
+under [Clouds](#clouds), below. The one-line note says how often forecasts
+that far ahead caught cloudy twilight hours, and how much of that skill held
+over the water.
+
+### The chart
+The chart is the view when you face southeast: east is on the left, south on
+the right, and height runs up the side. Each line is one past Falcon 9 flight
+flown on this launch's path, so the spread of lines is the spread between
+real ascents. The orange part is the rocket in sunlight while your sky is
+dark: that is where the jellyfish shows. The dotted part is before the
+plume is counted or after the rocket leaves sunlight. Our flight data stops
+at second-stage cutoff, about 8 to 9 minutes after liftoff, so the rocket
+may stay visible a little longer than the lines. The tree slider shades the
+sky below your treeline (the setting stays in your browser), and the sky
+view link draws the same path over your phone camera.
+
+When only the orbit is known, the chart shows both ways to reach it:
+northeast (the higher arcs, over the southeast sky) and southeast (the low
+arcs in the south). When nothing is known, it shows a fan of possible paths.
+When we have found the path ourselves, the card says **Path:** with a
+one-line reason, a link to the source, and a link to the full record.
+
+### If liftoff moves
+Each box is a possible liftoff time, ten minutes apart, two hours either
+side of the plan. It is not a time to look. Orange is likely, blue is
+possible, dark is no jellyfish. Outside the orange and blue run, the sky
+is either too dark for the rocket to reach sunlight while we can see it,
+or too bright to see it. Launches slip often, so if the time changes,
+reopen the page for the new viewing window.
+
+## How it works
+
+**Launch times.** Each visitor's browser asks Launch Library 2 directly,
+because it allows only 15 requests an hour from one address and refused
+Cloudflare's shared addresses. If that fails, the page uses the last answer
+the browser saved, then a copy in the repo
+([data/upcoming-fallback.json](data/upcoming-fallback.json)) that a GitHub
+Action refreshes each morning. Either copy is marked with its date.
+
+**The geometry.** For each launch the engine (`engine/`, plain JavaScript,
+no dependencies) works out:
+- **Where the Sun is**, with the U.S. Naval Observatory approximate
+  algorithm. It agrees with 12 USNO reference cases within 0.007 degrees,
+  tested down to a Sun 11 degrees below the horizon.
+- **Where the rocket is**, flying real Falcon 9 ascents (altitude and
+  downrange distance read off SpaceX webcasts: five 2018 flights and five
+  2020 flights) along a great circle from the pad. We fly every flight
+  rather than an average, so the page shows the spread. Nothing is newer
+  than 2020 and nothing is a vehicle other than Falcon 9, so results for
+  Vulcan, Atlas V or New Glenn assume they climb like a Falcon 9.
+- **Whether you can see it lit**: the rocket outside the Earth's shadow, the
+  Sun below your horizon, and the rocket at least 5 degrees up. Heights are
+  geometric, with no correction for refraction. The thresholds are in
+  [config/visibility.json](config/visibility.json), each with a source or
+  marked provisional.
+
+**Flight directions.** Launch Library 2 gives none. The page knows space
+station flights go northeast and high orbits go due east. For anything else
+it draws a fan from 37 to 124 degrees, unless we have set the direction by
+hand from the hazard areas or the drone ship (see
+[On launch morning](#on-launch-morning)).
 
 **Clouds.** Within about 7 days of a launch, each card shows the forecast
-cloud cover over the observer and at places between the observer and the
-top of the rocket's arc. The places stop where the sight line rises above
-about 39,000 ft of height (at 10 degrees up, about 41 miles out; at 5
-degrees, about 76 miles), because cloud farther away sits below the line. The forecast is NOAA's
-National Blend of Models (NBM) through Open-Meteo, and, within about a day
-and a half, NOAA's HRRR low cloud as well. Within about a day it adds the
-airport forecast (TAF) for Charleston Executive, with cloud heights from a
-forecaster. Each card also says how often
-forecasts that far ahead were right at twilight. The cloud top height, the
-spacing of the places, and how much of the arc counts are our choices, not
-values from a source.
+cloud cover over you and at places along your line of sight toward the top
+of the rocket's arc. Only the top 20% of the arc counts (down to 80% of the
+peak height), because that is where you will be looking. The places stop
+where your sight line climbs above 39,000 ft, our assumed cloud top: past
+that point, any cloud is below the line and cannot block the view, however
+far away the rocket is. The calculation includes the Earth's curve, which
+lifts the sight line clear a little sooner than on flat ground. A low
+launch reaches farther out: about 41 miles at 10 degrees up, 54 miles at
+7.4 degrees (Bandwagon 5) and 76 miles at 5 degrees. The cloud top, the
+spacing of the places and the 20% are our choices, not values from a
+source; real clouds lower than 39,000 ft would shorten the reach.
 
-**Which cloud forecast, and why.** We did not just pick one. We scored four
-models (ECMWF, GFS, NBM and HRRR) against 21 months of hourly reports from
-11 coastal airports between Wilmington and Jacksonville. NBM was best at
-every lead time from 1 to 7 days, and HRRR was much the best for low cloud
-at short range. Skill fell steadily with lead time: at twilight, NBM's
-score (hit rate minus false-alarm rate) went from 51 at 1 day to 26 at 7
-days. One trap worth knowing: automatic airport stations only report cloud
-below 12,000 ft, so a forecast of high cloud can look wrong when it is not.
-The plume is seen over the ocean, where there are no airports, so we also
-scored NBM against the GOES weather satellite over land and over water
-alike: one day ahead, it kept about 93 percent of its land skill offshore.
-The full write-up, with what we tried, what came second and how to rerun
-it, is in [clouds/README.md](clouds/README.md). It is written to be reused
-for any "will the sky be clear?" app.
+The forecast is NOAA's National Blend of Models (NBM), plus HRRR low cloud
+inside a day and a half and the Charleston Executive airport forecast (TAF)
+inside a day. We chose NBM by scoring four models against 21 months of
+airport reports and against the GOES weather satellite over the ocean; the
+results are under [How we got here](#how-we-got-here).
 
-**Launch directions.** Launch Library 2 gives no flight direction. The page
-knows it for space station flights (northeast) and for flights to high
-orbits (due east); for anything else it draws a fan of possible paths from
-37 to 124 degrees. When we can find the direction or the orbit's
-inclination before a launch (from the Coast Guard launch hazard areas on the
-[NAVCEN chart viewer](https://navcen.uscg.gov/chart), the drone ship's
-position, or earlier flights of the same series), we set it by hand in
-[config/launch-directions.json](config/launch-directions.json) with its
-source, and the page draws those paths instead. The steps and the web
-addresses to check are in
-[reference/topics/cape-launch-azimuths-and-inclinations.md](reference/topics/cape-launch-azimuths-and-inclinations.md)
-(section "Runbook").
+<a id="sky-view"></a>**Sky view.** Each card links to `sky.html`, which
+draws the predicted path over your phone's live camera: horizon, a line
+every 10 degrees of height, compass marks and a dot for each minute after
+liftoff. Solid orange is the rocket in sunlight; the plume spreads far wider
+than the line. Dashed blue is the rocket before it reaches sunlight. It runs
+on the phone, uploads nothing, uses the compass and tilt sensors (not GPS),
+and works only in portrait. It has been tested on iPhone, not Android.
 
-**The backtest so far.** We ran the engine over the 507 Cape Canaveral and
-Kennedy Space Center launches that Launch Library 2 lists from January 2017
-to 13 October 2026. It rates 60 of them (11.8%) as likely or possible to show
-a sunlit rocket in a dark Charleston sky, and 33 of those fall after the end
-of civil twilight, when the sky is darkest. That count carries no weather and
-rests on three provisional thresholds, so it is an upper bound on the chances
-rather than a forecast of sightings. It also overstates the future rate: 35
-of the 60 are Falcon 9 Starlink launches, and SpaceX has said the August 25,
-2026 Starlink flight was the last of those from Florida (reported by
-Spectrum News 13), so we expect fewer chances each year from now on.
+Calibrate it with the Sun, the day before, from the spot you will watch:
+1. **Compass correction.** Point the phone at the Sun, put it in the white
+   circle, and tap *Sun is in the circle*. A low Sun is best (the hour
+   after sunrise, for a morning launch), because you then hold the phone
+   upright as you will at launch time.
+2. **Field of view.** With the camera at 1x, turn until the Sun is near the
+   screen edge. If the yellow ring sits farther from the centre than the
+   Sun, raise *Field of view* in Settings; if closer, lower it. 70 degrees
+   worked on one iPhone.
 
-We compared the engine with 13 launches that people in the Charleston area
-reported seeing (local news stories, r/Charleston posts, and our own SpX-35
-sighting, listed in [data/labels.json](data/labels.json)). Five of the
-reports show a wide glowing plume, and the engine rates four as likely and
-one (Starlink 10-49, launched in deep twilight) as possible. Of the other eight,
-which say only that the rocket was seen, it rates seven as likely or
-possible. It also rates none of 165 midday or late-night launches as
-visible, although any rule based on the clock alone would pass that check, so
-it says little about the geometry itself.
+Compass errors of 5 to 10 degrees are normal, mostly from metal and magnets
+nearby (cars, railings, grills, MagSafe cases). The correction holds only
+for the spot where you made it. Full instructions are on the page, behind
+the Help button.
 
-**One sighting without a sunlit plume.** An Atlas V launch on 27 April 2026
-at 8:53 pm was seen and photographed from the Charleston area, and the engine
-finds no sunlit part of that ascent at any screening height we tried (about 3, 6,
-and 19 miles up). The photo shows a bright moving point rather than a glowing cloud,
-which is what a rocket flame looks like at night, so we count it as a sighting
-of the rocket and not of a jellyfish. This is consistent with the engine but
-does not confirm it: only one of our five plume reports is an evening launch,
-and all of our ascent profiles are Falcon 9 flights, so results for evening
-launches and for other vehicles should be treated with caution.
+## How well it works
 
-We set five plume reports as the minimum before any alert is built. The
-four public reports and Ben's own SpX-35 sighting of 13 October 2026 (see
-Our own observations, below) now make five, all in the backtest, so that bar
-is met. Five is still a small number, and we wrote the SpX-35 label after we
-already knew the engine's verdict for it, so treat the bar as a minimum, not
-a proof.
+**The backtest.** Over the 507 Cape and KSC launches Launch Library 2 lists
+from January 2017 to 13 October 2026, the engine rates 60 (11.8%) as likely
+or possible, 33 of them after the end of civil twilight. That count has no
+weather in it and rests on provisional thresholds, so it is an upper bound,
+not a forecast. It also overstates the future: 35 of the 60 were Falcon 9
+Starlink flights, and SpaceX has said those no longer fly from Florida.
 
-**Our own observations.** Public reports tell us only whether a launch was
-seen. Watching with the sky view from a known spot also tells us where the
-rocket was and when, so each of these tests the direction, height, and
-timing of the model. They are kept in
-[data/observations.json](data/observations.json), with the measured points
-and the engine's values for the same moments.
+**Against what people saw.** We collected 13 launches people in the
+Charleston area reported seeing ([data/labels.json](data/labels.json)). Of
+the five that show a wide glowing plume, the engine rates four likely and
+one possible. Of the eight that say only that the rocket was seen, it rates
+seven likely or possible. Five plume reports was our bar before building
+alerts; it is met, but five is a small number, so treat it as a minimum,
+not a proof.
+
+<a id="our-own-observations"></a>**Our own observations.** Watching with
+the sky view from a known spot tests direction, height and timing, not just
+"seen or not". Each one goes in
+[data/observations.json](data/observations.json) with the engine's values
+for the same moments.
 
 | Date | Launch | Where | Verdict | Seen | Height and timing | Direction |
 |---|---|---|---|---|---|---|
-| 2026-10-13 | SpX-35 | James Island | likely, prime | plume | within about 1 deg | 19 to 29 deg farther east than predicted at the same moment; on or just under the drawn arc. The compass checked out within 1 deg two days later, so the ascent model, not the phone, is the likely cause. Since 15 October the engine also flies 2020 Starlink and DM-2 ascents; the Starlink ones miss by 6 to 14 deg, still east of the prediction (`scripts/compare-ascent-sources.js`) |
+| 2026-10-13 | SpX-35 | James Island | likely, prime | plume | within about 1 deg | 19 to 29 deg farther east than predicted; the compass checked out, so the ascent model is the likely cause |
 
 <p align="center">
   <img src="assets/demo-plume-spx35.jpg" alt="A wide fan-shaped glowing rocket plume above dark trees in a twilight sky" width="520">
   <img src="assets/demo-skyview-spx35.jpg" alt="Sky view screenshot: the plume below the drawn orange path, with height lines and compass marks" width="260">
 </p>
-<p align="center"><em>SpX-35 from James Island, 13 October 2026. Left: the plume, photographed
-with the phone camera. Right: the sky view 254 s after liftoff, facing
-southeast; the rocket (the bright tip of the plume) sits just under the
-predicted path, and the plume fills far more sky than the line.</em></p>
+<p align="center"><em>SpX-35 from James Island, 13 October 2026. Left: the
+plume. Right: the sky view 254 s after liftoff, facing southeast; the rocket
+sits just under the predicted path.</em></p>
 
-To add one: before the launch, calibrate the sky view as described below.
-During it, take sky view screenshots (their time stamps give the seconds
-after liftoff), and note whether you saw nothing, a moving point of light,
-or a wide glowing plume. Afterwards, from the same spot in daylight, check
-whether the drawn Sun sits on the real Sun before recalibrating, because that
-separates a compass error from a model error. One launch is one data point,
-so we read this table for patterns across several launches rather than for
-any single row.
+After a launch, check from the same spot in daylight whether the drawn Sun
+sits on the real Sun before you recalibrate. That separates a compass error
+from a model error. One launch is one data point; we look for patterns
+across several.
 
-**Who this works for.** The engine computes everything for one point on
-James Island, but while it is visible the rocket is about 180 to 730 miles away
-(over the 506 launches of the 8 October snapshot), so moving the observer a
-few miles barely changes the answer. We re-ran all 507 snapshot launches
-for other places (`node scripts/observer-sensitivity.js`, Census ZIP code area points):
+**Who this works for.** While visible, the rocket is 180 to 730 miles away,
+so moving a few miles barely matters. Re-running all 507 launches for
+other places (`node scripts/observer-sensitivity.js`):
 
 | Place | Miles from James Island | Same verdict (of 507) | Same verdict when James Island says likely or possible (of 60) | Typical change in peak height |
 |---|---|---|---|---|
@@ -172,166 +242,46 @@ for other places (`node scripts/observer-sensitivity.js`, Census ZIP code area p
 | Summerville | 27 | 506 | 60 | 4.6 deg |
 | Columbia | 107 | 503 | 57 | 14.0 deg |
 
-Anywhere from Folly Beach to Isle of Palms, the page is as good for you as it
-is for James Island: the verdict differs for at most 1 of 507 launches, and
-heights and directions shift by about 1 degree, less than a phone compass
-error. By Summerville (27 miles) the verdict still holds but heights run about
-4.6 degrees off, and beyond roughly 30 miles the page should be treated as a rough
-guide only. These figures compare the model with itself; they say nothing
-about how right the model is, only that the answer does not depend on which
-Charleston-area neighbourhood you stand in.
+From Folly Beach to Isle of Palms the page is as good as it is for James
+Island. Past about 30 miles, treat it as a rough guide. This compares the
+model with itself, so it says nothing about how right the model is.
 
-**Sky view (camera).** Each launch card links to `sky.html`. It opens the
-phone's back camera and draws the predicted rocket path over the live
-picture, with the horizon, a line every 10 degrees of height, compass marks,
-and a dot for each minute after liftoff. The solid orange line is the rocket
-while it is sunlit; the glowing plume spreads far wider than that line. The
-dashed blue line is the rocket before it reaches sunlight. Everything runs on
-the phone and nothing is uploaded. The page uses the compass and tilt
-sensors, not GPS. It works only with the phone upright, in portrait: in
-landscape it hides the drawing and asks you to turn the phone. A phone's
-rotation lock keeps it in portrait; the page asks the browser to lock it
-too, but most phones (all iPhones) refuse that request.
+## How we got here
+The short version of what we tried. The reasons, and what we rejected, are
+in [FINDINGS.md](FINDINGS.md); the session history is in
+[JOURNAL.md](JOURNAL.md).
 
-The drawing depends on two settings, which each phone keeps for itself, and
-both are set with the Sun:
+- **Cloud forecast.** We scored ECMWF, GFS, NBM and HRRR against 21 months
+  of hourly reports from 11 coastal airports, Wilmington to Jacksonville.
+  NBM was best at every lead from 1 to 7 days; HRRR was best for low cloud
+  at short range. At twilight, NBM's skill (hit rate minus false-alarm
+  rate) fell from 51 at 1 day to 26 at 7 days. Because the plume is seen
+  over the ocean, we also scored NBM against the GOES satellite: one day
+  ahead it kept about 93% of its land skill offshore. Full report:
+  [clouds/README.md](clouds/README.md).
+- **Launch feed.** A shared feed on Cloudflare was tried and removed;
+  Launch Library 2 refused its shared addresses. An hourly GitHub Action
+  was rejected for filling the history; a daily one that commits only on a
+  change replaced hand refreshes.
+- **Ascent data.** We started with five 2018 Falcon 9 webcast flights and
+  added five 2020 flights after SpX-35 came in east of the prediction. The
+  2020 Starlink ascents cut that miss to 6 to 14 degrees.
+- **Directions by hand.** The Coast Guard hazard areas and the drone ship
+  turned out to give a launch's direction days or hours ahead, which
+  Launch Library 2 does not.
 
-1. **Compass correction.** The day before, stand exactly where you will
-   watch, ideally when the Sun is low over the trees (for a morning launch,
-   the hour after sunrise puts the Sun low in the east and southeast, close
-   to the rocket's path). Point the phone at the Sun, put it in the white
-   centre circle, and tap *Sun is in the circle*. The yellow ring, which
-   marks where the page expects the Sun, should land on it. A low Sun is
-   better than a high one because you then hold the phone upright, as you
-   will at launch time.
-2. **Field of view.** Lenses differ, and browsers do not report them, so the
-   page cannot know how wide your camera sees. With the camera at 1x, turn
-   until the Sun is near the edge of the screen. If the yellow ring sits
-   farther from the centre than the Sun, raise *Field of view* in Settings;
-   if it sits closer, lower it. 70 degrees worked on one iPhone. The centre
-   of the screen is right whatever this value is.
+Our notes on every outside source start at
+[reference/START-HERE.md](reference/START-HERE.md).
 
-Compass errors of 5 to 10 degrees are normal, and they come mostly from
-metal and magnets close to the phone: cars, railings, grills, decks with
-steel in them, and magnetic cases, MagSafe wallets, and car mounts.
-The iPhone compass also shifts when the phone is tilted sideways, so the
-page reads the compass only while the phone is held level and otherwise
-carries the direction on the gyro, showing "compass held" until you level it
-again. Recalibrating the phone's own compass helps (on Android, a figure-8 motion
-in a compass or maps app; on iPhone, keep Compass Calibration on under
-Location Services, System Services). The correction holds only for the spot
-where it was made. On one iPhone the correction was -3.4 degrees on
-12 October 2026; the sky view has not been tested on Android, where it
-should work in Chrome. The full instructions are also on the page itself,
-on the start screen and behind the Help button.
-
-What the engine consists of:
-
-- **Sun position** (`engine/sun.js`): the U.S. Naval Observatory approximate
-  solar coordinates algorithm. Across 12 reference cases from the USNO
-  celestial navigation API, our values agree within 0.007 degrees, against a
-  stated algorithm accuracy of about 1 arcminute (0.017 degrees). The
-  reference cases cover daytime and twilight only (Sun altitude down to
-  -11.2 degrees), so agreement deeper into the night is untested.
-- **Earth geometry** (`engine/geo.js`): geodetic to Earth-fixed coordinates
-  and the elevation, bearing, and range from the observer to a point. Across
-  4 reference conversions from the NOAA NGS coordinate tool, our values agree
-  within 0.4 mm. Elevations are geometric, with no correction for atmospheric
-  refraction.
-
-- **Trajectory** (`engine/trajectory.js`): the rocket's position against
-  time, taken as one great circle from the pad with altitude and downrange
-  distance from real Falcon 9 flights, read off the speed and altitude that
-  SpaceX shows on its launch webcasts. Five flights are 2018 missions (two to
-  the ISS, three to geostationary transfer orbit) from the public
-  [Telemetry-Data](https://github.com/shahar603/Telemetry-Data) collection.
-  Five more are 2020 flights to low orbit (four Starlink launches and the
-  Dragon demonstration flight DM-2) from
-  [SpaceXTelemetry-Api](https://github.com/R4yGM/SpaceXTelemetry-Api); we
-  work out their downrange distance ourselves, with a method that reproduces
-  the first collection's numbers within about half a mile. We use every flight rather
-  than an average, so the page shows the spread between real ascents. There
-  is nothing newer than 2020 and no vehicle other than Falcon 9, so results
-  for Vulcan, Atlas V or New Glenn rest on the assumption that they climb
-  like a Falcon 9, which is untested.
-
-- **Visibility** (`engine/visibility.js`): whether the rocket is in sunlight
-  (outside a cylindrical Earth shadow), whether the Sun is below the
-  observer's horizon, and whether the rocket is at least 5 degrees up.
-  Launch Library 2 does not give a launch direction, so for most launches we
-  fly every profile on eight azimuths from 37 to 124 degrees and report a
-  launch as "likely" when all of them are visible and "possible" when only
-  some are. The thresholds are in `config/visibility.json`, each with its
-  source or marked provisional.
-
-## Reading a launch card
-
-The card keeps to what you need outside. The explanations are here, and each
-note on the card links back to the part it shortens.
-
-**The verdict.** *Likely* means every past Falcon 9 flight we fly on this
-launch's path has a sunlit rocket in a dark sky, at least 5 degrees up and
-for at least a minute (both values are our choice, with no source yet). *Possible* means only some do. *No jellyfish*
-means none do; at night the rocket may still show as a moving point of
-light. *Prime: dark sky* means the Sun is at least 6 degrees below the
-horizon at the peak, so the sky is dark enough for the plume to stand out.
-*Confidence* is medium when the path is one known direction and the
-vehicle is a Falcon 9, and low otherwise. Clouds never change the verdict; the geometry does.
-
-**The facts.** *Look between* is the clock window when some path is lit and
-visible. *Highest point* is how high it climbs, in degrees above the horizon
-(a fist at arm's length is roughly 10 degrees). *Direction* is where it
-starts, peaks and ends, or the range of directions when the path is not
-known. *Sun below horizon* is how dark the sky is: about 6 degrees is the
-end of civil twilight, 12 the end of nautical twilight.
-
-**Clouds.** How the forecast was chosen is under Status, above. The card shows cloud over you, cloud at places toward the launch (out to
-where your sight line rises above the clouds), low cloud from HRRR within
-about a day and a half, and the Charleston Executive airport forecast
-within about a day. Its one-line note says how often forecasts that far
-ahead caught cloudy twilight hours, and how much of that skill held over
-the water; the full test is in [clouds/README.md](clouds/README.md).
-
-### The chart
-The chart is the view when you face southeast: east is on the left, south on
-the right, and height runs up the side. Each line is one past Falcon 9 flight
-flown on this launch's path, so the spread of lines is the spread between
-real ascents. The orange part is the rocket in sunlight while your sky is
-dark: that is where the jellyfish shows. The dotted part is before the
-plume is counted or after the rocket leaves sunlight. Our flight data stops
-at second-stage cutoff, about 8 to 9 minutes after liftoff, so the rocket
-may stay visible a little longer than the lines. The tree slider shades the
-sky below your treeline (the setting stays in your browser), and the sky view link draws the same path over
-your phone camera.
-
-When only the orbit is known, the chart shows both ways to reach it:
-northeast (the higher arcs, toward the Carolinas, over the southeast sky)
-and southeast (the low arcs in the south). When nothing is known, it shows a
-fan of possible paths. When we have found the path ourselves, the card says
-**Path:** with a one-line reason, a link to the source (for example the
-Coast Guard launch hazard map), and a link to the full record in
-[config/launch-directions.json](config/launch-directions.json). How we find
-a path is in the
-[runbook](reference/topics/cape-launch-azimuths-and-inclinations.md), and
-why a drone ship's position gives it away is in
-[recovery-fleet](reference/topics/recovery-fleet.md).
-
-### If liftoff moves
-Each box is a possible liftoff time, ten minutes apart, two hours either
-side of the plan. It is not a time to look. Orange is likely, blue is
-possible, dark is no jellyfish. Outside the orange and blue run, the sky
-is either too dark for the rocket to reach sunlight while we can see it,
-or too bright to see it. The edges come from the same geometry as the
-verdict. Launches slip often, so
-if the time changes, reopen the page for the new viewing window.
+## What could come next
+Better guesses for launches with no known path, then email alerts. Both are
+in [PLAN.md](PLAN.md). More of our own observations would help most: each
+one checks the model in a way public reports cannot.
 
 ## Sources worth a look
 
-Everything the engine uses traces back to a public source, and some of them
-are fun reading on their own. For a guided tour of our notes, start at
-[reference/START-HERE.md](reference/START-HERE.md); the full list is in
-[reference/INDEX.md](reference/INDEX.md); the full audit of every outside input, with
-dates and known problems, is
+Everything the engine uses traces back to a public source. The full audit,
+with dates and known problems, is
 [reference/source-audit.md](reference/source-audit.md).
 
 | Source | What we use it for | Our note |
@@ -347,125 +297,40 @@ dates and known problems, is
 | Local news and r/Charleston posts | Which past launches people here actually saw | [charleston-sighting-reports](reference/topics/charleston-sighting-reports.md) |
 | [Space Jellyfish Predictor](https://jellyfish.johnkrausphotos.com/) | The Florida tool that inspired this one; we compared notes but took no code or data | [prior-art-jellyfish-predictor](reference/topics/prior-art-jellyfish-predictor.md) |
 
-A few things we found along the way:
-
-- The Cape is 290 miles from James Island, and while a rocket is
-  visible from here it is about 180 to 730 miles away, which is why one forecast
-  works for the whole Charleston area.
-- A launch to the northeast, toward the Carolinas, climbs two to three times
-  higher in our sky than one heading southeast or due east. Space station
-  flights go northeast.
-- The booster lands on a drone ship that waits about 190 to 400 miles out to sea. If
-  the ship is parked off the Carolinas, the launch is coming our way; if it
-  is near the Bahamas, it will stay low in the south. The ship may not sail
-  until the day before (for Bandwagon 5 it was still in port that morning),
-  but the Coast Guard's launch hazard area, on the NAVCEN chart viewer, is
-  often posted days ahead and gives the same answer.
-- About six in ten of the launches the engine rates as visible since 2017
-  were Falcon 9 Starlink flights, and SpaceX has said those no longer fly
-  from Florida, so the chances from here on are fewer and come mostly from
-  station supply runs, crew flights and rideshares.
-
 ## Structure
-- `index.html`, `app.js`, `style.css`: the page. It has no build step; the
-  repo root is the site. `_headers` tells Cloudflare Pages to have browsers
-  check every file for a new version on each visit. It works because the
-  Cloudflare zone is set to respect the site's own cache headers.
-- `package.json` holds the version, which the page footer shows;
-  `CHANGELOG.md` lists what changed in each version and the commit that
-  shipped it.
-- `sky.html`, `sky.js`, `sky.css`: the camera sky view. `lib/skyproject.js`
-  holds its projection math and `config/skyview.json` its defaults.
-- `lib/`: code shared by the page and the scripts. `openmeteo.js` asks
-  Open-Meteo for cloud forecasts from the browser.
-- `clouds/`: the cloud forecast study. `README.md` is the report;
-  `results.json` and `results.md` are written by
-  `scripts/score-clouds.js` from the pinned data in `data/clouds/`.
-  `goes-relative-results.json` and `goes-relative-results.md` are test 3
-  (the forecast over land against over water), written by
-  `scripts/score-goes-relative.js`; the page reads the first.
-  `goes-ccl-results.json` and `goes-ccl-results.md` are test 2 of the
-  satellite check (cloud layers), written by `scripts/score-goes-ccl.js`.
-  `goes-results.json` and `goes-results.md` are the satellite check
-  (GOES cloud mask against the airports), written by
-  `scripts/score-goes.js` from the pinned extract in `data/goes/`.
-- `engine/`: the geometry engine. Pure ES modules with no DOM, no network
-  access, and no dependencies, so that the same code can run in the page and
-  in a Cloudflare Worker.
-- `config/`: reviewed, versioned inputs. `observer.json` is the observer
-  point; `profiles.json` holds the ascent profiles; `visibility.json` holds
-  the thresholds and azimuths; `weather.json` holds the cloud check
-  settings; `cloud-stations.json` holds the airports and models of the
-  cloud study; `goes-acm.json`, `goes-ccl.json` and `goes-relative.json` hold the rules of the satellite check; `launch-directions.json` holds directions
-  we set by hand for upcoming launches; `skyview.json` holds the sky view
-  defaults.
-- `test/`: tests for the engine, and `test/fixtures/` with the pinned
-  reference values they compare against.
-- `data/`: pinned data. `ll2-snapshot.json` holds the 507 Cape Canaveral and
-  Kennedy Space Center launches that Launch Library 2 listed from January
-  2017 to 13 October 2026. We refresh it on purpose after each launch we
-  watch, never as a side effect, so the backtest numbers only move when we
-  mean them to; `labels.json` holds the reported sightings. The
-  backtest reads these files and nothing else. `observations.json` holds our
-  own measured sightings. `upcoming-fallback.json` is a
-  saved copy of upcoming launches that the page shows only when every live
-  source fails. A GitHub Action refreshes it once a day and commits only
-  when the list changed. `goes/` holds the satellite check extract: the
-  cloud mask values around each airport for 782 scans, with the S3 name
-  and checksum of each file, the cloud layer values for the matching
-  782 files, the mask boxes at airports and water places for 1,984
-  twilight hours, NBM forecasts at the water places, and the pixel of each
-  airport and water place.
-- `scripts/`: one-off tools. `fetch-reference-fixtures.js` regenerates the
-  fixtures from USNO and NOAA NGS; `build-profiles.js` regenerates the ascent
-  profiles; `snapshot-ll2.js` regenerates the launch snapshot; `backtest.js`
-  runs the engine over the snapshot and the labels;
-  `observer-sensitivity.js` re-runs it for other Charleston-area places;
-  `compare-ascent-sources.js` flies other ascent data (2020 Starlink and
-  DM-2) on SpX-35 and prints the miss against our measured points;
-  `lib/webcast-telemetry.js` turns webcast speed and altitude into downrange
-  distance for the profiles;
-  `goes-station-pixels.js`, `fetch-goes-acm.js`, `score-goes.js`,
-  `fetch-goes-ccl.js`, `score-goes-ccl.js`, `fetch-goes-relative.js` and
-  `score-goes-relative.js` run the satellite check;
-  `serve.js` serves the page locally.
-- `reference/`: our knowledge base of outside sources, so that each value in
-  the engine can be traced to where it came from. Each note opens with a
-  short statement of what it answers; `INDEX.md` lists them all, and
-  `README.md` explains how to read and extend it. `reference/vendor/` holds
-  copies of outside data files that are not fetched from a pinned commit
-  (the 2020 webcast telemetry).
-- `assets/`: images. `demo-*.jpg` are the SpX-35 photo and sky view
-  screenshot shown above. `jellyfish.png` is the project art (1024 x 1024), also
-  the source for a future app icon.
+The repo root is the site, with no build step.
+- `index.html`, `app.js`, `style.css`: the page. `sky.html`, `sky.js`,
+  `sky.css`: the camera sky view.
+- `engine/`: the geometry engine. No DOM, network or dependencies, so the
+  same code can run in the page and in a Cloudflare Worker.
+- `lib/`: code shared by the page and the scripts.
+- `config/`: reviewed inputs, each value with its source: observer point,
+  ascent profiles, thresholds, cloud settings, and directions set by hand.
+- `data/`: pinned data. The launch snapshot and the sighting labels are the
+  only inputs to the backtest, and we refresh them on purpose, never as a
+  side effect. Also our observations, the fallback launch list and the
+  satellite extract.
+- `clouds/`: the cloud forecast study and its generated results.
+- `scripts/`: the backtest, data fetches and refreshes; each script says
+  what it does in its first lines.
+- `test/`: engine tests against pinned reference values.
+- `reference/`: our notes on outside sources, so every value can be traced.
+- `.github/workflows/`: the daily fallback refresh.
+- `package.json` holds the version shown in the footer; `CHANGELOG.md` says
+  what changed.
 - `AGENTS.md`, `PLAN.md`, `FINDINGS.md`, `JOURNAL.md`, `CLAUDE.md`: the
   project context files, from the
   [Solo Agent Context Kit](https://github.com/neely/agent-context-project-template).
 
 ## Running / developing
-The engine needs Node.js 22 or later and has no dependencies to install.
-Only the GOES fetch scripts and `scripts/goes-station-pixels.js`
-need one (h5wasm, to read satellite files); run `npm install` first for
-those.
+Node.js 22 or later. The engine has no dependencies; only the GOES satellite
+scripts need `npm install` (h5wasm).
 
 ```bash
-npm test
+npm test                         # pinned fixtures only, no network
+node scripts/backtest.js --list  # run the engine over the snapshot
+npm run dev                      # serve the page at http://127.0.0.1:8765
 ```
-
-```bash
-node scripts/backtest.js --list
-```
-
-To see the page locally, start the small server and open
-http://127.0.0.1:8765:
-
-```bash
-npm run dev
-```
-
-The tests read only the pinned fixtures and never call the network. The
-stack is flat-file JavaScript with no frameworks, intended for Cloudflare
-Pages and Workers.
 
 ## License
 Copyright (c) 2026 Ben Neely. Released under the
