@@ -28,26 +28,27 @@ built yet.
 ## On launch morning
 The links we actually use, in the order we use them.
 
-**Is it still on?**
-- [The page](https://jellyfish.benneely.com) reads Launch Library 2 and
-  refreshes at most every 20 minutes. When Launch Library 2 is slow to post
-  a scrub, so is the page.
-- [Spaceflight Now](https://spaceflightnow.com/launch-schedule/) launch
-  reports and live coverage. It reported the Bandwagon 5 weather scrub on
-  18 October 2026; SpaceX's own page still showed a countdown at window
-  open the next morning.
-- [SpaceX launches](https://www.spacex.com/launches/), the official page,
-  but it lagged that same scrub.
+**Is it still on?** The page is the first stop. The news sources are for
+the last hours, when Launch Library 2 can lag a scrub or a delay, and for
+reading more about the launch.
+- [The page](https://jellyfish.benneely.com): any Cape or KSC launch, from
+  Launch Library 2, refreshed at most every 20 minutes.
+- [Spaceflight Now](https://spaceflightnow.com/launch-schedule/): launch
+  schedule, launch-day reports and live coverage for most Cape launches,
+  any company.
+- The launch provider's own page, for example
+  [SpaceX launches](https://www.spacex.com/launches/) (SpaceX only). Official,
+  but it is not always the first to change.
 
 **Which way will it go?** Northeast climbs two to three times higher in our
 sky than southeast.
 - [NAVCEN chart viewer](https://navcen.uscg.gov/chart): Coast Guard launch
-  hazard areas, often posted days ahead. A box off the Carolinas means
-  northeast; one near the Bahamas means southeast.
+  hazard areas, any provider, often posted days ahead. A box off the
+  Carolinas means northeast; one near the Bahamas means southeast.
 - [orbitalradar live fleet map](https://orbitalradar.com/recovery-fleet):
-  where the drone ship waits gives the same answer, but it may not sail
-  until the day before (both ships were in port on Bandwagon 5's scrubbed
-  morning, with rough seas).
+  SpaceX only, and only when the booster lands on a drone ship. Where the
+  ship waits gives the same answer, but it may not sail until the day
+  before.
 - Step by step:
   [the runbook](reference/topics/cape-launch-azimuths-and-inclinations.md)
   (section "Runbook"). What we set lives in
@@ -154,7 +155,7 @@ that point, any cloud is below the line and cannot block the view, however
 far away the rocket is. The calculation includes the Earth's curve, which
 lifts the sight line clear a little sooner than on flat ground. A low
 launch reaches farther out: about 41 miles at 10 degrees up, 54 miles at
-7.4 degrees (Bandwagon 5) and 76 miles at 5 degrees. The cloud top, the
+7.4 degrees and 76 miles at 5 degrees. The cloud top, the
 spacing of the places and the 20% are our choices, not values from a
 source; real clouds lower than 39,000 ft would shorten the reach.
 
