@@ -8,6 +8,25 @@ journal/YYYY-MM.md (the month they were written, newest first).
 
 ---
 
+## 2026-10-19 · Bandwagon 5 scrubbed to Tuesday
+
+**Did:** Ben reported the scrub (Spaceflight Now, 18 Oct: poor weather,
+now Tuesday). He links it to rough seas; the drone ships were still in
+harbor. Read LL2: it changed by 10:08Z on 19 Oct to NET 20 Oct 10:30Z,
+Go, 85 percent. Ran the engine for Tuesday. Result: likely, prime at
+window open; not prime by 11:00Z. Recorded this in FINDINGS, PLAN and
+the direction file. No code change.
+
+**Least confident (Q1):** The scrub reason comes from Ben's quote of the
+headline. My fetch of the article showed the older text. A second
+fetch later in the day would confirm it.
+
+**Suggestions (Q5):** The fallback file still gives Bandwagon 5 as
+"October" (saved 8 Oct). Run save-upcoming-fallback.js from a machine
+that can reach LL2. The shell here cannot.
+
+---
+
 ## 2026-10-18 · Bandwagon 5 direction, stale links, Phase 2b, shorter cloud card (0.7.1, 0.7.2)
 
 **Did:** Set Bandwagon 5 to southeast from Coast Guard BNM 9080-26
@@ -179,73 +198,3 @@ _headers fixed caching before I had checked the live headers.
 `scripts/weather-points.js` and add its counts as a tripwire. Check the
 "forecast not available yet" text when a launch more than 7 days out
 appears. Check the other benneely.com sites' cache headers once.
-
----
-
-
-## 2026-10-15 (evening) · Source audit, snapshot refresh, exit gate met, 2020 profiles
-
-**Did:** Audited every outside input (reference/source-audit.md). Found
-that SpaceX ended Falcon 9 Starlink launches from Florida; 35 of the 60
-past chances were Starlink. Set declination to -8.3 (WMM-2025). Moved the
-sensitivity script to Census ZIP points. Vendored 2020 webcast telemetry
-(R4yGM, no licence, Ben approved) and derived downrange with a method that
-reproduces shahar603 within 1 km. Added Starlink 5 to 8 and DM-2 to
-falcon9-leo; the SpX-35 miss falls from 19 to 29 degrees to 6 to 14 for
-the Starlink members. Refreshed the LL2 snapshot through the browser on
-Ben's Mac (507 launches; old records byte-identical) under a new refresh
-rule. Labelled SpX-35; the Phase 1 exit gate is met (0 of 5 missed).
-Added a drone ship note and a "Sources worth a look" README section.
-Collapsed Phase 1 in PLAN; Phase 2 is active.
-
-**Least confident about (Q1):**
-- The exit gate. The fifth label was written after its verdict was known,
-  and 5 is a small number. More measured launches would show it.
-- The 2020 downrange. Neither source says if the webcast speed is
-  Earth-relative or inertial; both data sets share the method, so they
-  compare like with like, but absolute downrange may be off. A tracked
-  trajectory for one flight would show it.
-- The remaining 6 to 14 degree miss, and the two SpX-35 points, which imply
-  only 1.1 km/s of ground travel against 2.0 to 2.6 km/s in every flight. A
-  second measured launch with more points would show if it is reading error.
-- The Starlink statement is secondhand (Spectrum News quoting a post on X).
-- The declination comes from pygeomag's WMM-2025 file, not the NOAA
-  calculator (it refused WebFetch).
-
-**Unstated assumptions (Q2):** All R4yGM files give speed in km/h (only
-one header says so). The R4yGM file names map to the LL2 launches of the
-same name (file dates fit). The Census ZCTA internal point is a better
-place point than zippopotam's.
-
-**Biggest thing being missed (Q3):** Weather. And the engine flies one
-great circle at a fixed azimuth with no Earth rotation or dogleg; that may
-be part of the eastward miss that no profile can fix.
-
-**Could've gone better (Q4):** I said "no more Falcon 9s" when I meant
-Falcon 9 Starlink, and first gave the wrong day for Bandwagon 5. I used
-"fold in the snapshot" without saying what the snapshot is. I should
-define project terms when I report.
-
-**Suggestions (Q5):** Start Phase 2 in a new session. Generalise
-compare-ascent-sources.js into the planned compare-observations.js. Measure
-engine CPU again with 7 LEO members before Phase 3.
-
----
-
-<!-- Entry format:
-
-## YYYY-MM-DD — <session in a few words>
-
-**Did:** <one or two lines>
-
-**Least confident about (Q1):**
-- <thing> — would be proven right/wrong by <test/observation>.
-
-**Suggested improvement (Q5):** <one line>
-
-For big sessions, also include:
-**Unstated assumptions (Q2):** <...>
-**Biggest thing being missed (Q3):** <...>
-**Could've gone better (Q4):** <...>
-
--->

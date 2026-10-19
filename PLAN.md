@@ -12,12 +12,13 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   version 0.8.0 (shorter card with links to the README guide, miles and
   feet; not yet seen live). Next phase: 2b, unknown trajectories (Ben,
   2026-10-18). Phase 3 (alerts) starts only when Ben asks.
-- **Last updated:** 2026-10-18
-- **Next action:** Monday 2026-10-19, Bandwagon 5 (window 06:30 to
-  07:30 local): save the card's cloud lines, then note the sky toward
-  the launch. Direction set to southeast on 2026-10-18 (Coast Guard
-  hazard area); see the Backlog item. Before that, the three easy wins
-  at the top of the Backlog.
+- **Last updated:** 2026-10-19
+- **Next action:** Tuesday 2026-10-20, Bandwagon 5 (window 06:30 to
+  07:30 local; Monday was scrubbed for weather): save the card's cloud
+  lines, then note the sky toward the launch. Only the first half hour
+  of the window is prime. Direction set to southeast on 2026-10-18
+  (Coast Guard hazard area); see the Backlog item. Before that, the
+  three easy wins at the top of the Backlog.
 
 ---
 

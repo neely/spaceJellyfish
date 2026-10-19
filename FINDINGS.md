@@ -443,6 +443,20 @@ Full table: reference/source-audit.md. No pinned value was changed.
   southeast gives likely, prime, Sun -11.8 degrees, peak elevation 9 to
   13 degrees at bearing 162 to 168, visible 200 to 240 s. Northeast
   would have given 24 to 28 degrees. A low south-southeast pass.
+- Scrub (2026-10-18, Ben): Spaceflight Now reported that poor weather
+  scrubbed the Monday attempt and SpaceX moved to Tuesday. Ben links
+  this to rough seas; both drone ships were still in harbor on Monday
+  morning. Ben saw that SpaceX's own page and other sources had not
+  changed. LL2 had changed by 2026-10-19 10:08Z: NET and window open
+  2026-10-20 10:30Z, window close 11:30Z, status Go, 85 percent,
+  concern "Liftoff Winds" (read with WebFetch, 2026-10-19).
+- Lesson: a scrub can reach the page late, because the page reads only
+  LL2. Check a news source on the morning of a launch.
+- Engine for Tuesday (local script run 2026-10-19, southeast): 10:30Z
+  likely, prime, Sun -11.9 degrees, peak and bearing the same as Monday.
+  11:00Z likely, not prime (Sun -5.7). 11:30Z not visible. The Monday
+  run gave the same numbers as the record above.
+- The Coast Guard hazard windows (19 to 25 Oct) include Tuesday.
 
 #### SpX-35 seen from James Island (2026-10-13)
 - Wide plume seen. Engine: likely, prime. At 254 and 277 s after liftoff,
