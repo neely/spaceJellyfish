@@ -327,6 +327,29 @@ from resampling whole twilight events 2,000 times.
 **Going forward.** Each launch we watch adds a real check: what the card
 said about cloud toward the launch, and what the sky did.
 
+## Launch-morning checks
+
+One row per launch we watch: what NBM forecast for the viewing hour, and
+what the sky did. The forecasts are read back from the Open-Meteo Previous
+Model Runs API (`cell_selection=nearest`), so they are what NBM said 1, 2
+and 3 days before; the card on the phone showed a run between "1 day" and
+the latest one. Truth: the airport reports (IEM) and one GOES mask scan.
+
+**Bandwagon 5, 2026-10-20, liftoff 07:04 EDT (11:04 UTC), heading
+southeast.** Read 2026-10-20.
+
+| Where | NBM, 1 day before | 2 days | 3 days | What happened |
+|---|---|---|---|---|
+| Over the observer (James Island) | 4% | 1% | 12% | JZI, 2 km away: CLR every report 09:35 to 12:15 UTC, 10 miles |
+| 30 to 60 km out, bearings 120 to 180 | 3 to 7% | 0 to 3% | 10 to 22% | GOES 11:06 UTC: 0% at all six |
+| 90 km out, bearings 120 to 180 | 6% | 3 to 8% | 22 to 35% | GOES: 0%, 0%, and 28% at bearing 120 |
+
+CHS and LRO also reported CLR all morning; CHS reports high cloud, so the
+sky was clear above 12,000 ft too. The GOES box 30 km east (bearing 90,
+outside the table) showed 24%; no box reached the 50 percent cloudy line.
+Ben reported the forecast as spot on. The plume was seen, faint and far
+off (data/observations.json).
+
 ## Reproduce it
 
 Everything is pinned. Raw data: `data/clouds/raw/` (33 gzip files, 5.3 MB),

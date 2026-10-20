@@ -60,6 +60,21 @@
         "result": "Drawn Sun ring on the real Sun within about 1 degree, before recalibrating, with the stored correction. Same spot as the SpX-35 viewing (Ben). Phone held level, after the roll fix. Facing west (Sun at 250), while SpX-35 was viewed facing southeast; compass error near metal can change with heading, so a check facing southeast would close this fully."
       },
       "note": "Height and timing agree within about 1 degree. Rocket 19 to 29 degrees farther east than the engine at the same moments; it sat on or just under the drawn arc. The 2026-10-15 compass check found the compass right within about 1 degree, so a compass error of 20 degrees is unlikely; the old code's roll error was about 1 degree per degree of roll, and the SpX-35 screenshots show only 2 to 3 degrees of roll. Leading explanation: the real ascent ran farther downrange at those times than the 2018 profiles."
+    },
+    {
+      "date": "2026-10-20",
+      "launch": "Falcon 9 Block 5 | Bandwagon 5 (Dedicated Mid-Inclination Rideshare)",
+      "llId": null,
+      "liftoffUtc": "2026-10-20T11:04:00Z",
+      "observer": "Ben, a neighbour's yard near the James Island spot (29412), no trees in the way",
+      "verdict": "likely (sky view header); not prime: Sun -5.7 degrees at liftoff, -5.1 at 07:07 local (scripts/lib/clouds.js sunElevationDeg)",
+      "seen": "plume",
+      "points": [],
+      "model": [],
+      "modelProfiles": "Heading southeast, set 2026-10-18 from the Coast Guard hazard area (config/launch-directions.json); profile falcon9-leo.",
+      "compassCorrectionDeg": null,
+      "compassCheck": null,
+      "note": "Ben saw the plume low in the south-southeast, in roughly the place and height the sky view drew (the arc about 10 to 12 degrees up). It was faint and far away: a telephoto was needed to see it as a jellyfish. Ben judged it on the path; no points were measured, because on a far, low pass small errors in place, compass (+/-12 degrees shown) and time grow large in the image. LL2 (read 2026-10-20 13:31Z): NET 11:04:00Z, precision Second, status In Flight; booster landed on A Shortfall of Gravitas, 600 km downrange. llId is filled when the snapshot is refreshed. Sky that morning: clear (clouds/README.md, launch-morning checks)."
     }
   ]
 }

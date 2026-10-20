@@ -12,13 +12,11 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
   version 0.8.0 (shorter card with links to the README guide, miles and
   feet; not yet seen live). Next phase: 2b, unknown trajectories (Ben,
   2026-10-18). Phase 3 (alerts) starts only when Ben asks.
-- **Last updated:** 2026-10-19
-- **Next action:** Tuesday 2026-10-20, Bandwagon 5 (window 06:30 to
-  07:30 local; Monday was scrubbed for weather): save the card's cloud
-  lines, then note the sky toward the launch. Only the first half hour
-  of the window is prime. Direction set to southeast on 2026-10-18
-  (Coast Guard hazard area); see the Backlog item. Before that, the
-  three easy wins at the top of the Backlog.
+- **Last updated:** 2026-10-20
+- **Next action:** when LL2 marks Bandwagon 5 "Success" (it said "In
+  Flight" at 2026-10-20 13:31Z), refresh the snapshot and add the `seen`
+  label (Backlog). Bandwagon 5 was seen on 2026-10-20, low SSE, faint;
+  the cloud forecast was right (clouds/README.md, launch-morning checks).
 
 ---
 
@@ -81,7 +79,14 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       (0.7.1 folds that line into one shorter sentence.)
       Observed 2026-10-16 in the in-app browser: footer "Version 0.7.0";
       Bandwagon 5 card "kept about 94% of its skill over land".
-- [ ] Before Bandwagon 5 (Monday 2026-10-19, 06:30 local): on Sunday,
+- [ ] Bandwagon 5 label: when LL2 gives status Success, run
+      `node scripts/snapshot-ll2.js`, add a `seen` label to
+      data/labels.json (Ben's sighting, data/observations.json), fill
+      its llId there, and update the snapshot, label and backtest
+      tripwires in FINDINGS. Expected new record: Bandwagon 5 only (LL2
+      listed no other Cape or KSC launch after SpX-35 on 2026-10-20).
+      The commit states what moved (FINDINGS, refresh rule).
+- [x] Before Bandwagon 5 (Monday 2026-10-19, 06:30 local): on Sunday,
       find where the drone ship ASOG waits and set northeast or southeast
       in config/launch-directions.json (runbook in
       reference/topics/cape-launch-azimuths-and-inclinations.md; ship notes
@@ -93,7 +98,13 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       card's cloud lines (a screenshot) before going out, so Ben's sky
       note can be set beside what the card said. After the launch: add
       Ben's sky view points to data/observations.json and refresh the
-      snapshot (refresh rule in FINDINGS).
+      snapshot (refresh rule in FINDINGS). Done 2026-10-20 except the
+      refresh (item above): launched 07:04 local after the Monday scrub;
+      Ben saw a faint plume low in the SSE on the drawn path (telephoto
+      needed); no card screenshot, so the cloud forecast was read back
+      from Open-Meteo past runs and set beside the airports and GOES
+      (clouds/README.md). Observed: Ben's sky view screenshot at 07:07;
+      LL2 record read 2026-10-20 13:31Z (booster on ASOG, 600 km).
 - [ ] Morning Sun check facing southeast at the SpX-35 spot (Ben, about
       08:30 to 09:30, Sun at azimuth 109 to 119), to close the compass
       question for that direction.
@@ -140,7 +151,9 @@ make this a priority (2026-10-18).
       record which methods gave a direction before launch, when they gave
       it, and whether the launch-day report agreed. Keep it in one file
       (for example data/direction-checks.json). Bandwagon 5 is the first
-      row: hazard area southeast (2026-10-18), ship still in port.
+      row: hazard area southeast (2026-10-18), ship still in port; on the
+      day, LL2 gave the landing on ASOG at 600 km and Ben saw the rocket
+      in the SSE, so the southeast call held.
 - [ ] Count how many upcoming launches show the fan today, and how many
       past twilight launches in the snapshot had no known direction. This
       sizes the problem.
@@ -248,9 +261,9 @@ make this a priority (2026-10-18).
 Start prompt (local Claude Code, repo cloned on Ben's Mac):
 > Read AGENTS.md, then the PLAN.md status block, Backlog and Open
 > questions, then FINDINGS.md (skim; Tripwires in full). Run `npm test` and
-> `node scripts/backtest.js` and check them against the tripwires. After
-> Bandwagon 5 (2026-10-19), finish its Backlog item (observations,
-> snapshot refresh). The satellite check
+> `node scripts/backtest.js` and check them against the tripwires. When
+> LL2 marks Bandwagon 5 Success, do its label and snapshot refresh
+> (Backlog). The satellite check
 > is done (clouds/README.md, tests 1 to 3); start a new satellite test
 > only when Ben asks, with rules set before the data. Phase 3 starts only
 > when Ben asks. For any page
