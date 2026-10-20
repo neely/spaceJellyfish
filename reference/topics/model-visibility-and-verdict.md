@@ -158,7 +158,7 @@ This matches a sighting in the labels: the Post and Courier report for this laun
 ## Known weaknesses and ideas to test
 
 Facts first.
-- The one miss in the labels is recorded in PLAN.md "Open questions": Atlas V 551 Amazon Leo (LA-06), 2026-04-27, 20:53 local, label seen-plume, verdict 'no'. The Sun was 11.6 to 13.2 degrees below the horizon. The engine finds no sunlit sample at screening heights of 5, 10 and 30 km. On azimuth 37 the profile is 34 to 36 km below sunlight at 300 to 400 s. PLAN lists three possible causes and chooses none: the photo shows the engine flame (label should be seen); an Atlas V flies higher than the Falcon 9 profile; the model is wrong. The owner decides the label. FINDINGS.md (locked): no threshold changes to remove a missed label.
+- The Atlas V 551 Amazon Leo (LA-06), 2026-04-27, 20:53 local, gets verdict 'no'. The Sun was 11.6 to 13.2 degrees below the horizon. The engine finds no sunlit sample at screening heights of 5, 10 and 30 km. On azimuth 37 the profile is 34 to 36 km below sunlight at 300 to 400 s. Corrected 2026-10-20: Ben later set its label to `seen` (a bright point, not a plume), so it is not a miss (data/labels.json; FINDINGS backtest tripwire, 1 of 8 `seen` labels rated 'no'). One possible cause stays open for the ascent work: an Atlas V may fly higher than the Falcon 9 profile. FINDINGS.md (locked): no threshold changes to remove a missed label.
 - In the backtest output of 2026-10-08 an Atlas V 531 (NROL-101, 2020-11-13) is verdict 'likely' with the Sun at -4.5 degrees. So the model is not wrong for every Atlas V.
 
 Ideas to test. These are ideas, not facts. None is sourced; each needs a source or a test before it is used.

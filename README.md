@@ -278,9 +278,11 @@ Our notes on every outside source start at
 [reference/START-HERE.md](reference/START-HERE.md).
 
 ## What could come next
-Better guesses for launches with no known path, then email alerts. Both are
-in [PLAN.md](PLAN.md). More of our own observations would help most: each
-one checks the model in a way public reports cannot.
+Ascent data for rockets other than Falcon 9 (Vulcan first: 8 of the next
+30 Florida launches), then better guesses for launches with no known path,
+then email alerts. All are in [PLAN.md](PLAN.md). More of our own
+observations would help most: each one checks the model in a way public
+reports cannot.
 
 ## Sources worth a look
 

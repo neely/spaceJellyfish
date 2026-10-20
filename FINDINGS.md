@@ -213,6 +213,25 @@ before you rely on it.
   visible from about T+190 s to T+530 s, peak 27 to 29 degrees up near
   bearing 127 to 133, moving from bearing 173 to 178 round to 67 to 69.
 
+#### Vehicles without their own ascent profile (2026-10-20)
+- The engine has two profiles, both Falcon 9 (`falcon9-leo`,
+  `falcon9-gto`). Every other vehicle flies the Falcon 9 members with low
+  confidence.
+- Snapshot (507 launches) by vehicle: Falcon 9 435 (Block 5 415, Full
+  Thrust 11, Block 4 9); Atlas V 37 (551 16, 401 4, 541 4, 421 3, N22 3,
+  411 2, 501 2, 531 2, 511 1); Falcon Heavy 14; Delta IV 7 (Heavy 4,
+  M+ 3, last 2024-04-09); Vulcan 4 (VC2S 2, VC4S 2); New Glenn 3; SLS
+  Block 1 2; Astra Rocket 3 2; Minotaur IV, Orion Test Booster and
+  Terran 1, 1 each.
+- Rated likely or possible (60): Falcon 9 53, Atlas V 4 (551, N22, 531,
+  421), Falcon Heavy 2, Delta IV Heavy 1. Vulcan and New Glenn 0.
+- Next 30 upcoming (data/upcoming-fallback.json, 2026-10-20): Falcon 9
+  13, Vulcan 8, New Glenn 3, Falcon Heavy 2, Terran R 2, unknown 2.
+- Starliner (Atlas V N22, SLC-41): 3 flights. OFT (2019-12-20, 06:36
+  local) rated likely, prime; OFT-2 and CFT were daylight. LL2:
+  Starliner-1 NET 2027-01-14, precision Day, status TBD (read
+  2026-10-20). Station flights fly the northeast azimuth.
+
 #### One comparison with the Space Jellyfish Predictor (2026-10-08)
 - For SpX-35 on 2026-10-13 the site shows "Rocket in sunlight: T+03:15" and
   a northeast arrow (screenshot from Ben). The engine gives T+3:07 and
@@ -264,6 +283,9 @@ before you rely on it.
   and `pad` with `latitude` and `longitude`.
 - Orbit data on an upcoming launch can be as thin as the abbreviation "LEO".
   Three upcoming launches were checked and all three showed only "LEO".
+- Version 2.2.0 did not apply `pad__location__ids=12,27` on
+  `/launch/previous/` (2026-10-20): the answer held an H3 launch and a
+  Zhuque-2E launch. 2.3.0 `location__ids=12,27` gave only Florida.
 
 #### NWS API, api.weather.gov (2026-10-15)
 Docs read and live requests from a page at jellyfish.benneely.com. Full
@@ -459,6 +481,14 @@ Full table: reference/source-audit.md. No pinned value was changed.
   11:00Z likely, not prime (Sun -5.7). 11:30Z not visible. The Monday
   run gave the same numbers as the record above.
 - The Coast Guard hazard windows (19 to 25 Oct) include Tuesday.
+- On the day (2026-10-20): liftoff 11:04:00Z (LL2, precision Second),
+  not prime (Sun -5.7 degrees). Ben saw a faint plume low in the SSE on
+  the drawn path; a telephoto was needed (data/observations.json). LL2
+  gave the booster landed on ASOG at 600 km, so the drone ship sailed
+  after the Sunday check, and the southeast call held. LL2 still gave
+  status "In Flight" at 13:31Z, 2.5 hours after liftoff.
+- Cloud that morning: forecast clear and clear (clouds/README.md,
+  launch-morning checks).
 
 #### SpX-35 seen from James Island (2026-10-13)
 - Wide plume seen. Engine: likely, prime. At 254 and 277 s after liftoff,

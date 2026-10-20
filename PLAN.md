@@ -10,13 +10,13 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
 ## Status
 - **Active:** none. Phases 0 to 2 and the cloud work are done. Live
   version 0.8.0 (shorter card with links to the README guide, miles and
-  feet; not yet seen live). Next phase: 2b, unknown trajectories (Ben,
-  2026-10-18). Phase 3 (alerts) starts only when Ben asks.
+  feet; not yet seen live). Next phase: 2c, ascent models for other
+  rockets (Ben, 2026-10-20), then 2b, unknown trajectories. Phase 3
+  (alerts) starts only when Ben asks.
 - **Last updated:** 2026-10-20
-- **Next action:** when LL2 marks Bandwagon 5 "Success" (it said "In
-  Flight" at 2026-10-20 13:31Z), refresh the snapshot and add the `seen`
-  label (Backlog). Bandwagon 5 was seen on 2026-10-20, low SSE, faint;
-  the cloud forecast was right (clouds/README.md, launch-morning checks).
+- **Next action:** Phase 2c, ascent models for other rockets (Vulcan
+  first). Before that, the Bandwagon 5 label and snapshot refresh, once
+  LL2 marks it "Success" (Backlog).
 
 ---
 
@@ -128,10 +128,18 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       them by engine verdict. Search local outlets for each date. The cases
       that test the engine are twilight launches it rejects and launches it
       rates likely and prime.
-- [ ] A profile for vehicles other than Falcon 9. No source found yet.
-      Until then, other vehicles use the Falcon 9 members with low
-      confidence.
 - [ ] Ascent data from flights after 2020. None found yet.
+- [ ] Easy win: `scripts/launch-morning-clouds.js <liftoff UTC>`: print
+      the NBM past-run forecasts (days 1 to 3) at the observer and the
+      water places, the IEM reports at JZI, CHS and LRO, and one GOES mask
+      scan. It repeats the Bandwagon 5 check (clouds/README.md,
+      launch-morning checks), done by hand on 2026-10-20.
+- [ ] Easy win: `node scripts/backtest.js --by-vehicle`: print snapshot
+      counts and visible counts per vehicle, so the Phase 2c table and the
+      FINDINGS vehicle counts come from a script, not a one-off command.
+- [ ] Easy win (Ben to decide): drop the open question "Is 5 positive
+      cases the right minimum for the exit gate?" The gate was met on
+      2026-10-15; the README already calls five a minimum.
 - [ ] A unit test for the ratio and bootstrap in
       scripts/score-goes-relative.js (a small made-up set of counts with a
       known answer). Today only its output is checked against the report.
@@ -141,7 +149,43 @@ Live at **https://jellyfish.benneely.com** · Repo: **github.com/neely/spaceJell
       open question below and shows whether the 5 `seen-plume` launches had
       a clear line of sight. New rules before data, as for tests 1 to 3.
 
-## Phase 2b — Resolve unknown trajectories  ← NEXT
+## Phase 2c — Ascent models for other rockets  ← NEXT
+Goal: an ascent profile, from a source, for each vehicle that will fly
+from the Cape in the next year, so the engine stops flying them as a
+Falcon 9 with low confidence. Ben set this ahead of Phase 2b and Phase 3
+(2026-10-20). Counts: FINDINGS, "Vehicles without their own ascent
+profile".
+
+| Vehicle | Snapshot | Rated visible | Next 30 | Status |
+|---|---|---|---|---|
+| Vulcan (VC2S, VC4S, VC4L, VC6L) | 4 | 0 | 8 | active, growing |
+| New Glenn | 3 | 0 | 3 | active, growing |
+| Falcon Heavy | 14 | 2 | 2 | active |
+| Terran R | 0 | 0 | 2 | first flights |
+| Atlas V (9 variants) | 37 | 4 | 0 | flying out its last missions; Starliner-1 NET 2027-01-14 |
+| Delta IV, Astra, Minotaur, Terran 1, Orion test | 11 | 1 | 0 | retired; no work |
+| SLS Block 1 | 2 | 0 | 0 | rare; no work |
+
+- [ ] Sources, per vehicle, before any build: find altitude and speed
+      against time (or downrange) with a source and a date. Leads from
+      2026-10-19: no public ascent data found for Atlas V, Vulcan or New
+      Glenn; webcast telemetry read frame by frame (the method of
+      scripts/lib/webcast-telemetry.js); Flight Club simulations (not
+      checked); ULA mission booklets and press kits (event times, launch
+      azimuth). Record each in reference/ with a note.
+- [ ] Vulcan first (most upcoming). One profile per variant only if the
+      sources differ by variant; otherwise one `vulcan` profile.
+- [ ] New Glenn, then Falcon Heavy (side boosters change the first
+      minutes; the second stage is a Falcon 9 stage), then Terran R.
+- [ ] Atlas V N22 for Starliner-1, only if its launch time puts it near
+      twilight.
+- [ ] Engine: pick the profile by vehicle name (config/profiles.json),
+      fall back to Falcon 9 with low confidence. Rerun the backtest; the
+      commit states what moved (40 likely, 20 possible, 447 no today).
+- [ ] Test each new profile against a sighting or a measured webcast
+      before the confidence goes above low.
+
+## Phase 2b — Resolve unknown trajectories
 Goal: a direction for every Cape launch before launch day, from a
 source, without Ben looking it up by hand. Today LL2 gives no direction,
 the page draws the fan for anything not a station or high-orbit flight,
@@ -207,14 +251,9 @@ make this a priority (2026-10-18).
 ## Future / if needed
 - iOS home-screen icon from `assets/jellyfish.png` — deferred until the page
   is live.
-- Tuned profiles for Vulcan, New Glenn, Falcon Heavy — only if the generic
-  profile proves too coarse.
-  Leads (2026-10-19): no public ascent data found for Atlas V, Vulcan or
-  New Glenn. Read altitude and speed off the webcast of the first one in
-  twilight (the SpaceXtract approach). Flight Club simulations are a
-  second lead, not checked. ULA mission booklets give the launch azimuth.
-  Next 30 launches (list of 2026-10-19): 13 Falcon 9, 8 Vulcan, 3 New
-  Glenn, 2 Falcon Heavy, 2 Terran R, 2 unknown.
+- A watch list: a config line naming launches to show on the page even
+  when they are outside LL2's next 30 (Starliner-1, NET 2027-01-14, is
+  past the 30th today). Not needed until such a launch has a time.
 - Workers Paid — only if the engine does not fit in 10 ms.
 - Wallops launches — one Charleston sighting is on record (Antares,
   2022-11-07). Out of scope now; Ben decides if the scope grows.
@@ -254,6 +293,12 @@ make this a priority (2026-10-18).
 - Alert timing: how long before T-0, and how many emails per launch?
 - Clouds: does thin high cloud hide a lit plume? No source. A sighting
   through a forecast of high cloud would show it.
+- Plume size and brightness. Bandwagon 5 (low SSE pass, about 10 to 12
+  degrees up, not prime) was "likely" but faint enough to need a
+  telephoto. The verdict says nothing about how far away or how large
+  the plume is. Should the card give the distance to the plume, or a
+  "faint, far" note for low passes? No source yet for brightness
+  against distance.
 
 ---
 
@@ -263,7 +308,8 @@ Start prompt (local Claude Code, repo cloned on Ben's Mac):
 > questions, then FINDINGS.md (skim; Tripwires in full). Run `npm test` and
 > `node scripts/backtest.js` and check them against the tripwires. When
 > LL2 marks Bandwagon 5 Success, do its label and snapshot refresh
-> (Backlog). The satellite check
+> (Backlog). Then start Phase 2c (ascent models for other rockets,
+> Vulcan first): sources before any build. The satellite check
 > is done (clouds/README.md, tests 1 to 3); start a new satellite test
 > only when Ben asks, with rules set before the data. Phase 3 starts only
 > when Ben asks. For any page

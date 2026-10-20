@@ -8,6 +8,45 @@ journal/YYYY-MM.md (the month they were written, newest first).
 
 ---
 
+## 2026-10-20 · Bandwagon 5 seen, cloud check, Phase 2c set up
+
+**Did:** Bandwagon 5 flew at 07:04 local, southeast. Ben saw a faint
+plume low in the SSE on the drawn path (telephoto needed). Recorded it in
+data/observations.json; the label waits for LL2 "Success". Rebuilt the
+cloud forecast for the launch hour from Open-Meteo past runs (1 to 7
+percent, 1 day before) and set it beside the airports (CLR) and a GOES
+scan (no box cloudy): first launch-morning check in clouds/README.md.
+Answered Starliner questions (Florida, northeast; Starliner-1 not on the
+page yet). Counted vehicles with no ascent profile and set Phase 2c,
+ascent models for other rockets, ahead of 2b and alerts. Fixed a stale
+reference note (the Atlas V of 2026-04-27 is a `seen` label, not a miss).
+
+**Least confident about (Q1):**
+- The card's exact cloud numbers. They are bracketed by the 1-day and
+  latest NBM runs, not read from the card. A saved card would prove them.
+- The vehicle counts. They come from one-off commands; the
+  `--by-vehicle` easy win would certify them.
+- Why the 07:07 frame put the dot near the +6 minute mark. Ben confirmed
+  the rocket in better photos and judged it not worth chasing; left open.
+
+**Unstated assumptions (Q2):** LL2's 11:04:00Z is the true liftoff time.
+Falcon Heavy can borrow the Falcon 9 second stage in a profile. The next
+30 upcoming launches stand for the next year.
+
+**Biggest thing being missed (Q3):** A "likely" verdict says nothing
+about how big or bright the plume will look. A far, low pass is a
+likely that needs a telephoto.
+
+**Could've gone better (Q4):** I tested a star against Ben's sighting
+before asking him what his other photos showed; he had them. Ask the
+observer first. A garbled one-off count had to be redone.
+
+**Suggestions (Q5):** Script the launch-morning cloud check and the
+vehicle counts (Backlog easy wins). Start Phase 2c with sources for
+Vulcan before any code.
+
+---
+
 ## 2026-10-19 · Bandwagon 5 scrubbed to Tuesday
 
 **Did:** Ben reported the scrub (Spaceflight Now, 18 Oct: poor weather,
@@ -150,51 +189,3 @@ script at the first failed edit.
 **Suggestions (Q5):** Do the satellite work locally, step 1 only first.
 Keep the report-vs-results test pattern for any hand-written numbers.
 After Bandwagon 5, add Ben's sky notes next to the card's forecast.
-
----
-
-## 2026-10-15 (night) · Phase 2 done: cloud forecast on the page, versions, cache fix
-
-**Did:** Read the api.weather.gov docs and tested it from the live page
-(CORS works; skyCover in percent for about 7 days; grid at 59 km
-offshore, none at 107 km). Ben chose local plus directional cloud, as a
-triangle under the sight line. Computed where the sight line clears
-cloud height. Wrote engine/weather.js and lib/nws.js: local sky cover
-loads by itself; a labelled button checks the top 20 percent of the arc
-out to 60 km (7 to 33 places, was 74 median). Seen working on Ben's Mac
-and iPhone. Added a version (0.4.0) in package.json, a page footer, a
-README badge and a short CHANGELOG with commits; dropped git tags (the
-proxy refused the push). Found that the Cloudflare zone Browser Cache TTL
-(4 h) held old code; changed it to Respect Existing Headers in the
-dashboard at Ben's request, and saw max-age=0 after. Closed Phase 2.
-
-**Least confident about (Q1):**
-- The cloud top (12 km), the 0.8 arc fraction and the 60 km cap. None has
-  a source. A sighting with a cloud forecast beside it would test them.
-- skyCover is one total number. Thin high cloud counts the same as a low
-  deck. A sighting through a high forecast value would show the cost.
-- The offshore grid edge. Only bearings 134 to 184 were tested, and the
-  edge lies somewhere between 59 and 107 km.
-- The NWS rate limit is not published. A fan launch asks for up to about
-  64 requests per press. A 429 in the browser would show the limit.
-- The other sites on benneely.com now send their own cache headers.
-  Their headers were not checked.
-
-**Unstated assumptions (Q2):** One skyCover value per interval (1 to 6 h)
-is fine for a 6 minute view. The /points grid mapping holds for 24 h.
-Launch weather rules at the Cape are about the pad sky; not quoted from a
-source.
-
-**Biggest thing being missed (Q3):** Forecast skill. A sky cover number
-5 days out may say little about the sky at 06:30 on the day. And the
-verdict still ignores weather, by design.
-
-**Could've gone better (Q4):** One doc script wrote CHANGELOG, then failed
-on FINDINGS, and the half edit was committed; I should check all
-replacements before writing any file. I first wrote in the changelog that
-_headers fixed caching before I had checked the live headers.
-
-**Suggestions (Q5):** Turn the one-off point-count commands into
-`scripts/weather-points.js` and add its counts as a tripwire. Check the
-"forecast not available yet" text when a launch more than 7 days out
-appears. Check the other benneely.com sites' cache headers once.

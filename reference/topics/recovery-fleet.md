@@ -50,3 +50,10 @@ Interpretation and our own calculation.
 - Timing: on the morning before Bandwagon 5 (window 10:30Z on 2026-10-19), ASOG had not sailed. Check the hub again later the same day. The ship's position the evening before is a better test than the morning.
 - For the launch direction, the Coast Guard hazard areas are often public before the ship sails. See the Runbook in reference/topics/cape-launch-azimuths-and-inclinations.md, step 6.
 - AIS ship-tracking sites by ship name. Not checked.
+
+## Bandwagon 5 on the day (2026-10-20)
+LL2 (read 2026-10-20 13:31Z) gave the booster landing on A Shortfall of
+Gravitas, success, 600 km downrange. The ship was in port at 06:53 local
+on 2026-10-18 (Ben's screenshot), so it sailed later than that check.
+The launch had moved to Tuesday after a weather scrub.
+
