@@ -1,14 +1,14 @@
 {
- "fetched": 1792845623102,
+ "fetched": 1792933873014,
  "results": [
   {
    "id": "ef9850ad-1096-425b-9d27-f7bbd186e61a",
    "name": "Vulcan VC6L | Amazon Leo (LV-01)",
-   "net": "2026-10-29T00:00:00Z",
-   "precision": "Day",
+   "net": "2026-11-30T00:00:00Z",
+   "precision": "Month",
    "status": "TBD",
    "statusName": "To Be Determined",
-   "lastUpdated": "2026-10-08T18:02:42Z",
+   "lastUpdated": "2026-10-24T13:55:46Z",
    "vehicle": "Vulcan VC6L",
    "orbit": "LEO",
    "programs": [
@@ -94,6 +94,23 @@
    }
   },
   {
+   "id": "06201706-da6b-467e-83b2-ef2ff8596e05",
+   "name": "Vulcan | USSF-23",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Year",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2025-08-29T16:13:08Z",
+   "vehicle": "Vulcan",
+   "orbit": "N/A",
+   "programs": [],
+   "padName": "Space Launch Complex 41",
+   "pad": {
+    "latitudeDeg": 28.58341025,
+    "longitudeDeg": -80.58303644
+   }
+  },
+  {
    "id": "ce1317de-ec94-4479-9b28-38ebf11f13ae",
    "name": "Falcon 9 Block 5 | Telesat Lightspeed 1",
    "net": "2026-12-31T00:00:00Z",
@@ -142,23 +159,6 @@
    "pad": {
     "latitudeDeg": 28.501626,
     "longitudeDeg": -80.5518
-   }
-  },
-  {
-   "id": "06201706-da6b-467e-83b2-ef2ff8596e05",
-   "name": "Vulcan | USSF-23",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Year",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2025-08-29T16:13:08Z",
-   "vehicle": "Vulcan",
-   "orbit": "N/A",
-   "programs": [],
-   "padName": "Space Launch Complex 41",
-   "pad": {
-    "latitudeDeg": 28.58341025,
-    "longitudeDeg": -80.58303644
    }
   },
   {
@@ -213,6 +213,23 @@
    }
   },
   {
+   "id": "b32689fe-b156-4ccd-b824-fd555d12ba24",
+   "name": "Vulcan | USSF-57",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Year",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2026-03-17T13:58:53Z",
+   "vehicle": "Vulcan",
+   "orbit": "GTO",
+   "programs": [],
+   "padName": "Space Launch Complex 41",
+   "pad": {
+    "latitudeDeg": 28.58341025,
+    "longitudeDeg": -80.58303644
+   }
+  },
+  {
    "id": "d055f3cc-ef83-4229-98df-73bf68e67581",
    "name": "Vulcan | USSF-43",
    "net": "2026-12-31T00:00:00Z",
@@ -264,6 +281,25 @@
    }
   },
   {
+   "id": "ca3d56b7-2175-48e4-9a6a-2ecc9996d96b",
+   "name": "New Glenn | Amazon Leo (LN-01)",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Year",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2026-05-29T11:16:01Z",
+   "vehicle": "New Glenn",
+   "orbit": "LEO",
+   "programs": [
+    "Amazon Leo"
+   ],
+   "padName": "Launch Complex 36A",
+   "pad": {
+    "latitudeDeg": 28.4705556,
+    "longitudeDeg": -80.542194
+   }
+  },
+  {
    "id": "649bf8ed-f2a6-4923-aaf0-6086ad0227f5",
    "name": "Vulcan | WGS-11",
    "net": "2026-12-31T00:00:00Z",
@@ -298,37 +334,20 @@
    }
   },
   {
-   "id": "b32689fe-b156-4ccd-b824-fd555d12ba24",
-   "name": "Vulcan | USSF-57",
+   "id": "b97a54e5-5c6f-4f85-bcf3-69da17fa9682",
+   "name": "Terran R | Mars Lander",
    "net": "2026-12-31T00:00:00Z",
    "precision": "Year",
    "status": "TBD",
    "statusName": "To Be Determined",
-   "lastUpdated": "2026-03-17T13:58:53Z",
-   "vehicle": "Vulcan",
-   "orbit": "GTO",
+   "lastUpdated": "2024-08-10T13:39:10Z",
+   "vehicle": "Terran R",
+   "orbit": "Mars",
    "programs": [],
-   "padName": "Space Launch Complex 41",
+   "padName": "Launch Complex 16",
    "pad": {
-    "latitudeDeg": 28.58341025,
-    "longitudeDeg": -80.58303644
-   }
-  },
-  {
-   "id": "8bf5f61e-a7e1-41e6-aede-7b87e4beebab",
-   "name": "Falcon 9 Block 5 | CHORUS",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Quarter 4",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2025-11-14T23:31:58Z",
-   "vehicle": "Falcon 9",
-   "orbit": "LEO",
-   "programs": [],
-   "padName": "Unknown Pad",
-   "pad": {
-    "latitudeDeg": 28.458,
-    "longitudeDeg": -80.528
+    "latitudeDeg": 28.501626,
+    "longitudeDeg": -80.5518
    }
   },
   {
@@ -340,6 +359,23 @@
    "statusName": "To Be Determined",
    "lastUpdated": "2025-11-14T15:27:56Z",
    "vehicle": "Unknown Launch Vehicle",
+   "orbit": "LEO",
+   "programs": [],
+   "padName": "Unknown Pad",
+   "pad": {
+    "latitudeDeg": 28.458,
+    "longitudeDeg": -80.528
+   }
+  },
+  {
+   "id": "8bf5f61e-a7e1-41e6-aede-7b87e4beebab",
+   "name": "Falcon 9 Block 5 | CHORUS",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Quarter 4",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2025-11-14T23:31:58Z",
+   "vehicle": "Falcon 9",
    "orbit": "LEO",
    "programs": [],
    "padName": "Unknown Pad",
@@ -380,42 +416,6 @@
    "pad": {
     "latitudeDeg": 28.58341025,
     "longitudeDeg": -80.58303644
-   }
-  },
-  {
-   "id": "ca3d56b7-2175-48e4-9a6a-2ecc9996d96b",
-   "name": "New Glenn | Amazon Leo (LN-01)",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Year",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2026-05-29T11:16:01Z",
-   "vehicle": "New Glenn",
-   "orbit": "LEO",
-   "programs": [
-    "Amazon Leo"
-   ],
-   "padName": "Launch Complex 36A",
-   "pad": {
-    "latitudeDeg": 28.4705556,
-    "longitudeDeg": -80.542194
-   }
-  },
-  {
-   "id": "b97a54e5-5c6f-4f85-bcf3-69da17fa9682",
-   "name": "Terran R | Mars Lander",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Year",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2024-08-10T13:39:10Z",
-   "vehicle": "Terran R",
-   "orbit": "Mars",
-   "programs": [],
-   "padName": "Launch Complex 16",
-   "pad": {
-    "latitudeDeg": 28.501626,
-    "longitudeDeg": -80.5518
    }
   },
   {
