@@ -1,5 +1,5 @@
 {
- "fetched": 1793545562949,
+ "fetched": 1793643673364,
  "results": [
   {
    "id": "ef9850ad-1096-425b-9d27-f7bbd186e61a",
@@ -23,11 +23,11 @@
   {
    "id": "d74afbc7-0de5-491c-be05-4e9c31f736ac",
    "name": "Falcon 9 Block 5 | Cygnus CRS-2 NG-25",
-   "net": "2026-11-29T16:00:00Z",
-   "precision": "Hour",
-   "status": "TBC",
-   "statusName": "To Be Confirmed",
-   "lastUpdated": "2026-10-29T17:44:30Z",
+   "net": "2026-11-29T15:49:00Z",
+   "precision": "Minute",
+   "status": "Go",
+   "statusName": "Go for Launch",
+   "lastUpdated": "2026-11-02T17:54:56Z",
    "vehicle": "Falcon 9",
    "orbit": "LEO",
    "programs": [
