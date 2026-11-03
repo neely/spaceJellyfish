@@ -1,5 +1,5 @@
 {
- "fetched": 1793643673364,
+ "fetched": 1793722484575,
  "results": [
   {
    "id": "ef9850ad-1096-425b-9d27-f7bbd186e61a",
@@ -436,6 +436,23 @@
    }
   },
   {
+   "id": "36570751-7492-4b06-81e6-4ac720071216",
+   "name": "Vulcan | NROL-109",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Year",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2023-10-31T19:48:37Z",
+   "vehicle": "Vulcan",
+   "orbit": "N/A",
+   "programs": [],
+   "padName": "Space Launch Complex 41",
+   "pad": {
+    "latitudeDeg": 28.58341025,
+    "longitudeDeg": -80.58303644
+   }
+  },
+  {
    "id": "0a8cb805-3004-468e-bea6-743368af3253",
    "name": "Vulcan | NROL-56",
    "net": "2026-12-31T00:00:00Z",
@@ -467,23 +484,6 @@
    "pad": {
     "latitudeDeg": 28.458,
     "longitudeDeg": -80.528
-   }
-  },
-  {
-   "id": "36570751-7492-4b06-81e6-4ac720071216",
-   "name": "Vulcan | NROL-109",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Year",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2023-10-31T19:48:37Z",
-   "vehicle": "Vulcan",
-   "orbit": "N/A",
-   "programs": [],
-   "padName": "Space Launch Complex 41",
-   "pad": {
-    "latitudeDeg": 28.58341025,
-    "longitudeDeg": -80.58303644
    }
   },
   {
