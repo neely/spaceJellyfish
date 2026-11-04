@@ -1,14 +1,14 @@
 {
- "fetched": 1793722484575,
+ "fetched": 1793809096672,
  "results": [
   {
    "id": "ef9850ad-1096-425b-9d27-f7bbd186e61a",
    "name": "Vulcan VC6L | Amazon Leo (LV-01)",
-   "net": "2026-11-13T00:00:00Z",
-   "precision": "Day",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2026-10-28T15:16:48Z",
+   "net": "2026-11-13T17:54:00Z",
+   "precision": "Minute",
+   "status": "Go",
+   "statusName": "Go for Launch",
+   "lastUpdated": "2026-11-03T17:22:50Z",
    "vehicle": "Vulcan VC6L",
    "orbit": "LEO",
    "programs": [
@@ -281,23 +281,6 @@
    }
   },
   {
-   "id": "71df1dd0-d658-4762-b0bc-0fca6886aea7",
-   "name": "Falcon 9 Block 5 | SDA Tranche 2 Transport Layer D",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Month",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2026-10-17T08:28:07Z",
-   "vehicle": "Falcon 9",
-   "orbit": "PO",
-   "programs": [],
-   "padName": "Unknown Pad",
-   "pad": {
-    "latitudeDeg": 28.458,
-    "longitudeDeg": -80.528
-   }
-  },
-  {
    "id": "ac92d963-ebfb-4d18-b48c-04102d8dce8e",
    "name": "Vulcan | NROL-64",
    "net": "2026-12-31T00:00:00Z",
@@ -312,6 +295,23 @@
    "pad": {
     "latitudeDeg": 28.58341025,
     "longitudeDeg": -80.58303644
+   }
+  },
+  {
+   "id": "71df1dd0-d658-4762-b0bc-0fca6886aea7",
+   "name": "Falcon 9 Block 5 | SDA Tranche 2 Transport Layer D",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Month",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2026-10-17T08:28:07Z",
+   "vehicle": "Falcon 9",
+   "orbit": "PO",
+   "programs": [],
+   "padName": "Unknown Pad",
+   "pad": {
+    "latitudeDeg": 28.458,
+    "longitudeDeg": -80.528
    }
   },
   {
