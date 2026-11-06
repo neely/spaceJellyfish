@@ -1,5 +1,5 @@
 {
- "fetched": 1793896073051,
+ "fetched": 1793980508399,
  "results": [
   {
    "id": "ef9850ad-1096-425b-9d27-f7bbd186e61a",
@@ -8,7 +8,7 @@
    "precision": "Minute",
    "status": "Go",
    "statusName": "Go for Launch",
-   "lastUpdated": "2026-11-03T17:22:50Z",
+   "lastUpdated": "2026-11-06T14:36:43Z",
    "vehicle": "Vulcan VC6L",
    "orbit": "LEO",
    "programs": [
@@ -38,23 +38,6 @@
    "pad": {
     "latitudeDeg": 28.56194122,
     "longitudeDeg": -80.57735736
-   }
-  },
-  {
-   "id": "a5e81552-ecdd-4d89-b6bd-b594e22ca891",
-   "name": "New Glenn | Blue Ring-1",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Month",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2026-10-10T15:34:53Z",
-   "vehicle": "New Glenn",
-   "orbit": "GTO",
-   "programs": [],
-   "padName": "Launch Complex 36A",
-   "pad": {
-    "latitudeDeg": 28.4705556,
-    "longitudeDeg": -80.542194
    }
   },
   {
@@ -335,10 +318,10 @@
    "id": "e61d353c-db55-4a57-8184-0fab187231e6",
    "name": "Falcon 9 Block 5 | Globalstar 2-R Mission 2 (x 9)",
    "net": "2026-12-31T00:00:00Z",
-   "precision": "Year Half 2",
+   "precision": "Month",
    "status": "TBD",
    "statusName": "To Be Determined",
-   "lastUpdated": "2026-08-16T02:19:39Z",
+   "lastUpdated": "2026-11-05T18:03:47Z",
    "vehicle": "Falcon 9",
    "orbit": "LEO",
    "programs": [],
@@ -352,10 +335,10 @@
    "id": "8bf5f61e-a7e1-41e6-aede-7b87e4beebab",
    "name": "Falcon 9 Block 5 | CHORUS",
    "net": "2026-12-31T00:00:00Z",
-   "precision": "Quarter 4",
+   "precision": "Month",
    "status": "TBD",
    "statusName": "To Be Determined",
-   "lastUpdated": "2025-11-14T23:31:58Z",
+   "lastUpdated": "2026-11-05T18:00:50Z",
    "vehicle": "Falcon 9",
    "orbit": "LEO",
    "programs": [],
@@ -487,23 +470,6 @@
    }
   },
   {
-   "id": "01ca3653-126a-4c01-94fb-a9467b39cdac",
-   "name": "Falcon 9 Block 5 | Inmarsat-7 F1 (GX-7)",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Quarter 4",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2026-02-04T11:37:33Z",
-   "vehicle": "Falcon 9",
-   "orbit": "GTO",
-   "programs": [],
-   "padName": "Unknown Pad",
-   "pad": {
-    "latitudeDeg": 28.458,
-    "longitudeDeg": -80.528
-   }
-  },
-  {
    "id": "07e945c1-2ec6-4d29-a500-1afbe920440f",
    "name": "Atlas V N22 | Starliner-1",
    "net": "2027-01-14T00:00:00Z",
@@ -521,6 +487,42 @@
    "pad": {
     "latitudeDeg": 28.58341025,
     "longitudeDeg": -80.58303644
+   }
+  },
+  {
+   "id": "a5e81552-ecdd-4d89-b6bd-b594e22ca891",
+   "name": "New Glenn | Blue Ring-1",
+   "net": "2027-01-31T00:00:00Z",
+   "precision": "Month",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2026-11-05T18:10:53Z",
+   "vehicle": "New Glenn",
+   "orbit": "GTO",
+   "programs": [],
+   "padName": "Launch Complex 36A",
+   "pad": {
+    "latitudeDeg": 28.4705556,
+    "longitudeDeg": -80.542194
+   }
+  },
+  {
+   "id": "de3d5d91-f115-4a86-b923-203a91a08735",
+   "name": "Falcon 9 Block 5 | Axiom Space Mission 5",
+   "net": "2027-01-31T00:00:00Z",
+   "precision": "Month",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2026-01-30T23:49:40Z",
+   "vehicle": "Falcon 9",
+   "orbit": "LEO",
+   "programs": [
+    "Axiom Private Spaceflight"
+   ],
+   "padName": "Space Launch Complex 40",
+   "pad": {
+    "latitudeDeg": 28.56194122,
+    "longitudeDeg": -80.57735736
    }
   }
  ]
