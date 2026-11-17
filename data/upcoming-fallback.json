@@ -1,5 +1,5 @@
 {
- "fetched": 1794853871162,
+ "fetched": 1794937040593,
  "results": [
   {
    "id": "d74afbc7-0de5-491c-be05-4e9c31f736ac",
@@ -347,23 +347,6 @@
    }
   },
   {
-   "id": "4c78e865-8f03-4f47-a081-b507da270d19",
-   "name": "Falcon 9 Block 5 | USSF-31",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Year",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2025-12-17T00:01:28Z",
-   "vehicle": "Falcon 9",
-   "orbit": "Direct-GEO",
-   "programs": [],
-   "padName": "Unknown Pad",
-   "pad": {
-    "latitudeDeg": 28.458,
-    "longitudeDeg": -80.528
-   }
-  },
-  {
    "id": "581d1d85-bbe8-48f1-9dac-5b4e63503896",
    "name": "Unknown | VCLS Demo 2 Mission One",
    "net": "2026-12-31T00:00:00Z",
@@ -381,15 +364,15 @@
    }
   },
   {
-   "id": "0a07a23e-606a-4589-bf3e-c3e41bd4de51",
-   "name": "Falcon 9 Block 5 | SDA Tranche 2 Tracking Layer A",
+   "id": "4c78e865-8f03-4f47-a081-b507da270d19",
+   "name": "Falcon 9 Block 5 | USSF-31",
    "net": "2026-12-31T00:00:00Z",
    "precision": "Year",
    "status": "TBD",
    "statusName": "To Be Determined",
-   "lastUpdated": "2026-07-17T13:37:48Z",
+   "lastUpdated": "2025-12-17T00:01:28Z",
    "vehicle": "Falcon 9",
-   "orbit": "PO",
+   "orbit": "Direct-GEO",
    "programs": [],
    "padName": "Unknown Pad",
    "pad": {
@@ -412,6 +395,23 @@
    "pad": {
     "latitudeDeg": 28.58341025,
     "longitudeDeg": -80.58303644
+   }
+  },
+  {
+   "id": "0a07a23e-606a-4589-bf3e-c3e41bd4de51",
+   "name": "Falcon 9 Block 5 | SDA Tranche 2 Tracking Layer A",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Year",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2026-07-17T13:37:48Z",
+   "vehicle": "Falcon 9",
+   "orbit": "PO",
+   "programs": [],
+   "padName": "Unknown Pad",
+   "pad": {
+    "latitudeDeg": 28.458,
+    "longitudeDeg": -80.528
    }
   },
   {
