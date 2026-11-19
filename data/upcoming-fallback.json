@@ -1,5 +1,5 @@
 {
- "fetched": 1795022096913,
+ "fetched": 1795108925896,
  "results": [
   {
    "id": "d74afbc7-0de5-491c-be05-4e9c31f736ac",
@@ -8,7 +8,7 @@
    "precision": "Minute",
    "status": "Go",
    "statusName": "Go for Launch",
-   "lastUpdated": "2026-11-13T12:35:58Z",
+   "lastUpdated": "2026-11-19T12:34:08Z",
    "vehicle": "Falcon 9",
    "orbit": "LEO",
    "programs": [
@@ -141,6 +141,23 @@
    }
   },
   {
+   "id": "fc1bd321-e502-4d0f-81f4-1926dece81c6",
+   "name": "Falcon 9 Block 5 | VICTUS SURGO",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Year",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2024-10-05T03:22:08Z",
+   "vehicle": "Falcon 9",
+   "orbit": "LEO",
+   "programs": [],
+   "padName": "Unknown Pad",
+   "pad": {
+    "latitudeDeg": 28.458,
+    "longitudeDeg": -80.528
+   }
+  },
+  {
    "id": "2e37a196-f5f8-4496-96ae-63f4b6b27912",
    "name": "Terran R | Intelsat-1",
    "net": "2026-12-31T00:00:00Z",
@@ -155,6 +172,23 @@
    "pad": {
     "latitudeDeg": 28.501626,
     "longitudeDeg": -80.5518
+   }
+  },
+  {
+   "id": "ac92d963-ebfb-4d18-b48c-04102d8dce8e",
+   "name": "Vulcan | NROL-64",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Year",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2026-03-17T13:57:44Z",
+   "vehicle": "Vulcan",
+   "orbit": "N/A",
+   "programs": [],
+   "padName": "Space Launch Complex 41",
+   "pad": {
+    "latitudeDeg": 28.58341025,
+    "longitudeDeg": -80.58303644
    }
   },
   {
@@ -175,37 +209,20 @@
    }
   },
   {
-   "id": "fc1bd321-e502-4d0f-81f4-1926dece81c6",
-   "name": "Falcon 9 Block 5 | VICTUS SURGO",
+   "id": "71df1dd0-d658-4762-b0bc-0fca6886aea7",
+   "name": "Falcon 9 Block 5 | SDA Tranche 2 Transport Layer D",
    "net": "2026-12-31T00:00:00Z",
-   "precision": "Year",
+   "precision": "Month",
    "status": "TBD",
    "statusName": "To Be Determined",
-   "lastUpdated": "2024-10-05T03:22:08Z",
+   "lastUpdated": "2026-10-17T08:28:07Z",
    "vehicle": "Falcon 9",
-   "orbit": "LEO",
+   "orbit": "PO",
    "programs": [],
    "padName": "Unknown Pad",
    "pad": {
     "latitudeDeg": 28.458,
     "longitudeDeg": -80.528
-   }
-  },
-  {
-   "id": "ac92d963-ebfb-4d18-b48c-04102d8dce8e",
-   "name": "Vulcan | NROL-64",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Year",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2026-03-17T13:57:44Z",
-   "vehicle": "Vulcan",
-   "orbit": "N/A",
-   "programs": [],
-   "padName": "Space Launch Complex 41",
-   "pad": {
-    "latitudeDeg": 28.58341025,
-    "longitudeDeg": -80.58303644
    }
   },
   {
@@ -243,40 +260,6 @@
    }
   },
   {
-   "id": "649bf8ed-f2a6-4923-aaf0-6086ad0227f5",
-   "name": "Vulcan | WGS-11",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Year",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2026-01-28T18:53:33Z",
-   "vehicle": "Vulcan",
-   "orbit": "GSTO",
-   "programs": [],
-   "padName": "Space Launch Complex 41",
-   "pad": {
-    "latitudeDeg": 28.58341025,
-    "longitudeDeg": -80.58303644
-   }
-  },
-  {
-   "id": "71df1dd0-d658-4762-b0bc-0fca6886aea7",
-   "name": "Falcon 9 Block 5 | SDA Tranche 2 Transport Layer D",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Month",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2026-10-17T08:28:07Z",
-   "vehicle": "Falcon 9",
-   "orbit": "PO",
-   "programs": [],
-   "padName": "Unknown Pad",
-   "pad": {
-    "latitudeDeg": 28.458,
-    "longitudeDeg": -80.528
-   }
-  },
-  {
    "id": "e61d353c-db55-4a57-8184-0fab187231e6",
    "name": "Falcon 9 Block 5 | Globalstar 2-R Mission 2 (x 9)",
    "net": "2026-12-31T00:00:00Z",
@@ -294,15 +277,15 @@
    }
   },
   {
-   "id": "d40b57ec-e294-4aa2-9822-33eb222105cb",
-   "name": "Vulcan | USSF-16",
+   "id": "649bf8ed-f2a6-4923-aaf0-6086ad0227f5",
+   "name": "Vulcan | WGS-11",
    "net": "2026-12-31T00:00:00Z",
    "precision": "Year",
    "status": "TBD",
    "statusName": "To Be Determined",
-   "lastUpdated": "2025-08-29T16:07:57Z",
+   "lastUpdated": "2026-01-28T18:53:33Z",
    "vehicle": "Vulcan",
-   "orbit": "N/A",
+   "orbit": "GSTO",
    "programs": [],
    "padName": "Space Launch Complex 41",
    "pad": {
@@ -344,6 +327,23 @@
    "pad": {
     "latitudeDeg": 28.4705556,
     "longitudeDeg": -80.542194
+   }
+  },
+  {
+   "id": "d40b57ec-e294-4aa2-9822-33eb222105cb",
+   "name": "Vulcan | USSF-16",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Year",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2025-08-29T16:07:57Z",
+   "vehicle": "Vulcan",
+   "orbit": "N/A",
+   "programs": [],
+   "padName": "Space Launch Complex 41",
+   "pad": {
+    "latitudeDeg": 28.58341025,
+    "longitudeDeg": -80.58303644
    }
   },
   {
