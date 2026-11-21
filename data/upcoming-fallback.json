@@ -1,14 +1,14 @@
 {
- "fetched": 1795193835463,
+ "fetched": 1795277281980,
  "results": [
   {
    "id": "d74afbc7-0de5-491c-be05-4e9c31f736ac",
    "name": "Falcon 9 Block 5 | Cygnus CRS-2 NG-25",
-   "net": "2026-11-29T15:47:00Z",
+   "net": "2026-11-29T15:50:00Z",
    "precision": "Minute",
    "status": "Go",
    "statusName": "Go for Launch",
-   "lastUpdated": "2026-11-19T12:34:08Z",
+   "lastUpdated": "2026-11-20T17:43:33Z",
    "vehicle": "Falcon 9",
    "orbit": "LEO",
    "programs": [
@@ -243,23 +243,6 @@
    }
   },
   {
-   "id": "649bf8ed-f2a6-4923-aaf0-6086ad0227f5",
-   "name": "Vulcan | WGS-11",
-   "net": "2026-12-31T00:00:00Z",
-   "precision": "Year",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2026-01-28T18:53:33Z",
-   "vehicle": "Vulcan",
-   "orbit": "GSTO",
-   "programs": [],
-   "padName": "Space Launch Complex 41",
-   "pad": {
-    "latitudeDeg": 28.58341025,
-    "longitudeDeg": -80.58303644
-   }
-  },
-  {
    "id": "e61d353c-db55-4a57-8184-0fab187231e6",
    "name": "Falcon 9 Block 5 | Globalstar 2-R Mission 2 (x 9)",
    "net": "2026-12-31T00:00:00Z",
@@ -291,6 +274,23 @@
    "pad": {
     "latitudeDeg": 28.458,
     "longitudeDeg": -80.528
+   }
+  },
+  {
+   "id": "649bf8ed-f2a6-4923-aaf0-6086ad0227f5",
+   "name": "Vulcan | WGS-11",
+   "net": "2026-12-31T00:00:00Z",
+   "precision": "Year",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2026-01-28T18:53:33Z",
+   "vehicle": "Vulcan",
+   "orbit": "GSTO",
+   "programs": [],
+   "padName": "Space Launch Complex 41",
+   "pad": {
+    "latitudeDeg": 28.58341025,
+    "longitudeDeg": -80.58303644
    }
   },
   {
