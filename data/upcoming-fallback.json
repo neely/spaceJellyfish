@@ -1,5 +1,5 @@
 {
- "fetched": 1795631921961,
+ "fetched": 1795717532717,
  "results": [
   {
    "id": "d74afbc7-0de5-491c-be05-4e9c31f736ac",
@@ -8,7 +8,7 @@
    "precision": "Minute",
    "status": "Go",
    "statusName": "Go for Launch",
-   "lastUpdated": "2026-11-25T17:21:30Z",
+   "lastUpdated": "2026-11-26T11:44:54Z",
    "vehicle": "Falcon 9",
    "orbit": "LEO",
    "programs": [
@@ -511,15 +511,15 @@
    }
   },
   {
-   "id": "02e34864-4363-4056-b884-9d4a7a9cd5e8",
-   "name": "Falcon 9 Block 5 | Trinity",
+   "id": "9642cfef-4687-495a-af2e-2ac81fa1e12a",
+   "name": "Falcon 9 Block 5 | KOMPSAT-7A",
    "net": "2027-06-30T00:00:00Z",
-   "precision": "Quarter 2",
+   "precision": "Month",
    "status": "TBD",
    "statusName": "To Be Determined",
-   "lastUpdated": "2026-09-11T11:50:40Z",
+   "lastUpdated": "2026-07-08T00:28:01Z",
    "vehicle": "Falcon 9",
-   "orbit": "GTO",
+   "orbit": "SSO",
    "programs": [],
    "padName": "Unknown Pad",
    "pad": {
