@@ -1,5 +1,5 @@
 {
- "fetched": 1795717532717,
+ "fetched": 1795803029387,
  "results": [
   {
    "id": "d74afbc7-0de5-491c-be05-4e9c31f736ac",
@@ -355,23 +355,6 @@
    }
   },
   {
-   "id": "260a062e-ddff-410f-a17a-cc3241a5df47",
-   "name": "Nova | AstroForge Autonomy-1 (Demo Flight)",
-   "net": "2027-03-31T00:00:00Z",
-   "precision": "Quarter 1",
-   "status": "TBD",
-   "statusName": "To Be Determined",
-   "lastUpdated": "2026-09-22T16:07:42Z",
-   "vehicle": "Nova",
-   "orbit": "LEO",
-   "programs": [],
-   "padName": "Space Launch Complex 14",
-   "pad": {
-    "latitudeDeg": 28.49103,
-    "longitudeDeg": -80.54687
-   }
-  },
-  {
    "id": "4cc61288-6f94-41de-8fd5-7fe4d72aedfb",
    "name": "Falcon 9 Block 5 | Haven-1",
    "net": "2027-03-31T00:00:00Z",
@@ -386,6 +369,23 @@
    "pad": {
     "latitudeDeg": 28.458,
     "longitudeDeg": -80.528
+   }
+  },
+  {
+   "id": "260a062e-ddff-410f-a17a-cc3241a5df47",
+   "name": "Nova | AstroForge Autonomy-1 (Demo Flight)",
+   "net": "2027-03-31T00:00:00Z",
+   "precision": "Quarter 1",
+   "status": "TBD",
+   "statusName": "To Be Determined",
+   "lastUpdated": "2026-09-22T16:07:42Z",
+   "vehicle": "Nova",
+   "orbit": "LEO",
+   "programs": [],
+   "padName": "Space Launch Complex 14",
+   "pad": {
+    "latitudeDeg": 28.49103,
+    "longitudeDeg": -80.54687
    }
   },
   {
@@ -511,15 +511,15 @@
    }
   },
   {
-   "id": "9642cfef-4687-495a-af2e-2ac81fa1e12a",
-   "name": "Falcon 9 Block 5 | KOMPSAT-7A",
+   "id": "02e34864-4363-4056-b884-9d4a7a9cd5e8",
+   "name": "Falcon 9 Block 5 | Trinity",
    "net": "2027-06-30T00:00:00Z",
-   "precision": "Month",
+   "precision": "Quarter 2",
    "status": "TBD",
    "statusName": "To Be Determined",
-   "lastUpdated": "2026-07-08T00:28:01Z",
+   "lastUpdated": "2026-09-11T11:50:40Z",
    "vehicle": "Falcon 9",
-   "orbit": "SSO",
+   "orbit": "GTO",
    "programs": [],
    "padName": "Unknown Pad",
    "pad": {
